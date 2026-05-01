@@ -42,7 +42,7 @@ docs/
 
 ## Contributing
 
-See [CONTRIBUTING.md](https://github.com/software-atlas/software-atlas/blob/main/CONTRIBUTING.md)
+See [CONTRIBUTING.md](https://github.com/akardapolov/software-atlas/blob/main/CONTRIBUTING.md)
 for guidelines.
 
 ---
