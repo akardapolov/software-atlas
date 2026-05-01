@@ -336,16 +336,18 @@ switch (value) {
 
 ### Arrays and Strings
 
+{% raw %}
 ```c
 // Array declaration and initialization
 int arr[5] = {1, 2, 3, 4, 5};
-int arr2D[3][2] = {{1,2}, {3,4}, {5,6}};
+int arr2D[3][2] = { {1, 2}, {3, 4}, {5, 6} };
 
 // C strings are null-terminated
 char str[] = "Hello";
 size_t len = strlen(str);  // Manual length calculation
 strcpy(dest, str);       // Must ensure dest has space
 ```
+{% endraw %}
 
 ## Ecosystem and Tools
 
