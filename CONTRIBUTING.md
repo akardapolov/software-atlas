@@ -48,22 +48,6 @@ New code examples should:
 ### Code
 - Keep examples simple and focused
 - Avoid external dependencies when possible
-- Include compilation/run instructions in README
-
-## Development
-
-The site is built with MkDocs and the Material theme.
-
-```bash
-# Install dependencies
-pip install -r requirements.txt
-
-# Serve locally
-mkdocs serve
-
-# Build for deployment
-mkdocs build
-```
 
 ## License
 
