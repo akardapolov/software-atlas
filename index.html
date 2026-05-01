@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Software Atlas</title>
+
+  <link id="hljs-theme" rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --sidebar-w: 280px;
+      --header-h: 56px;
+      --accent: #3b63dd;
+      --accent-light: #eef1fd;
+      --bg: #ffffff;
+      --bg-secondary: #f8f9fa;
+      --border: #e1e4e8;
+      --text: #24292f;
+      --text-muted: #656d76;
+      --text-link: #0969da;
+      --sidebar-bg: #f6f8fa;
+      --sidebar-active: #dbeafe;
+      --sidebar-active-text: #1d4ed8;
+      --code-bg: #f6f8fa;
+      --shadow: 0 1px 3px rgba(0,0,0,.12);
+    }
+
+    [data-theme="dark"] {
+      --bg: #0d1117;
+      --bg-secondary: #161b22;
+      --border: #30363d;
+      --text: #e6edf3;
+      --text-muted: #7d8590;
+      --text-link: #58a6ff;
+      --sidebar-bg: #161b22;
+      --sidebar-active: #1f3a6e;
+      --sidebar-active-text: #79b8ff;
+      --code-bg: #161b22;
+      --accent: #58a6ff;
+      --accent-light: #1f3a6e;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--text);
+      background: var(--bg);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-rows: var(--header-h) 1fr;
+      grid-template-columns: var(--sidebar-w) 1fr;
+      grid-template-areas: "header header" "sidebar main";
+      height: 100vh;
+    }
+
+    .header {
+      grid-area: header;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 0 20px;
+      background: var(--accent);
+      color: white;
+      z-index: 100;
+      box-shadow: var(--shadow);
+    }
+
+    .header__logo {
+      font-size: 1.15rem;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .header__logo span { opacity: .75; font-weight: 400; }
+
+    .header__search {
+      flex: 1;
+      max-width: 420px;
+      display: flex;
+      align-items: center;
+      background: rgba(255,255,255,.15);
+      border: 1px solid rgba(255,255,255,.25);
+      border-radius: 6px;
+      padding: 0 10px;
+      gap: 6px;
+    }
+
+    .header__search input {
+      background: none;
+      border: none;
+      outline: none;
+      color: white;
+      font-size: .9rem;
+      width: 100%;
+      padding: 5px 0;
+    }
+
+    .header__search input::placeholder { color: rgba(255,255,255,.6); }
+
+    .header__actions { margin-left: auto; display: flex; gap: 8px; align-items: center; }
+
+    .btn-icon {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: white;
+      padding: 6px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background .15s;
+      font-size: 1.1rem;
+      text-decoration: none;
+    }
+
+    .btn-icon:hover { background: rgba(255,255,255,.2); }
+
+    .sidebar {
+      grid-area: sidebar;
+      background: var(--sidebar-bg);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    .sidebar::-webkit-scrollbar { width: 4px; }
+    .sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    .nav-group { border-bottom: 1px solid var(--border); }
+
+    .nav-group__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      cursor: pointer;
+      user-select: none;
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      transition: background .15s;
+    }
+
+    .nav-group__header:hover { background: var(--accent-light); color: var(--accent); }
+    .nav-group__arrow { transition: transform .2s; font-style: normal; font-size: .7rem; }
+    .nav-group.open .nav-group__arrow { transform: rotate(90deg); }
+    .nav-group__body { display: none; }
+    .nav-group.open .nav-group__body { display: block; }
+
+    .nav-item {
+      display: block;
+      padding: 6px 14px 6px 22px;
+      font-size: .875rem;
+      color: var(--text);
+      cursor: pointer;
+      transition: background .12s, color .12s;
+      border-left: 3px solid transparent;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .nav-item:hover { background: var(--accent-light); color: var(--accent); }
+    .nav-item.active {
+      background: var(--sidebar-active);
+      color: var(--sidebar-active-text);
+      border-left-color: var(--accent);
+      font-weight: 600;
+    }
+
+    .nav-subgroup__header {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      font-size: .82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      transition: background .12s;
+      padding: 5px 14px;
+    }
+
+    .nav-subgroup__header:hover { background: var(--accent-light); }
+    .nav-subgroup__arrow { font-style: normal; font-size: .65rem; transition: transform .2s; flex-shrink: 0; }
+    .nav-subgroup.open .nav-subgroup__arrow { transform: rotate(90deg); }
+    .nav-subgroup__body { display: none; }
+    .nav-subgroup.open .nav-subgroup__body { display: block; }
+
+    .main { grid-area: main; overflow-y: auto; }
+    .main::-webkit-scrollbar { width: 6px; }
+    .main::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+    .content { max-width: 900px; margin: 0 auto; padding: 40px 48px; }
+
+    .search-overlay {
+      position: fixed;
+      top: var(--header-h);
+      left: var(--sidebar-w);
+      right: 0;
+      bottom: 0;
+      background: var(--bg);
+      z-index: 90;
+      overflow-y: auto;
+      display: none;
+      padding: 24px 40px;
+    }
+
+    .search-overlay.visible { display: block; }
+
+    .search-result {
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: border-color .15s, background .15s;
+    }
+
+    .search-result:hover { border-color: var(--accent); background: var(--accent-light); }
+    .search-result__title { font-weight: 600; color: var(--text); margin-bottom: 2px; }
+    .search-result__path { font-size: .8rem; color: var(--text-muted); }
+
+    .state-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      min-height: 300px;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    .state-box__icon { font-size: 2.5rem; }
+    .state-box__title { font-size: 1.1rem; font-weight: 600; color: var(--text); }
+
+    .spinner {
+      width: 36px; height: 36px;
+      border: 3px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Markdown */
+    .md-body { line-height: 1.75; }
+    .md-body h1 { font-size: 2rem; font-weight: 700; border-bottom: 2px solid var(--border); padding-bottom: 12px; margin-bottom: 24px; }
+    .md-body h2 { font-size: 1.4rem; font-weight: 700; border-bottom: 1px solid var(--border); padding-bottom: 8px; margin: 32px 0 16px; }
+    .md-body h3 { font-size: 1.15rem; font-weight: 700; margin: 24px 0 12px; }
+    .md-body h4 { font-size: 1rem; font-weight: 700; margin: 20px 0 10px; }
+    .md-body p { margin-bottom: 16px; }
+    .md-body a { color: var(--text-link); text-decoration: none; }
+    .md-body a:hover { text-decoration: underline; }
+    .md-body code {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      font-size: .875em;
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2px 6px;
+    }
+    .md-body pre { background: var(--code-bg); border: 1px solid var(--border); border-radius: 8px; padding: 16px; overflow-x: auto; margin: 16px 0; }
+    .md-body pre code { background: none; border: none; padding: 0; font-size: .85rem; }
+    .md-body blockquote { border-left: 4px solid var(--accent); margin: 16px 0; padding: 8px 16px; color: var(--text-muted); background: var(--accent-light); border-radius: 0 6px 6px 0; }
+    .md-body ul, .md-body ol { padding-left: 24px; margin-bottom: 16px; }
+    .md-body li { margin-bottom: 4px; }
+    .md-body table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: .9rem; overflow-x: auto; display: block; }
+    .md-body th { background: var(--bg-secondary); font-weight: 700; padding: 8px 12px; border: 1px solid var(--border); text-align: left; }
+    .md-body td { padding: 7px 12px; border: 1px solid var(--border); }
+    .md-body tr:nth-child(even) td { background: var(--bg-secondary); }
+    .md-body hr { border: none; border-top: 2px solid var(--border); margin: 32px 0; }
+    .md-body img { max-width: 100%; border-radius: 6px; }
+
+    .mermaid { text-align: center; margin: 16px 0; overflow-x: auto; }
+
+    .breadcrumb { font-size: .82rem; color: var(--text-muted); margin-bottom: 20px; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+    .breadcrumb__sep { opacity: .5; }
+    .breadcrumb__item { cursor: pointer; color: var(--text-link); }
+    .breadcrumb__item:hover { text-decoration: underline; }
+    .breadcrumb__item.current { color: var(--text-muted); cursor: default; }
+    .breadcrumb__item.current:hover { text-decoration: none; }
+
+    /* Offline warning */
+    .offline-banner {
+      display: none;
+      background: #fff3cd;
+      color: #856404;
+      border: 1px solid #ffc107;
+      border-radius: 6px;
+      padding: 10px 16px;
+      margin-bottom: 20px;
+      font-size: .85rem;
+    }
+
+    [data-theme="dark"] .offline-banner {
+      background: #2d2000;
+      color: #ffc107;
+      border-color: #664d00;
+    }
+
+    .sidebar-toggle { display: none; }
+
+    @media (max-width: 768px) {
+      .layout { grid-template-columns: 1fr; grid-template-areas: "header" "main"; }
+      .sidebar {
+        position: fixed;
+        top: var(--header-h);
+        left: -100%;
+        width: var(--sidebar-w);
+        height: calc(100vh - var(--header-h));
+        z-index: 80;
+        transition: left .25s;
+        box-shadow: var(--shadow);
+      }
+      .sidebar.open { left: 0; }
+      .sidebar-toggle { display: flex; }
+      .search-overlay { left: 0; }
+      .content { padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="layout">
+  <header class="header">
+    <button class="btn-icon sidebar-toggle" id="sidebarToggle">☰</button>
+    <div class="header__logo" id="logoBtn">
+      🗺️ Software Atlas <span>/ knowledge base</span>
+    </div>
+    <div class="header__search">
+      <span>🔍</span>
+      <input type="text" id="searchInput"
+             placeholder="Search… (press /)"
+             autocomplete="off" spellcheck="false" />
+    </div>
+    <div class="header__actions">
+      <button class="btn-icon" id="themeToggle">🌙</button>
+      <a class="btn-icon"
+         href="https://github.com/software-atlas/software-atlas"
+         target="_blank" rel="noopener">⭐</a>
+    </div>
+  </header>
+
+  <nav class="sidebar" id="sidebar"></nav>
+
+  <main class="main" id="main">
+    <div class="content" id="content">
+      <div class="state-box">
+        <div class="spinner"></div>
+        <div class="state-box__title">Loading…</div>
+      </div>
+    </div>
+    <div class="search-overlay" id="searchOverlay"></div>
+  </main>
+</div>
+
+<!--
+  Порядок загрузки важен: сначала библиотеки, потом наш код.
+  defer гарантирует выполнение после парсинга HTML,
+  но НЕ гарантирует порядок между разными defer-скриптами из CDN.
+  Поэтому грузим синхронно в нужном порядке через обычные теги,
+  а наш код запускаем только после window.onload.
+-->
+<script src="https://cdn.jsdelivr.net/npm/marked@9/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/highlight.js@11/highlight.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+
+<script>
+  "use strict";
+
+  // ═══════════════════════════════════════
+  // NAV TREE
+  // ═══════════════════════════════════════
+  const NAV = [
+    { label: "🏠 Home", path: "docs/index.md" },
+    {
+      label: "🗺️ Maps",
+      children: [
+        { label: "Overview",            path: "docs/maps/index.md" },
+        { label: "Master Timeline",     path: "docs/maps/master-timeline.md" },
+        { label: "Ideas Evolution",     path: "docs/maps/ideas-evolution.md" },
+        { label: "Paradigms",           path: "docs/maps/paradigms-map.md" },
+        { label: "Architecture",        path: "docs/maps/architecture-map.md" },
+        { label: "Languages Genealogy", path: "docs/maps/languages-genealogy.md" },
+        { label: "Process Map",         path: "docs/maps/process-map.md" },
+        { label: "Concurrency",         path: "docs/maps/concurrency-map.md" },
+      ]
+    },
+    {
+      label: "📚 Topics",
+      children: [
+        { label: "Overview",  path: "docs/topics/index.md" },
+        { label: "Paradigms", path: "docs/topics/paradigms/index.md" },
+        {
+          label: "Architecture",
+          children: [
+            { label: "Overview", path: "docs/topics/architecture/index.md" },
+            { label: "Domain-centric", children: [
+              { label: "Clean Architecture",     path: "docs/topics/architecture/domain-centric/clean-architecture.md" },
+              { label: "Hexagonal Architecture", path: "docs/topics/architecture/domain-centric/hexagonal-architecture.md" },
+              { label: "Industrial Functional",  path: "docs/topics/architecture/domain-centric/industrial-functional-architecture.md" },
+              { label: "Layered Architecture",   path: "docs/topics/architecture/domain-centric/layered-architecture.md" },
+              { label: "Onion Architecture",     path: "docs/topics/architecture/domain-centric/onion-architecture.md" },
+            ]},
+            { label: "Structural", children: [
+              { label: "Microservices",    path: "docs/topics/architecture/structural/microservices.md" },
+              { label: "Modular Monolith", path: "docs/topics/architecture/structural/modular-monolith.md" },
+              { label: "Monolith",         path: "docs/topics/architecture/structural/monolith.md" },
+            ]},
+            { label: "Communication", children: [
+              { label: "Event-Driven",   path: "docs/topics/architecture/communication/event-driven-architecture.md" },
+              { label: "Message-Driven", path: "docs/topics/architecture/communication/message-driven-architecture.md" },
+              { label: "Pub/Sub",        path: "docs/topics/architecture/communication/publish-subscribe.md" },
+              { label: "SOA",            path: "docs/topics/architecture/communication/service-oriented-architecture.md" },
+            ]},
+            { label: "Data", children: [
+              { label: "CQRS",           path: "docs/topics/architecture/data/cqrs.md" },
+              { label: "Event Sourcing", path: "docs/topics/architecture/data/event-sourcing.md" },
+            ]},
+            { label: "Integration", children: [
+              { label: "Ambassador Pattern",    path: "docs/topics/architecture/integration/ambassador-pattern.md" },
+              { label: "Anti-Corruption Layer", path: "docs/topics/architecture/integration/anti-corruption-layer.md" },
+              { label: "API Gateway",           path: "docs/topics/architecture/integration/api-gateway.md" },
+              { label: "Backend for Frontend",  path: "docs/topics/architecture/integration/backend-for-frontend.md" },
+            ]},
+            { label: "Resilience", children: [
+              { label: "Bulkhead",        path: "docs/topics/architecture/resilience/bulkhead.md" },
+              { label: "Circuit Breaker", path: "docs/topics/architecture/resilience/circuit-breaker.md" },
+              { label: "Retry Pattern",   path: "docs/topics/architecture/resilience/retry-pattern.md" },
+              { label: "Saga Pattern",    path: "docs/topics/architecture/resilience/saga-pattern.md" },
+            ]},
+          ]
+        },
+        {
+          label: "OOP & Design",
+          children: [
+            { label: "Overview",      path: "docs/topics/design/index.md" },
+            { label: "OOP Deep Dive", path: "docs/topics/design/oop-deep-dive.md" },
+            { label: "Creational Patterns", children: [
+              { label: "Abstract Factory", path: "docs/topics/design/creational/abstract-factory.md" },
+              { label: "Builder",          path: "docs/topics/design/creational/builder.md" },
+              { label: "Factory Method",   path: "docs/topics/design/creational/factory-method.md" },
+              { label: "Prototype",        path: "docs/topics/design/creational/prototype.md" },
+              { label: "Singleton",        path: "docs/topics/design/creational/singleton.md" },
+            ]},
+            { label: "Structural Patterns", children: [
+              { label: "Adapter",   path: "docs/topics/design/structural/adapter.md" },
+              { label: "Bridge",    path: "docs/topics/design/structural/bridge.md" },
+              { label: "Composite", path: "docs/topics/design/structural/composite.md" },
+              { label: "Decorator", path: "docs/topics/design/structural/decorator.md" },
+              { label: "Facade",    path: "docs/topics/design/structural/facade.md" },
+              { label: "Flyweight", path: "docs/topics/design/structural/flyweight.md" },
+              { label: "Proxy",     path: "docs/topics/design/structural/proxy.md" },
+            ]},
+            { label: "Behavioral Patterns", children: [
+              { label: "Chain of Responsibility", path: "docs/topics/design/behavioral/chain-of-responsibility.md" },
+              { label: "Command",         path: "docs/topics/design/behavioral/command.md" },
+              { label: "Interpreter",     path: "docs/topics/design/behavioral/interpreter.md" },
+              { label: "Iterator",        path: "docs/topics/design/behavioral/iterator.md" },
+              { label: "Mediator",        path: "docs/topics/design/behavioral/mediator.md" },
+              { label: "Memento",         path: "docs/topics/design/behavioral/memento.md" },
+              { label: "Observer",        path: "docs/topics/design/behavioral/observer.md" },
+              { label: "State",           path: "docs/topics/design/behavioral/state.md" },
+              { label: "Strategy",        path: "docs/topics/design/behavioral/strategy.md" },
+              { label: "Template Method", path: "docs/topics/design/behavioral/template-method.md" },
+              { label: "Visitor",         path: "docs/topics/design/behavioral/visitor.md" },
+            ]},
+          ]
+        },
+        { label: "Type Systems",           path: "docs/topics/types/index.md" },
+        { label: "Functional Programming", path: "docs/topics/functional/index.md" },
+        { label: "Concurrency",            path: "docs/topics/concurrency/index.md" },
+        { label: "Process & Testing",      path: "docs/topics/process/index.md" },
+        { label: "Version Control",        path: "docs/topics/vcs/index.md" },
+        { label: "Distributed Systems",    path: "docs/topics/distributed/index.md" },
+      ]
+    },
+    {
+      label: "💬 Languages",
+      children: [
+        { label: "Overview",   path: "docs/languages/index.md" },
+        { label: "Lisp",       path: "docs/languages/lisp/index.md" },
+        { label: "Simula",     path: "docs/languages/simula/index.md" },
+        { label: "Smalltalk",  path: "docs/languages/smalltalk/index.md" },
+        { label: "C",          path: "docs/languages/c/index.md" },
+        { label: "ML",         path: "docs/languages/ml/index.md" },
+        { label: "Erlang",     path: "docs/languages/erlang/index.md" },
+        { label: "Haskell",    path: "docs/languages/haskell/index.md" },
+        { label: "Python",     path: "docs/languages/python/index.md" },
+        { label: "Java",       path: "docs/languages/java/index.md" },
+        { label: "Clojure",    path: "docs/languages/clojure/index.md" },
+        { label: "Go",         path: "docs/languages/go/index.md" },
+        { label: "Rust",       path: "docs/languages/rust/index.md" },
+        { label: "TypeScript", path: "docs/languages/typescript/index.md" },
+      ]
+    },
+    {
+      label: "👤 Authors",
+      children: [
+        { label: "Overview",              path: "docs/authors/index.md" },
+        { label: "Adele Goldberg",        path: "docs/authors/adele-goldberg.md" },
+        { label: "Alan Kay",              path: "docs/authors/alan-kay.md" },
+        { label: "Alan Turing",           path: "docs/authors/alan-turing.md" },
+        { label: "Alexander Zhidkov",     path: "docs/authors/alexander-zhidkov.md" },
+        { label: "Alistair Cockburn",     path: "docs/authors/alistair-cockburn.md" },
+        { label: "Alonzo Church",         path: "docs/authors/alonzo-church.md" },
+        { label: "Barbara Liskov",        path: "docs/authors/barbara-liskov.md" },
+        { label: "Bertrand Meyer",        path: "docs/authors/bertrand-meyer.md" },
+        { label: "Bjarne Stroustrup",     path: "docs/authors/bjarne-stroustrup.md" },
+        { label: "Brad Cox",              path: "docs/authors/brad-cox.md" },
+        { label: "Christopher Alexander", path: "docs/authors/christopher-alexander.md" },
+        { label: "Dan Ingalls",           path: "docs/authors/dan-ingalls.md" },
+        { label: "David Farley",          path: "docs/authors/david-farley.md" },
+        { label: "David MacIver",         path: "docs/authors/david-maciver.md" },
+        { label: "David Parnas",          path: "docs/authors/david-parnas.md" },
+        { label: "Diego Ongaro",          path: "docs/authors/diego-ongaro.md" },
+        { label: "Edsger Dijkstra",       path: "docs/authors/edsger-dijkstra.md" },
+        { label: "Eric Brewer",           path: "docs/authors/eric-brewer.md" },
+        { label: "Eric Evans",            path: "docs/authors/eric-evans.md" },
+        { label: "Erich Gamma",           path: "docs/authors/erich-gamma.md" },
+        { label: "Fred Brooks",           path: "docs/authors/fred-brooks.md" },
+        { label: "Gary Bernhardt",        path: "docs/authors/gary-bernhardt.md" },
+        { label: "Gene Kim",              path: "docs/authors/gene-kim.md" },
+        { label: "Grady Booch",           path: "docs/authors/grady-booch.md" },
+        { label: "Guido van Rossum",      path: "docs/authors/guido-van-rossum.md" },
+        { label: "Ivan Sutherland",       path: "docs/authors/ivan-sutherland.md" },
+        { label: "Ivar Jacobson",         path: "docs/authors/ivar-jacobson.md" },
+        { label: "James Gosling",         path: "docs/authors/james-gosling.md" },
+        { label: "James Rumbaugh",        path: "docs/authors/james-rumbaugh.md" },
+        { label: "Jez Humble",            path: "docs/authors/jez-humble.md" },
+        { label: "Jim Gray",              path: "docs/authors/jim-gray.md" },
+        { label: "Joe Armstrong",         path: "docs/authors/joe-armstrong.md" },
+        { label: "John Backus",           path: "docs/authors/john-backus.md" },
+        { label: "John Hughes",           path: "docs/authors/john-hughes.md" },
+        { label: "John McCarthy",         path: "docs/authors/john-mccarthy.md" },
+        { label: "John Vlissides",        path: "docs/authors/john-vlissides.md" },
+        { label: "Kent Beck",             path: "docs/authors/kent-beck.md" },
+        { label: "Koen Claessen",         path: "docs/authors/koen-claessen.md" },
+        { label: "Kristen Nygaard",       path: "docs/authors/kristen-nygaard.md" },
+        { label: "Kurt Gödel",            path: "docs/authors/kurt-godel.md" },
+        { label: "Leslie Lamport",        path: "docs/authors/leslie-lamport.md" },
+        { label: "Linus Torvalds",        path: "docs/authors/linus-torvalds.md" },
+        { label: "Luca Cardelli",         path: "docs/authors/luca-cardelli.md" },
+        { label: "Manuel Pais",           path: "docs/authors/manuel-pais.md" },
+        { label: "Martin Fowler",         path: "docs/authors/martin-fowler.md" },
+        { label: "Martin Kleppmann",      path: "docs/authors/martin-kleppmann.md" },
+        { label: "Matthew Skelton",       path: "docs/authors/matthew-skelton.md" },
+        { label: "Meir Lehman",           path: "docs/authors/meir-lehman.md" },
+        { label: "Michael Feathers",      path: "docs/authors/michael-feathers.md" },
+        { label: "Michael Cohn",          path: "docs/authors/mike-cohn.md" },
+        { label: "Nicole Forsgren",       path: "docs/authors/nicole-forsgren.md" },
+        { label: "Ole-Johan Dahl",        path: "docs/authors/ole-johan-dahl.md" },
+        { label: "Ralph Johnson",         path: "docs/authors/ralph-johnson.md" },
+        { label: "Rebecca Wirfs-Brock",   path: "docs/authors/rebecca-wirfs-brock.md" },
+        { label: "Rich Hickey",           path: "docs/authors/rich-hickey.md" },
+        { label: "Richard Helm",          path: "docs/authors/richard-helm.md" },
+        { label: "Robert C. Martin",      path: "docs/authors/robert-c-martin.md" },
+        { label: "Robin Milner",          path: "docs/authors/robin-milner.md" },
+        { label: "Sam Newman",            path: "docs/authors/sam-newman.md" },
+        { label: "Sandi Metz",            path: "docs/authors/sandi-metz.md" },
+        { label: "Scott Wlaschin",        path: "docs/authors/scott-wlaschin.md" },
+        { label: "Seymour Papert",        path: "docs/authors/seymour-papert.md" },
+        { label: "Simon Brown",           path: "docs/authors/simon-brown.md" },
+        { label: "Steve Smith",           path: "docs/authors/steve-smith.md" },
+        { label: "Tony Hoare",            path: "docs/authors/tony-hoare.md" },
+        { label: "Ward Cunningham",       path: "docs/authors/ward-cunningham.md" },
+        { label: "Wirfs-Brock & McKim",   path: "docs/authors/wirfs-brock-mckim.md" },
+        { label: "Yukihiro Matsumoto",    path: "docs/authors/yukihiro-matsumoto.md" },
+      ]
+    },
+    {
+      label: "📖 Works",
+      children: [
+        { label: "Overview", path: "docs/works/index.md" },
+        {
+          label: "📄 Papers",
+          children: [
+            { label: "Overview",                       path: "docs/works/papers/index.md" },
+            { label: "Church 1936 — Lambda",           path: "docs/works/papers/church-1936-lambda.md" },
+            { label: "Turing 1936 — Computable",       path: "docs/works/papers/turing-1936-computable.md" },
+            { label: "Gödel 1931 — Incompleteness",    path: "docs/works/papers/godel-1931-incompleteness.md" },
+            { label: "Sutherland 1963 — Sketchpad",    path: "docs/works/papers/sutherland-1963-sketchpad.md" },
+            { label: "Dijkstra 1968 — GoTo",           path: "docs/works/papers/dijkstra-1968-goto.md" },
+            { label: "Dijkstra 1968 — THE",            path: "docs/works/papers/dijkstra-1968-the.md" },
+            { label: "Parnas 1972 — Modules",          path: "docs/works/papers/parnas-1972-modules.md" },
+            { label: "Parnas 1979 — Extension",        path: "docs/works/papers/parnas-1979-extension.md" },
+            { label: "Parnas 1985 — SDI",              path: "docs/works/papers/parnas-1985-sdi.md" },
+            { label: "Liskov 1974 — ADT",              path: "docs/works/papers/liskov-1974-adt.md" },
+            { label: "Liskov 1977 — CLU",              path: "docs/works/papers/liskov-1977-clu.md" },
+            { label: "Liskov 1994 — Subtyping",        path: "docs/works/papers/liskov-1994-subtyping.md" },
+            { label: "Liskov-Wing 1994",               path: "docs/works/papers/liskov-wing-1994-subtyping.md" },
+            { label: "Backus 1978 — Liberated",        path: "docs/works/papers/backus-1978-liberated.md" },
+            { label: "Hoare 1978 — CSP",               path: "docs/works/papers/hoare-1978-csp.md" },
+            { label: "Lamport 1978 — Clocks",          path: "docs/works/papers/lamport-1978-clocks.md" },
+            { label: "Lehman 1980 — Laws",             path: "docs/works/papers/lehman-1980-laws.md" },
+            { label: "Gray 1981 — Transactions",       path: "docs/works/papers/gray-1981-transactions.md" },
+            { label: "Hughes 1989 — Why FP",           path: "docs/works/papers/hughes-1989-why-fp.md" },
+            { label: "Ingalls 1978 — Design",          path: "docs/works/papers/ingalls-1978-design-principles.md" },
+            { label: "Ingalls 1978 — Smalltalk-76",    path: "docs/works/papers/ingalls-1978-smalltalk76.md" },
+            { label: "Ingalls 1981 — Design",          path: "docs/works/papers/ingalls-1981-design-principles.md" },
+            { label: "Ingalls 1997 — Squeak",          path: "docs/works/papers/ingalls-1997-squeak.md" },
+            { label: "Kay 1969 — Reactive Engine",     path: "docs/works/papers/kay-1969-reactive-engine.md" },
+            { label: "Kay 1997 — Revolution",          path: "docs/works/papers/kay-1997-revolution.md" },
+            { label: "Kay 2003 — OOP email",           path: "docs/works/papers/kay-2003-oop-email.md" },
+            { label: "Cardelli-Wegner 1985 — Types",   path: "docs/works/papers/cardelli-wegner-1985-types.md" },
+            { label: "Cox 1986 — OOP",                 path: "docs/works/papers/cox-1986-oop.md" },
+            { label: "Cunningham 1992 — WyCash",       path: "docs/works/papers/cunningham-1992-wycash.md" },
+            { label: "Fowler 2002 — PoEAA",            path: "docs/works/papers/fowler-2002-poeaa.md" },
+            { label: "Gamma 1993 — ECOOP",             path: "docs/works/papers/gamma-1993-ecoop-patterns.md" },
+            { label: "Gosling 1996 — JLS",             path: "docs/works/papers/gosling-1996-jls.md" },
+            { label: "Hughes-Claessen 2000 — QuickCheck", path: "docs/works/papers/hughes-claessen-2000-quickcheck.md" },
+            { label: "Martin 1996 — LSP",              path: "docs/works/papers/martin-1996-lsp.md" },
+            { label: "Martin 1996 — OCP",              path: "docs/works/papers/martin-1996-ocp.md" },
+            { label: "Brewer 2000 — CAP",              path: "docs/works/papers/brewer-2000-cap.md" },
+            { label: "Helland 2007 — Beyond DT",       path: "docs/works/papers/helland-2007-beyond-dt.md" },
+            { label: "Stroustrup 1993 — C++ History",  path: "docs/works/papers/stroustrup-1993-history-cpp.md" },
+          ]
+        },
+        {
+          label: "📚 Books",
+          children: [
+            { label: "Overview",                         path: "docs/works/books/index.md" },
+            { label: "Church 1941 — Calculi",            path: "docs/works/books/church-1941-calculi.md" },
+            { label: "Brooks 1975 — MMM",                path: "docs/works/books/brooks-1975-mmm.md" },
+            { label: "Papert 1980 — Mindstorms",         path: "docs/works/books/papert-1980-mindstorms.md" },
+            { label: "Hoare 1985 — CSP Book",            path: "docs/works/books/hoare-1985-csp-book.md" },
+            { label: "Wirfs-Brock 1990 — OO Design",     path: "docs/works/books/wirfs-brock-1990-designing-oo.md" },
+            { label: "Rumbaugh 1991 — OMT",              path: "docs/works/books/rumbaugh-1991-omt.md" },
+            { label: "Jacobson 1992 — OOSE",             path: "docs/works/books/jacobson-1992-oose.md" },
+            { label: "GoF 1994 — Design Patterns",       path: "docs/works/books/gof-1994-design-patterns.md" },
+            { label: "Cardelli-Abadi 1996 — Theory",     path: "docs/works/books/cardelli-abadi-1996-theory-objects.md" },
+            { label: "Stroustrup 1997 — C++ PL",         path: "docs/works/books/stroustrup-1997-cpp-pl.md" },
+            { label: "Fowler 1999 — Refactoring",        path: "docs/works/books/fowler-1999-refactoring.md" },
+            { label: "Alexander 1979 — Timeless Way",    path: "docs/works/books/alexander-1979-timeless-way.md" },
+            { label: "Gosling 2000 — Java PL",           path: "docs/works/books/gosling-2000-java-pl.md" },
+            { label: "McCarthy 1962 — Lisp 1.5",         path: "docs/works/books/mccarthy-1962-lisp15.md" },
+            { label: "Beck 2002 — TDD",                  path: "docs/works/books/beck-2002-tdd.md" },
+            { label: "Beck-Cunningham 1989 — CRC",       path: "docs/works/books/beck-cunningham-1989-crc.md" },
+            { label: "Evans 2003 — DDD",                 path: "docs/works/books/evans-2003-ddd.md" },
+            { label: "Feathers 2004 — Legacy",           path: "docs/works/books/feathers-2004-legacy.md" },
+            { label: "Cohn 2004 — User Stories",         path: "docs/works/books/cohn-2004-user-stories.md" },
+            { label: "Martin 1996 — Agile PPP",          path: "docs/works/books/martin-1996-agile-ppp.md" },
+            { label: "Goldberg 1983 — Smalltalk Blue",   path: "docs/works/books/goldberg-1983-smalltalk80-blue.md" },
+            { label: "Goldberg 1984 — Smalltalk Orange", path: "docs/works/books/goldberg-1984-smalltalk80-orange.md" },
+            { label: "Humble 2010 — CD",                 path: "docs/works/books/humble-2010-cd.md" },
+            { label: "Wirfs-Brock 2003 — Object Design", path: "docs/works/books/wirfs-brock-2003-object-design.md" },
+            { label: "Metz 2012 — POODR",                path: "docs/works/books/metz-2012-poodr.md" },
+            { label: "Metz 2018 — POODR",                path: "docs/works/books/metz-2018-poodr.md" },
+            { label: "Newman 2015 — Microservices",      path: "docs/works/books/newman-2015-microservices.md" },
+            { label: "Google 2016 — SRE",                path: "docs/works/books/google-2016-sre.md" },
+            { label: "Kleppmann 2017 — DDIA",            path: "docs/works/books/kleppmann-2017-ddia.md" },
+            { label: "Forsgren 2018 — Accelerate",       path: "docs/works/books/forsgren-2018-accelerate.md" },
+            { label: "Wlaschin 2018 — DMF",              path: "docs/works/books/wlaschin-2018-dmf.md" },
+            { label: "Ousterhout 2018 — Philosophy",     path: "docs/works/books/ousterhout-2018-philosophy.md" },
+            { label: "Skelton 2019 — Team Topologies",   path: "docs/works/books/skelton-2019-team-topologies.md" },
+          ]
+        },
+        {
+          label: "🎤 Talks",
+          children: [
+            { label: "Overview",                       path: "docs/works/talks/index.md" },
+            { label: "Hickey 2011 — Simple Made Easy", path: "docs/works/talks/hickey-2011-simple-made-easy.md" },
+            { label: "Bernhardt 2012 — Boundaries",    path: "docs/works/talks/bernhardt-2012-boundaries.md" },
+            { label: "MacIver 2013 — Hypothesis",      path: "docs/works/talks/maciver-2013-hypothesis.md" },
+            { label: "Zhidkov 2024", children: [
+              { label: "Агрегаты",                    path: "docs/works/talks/zhidkov/zhidkov-2024-agregaty.md" },
+              { label: "Диаграмма эффектов",          path: "docs/works/talks/zhidkov/zhidkov-2024-diagramma-effektov.md" },
+              { label: "Эргономичный подход",         path: "docs/works/talks/zhidkov/zhidkov-2024-ergonomichnyy-podkhod.md" },
+              { label: "FP стоимость",                path: "docs/works/talks/zhidkov/zhidkov-2024-fp-stoimost.md" },
+              { label: "Не JPA",                      path: "docs/works/talks/zhidkov/zhidkov-2024-ne-jpa.md" },
+              { label: "Не нужна чистая архитектура", path: "docs/works/talks/zhidkov/zhidkov-2024-ne-nuzhna-chistaya-arkhitektura.md" },
+              { label: "Структурный дизайн",          path: "docs/works/talks/zhidkov/zhidkov-2024-strukturnyy-dizayn.md" },
+            ]},
+            { label: "Series", children: [
+              { label: "Overview", path: "docs/works/series/index.md" },
+              { label: "DAS",      path: "docs/works/series/das.md" },
+            ]},
+          ]
+        },
+      ]
+    },
+    {
+      label: "🛤️ Reading Paths",
+      children: [
+        { label: "Overview",                 path: "docs/reading-paths/index.md" },
+        { label: "Architecture Path",        path: "docs/reading-paths/architecture-path.md" },
+        { label: "OOP & Design Path",        path: "docs/reading-paths/oop-and-design-path.md" },
+        { label: "FP Path",                  path: "docs/reading-paths/fp-path.md" },
+        { label: "Testing & Delivery Path",  path: "docs/reading-paths/testing-and-delivery-path.md" },
+        { label: "Distributed Systems Path", path: "docs/reading-paths/distributed-systems-path.md" },
+      ]
+    },
+    {
+      label: "🔗 References",
+      children: [
+        { label: "Bibliography", path: "docs/references/bibliography.md" },
+        { label: "Open Access",  path: "docs/references/open-access-links.md" },
+      ]
+    },
+    { label: "📝 Glossary", path: "docs/glossary/index.md" },
+  ];
+
+  // ═══════════════════════════════════════
+  // LIBS – теперь не ждём бесконечно
+  // ═══════════════════════════════════════
+  let hljsReady    = false;
+  let mermaidReady = false;
+  let markedReady  = false;
+
+  // ═══════════════════════════════════════
+  // STATE
+  // ═══════════════════════════════════════
+  let currentPath  = null;
+  let searchIndex  = [];
+  let searchTimer  = null;
+  const isFileProtocol = location.protocol === "file:";
+
+  // ═══════════════════════════════════════
+  // THEME
+  // ═══════════════════════════════════════
+  function initTheme() {
+    const saved = localStorage.getItem("sa-theme");
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    applyTheme(saved === "dark" || (!saved && prefersDark));
+  }
+
+  function applyTheme(dark) {
+    document.documentElement.setAttribute("data-theme", dark ? "dark" : "light");
+    document.getElementById("themeToggle").textContent = dark ? "☀️" : "🌙";
+    document.getElementById("hljs-theme").href = dark
+      ? "https://cdn.jsdelivr.net/npm/highlight.js@11/styles/github-dark.min.css"
+      : "https://cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css";
+    if (mermaidReady) {
+      mermaid.initialize({
+        startOnLoad: false,
+        theme: dark ? "dark" : "default",
+        securityLevel: "loose",
+      });
+    }
+  }
+
+  function toggleTheme() {
+    const dark = document.documentElement.getAttribute("data-theme") !== "dark";
+    localStorage.setItem("sa-theme", dark ? "dark" : "light");
+    applyTheme(dark);
+  }
+
+  // ═══════════════════════════════════════
+  // SEARCH INDEX
+  // ═══════════════════════════════════════
+  function buildSearchIndex(nodes, acc) {
+    for (const node of nodes) {
+      if (node.path) acc.push({ label: node.label, path: node.path });
+      if (node.children) buildSearchIndex(node.children, acc);
+    }
+  }
+
+  // ═══════════════════════════════════════
+  // SIDEBAR
+  // ═══════════════════════════════════════
+  function nodeContainsActive(node, activePath) {
+    if (node.path === activePath) return true;
+    if (node.children) return node.children.some(c => nodeContainsActive(c, activePath));
+    return false;
+  }
+
+  function renderSidebar(activePath) {
+    const sidebar = document.getElementById("sidebar");
+    sidebar.innerHTML = "";
+
+    for (const group of NAV) {
+      if (!group.children) {
+        const item = document.createElement("div");
+        item.className = "nav-item" + (group.path === activePath ? " active" : "");
+        item.style.cssText = "padding-left:14px;font-weight:600;border-bottom:1px solid var(--border)";
+        item.textContent = group.label;
+        item.onclick = () => navigate(group.path);
+        sidebar.appendChild(item);
+        continue;
+      }
+
+      const isOpen = group.children.some(c => nodeContainsActive(c, activePath));
+      const groupEl = document.createElement("div");
+      groupEl.className = "nav-group" + (isOpen ? " open" : "");
+
+      const headerEl = document.createElement("div");
+      headerEl.className = "nav-group__header";
+      headerEl.innerHTML = `<span>${group.label}</span><i class="nav-group__arrow">▶</i>`;
+      headerEl.onclick = () => groupEl.classList.toggle("open");
+
+      const bodyEl = document.createElement("div");
+      bodyEl.className = "nav-group__body";
+      renderNavChildren(group.children, bodyEl, activePath, 0);
+
+      groupEl.appendChild(headerEl);
+      groupEl.appendChild(bodyEl);
+      sidebar.appendChild(groupEl);
+    }
+  }
+
+  function renderNavChildren(children, container, activePath, depth) {
+    for (const node of children) {
+      if (!node.children) {
+        const item = document.createElement("div");
+        item.className = "nav-item" + (node.path === activePath ? " active" : "");
+        item.style.paddingLeft = (22 + depth * 10) + "px";
+        item.title = node.label;
+        item.textContent = node.label;
+        item.onclick = () => navigate(node.path);
+        container.appendChild(item);
+      } else {
+        const hasActive = node.children.some(c => nodeContainsActive(c, activePath));
+        const sg = document.createElement("div");
+        sg.className = "nav-subgroup" + (hasActive ? " open" : "");
+
+        const sgHeader = document.createElement("div");
+        sgHeader.className = "nav-subgroup__header";
+        sgHeader.style.paddingLeft = (22 + depth * 10) + "px";
+        sgHeader.innerHTML = `<i class="nav-subgroup__arrow">▶</i><span>${node.label}</span>`;
+        sgHeader.onclick = (e) => { e.stopPropagation(); sg.classList.toggle("open"); };
+
+        const sgBody = document.createElement("div");
+        sgBody.className = "nav-subgroup__body";
+        renderNavChildren(node.children, sgBody, activePath, depth + 1);
+
+        sg.appendChild(sgHeader);
+        sg.appendChild(sgBody);
+        container.appendChild(sg);
+      }
+    }
+  }
+
+  // ═══════════════════════════════════════
+  // BREADCRUMB
+  // ═══════════════════════════════════════
+  function findTrail(nodes, activePath, trail) {
+    for (const node of nodes) {
+      const next = [...trail, node];
+      if (node.path === activePath) return next;
+      if (node.children) {
+        const found = findTrail(node.children, activePath, next);
+        if (found) return found;
+      }
+    }
+    return null;
+  }
+
+  function renderBreadcrumb(activePath) {
+    const trail = findTrail(NAV, activePath, []) || [];
+    const bc = document.createElement("nav");
+    bc.className = "breadcrumb";
+
+    if (activePath !== "docs/index.md") {
+      const home = document.createElement("span");
+      home.className = "breadcrumb__item";
+      home.textContent = "🗺️ Atlas";
+      home.onclick = () => navigate("docs/index.md");
+      bc.appendChild(home);
+    }
+
+    trail.forEach((node, i) => {
+      if (activePath !== "docs/index.md" || i > 0) {
+        const sep = document.createElement("span");
+        sep.className = "breadcrumb__sep";
+        sep.textContent = " / ";
+        bc.appendChild(sep);
+      }
+      const item = document.createElement("span");
+      const isCurrent = i === trail.length - 1;
+      item.className = "breadcrumb__item" + (isCurrent ? " current" : "");
+      item.textContent = node.label;
+      if (!isCurrent && node.path) item.onclick = () => navigate(node.path);
+      bc.appendChild(item);
+    });
+
+    return bc;
+  }
+
+  // ═══════════════════════════════════════
+  // PATH UTILS
+  // ═══════════════════════════════════════
+  function resolvePath(path) {
+    const parts = path.split("/");
+    const out = [];
+    for (const p of parts) {
+      if (p === "..") out.pop();
+      else if (p && p !== ".") out.push(p);
+    }
+    return out.join("/");
+  }
+
+  function resolveRelativeLinks(html, basePath) {
+    const baseDir = basePath.substring(0, basePath.lastIndexOf("/") + 1);
+    const div = document.createElement("div");
+    div.innerHTML = html;
+
+    div.querySelectorAll("a[href]").forEach(a => {
+      const href = a.getAttribute("href");
+      if (!href) return;
+
+      if (href.startsWith("http://") || href.startsWith("https://")) {
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
+        return;
+      }
+
+      if (href.startsWith("#") || href.startsWith("mailto:")) return;
+
+      let resolved = href.startsWith("/")
+        ? href.substring(1)
+        : resolvePath(baseDir + href);
+
+      if (resolved.endsWith("/")) resolved += "index.md";
+      if (resolved.endsWith(".md")) {
+        a.href = "javascript:void(0)";
+        a.setAttribute("data-nav", resolved);
+      }
+    });
+
+    return div.innerHTML;
+  }
+
+  // ═══════════════════════════════════════
+  // MERMAID
+  // ═══════════════════════════════════════
+  async function renderMermaid(container) {
+    if (!mermaidReady) return;
+
+    const blocks = container.querySelectorAll("pre code.language-mermaid");
+    blocks.forEach(block => {
+      const pre = block.parentElement;
+      const div = document.createElement("div");
+      div.className = "mermaid";
+      div.textContent = block.textContent.trim();
+      pre.replaceWith(div);
+    });
+
+    const diagrams = container.querySelectorAll(".mermaid:not([data-processed])");
+    if (diagrams.length > 0) {
+      try {
+        await mermaid.run({ nodes: Array.from(diagrams) });
+      } catch (e) {
+        console.warn("Mermaid render error:", e);
+      }
+    }
+  }
+
+  // ═══════════════════════════════════════
+  // SYNTAX HIGHLIGHT
+  // ═══════════════════════════════════════
+  function highlightCode(container) {
+    if (!hljsReady) return;
+    container.querySelectorAll("pre code").forEach(block => {
+      if (!block.classList.contains("language-mermaid")) {
+        try {
+          hljs.highlightElement(block);
+        } catch(e) {
+          console.warn("hljs error:", e);
+        }
+      }
+    });
+  }
+
+  // ═══════════════════════════════════════
+  // NAVIGATION
+  // ═══════════════════════════════════════
+  async function navigate(path) {
+    if (!path) return;
+    closeSearch();
+    document.getElementById("sidebar").classList.remove("open");
+
+    const url = new URL(window.location.href);
+    url.searchParams.set("page", path);
+    window.history.pushState({ path }, "", url.toString());
+
+    await loadPage(path);
+  }
+
+  async function loadPage(path) {
+    currentPath = path;
+    renderSidebar(path);
+
+    const content = document.getElementById("content");
+    content.innerHTML = `
+      <div class="state-box">
+        <div class="spinner"></div>
+        <div class="state-box__title">Loading…</div>
+      </div>`;
+    document.getElementById("main").scrollTo(0, 0);
+
+    // Предупреждение для file:// протокола
+    if (isFileProtocol) {
+      showOfflineWarning(content);
+      return;
+    }
+
+    try {
+      const resp = await fetch(path, { cache: "no-cache" });
+      if (!resp.ok) throw new Error(`HTTP ${resp.status} — ${resp.statusText}`);
+      const mdText = await resp.text();
+
+      if (!markedReady) throw new Error("marked.js not loaded. Unable to render page.");
+
+      const rawHtml = marked.parse(mdText);
+      const processedHtml = resolveRelativeLinks(rawHtml, path);
+
+      content.innerHTML = "";
+      content.appendChild(renderBreadcrumb(path));
+
+      const body = document.createElement("div");
+      body.className = "md-body";
+      body.innerHTML = processedHtml;
+      content.appendChild(body);
+
+      // Делегированные клики по MD-ссылкам
+      body.addEventListener("click", (e) => {
+        const a = e.target.closest("a[data-nav]");
+        if (a) { e.preventDefault(); navigate(a.getAttribute("data-nav")); }
+      });
+
+      // Подсветка синтаксиса
+      highlightCode(body);
+
+      // Mermaid
+      await renderMermaid(body);
+
+      const h1 = body.querySelector("h1");
+      document.title = h1
+        ? `${h1.textContent.trim()} — Software Atlas`
+        : "Software Atlas";
+
+    } catch (err) {
+      console.error("loadPage error:", err);
+      content.innerHTML = `
+        <div class="state-box">
+          <div class="state-box__icon">📄</div>
+          <div class="state-box__title">Could not load page</div>
+          <div style="color:var(--text-muted);font-size:.9rem;margin-top:8px">
+            <code style="background:var(--code-bg);padding:2px 8px;border-radius:4px;border:1px solid var(--border)">${path}</code>
+            <br/><small style="opacity:.7">${err.message}</small>
+            <br/><br/>
+            <a href="javascript:void(0)" onclick="navigate('docs/index.md')" style="color:var(--text-link);text-decoration:underline">Return to Home</a>
+          </div>
+        </div>`;
+      document.title = "Not Found — Software Atlas";
+    }
+  }
+
+  function showOfflineWarning(content) {
+    content.innerHTML = `
+      <div class="state-box">
+        <div class="state-box__icon">🖥️</div>
+        <div class="state-box__title">Local file access restricted</div>
+        <div style="color:var(--text-muted);font-size:.9rem;max-width:480px;margin-top:8px;line-height:1.7">
+          Browsers block <code>fetch()</code> on <code>file://</code> protocol.<br/>
+          Run a local HTTP server to preview:<br/>
+          <pre style="background:var(--code-bg);border:1px solid var(--border);border-radius:6px;padding:12px;margin:12px 0;text-align:left;font-size:.82rem"># Python (with SPA fallback)
+python -m http.server 8080 --directory . &amp;&amp; python -c "import http.server; ..."</pre>
+          <strong>For SPA fallback</strong> (so that views like /reading-paths/ work), use a server that redirects missing paths to index.html, e.g.:
+          <pre style="background:var(--code-bg);border:1px solid var(--border);border-radius:6px;padding:12px;margin:12px 0;text-align:left;font-size:.82rem">npx serve . --single</pre>
+          Then open <a href="http://localhost:8080" style="color:var(--text-link)">http://localhost:8080</a>
+          <br/><br/>
+          On <strong>GitHub Pages</strong> everything works automatically. ✅
+        </div>
+      </div>`;
+  }
+
+  // ═══════════════════════════════════════
+  // SEARCH
+  // ═══════════════════════════════════════
+  function closeSearch() {
+    document.getElementById("searchOverlay").classList.remove("visible");
+    document.getElementById("searchInput").value = "";
+  }
+
+  function highlightMatch(text, query) {
+    const lower = text.toLowerCase();
+    const idx = lower.indexOf(query.toLowerCase());
+    if (idx === -1) return text;
+    return (
+      text.substring(0, idx) +
+      `<mark style="background:rgba(255,200,0,.4);border-radius:2px;padding:0 1px">${text.substring(idx, idx + query.length)}</mark>` +
+      text.substring(idx + query.length)
+    );
+  }
+
+  function handleSearch(query) {
+    const overlay = document.getElementById("searchOverlay");
+    const q = query.trim();
+
+    if (!q) { overlay.classList.remove("visible"); return; }
+
+    overlay.classList.add("visible");
+
+    const lower = q.toLowerCase();
+    const results = searchIndex.filter(item =>
+      item.label.toLowerCase().includes(lower) ||
+      item.path.toLowerCase().includes(lower)
+    );
+
+    if (results.length === 0) {
+      overlay.innerHTML = `
+        <div class="state-box">
+          <div class="state-box__icon">🔍</div>
+          <div class="state-box__title">No results for "${q}"</div>
+        </div>`;
+      return;
+    }
+
+    const frag = document.createDocumentFragment();
+    const info = document.createElement("div");
+    info.style.cssText = "margin-bottom:16px;color:var(--text-muted);font-size:.85rem";
+    info.innerHTML = `Found <strong>${results.length}</strong> result${results.length !== 1 ? "s" : ""} for "<strong>${q}</strong>"`;
+    frag.appendChild(info);
+
+    results.slice(0, 60).forEach(item => {
+      const el = document.createElement("div");
+      el.className = "search-result";
+      el.innerHTML = `
+        <div class="search-result__title">${highlightMatch(item.label, q)}</div>
+        <div class="search-result__path">${item.path}</div>`;
+      el.onclick = () => navigate(item.path);
+      frag.appendChild(el);
+    });
+
+    overlay.innerHTML = "";
+    overlay.appendChild(frag);
+  }
+
+  // ═══════════════════════════════════════
+  // INIT
+  // ═══════════════════════════════════════
+  async function init() {
+    initTheme();
+
+    // Определяем доступность библиотек сразу после загрузки страницы
+    markedReady  = typeof marked  !== "undefined";
+    hljsReady    = typeof hljs    !== "undefined";
+    mermaidReady = typeof mermaid !== "undefined";
+
+    if (!markedReady) console.warn("marked.js not loaded — page rendering disabled.");
+    if (!hljsReady)   console.warn("highlight.js not loaded — syntax highlighting disabled.");
+    if (!mermaidReady) console.warn("mermaid not loaded — diagram rendering disabled.");
+
+    if (mermaidReady) {
+      const dark = document.documentElement.getAttribute("data-theme") === "dark";
+      mermaid.initialize({
+        startOnLoad: false,
+        theme: dark ? "dark" : "default",
+        securityLevel: "loose",
+      });
+    }
+
+    // Строим поисковый индекс
+    buildSearchIndex(NAV, searchIndex);
+
+    // Events
+    document.getElementById("themeToggle").onclick  = toggleTheme;
+    document.getElementById("logoBtn").onclick       = () => navigate("docs/index.md");
+    document.getElementById("sidebarToggle").onclick = () =>
+      document.getElementById("sidebar").classList.toggle("open");
+
+    const searchInput = document.getElementById("searchInput");
+    searchInput.addEventListener("input", e => {
+      clearTimeout(searchTimer);
+      searchTimer = setTimeout(() => handleSearch(e.target.value), 180);
+    });
+    searchInput.addEventListener("keydown", e => {
+      if (e.key === "Escape") closeSearch();
+    });
+
+    document.addEventListener("keydown", e => {
+      if (e.key === "/" && document.activeElement !== searchInput) {
+        e.preventDefault();
+        searchInput.focus();
+      }
+    });
+
+    window.addEventListener("popstate", e => {
+      const path = e.state?.path || new URLSearchParams(location.search).get("page") || "docs/index.md";
+      loadPage(path);
+    });
+
+    // Начальная страница
+    const initial = new URLSearchParams(location.search).get("page") || "docs/index.md";
+    await loadPage(initial);
+  }
+
+  window.addEventListener("load", init);
+</script>
+</body>
+</html>

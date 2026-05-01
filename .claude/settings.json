@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mvn)",
+      "Bash(mvn *)",
+
+      "Bash(git diff)",
+      "Bash(git diff *)",
+      "Bash(git log)",
+      "Bash(git log *)",
+      "Bash(git status)",
+      "Bash(git status *)",
+
+      "Bash(find)",
+      "Bash(find *)",
+      "Bash(chmod)",
+      "Bash(chmod *)"
+    ],
+    "deny": [
+      "Bash(git commit *)",
+      "Bash(git push *)",
+      "Bash(git tag *)"
+    ]
+  }
+}
