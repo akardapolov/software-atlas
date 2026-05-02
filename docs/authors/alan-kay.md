@@ -76,7 +76,7 @@ and Macintosh.
 
 | Year | Title | Type | Page |
 |------|-------|------|------|
-| 1972 | Smalltalk-72 | Language | [→](../languages/smalltalk/) |
+| 1972 | Smalltalk-72 | Language | [→](../languages/smalltalk/index.md) |
 | 1993 | "The Early History of Smalltalk" | Paper | — |
 | 1997 | "The Computer Revolution Hasn't Happened Yet" (OOPSLA keynote) | Talk | — |
 
@@ -119,9 +119,9 @@ and Macintosh.
 
 ## Related Pages
 
-- [Smalltalk](../languages/smalltalk/)
-- [OOP & Design](../topics/design/)
-- [Paradigms](../topics/paradigms/)
+- [Smalltalk](../languages/smalltalk/index.md)
+- [OOP & Design](../topics/design/index.md)
+- [Paradigms](../topics/paradigms/index.md)
 - [Design Patterns (GoF)](../works/books/gof-1994-design-patterns.md)
 - [Joe Armstrong](joe-armstrong.md)
 - [Ole-Johan Dahl](ole-johan-dahl.md)

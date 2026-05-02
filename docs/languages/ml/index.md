@@ -509,16 +509,16 @@ async {
 
 ## Code Examples
 
-See [`examples/ml/`](../../examples/ml/) for runnable code:
+See [`examples/ml/`](../../examples/ml/index.md) for runnable code:
 
 | Example | Description |
 |---------|-------------|
-| [01 Hello World](../../examples/ml/01-hello-world/) | Basic syntax, printing |
-| [02 Variables & Types](../../examples/ml/02-variables-and-types/) | Type inference, basic types |
-| [03 Functions](../../examples/ml/03-functions/) | Functions, recursion, higher-order |
-| [04 Control Flow](../../examples/ml/04-control-flow/) | Pattern matching, conditionals |
-| [05 Data Structures](../../examples/ml/05-data-structures/) | Lists, records, trees |
-| [06 OOP/Modules](../../examples/ml/06-oop-modules/) | Modules, signatures, functors |
+| [01 Hello World](../../examples/ml/01-hello-world/index.md) | Basic syntax, printing |
+| [02 Variables & Types](../../examples/ml/02-variables-and-types/index.md) | Type inference, basic types |
+| [03 Functions](../../examples/ml/03-functions/index.md) | Functions, recursion, higher-order |
+| [04 Control Flow](../../examples/ml/04-control-flow/index.md) | Pattern matching, conditionals |
+| [05 Data Structures](../../examples/ml/05-data-structures/index.md) | Lists, records, trees |
+| [06 OOP/Modules](../../examples/ml/06-oop-modules/index.md) | Modules, signatures, functors |
 
 ---
 
@@ -532,9 +532,9 @@ See [`examples/ml/`](../../examples/ml/) for runnable code:
 
 ## Related Topics
 
-- [Functional Programming](../../topics/functional/) — ML as functional pioneer |
-- [Type Systems](../../topics/types/) — HM type inference |
-- [Haskell](../haskell/) — ML's most prominent descendant |
+- [Functional Programming](../../topics/functional/index.md) — ML as functional pioneer |
+- [Type Systems](../../topics/types/index.md) — HM type inference |
+- [Haskell](../haskell/index.md) — ML's most prominent descendant |
 
 ---
 
@@ -562,4 +562,4 @@ See [`examples/ml/`](../../examples/ml/) for runnable code:
 
 ---
 
-*See [Languages Index](../languages/) for other language profiles.*
+*See [Languages Index](../languages/index.md) for other language profiles.*

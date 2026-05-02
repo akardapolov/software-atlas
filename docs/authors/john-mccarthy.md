@@ -98,8 +98,8 @@ language research.
 
 ## Related Pages
 
-- [Lisp](../languages/lisp/)
-- [Functional Programming](../topics/functional/)
-- [Paradigms](../topics/paradigms/)
+- [Lisp](../languages/lisp/index.md)
+- [Functional Programming](../topics/functional/index.md)
+- [Paradigms](../topics/paradigms/index.md)
 - [Alonzo Church](alonzo-church.md)
-- [Clojure](../languages/clojure/)
+- [Clojure](../languages/clojure/index.md)

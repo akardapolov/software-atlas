@@ -142,10 +142,10 @@ Wlaschin is a frequent conference speaker. Notable talks:
 ## Related Pages
 
 - [Domain Modeling Made Functional](../works/books/wlaschin-2018-dmf.md)
-- [Functional Programming](../topics/functional/)
-- [Type Systems](../topics/types/)
-- [Architecture & Modularity](../topics/architecture/)
-- [ML](../languages/ml/)
+- [Functional Programming](../topics/functional/index.md)
+- [Type Systems](../topics/types/index.md)
+- [Architecture & Modularity](../topics/architecture/index.md)
+- [ML](../languages/ml/index.md)
 - [Eric Evans](eric-evans.md)
 - [Robin Milner](robin-milner.md)
 - [Rich Hickey](rich-hickey.md)

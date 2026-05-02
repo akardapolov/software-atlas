@@ -245,4 +245,4 @@ flowchart TD
 
 - [Languages Genealogy](./languages-genealogy.md)
 - [Ideas Evolution](./ideas-evolution.md)
-- [Functional Programming Topic](../topics/paradigms/functional/)
+- [Functional Programming Topic](../topics/paradigms/functional/index.md)

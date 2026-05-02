@@ -281,7 +281,7 @@ Created by Rich Hickey. Modern Lisp features:
 - **Software transactional memory** for concurrency
 - **Minimal syntax** — fewer parentheses
 
-→ [Clojure](../clojure/)
+→ [Clojure](../clojure/index.md)
 
 ### Racket (1995)
 
@@ -330,15 +330,15 @@ Lisp shaped computer science education and research:
 
 ## Code Examples
 
-See [examples/lisp/](../../../examples/lisp/) for runnable code:
+See [examples/lisp/](../../../examples/lisp/index.md) for runnable code:
 
 | Example | Description |
 |---------|-------------|
-| [01 Hello World](../../../examples/lisp/01-hello-world/) | Basic syntax and output |
-| [02 Variables & Types](../../../examples/lisp/02-variables-and-types/) | Dynamic typing, symbols, quoting |
-| [03 Functions](../../../examples/lisp/03-functions/) | Function definition, recursion |
-| [04 Control Flow](../../../examples/lisp/04-control-flow/) | Conditionals, iteration |
-| [05 Data Structures](../../../examples/lisp/05-data-structures/) | Lists, alists, property lists |
+| [01 Hello World](../../../examples/lisp/01-hello-world/index.md) | Basic syntax and output |
+| [02 Variables & Types](../../../examples/lisp/02-variables-and-types/index.md) | Dynamic typing, symbols, quoting |
+| [03 Functions](../../../examples/lisp/03-functions/index.md) | Function definition, recursion |
+| [04 Control Flow](../../../examples/lisp/04-control-flow/index.md) | Conditionals, iteration |
+| [05 Data Structures](../../../examples/lisp/05-data-structures/index.md) | Lists, alists, property lists |
 
 ## Strengths and Weaknesses
 
@@ -366,10 +366,10 @@ See [examples/lisp/](../../../examples/lisp/) for runnable code:
 
 ## Related Topics
 
-- [Functional Programming](../topics/functional/) — Lisp as first FP language
-- [Type Systems](../topics/types/) — dynamic typing vs static
-- [Paradigms](../topics/paradigms/) — symbolic and imperative paradigms
-- [Macros & Meta-programming](../topics/macros/) — code-as-data *(future topic)*
+- [Functional Programming](../topics/functional/index.md) — Lisp as first FP language
+- [Type Systems](../topics/types/index.md) — dynamic typing vs static
+- [Paradigms](../topics/paradigms/index.md) — symbolic and imperative paradigms
+- [Macros & Meta-programming](../topics/macros/index.md) — code-as-data *(future topic)*
 
 ## Further Reading
 
@@ -393,4 +393,4 @@ See [examples/lisp/](../../../examples/lisp/) for runnable code:
 
 ---
 
-See [Languages Index](../languages/) for other language profiles.
+See [Languages Index](../languages/index.md) for other language profiles.

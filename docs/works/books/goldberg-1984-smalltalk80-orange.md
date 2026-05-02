@@ -87,4 +87,4 @@ Smalltalk-80's IDE concepts became standard:
 - **Companion to:** [Blue Book (1983)](./goldberg-1983-smalltalk80-blue.md)
 - **Related tools:** [Ingalls implementation](../papers/ingalls-1978-smalltalk76.md)
 - **Author:** [Adele Goldberg](../../authors/adele-goldberg.md)
-- **Related language:** [Smalltalk](../../languages/smalltalk/)
+- **Related language:** [Smalltalk](../../languages/smalltalk/index.md)

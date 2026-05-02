@@ -28,4 +28,4 @@ UML Distilled became one of the most popular UML references because of its pragm
 ## Connections
 
 - **Author:** [Martin Fowler](../../authors/martin-fowler.md)
-- **Related topic:** [OOP & Design](../../topics/design/)
+- **Related topic:** [OOP & Design](../../topics/design/index.md)

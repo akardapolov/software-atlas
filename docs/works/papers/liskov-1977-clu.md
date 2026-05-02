@@ -90,5 +90,5 @@ CLU's abstraction mechanisms became standard:
 
 - **Builds on:** [Programming with ADTs (1974)](./liskov-1974-adt.md)
 - **Influenced:** Java generics, type systems, module design
-- **Related topic:** [Type Systems](../../topics/type-systems/)
+- **Related topic:** [Type Systems](../../topics/type-systems/index.md)
 - **Author:** [Barbara Liskov](../../authors/barbara-liskov.md)

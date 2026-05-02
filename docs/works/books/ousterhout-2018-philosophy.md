@@ -47,4 +47,4 @@ Good comments explain **why** and **invariants**, not repeat code.
 
 - **Builds on:** Parnas modularity
 - **Related:** SOLID, Refactoring
-- **Related topics:** [OOP & Design](../../topics/design/) · [Architecture](../../topics/architecture/)
+- **Related topics:** [OOP & Design](../../topics/design/index.md) · [Architecture](../../topics/architecture/index.md)

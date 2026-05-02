@@ -64,4 +64,4 @@ Without her advocacy, Smalltalk might have remained an internal Xerox research p
 
 - [Alan Kay](alan-kay.md)
 - [Dan Ingalls](dan-ingalls.md)
-- [Smalltalk](../languages/smalltalk/)
+- [Smalltalk](../languages/smalltalk/index.md)

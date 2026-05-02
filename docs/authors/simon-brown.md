@@ -68,7 +68,7 @@ From his work, Brown promotes:
 
 ## Related Pages
 
-- [Architecture & Modularity topic](../topics/architecture/) — software architecture principles
+- [Architecture & Modularity topic](../topics/architecture/index.md) — software architecture principles
 - [Alistair Cockburn](alistair-cockburn.md) — hexagonal architecture
 - [4+1 View Model](https://en.wikipedia.org/wiki/4%2B11_view_model) — Architecture documentation approach
 

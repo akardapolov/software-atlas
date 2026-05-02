@@ -86,4 +86,4 @@ With Alan Kay, Ingalls co-created **Squeak** — an open-source Smalltalk:
 
 - [Alan Kay](alan-kay.md)
 - [Adele Goldberg](adele-goldberg.md)
-- [Smalltalk](../languages/smalltalk/)
+- [Smalltalk](../languages/smalltalk/index.md)

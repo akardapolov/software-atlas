@@ -132,4 +132,4 @@ end
 
 - [Rebecca Wirfs-Brock](rebecca-wirfs-brock.md)
 - [Robert C. Martin](robert-c-martin.md)
-- [Ruby language](../languages/ruby/) (to be created)
+- [Ruby language](../languages/ruby/index.md) (to be created)

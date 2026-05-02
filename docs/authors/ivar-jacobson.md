@@ -96,4 +96,4 @@ Jacobson's impact:
 
 - [Grady Booch](grady-booch.md)
 - [James Rumbaugh](james-rumbaugh.md)
-- [UML topic](../topics/architecture/) (if exists)
+- [UML topic](../topics/architecture/index.md) (if exists)

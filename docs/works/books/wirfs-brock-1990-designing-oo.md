@@ -98,5 +98,5 @@ Wirfs-Brock's impact:
 - **Preceded by:** [Alan Kay](../../authors/alan-kay.md) — objects as responsible agents
 - **Influenced:** [Robert C. Martin](../../authors/robert-c-martin.md) (SOLID)
 - **Related:** [Sandi Metz](../../authors/sandi-metz.md) — POODR builds on RDD
-- **Related topic:** [Design Patterns](../../topics/design/) (if exists)
+- **Related topic:** [Design Patterns](../../topics/design/index.md) (if exists)
 - **Author:** [Rebecca Wirfs-Brock](../../authors/rebecca-wirfs-brock.md)

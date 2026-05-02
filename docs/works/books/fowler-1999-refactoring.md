@@ -102,5 +102,5 @@ The book became a bridge between:
   [Feathers — Legacy Code (2004)](feathers-2004-legacy.md) ·
   [GoF — Design Patterns (1994)](gof-1994-design-patterns.md)
 - **Author:** [Martin Fowler](../../authors/martin-fowler.md)
-- **Related topics:** [OOP & Design](../../topics/design/) ·
-  [Process & Testing](../../topics/process/)
+- **Related topics:** [OOP & Design](../../topics/design/index.md) ·
+  [Process & Testing](../../topics/process/index.md)

@@ -86,5 +86,5 @@ The talk remains influential:
 
 - **Speaker:** [Gary Bernhardt](../../authors/gary-bernhardt.md)
 - **Related Works:** [Destroy All Software](../series/das.md)
-- **Related Series:** [FC/IS talks](../talks/)
-- **Related:** [Functional Core / Imperative Shell pattern](../../topics/architecture/) (if exists)
+- **Related Series:** [FC/IS talks](../talks/index.md)
+- **Related:** [Functional Core / Imperative Shell pattern](../../topics/architecture/index.md) (if exists)

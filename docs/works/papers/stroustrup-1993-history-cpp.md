@@ -91,7 +91,7 @@ C++'s influence continues:
 
 ## Connections
 
-- **Builds on:** [Simula](../../languages/simula/)
+- **Builds on:** [Simula](../../languages/simula/index.md)
 - **Preceded by:** [Ole-Johan Dahl](../../authors/ole-johan-dahl.md) · [Kristen Nygaard](../../authors/kristen-nygaard.md)
 - **Influenced:** Java, C#, D, Rust
 - **Related works:** [Design and Evolution of C++ (1994)](../papers/stroustrup-1994-design-evolution-cpp.md)

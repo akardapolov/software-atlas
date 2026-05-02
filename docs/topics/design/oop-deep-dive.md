@@ -805,9 +805,9 @@ flowchart LR
 ## See Also
 
 - 🧩 **[OOP & Design](index.md)** — encapsulation, GoF patterns, SOLID principles
-- 🔠 **[Type Systems](../types/)** — static vs. dynamic, ADTs, generics, type inference
-- λ **[Functional Programming](../functional/)** — parametric polymorphism in FP context
-- 📐 **[Paradigms](../paradigms/)** — how OOP relates to other paradigms
+- 🔠 **[Type Systems](../types/index.md)** — static vs. dynamic, ADTs, generics, type inference
+- λ **[Functional Programming](../functional/index.md)** — parametric polymorphism in FP context
+- 📐 **[Paradigms](../paradigms/index.md)** — how OOP relates to other paradigms
 - 📄 **[Liskov & Wing 1994](../../works/papers/liskov-1994-subtyping.md)** — behavioral subtyping paper
 - 📄 **[Cardelli & Wegner 1985](../../references/bibliography.md)** — polymorphism taxonomy
 - 👤 **[Barbara Liskov](../../authors/barbara-liskov.md)** · **[Robin Milner](../../authors/robin-milner.md)** · **[Alan Kay](../../authors/alan-kay.md)**

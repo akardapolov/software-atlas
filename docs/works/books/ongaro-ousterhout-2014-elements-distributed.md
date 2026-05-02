@@ -33,4 +33,4 @@ Raft became the de facto standard for consensus in distributed systems:
 
 - **Builds on:** [Lamport — Paxos](lamport-1978-clocks.md)
 - **Related author:** [Diego Ongaro](../../authors/diego-ongaro.md)
-- **Related topic:** [Distributed Systems](../../topics/distributed/)
+- **Related topic:** [Distributed Systems](../../topics/distributed/index.md)

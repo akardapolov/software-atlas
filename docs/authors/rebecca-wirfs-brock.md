@@ -109,4 +109,4 @@ Wirfs-Brock's impact:
 - [Alan Kay](alan-kay.md)
 - [Ward Cunningham](ward-cunningham.md)
 - [Sandi Metz](sandi-metz.md)
-- [SOLID principles](../topics/design/) (if exists)
+- [SOLID principles](../topics/design/index.md) (if exists)

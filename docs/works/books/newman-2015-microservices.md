@@ -29,4 +29,4 @@ microservices buy independence at the cost of distributed system complexity.
 
 - **Builds on:** [Evans — DDD (2003)](evans-2003-ddd.md)
 - **Related:** [Kleppmann — DDIA (2017)](kleppmann-2017-ddia.md)
-- **Related topic:** [Architecture](../../topics/architecture/) · [Distributed](../../topics/distributed/)
+- **Related topic:** [Architecture](../../topics/architecture/index.md) · [Distributed](../../topics/distributed/index.md)

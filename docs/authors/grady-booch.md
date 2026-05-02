@@ -87,4 +87,4 @@ Booch's impact:
 
 - [Ivar Jacobson](ivar-jacobson.md)
 - [James Rumbaugh](james-rumbaugh.md)
-- [UML topic](../topics/architecture/) (if exists)
+- [UML topic](../topics/architecture/index.md) (if exists)

@@ -41,7 +41,7 @@ Hickey argues that the industry focuses too much on "easy" (what's quick to lear
 
 - **Speaker:** [Rich Hickey](../../authors/rich-hickey.md)
 - **Related talk:** [Hickey — Hammock Driven Development](../talks/hickey-hammock.md)
-- **Related topic:** [Functional Programming](../../topics/paradigms/functional/)
+- **Related topic:** [Functional Programming](../../topics/paradigms/functional/index.md)
 - **Related language:** [Clojure](../../languages/clojure.md)
 
 ## Further Reading

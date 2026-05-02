@@ -29,5 +29,5 @@ The article provides evidence from commercial projects demonstrating that:
 ## Related Pages
 
 - [Alexander Zhidkov](../../authors/alexander-zhidkov.md)
-- [Functional Programming](../../topics/functional/)
+- [Functional Programming](../../topics/functional/index.md)
 - [Rich Hickey](../../authors/rich-hickey.md)

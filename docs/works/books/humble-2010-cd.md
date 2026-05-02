@@ -70,4 +70,4 @@ The book provides the foundation for what became standard later:
 
 - **Builds on:** XP/TDD, CI
 - **Leads to:** [Forsgren et al. — Accelerate (2018)](forsgren-2018-accelerate.md)
-- **Related topic:** [Process & Testing](../../topics/process/)
+- **Related topic:** [Process & Testing](../../topics/process/index.md)

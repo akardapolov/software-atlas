@@ -90,4 +90,4 @@ The book catalogues surgical techniques for making code testable:
 - [Working Effectively with Legacy Code](../works/books/feathers-2004-legacy.md)
 - [Refactoring](../works/books/fowler-1999-refactoring.md)
 - [TDD](../works/books/beck-2002-tdd.md)
-- [Testing](../../topics/process/)
+- [Testing](../../topics/process/index.md)

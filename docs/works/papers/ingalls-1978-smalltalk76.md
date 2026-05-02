@@ -83,4 +83,4 @@ Ingalls' innovations remain foundational:
 - **Influenced:** JVM, graphics systems, reflection
 - **Followed by:** [Smalltalk-80](./goldberg-1983-smalltalk80-blue.md)
 - **Author:** [Dan Ingalls](../../authors/dan-ingalls.md)
-- **Related language:** [Smalltalk](../../languages/smalltalk/)
+- **Related language:** [Smalltalk](../../languages/smalltalk/index.md)

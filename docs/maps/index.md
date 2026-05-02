@@ -462,5 +462,5 @@ To avoid ambiguity, this atlas uses the following notation:
 | Cross-track links | 4 dotted edges | 12 documented edges with explanations |
 | Purpose | Orientation, "where am I?" | Navigation, "what connects to what and why?" |
 
-> Next level of detail → individual [topic pages](../topics/)
-> and [reading paths](../reading-paths/).
+> Next level of detail → individual [topic pages](../topics/index.md)
+> and [reading paths](../reading-paths/index.md).

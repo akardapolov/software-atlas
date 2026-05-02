@@ -79,4 +79,4 @@ Turing designed the bombe, an electromechanical device used to help decipher Ger
 - [Turing Machine paper](../works/papers/turing-1936-computable.md)
 - [Alonzo Church](alonzo-church.md)
 - [Kurt Gödel](kurt-godel.md)
-- [Computability Theory](../topics/functional/)
+- [Computability Theory](../topics/functional/index.md)

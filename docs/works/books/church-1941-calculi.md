@@ -64,7 +64,7 @@ The lambda calculus directly influenced:
 
 - **Builds on:** [Lambda Calculus (1936)](../papers/church-1936-lambda.md)
 - **Influenced:** John McCarthy (Lisp), Robin Milner (ML), Haskell community
-- **Related topic:** [Paradigms](../../topics/paradigms/) · [Lambda Calculus](../../topics/paradigms/)
+- **Related topic:** [Paradigms](../../topics/paradigms/index.md) · [Lambda Calculus](../../topics/paradigms/index.md)
 
 ## Author
 

@@ -84,5 +84,5 @@ The THE system's architectural principles became standard:
 ## Connections
 
 - **Influenced:** Parnas, OS design, software architecture
-- **Related topic:** [Architecture](../../topics/architecture/)
+- **Related topic:** [Architecture](../../topics/architecture/index.md)
 - **Author:** [Edsger Dijkstra](../../authors/edsger-dijkstra.md)

@@ -35,5 +35,5 @@ The article details the process of creating an Effect Diagram for a small servic
 ## Related Pages
 
 - [Alexander Zhidkov](../../authors/alexander-zhidkov.md)
-- [Architecture & Modularity](../../topics/architecture/)
+- [Architecture & Modularity](../../topics/architecture/index.md)
 - [Ergonomic Approach](https://ergowiki.azhidkov.pro/docs/effect-diagram/)

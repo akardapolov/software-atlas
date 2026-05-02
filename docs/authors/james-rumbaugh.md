@@ -96,4 +96,4 @@ Rumbaugh's impact:
 
 - [Grady Booch](grady-booch.md)
 - [Ivar Jacobson](ivar-jacobson.md)
-- [State pattern](../topics/design/) (if exists)
+- [State pattern](../topics/design/index.md) (if exists)

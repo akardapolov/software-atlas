@@ -68,5 +68,5 @@ This system was Alan Kay's inspiration for seeing that **objects were a natural 
 ## Related Pages
 
 - [Alan Kay](alan-kay.md)
-- [OOP & Design](../topics/design/)
+- [OOP & Design](../topics/design/index.md)
 - [Sketchpad paper](../works/papers/sutherland-1963-sketchpad.md)

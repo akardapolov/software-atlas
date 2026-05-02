@@ -76,7 +76,7 @@ McKim documented design patterns as solutions to common problems:
 
 ## Related Pages
 
-- [OOP & Design topic](../topics/design/) — SOLID principles and OOP design
+- [OOP & Design topic](../topics/design/index.md) — SOLID principles and OOP design
 - [Barbara Liskov](barbara-liskov.md) — LSP and behavioral subtyping
 - [Robert C. Martin](robert-c-martin.md) — SOLID principles
 - [Rebecca Wirfs-Brock](rebecca-wirfs-brock.md) — CRC cards, responsibility-driven design

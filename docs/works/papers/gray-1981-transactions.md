@@ -72,7 +72,7 @@ Gray's work directly influenced:
 
 ## Related Pages
 
-- [Distributed Systems topic](../topics/distributed/) - CAP, consensus, transactions
+- [Distributed Systems topic](../topics/distributed/index.md) - CAP, consensus, transactions
 - [Leslie Lamport](../authors/leslie-lamport.md) - Distributed systems
 - [Jim Gray](../authors/jim-gray.md) — Transactions author
 

@@ -60,6 +60,6 @@ Very "Clean Architecture"-compatible.
 
 ## Connections
 
-- **Builds on:** [Evans — DDD (2003)](evans-2003-ddd.md) · [FP topic](../../topics/functional/) · [Types topic](../../topics/types/)
+- **Builds on:** [Evans — DDD (2003)](evans-2003-ddd.md) · [FP topic](../../topics/functional/index.md) · [Types topic](../../topics/types/index.md)
 - **Related:** [Hughes 1989](../papers/hughes-1989-why-fp.md) · Hickey/Bernhardt talks
 - **Author:** [Scott Wlaschin](../../authors/scott-wlaschin.md)

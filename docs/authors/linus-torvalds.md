@@ -74,6 +74,6 @@ have made it the dominant VCS in software development.
 
 ## Related Pages
 
-- [Version Control & Git](../topics/vcs/)
-- [C](../languages/c/) — Linux kernel is written in C
-- [Go](../languages/go/) — influenced by systems programming tradition
+- [Version Control & Git](../topics/vcs/index.md)
+- [C](../languages/c/index.md) — Linux kernel is written in C
+- [Go](../languages/go/index.md) — influenced by systems programming tradition

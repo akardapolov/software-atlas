@@ -123,11 +123,11 @@ Co-authored with Ole-Johan Dahl and Edsger W. Dijkstra, Hoare published the semi
 - [Alonzo Church](alonzo-church.md) — formal reasoning in CSP
 - [Edsger Dijkstra](edsger-dijkstra.md) — structured programming
 - [Joe Armstrong](joe-armstrong.md) — monitor model
-- [Go](../languages/go/) — channels
-- [Concurrency](../topics/concurrency/) — semaphores
-- [Type Systems](../topics/types/) — formal verification
-- [CSP](../topics/concurrency/) — communication model
-- [Formal methods](../topics/design/) — program correctness
-- [Structured Programming](../topics/paradigms/) — structured programming
+- [Go](../languages/go/index.md) — channels
+- [Concurrency](../topics/concurrency/index.md) — semaphores
+- [Type Systems](../topics/types/index.md) — formal verification
+- [CSP](../topics/concurrency/index.md) — communication model
+- [Formal methods](../topics/design/index.md) — program correctness
+- [Structured Programming](../topics/paradigms/index.md) — structured programming
 - [Edsger W. Dijkstra](edsger-dijkstra.md)
 - [Edsger W. Dijkstra](edsger-w-dijkstra.md)

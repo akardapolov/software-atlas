@@ -469,16 +469,16 @@ Smalltalk isn't just a language — it's a complete development environment:
 
 ## Code Examples
 
-See [`examples/smalltalk/`](../../examples/smalltalk/) for runnable code:
+See [`examples/smalltalk/`](../../examples/smalltalk/index.md) for runnable code:
 
 | Example | Description |
 |---------|-------------|
-| [01 Hello World](../../examples/smalltalk/01-hello-world/) | Basic syntax, Transcript |
-| [02 Variables & Types](../../examples/smalltalk/02-variables-and-types/) | Dynamic typing, objects |
-| [03 Functions](../../examples/smalltalk/03-functions/) | Methods, blocks |
-| [04 Control Flow](../../examples/smalltalk/04-control-flow/) | Conditionals, loops |
-| [05 Data Structures](../../examples/smalltalk/05-data-structures/) | Collections, dictionaries |
-| [06 OOP/Modules](../../examples/smalltalk/06-oop-modules/) | Classes, inheritance |
+| [01 Hello World](../../examples/smalltalk/01-hello-world/index.md) | Basic syntax, Transcript |
+| [02 Variables & Types](../../examples/smalltalk/02-variables-and-types/index.md) | Dynamic typing, objects |
+| [03 Functions](../../examples/smalltalk/03-functions/index.md) | Methods, blocks |
+| [04 Control Flow](../../examples/smalltalk/04-control-flow/index.md) | Conditionals, loops |
+| [05 Data Structures](../../examples/smalltalk/05-data-structures/index.md) | Collections, dictionaries |
+| [06 OOP/Modules](../../examples/smalltalk/06-oop-modules/index.md) | Classes, inheritance |
 
 ---
 
@@ -492,9 +492,9 @@ See [`examples/smalltalk/`](../../examples/smalltalk/) for runnable code:
 
 ## Related Topics
 
-- [OOP & Design](../../topics/design/) — Smalltalk as OOP pioneer |
-- [Paradigms](../../topics/paradigms/) — Pure object-oriented programming |
-- [Architecture](../../topics/architecture/) — MVC pattern origins |
+- [OOP & Design](../../topics/design/index.md) — Smalltalk as OOP pioneer |
+- [Paradigms](../../topics/paradigms/index.md) — Pure object-oriented programming |
+- [Architecture](../../topics/architecture/index.md) — MVC pattern origins |
 
 ---
 
@@ -525,4 +525,4 @@ See [`examples/smalltalk/`](../../examples/smalltalk/) for runnable code:
 
 ---
 
-*See [Languages Index](../languages/) for other language profiles.*
+*See [Languages Index](../languages/index.md) for other language profiles.*

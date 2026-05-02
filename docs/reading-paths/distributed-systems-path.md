@@ -31,5 +31,5 @@ Create a "decision matrix" for one service:
 
 ## Related
 
-- [Distributed topic](../topics/distributed/)
-- [Concurrency topic](../topics/concurrency/)
+- [Distributed topic](../topics/distributed/index.md)
+- [Concurrency topic](../topics/concurrency/index.md)

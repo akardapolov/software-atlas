@@ -110,6 +110,6 @@ Gödel's theorems have profound philosophical implications:
 ## Connections
 
 - **Builds on:** Hilbert's program, Principia Mathematica (Russell & Whitehead)
-- **Influenced:** [Alonzo Church](../../authors/alonzo-church.md) · [Alan Turing](../../authors/alan-turing.md) · [Church-Turing thesis](../../topics/functional/)
+- **Influenced:** [Alonzo Church](../../authors/alonzo-church.md) · [Alan Turing](../../authors/alan-turing.md) · [Church-Turing thesis](../../topics/functional/index.md)
 - **Related author:** [Kurt Gödel](../../authors/kurt-godel.md)
-- **Related topic:** [Type Systems](../../topics/types/) · [Mathematical Logic](../../topics/types/)
+- **Related topic:** [Type Systems](../../topics/types/index.md) · [Mathematical Logic](../../topics/types/index.md)

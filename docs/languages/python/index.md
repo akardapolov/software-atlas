@@ -667,20 +667,20 @@ Python's emphasis on readability influenced:
 
 ## Code Examples
 
-See [`examples/python/`](../../examples/python/) for runnable code:
+See [`examples/python/`](../../examples/python/index.md) for runnable code:
 
 | Example | Description |
 |---------|-------------|
-| [01 Hello World](../../examples/python/01-hello-world/) | Basic syntax, print, input |
-| [02 Variables & Types](../../examples/python/02-variables-and-types/) | Dynamic typing, type hints |
-| [03 Functions](../../examples/python/03-functions/) | Functions, closures, decorators |
-| [04 Control Flow](../../examples/python/04-control-flow/) | Loops, conditionals, match |
-| [05 Data Structures](../../examples/python/05-data-structures/) | Lists, dicts, sets, comprehensions |
-| [06 OOP/Modules](../../examples/python/06-oop-modules/) | Classes, inheritance, modules |
-| [07 FP Features](../../examples/python/07-fp-features/) | Lambdas, map/filter/reduce |
-| [08 Error Handling](../../examples/python/08-error-handling/) | Try/except, context managers |
-| [09 Concurrency](../../examples/python/09-concurrency/) | Threading, asyncio, multiprocessing |
-| [10 Testing](../../examples/python/10-testing/) | pytest, fixtures, mocks |
+| [01 Hello World](../../examples/python/01-hello-world/index.md) | Basic syntax, print, input |
+| [02 Variables & Types](../../examples/python/02-variables-and-types/index.md) | Dynamic typing, type hints |
+| [03 Functions](../../examples/python/03-functions/index.md) | Functions, closures, decorators |
+| [04 Control Flow](../../examples/python/04-control-flow/index.md) | Loops, conditionals, match |
+| [05 Data Structures](../../examples/python/05-data-structures/index.md) | Lists, dicts, sets, comprehensions |
+| [06 OOP/Modules](../../examples/python/06-oop-modules/index.md) | Classes, inheritance, modules |
+| [07 FP Features](../../examples/python/07-fp-features/index.md) | Lambdas, map/filter/reduce |
+| [08 Error Handling](../../examples/python/08-error-handling/index.md) | Try/except, context managers |
+| [09 Concurrency](../../examples/python/09-concurrency/index.md) | Threading, asyncio, multiprocessing |
+| [10 Testing](../../examples/python/10-testing/index.md) | pytest, fixtures, mocks |
 
 ---
 
@@ -694,10 +694,10 @@ See [`examples/python/`](../../examples/python/) for runnable code:
 
 ## Related Topics
 
-- [Functional Programming](../../topics/functional/) — Python's FP features |
-- [Type Systems](../../topics/types/) — dynamic vs static typing |
-- [Paradigms](../../topics/paradigms/) — Python as multi-paradigm |
-- [Process](../../topics/process/) — Python's tooling and packaging |
+- [Functional Programming](../../topics/functional/index.md) — Python's FP features |
+- [Type Systems](../../topics/types/index.md) — dynamic vs static typing |
+- [Paradigms](../../topics/paradigms/index.md) — Python as multi-paradigm |
+- [Process](../../topics/process/index.md) — Python's tooling and packaging |
 
 ---
 
@@ -728,4 +728,4 @@ See [`examples/python/`](../../examples/python/) for runnable code:
 
 ---
 
-*See [Languages Index](../languages/) for other language profiles.*
+*See [Languages Index](../languages/index.md) for other language profiles.*

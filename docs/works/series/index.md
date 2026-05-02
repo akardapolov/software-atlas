@@ -8,6 +8,6 @@ Multi-part works, video series, and related content collections.
 
 ## See Also
 
-- [Books](../books/) — full-length publications
-- [Papers](../papers/) — academic papers
-- [Talks](../talks/) — individual presentations
+- [Books](../books/index.md) — full-length publications
+- [Papers](../papers/index.md) — academic papers
+- [Talks](../talks/index.md) — individual presentations

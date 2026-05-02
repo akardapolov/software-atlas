@@ -348,16 +348,16 @@ Clojure's "simple ≠ easy" philosophy influenced:
 
 ## Code Examples
 
-See [examples/clojure/](../../../examples/clojure/) for runnable code:
+See [examples/clojure/](../../../examples/clojure/index.md) for runnable code:
 
 | Example | Description |
 |---------|-------------|
-| [01 Hello World](../../../examples/clojure/01-hello-world/) | Basic syntax, REPL |
-| [02 Variables & Types](../../../examples/clojure/02-variables-and-types/) | Dynamic typing, keywords, symbols |
-| [03 Functions](../../../examples/clojure/03-functions/) | Arity, destructuring, higher-order functions |
-| [04 Control Flow](../../../examples/clojure/04-control-flow/) | Conditionals, recursion, loops |
-| [05 Data Structures](../../../examples/clojure/05-data-structures/) | Vectors, maps, sets, seq operations |
-| [06 OOP/Modules](../../../examples/clojure/06-oop-modules/) | Protocols, records, namespaces |
+| [01 Hello World](../../../examples/clojure/01-hello-world/index.md) | Basic syntax, REPL |
+| [02 Variables & Types](../../../examples/clojure/02-variables-and-types/index.md) | Dynamic typing, keywords, symbols |
+| [03 Functions](../../../examples/clojure/03-functions/index.md) | Arity, destructuring, higher-order functions |
+| [04 Control Flow](../../../examples/clojure/04-control-flow/index.md) | Conditionals, recursion, loops |
+| [05 Data Structures](../../../examples/clojure/05-data-structures/index.md) | Vectors, maps, sets, seq operations |
+| [06 OOP/Modules](../../../examples/clojure/06-oop-modules/index.md) | Protocols, records, namespaces |
 
 ## Strengths and Weaknesses
 
@@ -387,10 +387,10 @@ See [examples/clojure/](../../../examples/clojure/) for runnable code:
 
 ## Related Topics
 
-- [Functional Programming](../topics/functional/) — Clojure as practical FP
-- [Lisp](../lisp/) — Clojure as modern Lisp dialect
-- [Concurrency](../topics/concurrency/) — STM, core.async
-- [Type Systems](../topics/types/) — dynamic vs static typing
+- [Functional Programming](../topics/functional/index.md) — Clojure as practical FP
+- [Lisp](../lisp/index.md) — Clojure as modern Lisp dialect
+- [Concurrency](../topics/concurrency/index.md) — STM, core.async
+- [Type Systems](../topics/types/index.md) — dynamic vs static typing
 
 ## Further Reading
 
@@ -416,4 +416,4 @@ See [examples/clojure/](../../../examples/clojure/) for runnable code:
 
 ---
 
-See [Languages Index](../languages/) for other language profiles.
+See [Languages Index](../languages/index.md) for other language profiles.

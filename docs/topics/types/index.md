@@ -221,7 +221,7 @@ Types help most when you use them to encode **invariants**:
 
 ## Related Topics
 
-- [Paradigms](../paradigms/) — OOP in context of all paradigms
-- [Functional Programming](../functional/) — alternative to OOP
-- [OOP & Design](../design/) — SOLID, patterns, refactoring
-- [Concurrency](../concurrency/) — shared state vs message passing
+- [Paradigms](../paradigms/index.md) — OOP in context of all paradigms
+- [Functional Programming](../functional/index.md) — alternative to OOP
+- [OOP & Design](../design/index.md) — SOLID, patterns, refactoring
+- [Concurrency](../concurrency/index.md) — shared state vs message passing

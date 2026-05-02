@@ -87,5 +87,5 @@ Objective-C's impact:
 ## Related Pages
 
 - [Alan Kay](alan-kay.md)
-- [Smalltalk](../languages/smalltalk/)
-- [Objective-C language](../languages/objective-c/) (to be created)
+- [Smalltalk](../languages/smalltalk/index.md)
+- [Objective-C language](../languages/objective-c/index.md) (to be created)

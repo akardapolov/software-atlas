@@ -128,8 +128,8 @@ entire categories of bugs.
 ## Related Pages
 
 - [Domain-Driven Design (book)](../works/books/evans-2003-ddd.md)
-- [Architecture & Modularity](../topics/architecture/)
-- [OOP & Design](../topics/design/)
+- [Architecture & Modularity](../topics/architecture/index.md)
+- [OOP & Design](../topics/design/index.md)
 - [Alistair Cockburn](alistair-cockburn.md)
 - [Scott Wlaschin](scott-wlaschin.md)
 - [Martin Fowler](martin-fowler.md)

@@ -88,5 +88,5 @@ The formal LSP definition remains:
 - **Builds on:** [CLU (1974)](./liskov-1974-adt.md)
 - **Co-author:** Jeannette Wing
 - **Influenced:** SOLID principles, type checking, OO design
-- **Related principle:** [SOLID](../../topics/design/) (if exists)
+- **Related principle:** [SOLID](../../topics/design/index.md) (if exists)
 - **Author:** [Barbara Liskov](../../authors/barbara-liskov.md)

@@ -514,10 +514,10 @@ Across all architectural approaches, these principles recur:
 
 ## Related Topics
 
-- [OOP & Design](../design/) — component-level design (SOLID, patterns)
-- [Paradigms](../paradigms/) — how paradigms shape architecture
-- [Distributed Systems](../distributed/) — architecture across machines
-- [Process & Testing](../process/) — how process supports architecture
+- [OOP & Design](../design/index.md) — component-level design (SOLID, patterns)
+- [Paradigms](../paradigms/index.md) — how paradigms shape architecture
+- [Distributed Systems](../distributed/index.md) — architecture across machines
+- [Process & Testing](../process/index.md) — how process supports architecture
 
 ---
 

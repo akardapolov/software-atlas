@@ -90,6 +90,6 @@ Booch's influence continues:
 ## Connections
 
 - **Co-created UML:** [Jacobson (Use Cases)](../books/jacobson-1992-oose.md) · [Rumbaugh (OMT)](../books/rumbaugh-1991-omt.md)
-- **Influenced:** [Software Architecture in Practice](../topics/architecture/)
-- **Related topic:** [UML](../topics/architecture/) (if exists)
+- **Influenced:** [Software Architecture in Practice](../topics/architecture/index.md)
+- **Related topic:** [UML](../topics/architecture/index.md) (if exists)
 - **Author:** [Grady Booch](../../authors/grady-booch.md)

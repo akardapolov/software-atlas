@@ -68,6 +68,6 @@ The key insight: modules should hide design decisions that are likely to change.
 - [Fred Brooks](fred-brooks.md) — conceptual integrity, modular thinking
 - [Bertrand Meyer](bertrand-meyer.md) — design by contract, encapsulation
 - [Eric Evans](eric-evans.md) — Domain-Driven Design
-- [Modularity & Architecture](../topics/architecture/)
-- [Software Engineering](../topics/design/)
+- [Modularity & Architecture](../topics/architecture/index.md)
+- [Software Engineering](../topics/design/index.md)
 - [ALGOL community](https://www.algol.com/2013/awards/david-l-parnas/)

@@ -30,5 +30,5 @@ Zhidkov's alternative:
 ## Related Pages
 
 - [Alexander Zhidkov](../../authors/alexander-zhidkov.md)
-- [Architecture & Modularity](../../topics/architecture/)
-- [OOP & Design](../../topics/design/)
+- [Architecture & Modularity](../../topics/architecture/index.md)
+- [OOP & Design](../../topics/design/index.md)

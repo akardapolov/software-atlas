@@ -212,4 +212,4 @@ Cohn's approach influenced:
 - **Builds on:** XP user stories · Use cases (Jacobson)
 - **Complements:** Scrum planning · Agile estimation practices
 - **Author:** [Mike Cohn](../../authors/mike-cohn.md)
-- **Related topic:** [Requirements & Planning](../../topics/process/) · [Agile](../../topics/process/)
+- **Related topic:** [Requirements & Planning](../../topics/process/index.md) · [Agile](../../topics/process/index.md)

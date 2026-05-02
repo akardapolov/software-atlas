@@ -73,7 +73,7 @@ With Matthew Skelton, Pais developed a comprehensive framework for understanding
 
 ## Related Pages
 
-- [Process topic](../topics/process/) — team organization and DevOps
+- [Process topic](../topics/process/index.md) — team organization and DevOps
 - [Alistair Cockburn](alistair-cockburn.md) — organizational design
 - [Nicole Forsgren](nicole-forsgren.md) — Accelerate and DORA
 - [Jez Humble](jez-humble.md) — Continuous Delivery

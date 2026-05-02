@@ -85,7 +85,7 @@ The LISP 1.5 manual established patterns that became standard:
 
 - **Preceded by:** [Recursive Functions of Symbolic Expressions (1960)](../papers/mccarthy-1960-lisp.md)
 - **Influenced:** Alan Kay (Smalltalk eval/apply), Scheme, Common Lisp
-- **Related topic:** [Paradigms](../../topics/paradigms/) · [Lisp language](../../languages/lisp/) (if exists)
+- **Related topic:** [Paradigms](../../topics/paradigms/index.md) · [Lisp language](../../languages/lisp/index.md) (if exists)
 
 ## Author
 

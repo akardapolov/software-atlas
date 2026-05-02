@@ -205,8 +205,8 @@ CSP thinking influenced patterns beyond language-level concurrency:
 
 - **Builds on:** Dijkstra — guarded commands (1975), Hoare — monitors (1974)
 - **Contemporary:** Hewitt — Actor model (1973), Milner — CCS (1980)
-- **Led to:** occam (1983) · [Go](../../languages/go/) (2009) ·
+- **Led to:** occam (1983) · [Go](../../languages/go/index.md) (2009) ·
   Clojure core.async (2013) · Roscoe — *Understanding Concurrent Systems* (2010)
 - **Author:** [Tony Hoare](../../authors/tony-hoare.md)
-- **Related topic:** [Concurrency](../../topics/concurrency/) ·
-  [Paradigms](../../topics/paradigms/)
+- **Related topic:** [Concurrency](../../topics/concurrency/index.md) ·
+  [Paradigms](../../topics/paradigms/index.md)

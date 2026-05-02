@@ -165,8 +165,8 @@ Kay himself agreed:
 
 ## Related Pages
 
-- [Erlang](../languages/erlang/)
-- [Concurrency](../topics/concurrency/)
-- [Distributed Systems](../topics/distributed/)
+- [Erlang](../languages/erlang/index.md)
+- [Concurrency](../topics/concurrency/index.md)
+- [Distributed Systems](../topics/distributed/index.md)
 - [Tony Hoare](tony-hoare.md)
 - [Alan Kay](alan-kay.md)

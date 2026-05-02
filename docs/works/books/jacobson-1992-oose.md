@@ -102,5 +102,5 @@ Jacobson's influence continues:
 
 - **Co-created UML:** [Booch (Class diagrams)](../books/booch-1994-ooad.md) · [Rumbaugh (OMT)](../books/rumbaugh-1991-omt.md)
 - **Influenced:** User Stories (Agile), BDD scenarios
-- **Related topic:** [Requirements](../topics/process/) (if exists)
+- **Related topic:** [Requirements](../topics/process/index.md) (if exists)
 - **Author:** [Ivar Jacobson](../../authors/ivar-jacobson.md)

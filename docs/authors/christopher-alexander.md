@@ -96,4 +96,4 @@ The Gang of Four explicitly credit Alexander:
 - [GoF: Design Patterns](../works/books/gof-1994-design-patterns.md)
 - [Kent Beck](kent-beck.md)
 - [Ward Cunningham](ward-cunningham.md)
-- [Design patterns topic](../topics/design/)
+- [Design patterns topic](../topics/design/index.md)

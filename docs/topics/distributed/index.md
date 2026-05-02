@@ -549,7 +549,7 @@ Google's globally distributed database:
 
 ## Related Topics
 
-- [Concurrency](../concurrency/) — shared-memory vs distributed
-- [Architecture & Modularity](../architecture/) — microservices, system design
-- [Process](../process/) — how teams build distributed systems
-- [Languages](../../languages/) — Erlang (actor model), Go (CSP)
+- [Concurrency](../concurrency/index.md) — shared-memory vs distributed
+- [Architecture & Modularity](../architecture/index.md) — microservices, system design
+- [Process](../process/index.md) — how teams build distributed systems
+- [Languages](../../languages/index.md) — Erlang (actor model), Go (CSP)

@@ -697,16 +697,16 @@ const colors2 = ["red", "green", "blue"] as const;
 
 ## Code Examples
 
-See [`examples/typescript/`](../../examples/typescript/) for runnable code:
+See [`examples/typescript/`](../../examples/typescript/index.md) for runnable code:
 
 | Example | Description |
 |---------|-------------|
-| [01 Hello World](../../examples/typescript/01-hello-world/) | Setup, compilation, basic syntax |
-| [02 Variables & Types](../../examples/typescript/02-variables-and-types/) | Type annotations, inference, any |
-| [03 Functions](../../examples/typescript/03-functions/) | Return types, overloads, generics |
-| [04 Control Flow](../../examples/typescript/04-control-flow/) | Type guards, narrowing |
-| [05 Data Structures](../../examples/typescript/05-data-structures/) | Interfaces, classes, enums |
-| [06 OOP/Modules](../../examples/typescript/06-oop-modules/) | Classes, inheritance, modules |
+| [01 Hello World](../../examples/typescript/01-hello-world/index.md) | Setup, compilation, basic syntax |
+| [02 Variables & Types](../../examples/typescript/02-variables-and-types/index.md) | Type annotations, inference, any |
+| [03 Functions](../../examples/typescript/03-functions/index.md) | Return types, overloads, generics |
+| [04 Control Flow](../../examples/typescript/04-control-flow/index.md) | Type guards, narrowing |
+| [05 Data Structures](../../examples/typescript/05-data-structures/index.md) | Interfaces, classes, enums |
+| [06 OOP/Modules](../../examples/typescript/06-oop-modules/index.md) | Classes, inheritance, modules |
 
 ---
 
@@ -720,9 +720,9 @@ See [`examples/typescript/`](../../examples/typescript/) for runnable code:
 
 ## Related Topics
 
-- [Type Systems](../../topics/types/) — structural typing, generics |
-- [Paradigms](../../topics/paradigms/) — TS as multi-paradigm |
-- [Web Development](../../topics/web/) — TypeScript in modern web |
+- [Type Systems](../../topics/types/index.md) — structural typing, generics |
+- [Paradigms](../../topics/paradigms/index.md) — TS as multi-paradigm |
+- [Web Development](../../topics/web/index.md) — TypeScript in modern web |
 
 ---
 
@@ -752,4 +752,4 @@ See [`examples/typescript/`](../../examples/typescript/) for runnable code:
 
 ---
 
-*See [Languages Index](../languages/) for other language profiles.*
+*See [Languages Index](../languages/index.md) for other language profiles.*

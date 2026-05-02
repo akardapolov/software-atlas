@@ -75,5 +75,5 @@ Hoare's CSP theory remains influential:
 
 - **Builds on:** [CSP paper (1978)](../papers/hoare-1978-csp.md)
 - **Influenced:** occam, Go, Clojure, verification tools
-- **Related topic:** [Concurrency](../../topics/concurrency/)
+- **Related topic:** [Concurrency](../../topics/concurrency/index.md)
 - **Author:** [Tony Hoare](../../authors/tony-hoare.md)

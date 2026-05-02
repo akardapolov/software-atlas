@@ -88,8 +88,8 @@ The JLS continues to be:
 
 ## Connections
 
-- **Builds on:** [Mesa/Cedar](../languages/) (Java ancestor)
+- **Builds on:** [Mesa/Cedar](../languages/index.md) (Java ancestor)
 - **Influenced:** .NET, Kotlin, Scala (JVM languages)
 - **Related works:** [Java Programming Language (2000)](../books/gosling-2000-java-pl.md)
 - **Author:** [James Gosling](../../authors/james-gosling.md)
-- **Related:** [Java language](../../languages/java/)
+- **Related:** [Java language](../../languages/java/index.md)

@@ -100,6 +100,6 @@ These are not engineering limitations — they're fundamental limits of computat
 
 - **Builds on:** Gödel's incompleteness theorems, Hilbert's Entscheidungsproblem
 - **Contemporary:** Church — "An Unsolvable Problem..." (1936)
-- **Led to:** [Church-Turing thesis](../../topics/functional/) · Universal Turing machine · All of computer science
+- **Led to:** [Church-Turing thesis](../../topics/functional/index.md) · Universal Turing machine · All of computer science
 - **Author:** [Alan Turing](../../authors/alan-turing.md)
-- **Related topic:** [Computability Theory](../../topics/functional/) · [Alonzo Church](../../authors/alonzo-church.md) · [Kurt Gödel](../../authors/kurt-godel.md)
+- **Related topic:** [Computability Theory](../../topics/functional/index.md) · [Alonzo Church](../../authors/alonzo-church.md) · [Kurt Gödel](../../authors/kurt-godel.md)

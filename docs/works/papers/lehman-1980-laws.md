@@ -212,5 +212,5 @@ Lehman explains why legacy modernisation is difficult:
 - **Builds on:** Systems theory · Empirical software research
 - **Influenced:** Software maintenance practices · Legacy system management · Agile
 - **Author:** [Meir Lehman](../../authors/meir-lehman.md)
-- **Related work:** [Software Evolution](../../topics/process/) · [Legacy Code](../works/books/feathers-2004-legacy.md)
-- **Related topic:** [Architecture & Modularity](../../topics/architecture/) — designing for evolution
+- **Related work:** [Software Evolution](../../topics/process/index.md) · [Legacy Code](../works/books/feathers-2004-legacy.md)
+- **Related topic:** [Architecture & Modularity](../../topics/architecture/index.md) — designing for evolution

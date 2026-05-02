@@ -84,4 +84,4 @@ Java's success beyond the language:
 
 - [Ole-Johan Dahl](ole-johan-dahl.md)
 - [Alan Kay](alan-kay.md)
-- [Java language](../languages/java/)
+- [Java language](../languages/java/index.md)

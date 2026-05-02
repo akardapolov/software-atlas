@@ -6,7 +6,7 @@ to patterns, SOLID, refactoring, and testability practices.
 ## Steps
 
 ### 1) Origins of OOP
-- Watch/read: [Simula](../languages/simula/) and [Smalltalk](../languages/smalltalk/) language pages
+- Watch/read: [Simula](../languages/simula/index.md) and [Smalltalk](../languages/smalltalk/index.md) language pages
 - Understand: Simula = modeling and classification; Kay = messaging and late binding
 
 ### 2) Patterns as a design vocabulary
@@ -45,5 +45,5 @@ to patterns, SOLID, refactoring, and testability practices.
 
 ## Related
 
-- [OOP & Design topic](../topics/design/)
-- [Type Systems topic](../topics/types/)
+- [OOP & Design topic](../topics/design/index.md)
+- [Type Systems topic](../topics/types/index.md)

@@ -187,5 +187,5 @@ It works best combined with domain knowledge and design principles.
   [Continuous Delivery (Humble & Farley, 2010)](humble-2010-cd.md) ·
   [Forsgren — *Accelerate* (2018)](../../authors/nicole-forsgren.md)
 - **Author:** [Kent Beck](../../authors/kent-beck.md)
-- **Related topic:** [Process & Testing](../../topics/process/) ·
-  [OOP & Design](../../topics/design/)
+- **Related topic:** [Process & Testing](../../topics/process/index.md) ·
+  [OOP & Design](../../topics/design/index.md)

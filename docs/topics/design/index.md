@@ -183,5 +183,5 @@ Today, pure class-based inheritance is less prominent, but OO *design principles
 - 📖 **Authors:** [David Parnas](../../authors/david-parnas.md) · [Barbara Liskov](../../authors/barbara-liskov.md) · [Robert C. Martin](../../authors/robert-c-martin.md) · [Alexander Zhidkov](../../authors/alexander-zhidkov.md)
 - 📚 **Works:** [Design Patterns (GoF)](../../works/books/gof-1994-design-patterns.md) · [Behavioral Subtyping (Liskov)](../../works/papers/liskov-1994-subtyping.md)
 - 🗺️ **Paths:** [OOP & Design Reading Path](../../reading-paths/oop-and-design-path.md)
-- 🧭 **Topics:** [Paradigms](../paradigms/) · [Architecture](../architecture/)
+- 🧭 **Topics:** [Paradigms](../paradigms/index.md) · [Architecture](../architecture/index.md)
 - 🔬 **Deep Dive:** [OOP Deep Dive: Polymorphism, Subtyping & Mechanics](oop-deep-dive.md)

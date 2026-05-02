@@ -198,5 +198,5 @@ position but use different technical mechanisms.
 - **Led to:** [Hughes — "Why FP Matters" (1989)](hughes-1989-why-fp.md) ·
   Haskell (1990) · Clojure (2007)
 - **Author:** [John Backus](../../authors/john-backus.md)
-- **Related topic:** [Functional Programming](../../topics/functional/) ·
-  [Paradigms](../../topics/paradigms/)
+- **Related topic:** [Functional Programming](../../topics/functional/index.md) ·
+  [Paradigms](../../topics/paradigms/index.md)

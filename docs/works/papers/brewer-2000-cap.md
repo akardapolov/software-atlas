@@ -49,7 +49,7 @@ Later Brewer refined his theorem in the paper "CAP Twelve Years Later" (2012), e
 
 - **Led to:** [Helland — Life beyond Distributed Transactions](../papers/helland-2007-beyond-dt.md)
 - **Related author:** [Eric Brewer](../../authors/eric-brewer.md)
-- **Related topic:** [Distributed Systems](../../topics/distributed-systems/)
+- **Related topic:** [Distributed Systems](../../topics/distributed-systems/index.md)
 
 ## Personal Notes
 

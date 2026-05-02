@@ -82,7 +82,7 @@ Humble advocated for treating infrastructure programmatically:
 
 ## Related Pages
 
-- [Process topic](../topics/process/) — DevOps, CI/CD, and deployment
+- [Process topic](../topics/process/index.md) — DevOps, CI/CD, and deployment
 - [Kent Beck](kent-beck.md) — XP and continuous integration
 - [David Farley](david-farley.md) — Continuous Delivery
 - [Nicole Forsgren](nicole-forsgren.md) — Accelerate and DORA

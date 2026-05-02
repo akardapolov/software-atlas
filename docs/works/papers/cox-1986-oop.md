@@ -98,8 +98,8 @@ Objective-C's influence persists:
 
 ## Connections
 
-- **Influenced by:** [Smalltalk](../../languages/smalltalk/) · [C language](../../languages/c/)
-- **Preceded by:** [Simula](../../languages/simula/)
+- **Influenced by:** [Smalltalk](../../languages/smalltalk/index.md) · [C language](../../languages/c/index.md)
+- **Preceded by:** [Simula](../../languages/simula/index.md)
 - **Influenced:** NeXTSTEP, macOS, iOS, Swift
-- **Related:** [Objective-C language](../../languages/objective-c/) (to be created)
+- **Related:** [Objective-C language](../../languages/objective-c/index.md) (to be created)
 - **Author:** [Brad Cox](../../authors/brad-cox.md)

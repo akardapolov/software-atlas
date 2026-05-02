@@ -100,6 +100,6 @@ Rumbaugh's influence continues:
 ## Connections
 
 - **Co-created UML:** [Booch (OOAD)](../books/booch-1994-ooad.md) · [Jacobson (Use Cases)](../books/jacobson-1992-oose.md)
-- **Influenced:** [Pattern-Oriented Software Architecture](../topics/architecture/) (if exists)
-- **Related:** [State Machine pattern](../topics/design/) (if exists)
+- **Influenced:** [Pattern-Oriented Software Architecture](../topics/architecture/index.md) (if exists)
+- **Related:** [State Machine pattern](../topics/design/index.md) (if exists)
 - **Author:** [James Rumbaugh](../../authors/james-rumbaugh.md)

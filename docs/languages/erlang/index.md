@@ -591,16 +591,16 @@ Erlang's design influenced modern distributed systems:
 
 ## Code Examples
 
-See [`examples/erlang/`](../../examples/erlang/) for runnable code:
+See [`examples/erlang/`](../../examples/erlang/index.md) for runnable code:
 
 | Example | Description |
 |---------|-------------|
-| [01 Hello World](../../examples/erlang/01-hello-world/) | Basic syntax, shell |
-| [02 Variables & Types](../../examples/erlang/02-variables-and-types/) | Pattern matching, data types |
-| [03 Functions](../../examples/erlang/03-functions/) | Recursion, higher-order |
-| [04 Control Flow](../../examples/erlang/04-control-flow/) | case, if, receive |
-| [05 Data Structures](../../examples/erlang/05-data-structures/) | Lists, maps, binaries |
-| [06 OOP/Modules](../../examples/erlang/06-oop-modules/) | Modules, processes, OTP |
+| [01 Hello World](../../examples/erlang/01-hello-world/index.md) | Basic syntax, shell |
+| [02 Variables & Types](../../examples/erlang/02-variables-and-types/index.md) | Pattern matching, data types |
+| [03 Functions](../../examples/erlang/03-functions/index.md) | Recursion, higher-order |
+| [04 Control Flow](../../examples/erlang/04-control-flow/index.md) | case, if, receive |
+| [05 Data Structures](../../examples/erlang/05-data-structures/index.md) | Lists, maps, binaries |
+| [06 OOP/Modules](../../examples/erlang/06-oop-modules/index.md) | Modules, processes, OTP |
 
 ---
 
@@ -616,9 +616,9 @@ See [`examples/erlang/`](../../examples/erlang/) for runnable code:
 
 ## Related Topics
 
-- [Concurrency](../../topics/concurrency/) — Actor model, supervision |
-- [Distributed Systems](../../topics/distributed/) — Erlang's design philosophy |
-- [Functional Programming](../../topics/functional/) — Erlang as functional language |
+- [Concurrency](../../topics/concurrency/index.md) — Actor model, supervision |
+- [Distributed Systems](../../topics/distributed/index.md) — Erlang's design philosophy |
+- [Functional Programming](../../topics/functional/index.md) — Erlang as functional language |
 
 ---
 
@@ -653,4 +653,4 @@ See [`examples/erlang/`](../../examples/erlang/) for runnable code:
 
 ---
 
-*See [Languages Index](../languages/) for other language profiles.*
+*See [Languages Index](../languages/index.md) for other language profiles.*

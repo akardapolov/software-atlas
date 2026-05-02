@@ -94,8 +94,8 @@ how classes and hierarchies organise programs.
 
 ## Related Pages
 
-- [Simula](../languages/simula/)
-- [Paradigms](../topics/paradigms/)
-- [OOP & Design](../topics/design/)
+- [Simula](../languages/simula/index.md)
+- [Paradigms](../topics/paradigms/index.md)
+- [OOP & Design](../topics/design/index.md)
 - [Kristen Nygaard](kristen-nygaard.md)
 - [Alan Kay](alan-kay.md)

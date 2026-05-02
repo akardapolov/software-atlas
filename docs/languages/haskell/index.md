@@ -337,16 +337,16 @@ Haskell is used in production at:
 
 ## Code Examples
 
-See [examples/haskell/](../../../examples/haskell/) for runnable code:
+See [examples/haskell/](../../../examples/haskell/index.md) for runnable code:
 
 | Example | Description |
 |---------|-------------|
-| [01 Hello World](../../../examples/haskell/01-hello-world/) | Basic IO action, type signatures |
-| [02 Variables & Types](../../../examples/haskell/02-variables-and-types/) | Type inference, basic types |
-| [03 Functions](../../../examples/haskell/03-functions/) | Pattern matching, guards |
-| [04 Control Flow](../../../examples/haskell/04-control-flow/) | Recursion, case expressions |
-| [05 Data Structures](../../../examples/haskell/05-data-structures/) | Lists, trees, pattern matching |
-| [06 OOP/Modules](../../../examples/haskell/06-oop-modules/) | Type classes, modules |
+| [01 Hello World](../../../examples/haskell/01-hello-world/index.md) | Basic IO action, type signatures |
+| [02 Variables & Types](../../../examples/haskell/02-variables-and-types/index.md) | Type inference, basic types |
+| [03 Functions](../../../examples/haskell/03-functions/index.md) | Pattern matching, guards |
+| [04 Control Flow](../../../examples/haskell/04-control-flow/index.md) | Recursion, case expressions |
+| [05 Data Structures](../../../examples/haskell/05-data-structures/index.md) | Lists, trees, pattern matching |
+| [06 OOP/Modules](../../../examples/haskell/06-oop-modules/index.md) | Type classes, modules |
 
 ## Strengths and Weaknesses
 
@@ -377,10 +377,10 @@ See [examples/haskell/](../../../examples/haskell/) for runnable code:
 
 ## Related Topics
 
-- [Functional Programming](../topics/functional/) — Haskell as pure FP exemplar
-- [Type Systems](../topics/types/) — type classes, HM inference
-- [Concurrency](../topics/concurrency/) — STM, async patterns
-- [Monads](../topics/monads/) *(future topic)* — structured side effects
+- [Functional Programming](../topics/functional/index.md) — Haskell as pure FP exemplar
+- [Type Systems](../topics/types/index.md) — type classes, HM inference
+- [Concurrency](../topics/concurrency/index.md) — STM, async patterns
+- [Monads](../topics/monads/index.md) *(future topic)* — structured side effects
 
 ## Further Reading
 
@@ -401,4 +401,4 @@ See [examples/haskell/](../../../examples/haskell/) for runnable code:
 
 ---
 
-See [Languages Index](../languages/) for other language profiles.
+See [Languages Index](../languages/index.md) for other language profiles.

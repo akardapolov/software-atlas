@@ -91,4 +91,4 @@ POODR remains:
 - **Influenced:** Ruby community, Rails framework
 - **Author:** [Sandi Metz](../../authors/sandi-metz.md)
 - **Related Works:** [99 Bottles](../books/metz-2016-99bottles.md)
-- **Related:** [Ruby language](../../languages/ruby/) (to be created)
+- **Related:** [Ruby language](../../languages/ruby/index.md) (to be created)

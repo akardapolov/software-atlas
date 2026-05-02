@@ -63,4 +63,4 @@ Claessen's research focuses on:
 
 - [QuickCheck](../works/papers/hughes-claessen-2000-quickcheck.md)
 - [John Hughes](john-hughes.md)
-- [Property-Based Testing](../topics/process/#property-based-testing)
+- [Property-Based Testing](../topics/process/index.md#property-based-testing)

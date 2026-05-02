@@ -642,16 +642,16 @@ Rust has changed systems programming:
 
 ## Code Examples
 
-See [`examples/rust/`](../../examples/rust/) for runnable code:
+See [`examples/rust/`](../../examples/rust/index.md) for runnable code:
 
 | Example | Description |
 |---------|-------------|
-| [01 Hello World](../../examples/rust/01-hello-world/) | Cargo, basics, printing |
-| [02 Variables & Types](../../examples/rust/02-variables-and-types/) | Ownership, mutability, types |
-| [03 Functions](../../examples/rust/03-functions/) | Closures, higher-order functions |
-| [04 Control Flow](../../examples/rust/04-control-flow/) | Loops, match, if-let |
-| [05 Data Structures](../../examples/rust/05-data-structures/) | Structs, enums, pattern matching |
-| [06 OOP/Modules](../../examples/rust/06-oop-modules/) | Traits, impl blocks, modules |
+| [01 Hello World](../../examples/rust/01-hello-world/index.md) | Cargo, basics, printing |
+| [02 Variables & Types](../../examples/rust/02-variables-and-types/index.md) | Ownership, mutability, types |
+| [03 Functions](../../examples/rust/03-functions/index.md) | Closures, higher-order functions |
+| [04 Control Flow](../../examples/rust/04-control-flow/index.md) | Loops, match, if-let |
+| [05 Data Structures](../../examples/rust/05-data-structures/index.md) | Structs, enums, pattern matching |
+| [06 OOP/Modules](../../examples/rust/06-oop-modules/index.md) | Traits, impl blocks, modules |
 
 ---
 
@@ -665,10 +665,10 @@ See [`examples/rust/`](../../examples/rust/) for runnable code:
 
 ## Related Topics
 
-- [Type Systems](../../topics/types/) — ownership, lifetimes |
-- [Concurrency](../../topics/concurrency/) — fearless concurrency |
-- [Paradigms](../../topics/paradigms/) — Rust as multi-paradigm |
-- [Architecture](../../topics/architecture/) — Rust in systems programming |
+- [Type Systems](../../topics/types/index.md) — ownership, lifetimes |
+- [Concurrency](../../topics/concurrency/index.md) — fearless concurrency |
+- [Paradigms](../../topics/paradigms/index.md) — Rust as multi-paradigm |
+- [Architecture](../../topics/architecture/index.md) — Rust in systems programming |
 
 ---
 
@@ -697,4 +697,4 @@ See [`examples/rust/`](../../examples/rust/) for runnable code:
 
 ---
 
-*See [Languages Index](../languages/) for other language profiles.*
+*See [Languages Index](../languages/index.md) for other language profiles.*

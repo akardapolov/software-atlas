@@ -405,15 +405,15 @@ gcc -g main.c -o program
 
 ## Code Examples
 
-See [examples/c/](../../../examples/c/) for runnable code:
+See [examples/c/](../../../examples/c/index.md) for runnable code:
 
 | Example | Description |
 |---------|-------------|
-| [01 Hello World](../../../examples/c/01-hello-world/) | Basic program, compilation, `printf` |
-| [02 Variables & Types](../../../examples/c/02-variables-and-types/) | Pointers, arrays, structures |
-| [03 Functions](../../../examples/c/03-functions/) | Parameters, return values, recursion |
-| [04 Control Flow](../../../examples/c/04-control-flow/) | Loops, conditionals, switch |
-| [05 Data Structures](../../../examples/c/05-data-structures/) | Linked lists, arrays, structs |
+| [01 Hello World](../../../examples/c/01-hello-world/index.md) | Basic program, compilation, `printf` |
+| [02 Variables & Types](../../../examples/c/02-variables-and-types/index.md) | Pointers, arrays, structures |
+| [03 Functions](../../../examples/c/03-functions/index.md) | Parameters, return values, recursion |
+| [04 Control Flow](../../../examples/c/04-control-flow/index.md) | Loops, conditionals, switch |
+| [05 Data Structures](../../../examples/c/05-data-structures/index.md) | Linked lists, arrays, structs |
 
 ## Strengths and Weaknesses
 
@@ -443,10 +443,10 @@ See [examples/c/](../../../examples/c/) for runnable code:
 
 ## Related Topics
 
-- [Architecture](../topics/architecture/) — C in systems programming |
-- [Type Systems](../topics/types/) — static vs dynamic typing |
-- [Paradigms](../topics/paradigms/) — procedural programming |
-- [Distributed](../topics/distributed/) — C in low-level networking |
+- [Architecture](../topics/architecture/index.md) — C in systems programming |
+- [Type Systems](../topics/types/index.md) — static vs dynamic typing |
+- [Paradigms](../topics/paradigms/index.md) — procedural programming |
+- [Distributed](../topics/distributed/index.md) — C in low-level networking |
 
 ## Further Reading
 
@@ -468,4 +468,4 @@ See [examples/c/](../../../examples/c/) for runnable code:
 
 ---
 
-See [Languages Index](../languages/) for other language profiles.
+See [Languages Index](../languages/index.md) for other language profiles.

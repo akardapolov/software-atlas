@@ -279,7 +279,7 @@ making procedural code tractable.
 **Core idea:** A program is a collection of **objects** — bundles of data
 (state) and behaviour (methods) — that interact by sending **messages**.
 
-> 🔍 **Deep Dive:** This section focuses on OOP as a structural paradigm. For a detailed breakdown of OOP mechanics (encapsulation, inheritance, polymorphism) and the evolution of design principles (DbC, GoF, SOLID), see the **[OOP & Design](../design/)** topic.
+> 🔍 **Deep Dive:** This section focuses on OOP as a structural paradigm. For a detailed breakdown of OOP mechanics (encapsulation, inheritance, polymorphism) and the evolution of design principles (DbC, GoF, SOLID), see the **[OOP & Design](../design/index.md)** topic.
 
 #### Two Visions of OOP
 
@@ -395,8 +395,8 @@ languages (Java, C#) and **dynamically typed** ones (Python, Ruby).
 
 → [Alan Kay](../../authors/alan-kay.md) ·
 [Ole-Johan Dahl](../../authors/ole-johan-dahl.md) ·
-[Smalltalk](../../languages/smalltalk/) ·
-[Simula](../../languages/simula/)
+[Smalltalk](../../languages/smalltalk/index.md) ·
+[Simula](../../languages/simula/index.md)
 
 ---
 
@@ -499,7 +499,7 @@ flowchart LR
 → [Alonzo Church](../../authors/alonzo-church.md) ·
 [John McCarthy](../../authors/john-mccarthy.md) ·
 [John Backus](../../authors/john-backus.md) ·
-[Functional Programming topic](../functional/)
+[Functional Programming topic](../functional/index.md)
 
 ---
 
@@ -824,7 +824,7 @@ func main() {
 
 → [Tony Hoare](../../authors/tony-hoare.md) ·
 [Joe Armstrong](../../authors/joe-armstrong.md) ·
-[Concurrency topic](../concurrency/)
+[Concurrency topic](../concurrency/index.md)
 
 ---
 
@@ -1057,8 +1057,8 @@ flowchart LR
 
 ## Related Topics
 
-- [Functional Programming](../functional/) — deep dive into FP
-- [OOP & Design](../design/) — design principles for OOP
-- [Concurrency](../concurrency/) — concurrent programming models
-- [Type Systems](../types/) — how types interact with paradigms
-- [Languages](../../languages/) — how each language embodies paradigms
+- [Functional Programming](../functional/index.md) — deep dive into FP
+- [OOP & Design](../design/index.md) — design principles for OOP
+- [Concurrency](../concurrency/index.md) — concurrent programming models
+- [Type Systems](../types/index.md) — how types interact with paradigms
+- [Languages](../../languages/index.md) — how each language embodies paradigms

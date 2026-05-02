@@ -31,6 +31,6 @@ Within the Ergonomic Approach:
 ## Related Pages
 
 - [Alexander Zhidkov](../../authors/alexander-zhidkov.md)
-- [OOP & Design](../../topics/design/)
+- [OOP & Design](../../topics/design/index.md)
 - [Eric Evans](../../authors/eric-evans.md)
 - [Ergonomic Approach](https://ergowiki.azhidkov.pro/docs/aggregates/)

@@ -81,4 +81,4 @@ It became a reference for language designers and type theorists.
 
 - [Barbara Liskov](barbara-liskov.md)
 - [Robin Milner](robin-milner.md)
-- [Type Systems topic](../topics/type-systems/)
+- [Type Systems topic](../topics/type-systems/index.md)

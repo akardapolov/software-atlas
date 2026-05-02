@@ -96,6 +96,6 @@ OCP remains influential:
 - **Co-authored:** [Meyer (OOSC)](../books/meyer-1997-oosc2.md)
 - **Co-created OCP:** [Bertrand Meyer](../authors/bertrand-meyer.md)
 - **Influenced:** Java, C#, interface design, plugin architectures
-- **Related principles:** [LSP](../topics/design/) (if exists)
+- **Related principles:** [LSP](../topics/design/index.md) (if exists)
 - **Author:** [Robert C. Martin](../../authors/robert-c-martin.md)
-- **Related:** [Clean Architecture](../topics/architecture/) (if exists)
+- **Related:** [Clean Architecture](../topics/architecture/index.md) (if exists)

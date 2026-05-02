@@ -194,5 +194,5 @@ Kleppmann's emphasis on immutable event logs influenced:
 - **Related to:** [Evans — DDD (2003)](evans-2003-ddd.md) (bounded contexts for data ownership) ·
   [Humble & Farley — CD (2010)](humble-2010-cd.md) (deploying data systems)
 - **Author:** [Martin Kleppmann](../../authors/martin-kleppmann.md)
-- **Related topic:** [Distributed Systems](../../topics/distributed/) ·
-  [Architecture & Modularity](../../topics/architecture/)
+- **Related topic:** [Distributed Systems](../../topics/distributed/index.md) ·
+  [Architecture & Modularity](../../topics/architecture/index.md)

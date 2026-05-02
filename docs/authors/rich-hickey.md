@@ -117,7 +117,7 @@ Hickey's talks form a coherent body of design thinking:
 
 | Year | Title | Type | Page |
 |------|-------|------|------|
-| 2007 | Clojure language release | Language | [→](../languages/clojure/) |
+| 2007 | Clojure language release | Language | [→](../languages/clojure/index.md) |
 | 2009 | "Are We There Yet?" (JVM Language Summit) | Talk | — |
 | 2011 | "Simple Made Easy" (Strange Loop) | Talk | [→](../works/talks/hickey-2011-simple-made-easy.md) |
 | 2012 | Datomic database | Software | — |
@@ -167,10 +167,10 @@ Hickey's talks form a coherent body of design thinking:
 
 ## Related Pages
 
-- [Clojure](../languages/clojure/)
+- [Clojure](../languages/clojure/index.md)
 - [Simple Made Easy](../works/talks/hickey-2011-simple-made-easy.md)
-- [Functional Programming](../topics/functional/)
-- [OOP & Design](../topics/design/)
+- [Functional Programming](../topics/functional/index.md)
+- [OOP & Design](../topics/design/index.md)
 - [John McCarthy](john-mccarthy.md)
 - [John Hughes](john-hughes.md)
 - [Gary Bernhardt](gary-bernhardt.md)

@@ -90,4 +90,4 @@ Ingalls' design principles remain influential:
 - **Precedes:** [Smalltalk-80 documentation](./goldberg-1983-smalltalk80-blue.md)
 - **Influenced:** GUI systems, live programming, IDE design
 - **Author:** [Dan Ingalls](../../authors/dan-ingalls.md)
-- **Related language:** [Smalltalk](../../languages/smalltalk/)
+- **Related language:** [Smalltalk](../../languages/smalltalk/index.md)

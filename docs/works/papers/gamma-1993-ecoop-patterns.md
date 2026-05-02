@@ -111,4 +111,4 @@ This paper established:
 - **Followed by:** [GoF Design Patterns (1994)](../books/gof-1994-design-patterns.md)
 - **Author:** [Erich Gamma](../../authors/erich-gamma.md)
 - **Co-authors:** Richard Helm, Ralph Johnson, John Vlissides
-- **Related topic:** [Design Patterns](../../topics/design/)
+- **Related topic:** [Design Patterns](../../topics/design/index.md)

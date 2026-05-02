@@ -253,4 +253,4 @@ Careful generator design and shrinking efficiency are important.
 - **Led to:** Hypothesis (Python) · ScalaCheck · FsCheck · Property-based testing in industry
 - **Authors:** [John Hughes](../../authors/john-hughes.md) · [Koen Claessen](../../authors/koen-claessen.md)
 - **Related work:** [Why Functional Programming Matters](hughes-1989-why-fp.md) · TDD
-- **Related topic:** [Testing](../../topics/process/#testing) · [Functional Programming](../../topics/functional/)
+- **Related topic:** [Testing](../../topics/process/index.md#testing) · [Functional Programming](../../topics/functional/index.md)

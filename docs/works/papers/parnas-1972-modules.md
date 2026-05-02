@@ -46,7 +46,7 @@ Parnas's work is cited in nearly every serious work on software architecture.
 - **Builds on:** [Dijkstra — Structured Programming](../papers/dijkstra-1968-goto.md)
 - **Led to:** [Brooks — The Mythical Man-Month](../books/brooks-1975-mmm.md)
 - **Related author:** [David Parnas](../../authors/david-parnas.md)
-- **Related topic:** [Architecture](../../topics/architecture/)
+- **Related topic:** [Architecture](../../topics/architecture/index.md)
 
 ## Personal Notes
 

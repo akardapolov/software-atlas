@@ -53,4 +53,4 @@ Research shows: best in speed are usually best in reliability too.
 
 - **Builds on:** [Continuous Delivery (2010)](humble-2010-cd.md) · Lean
 - **Related:** [Skelton & Pais — Team Topologies (2019)](skelton-2019-team-topologies.md)
-- **Related topic:** [Process & Testing](../../topics/process/)
+- **Related topic:** [Process & Testing](../../topics/process/index.md)

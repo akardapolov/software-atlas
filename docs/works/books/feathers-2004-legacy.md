@@ -87,5 +87,5 @@ systems that aren't ready for it.
 - **Builds on:** [Fowler — Refactoring (1999)](fowler-1999-refactoring.md) ·
   [Beck — TDD (2002)](beck-2002-tdd.md)
 - **Leads to:** safe migrations, incremental rewrites, Strangler pattern
-- **Related topic:** [Process & Testing](../../topics/process/) ·
-  [OOP & Design](../../topics/design/)
+- **Related topic:** [Process & Testing](../../topics/process/index.md) ·
+  [OOP & Design](../../topics/design/index.md)

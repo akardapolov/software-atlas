@@ -127,7 +127,7 @@ goal-driven, actor-focused use cases at multiple levels of abstraction.
 
 ## Related Pages
 
-- [Architecture & Modularity](../topics/architecture/)
+- [Architecture & Modularity](../topics/architecture/index.md)
 - [Robert C. Martin](robert-c-martin.md)
 - [Eric Evans](eric-evans.md)
 - [Kent Beck](kent-beck.md)

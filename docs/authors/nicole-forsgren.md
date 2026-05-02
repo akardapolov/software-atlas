@@ -78,7 +78,7 @@ With Jez Humble, David Farley, and Gene Kim, Forsgren conducted extensive resear
 
 ## Related Pages
 
-- [Process topic](../topics/process/) — DevOps, CI/CD, SRE
+- [Process topic](../topics/process/index.md) — DevOps, CI/CD, SRE
 - [Jez Humble](jez-humble.md) — Continuous Delivery
 - [David Farley](david-farley.md) — Continuous Delivery
 - [Gene Kim](gene-kim.md) — Team dynamics and DORA

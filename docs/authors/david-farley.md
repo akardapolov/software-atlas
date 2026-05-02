@@ -72,7 +72,7 @@ Farley documented various testing approaches for CD:
 
 ## Related Pages
 
-- [Process topic](../topics/process/) — DevOps, CI/CD, and deployment
+- [Process topic](../topics/process/index.md) — DevOps, CI/CD, and deployment
 - [Jez Humble](jez-humble.md) — Co-author, Continuous Delivery
 - [Kent Beck](kent-beck.md) — XP and continuous integration
 - [Martin Fowler](martin-fowler.md) — Refactoring and CI/CD

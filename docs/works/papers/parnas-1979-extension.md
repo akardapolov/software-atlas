@@ -77,5 +77,5 @@ Parnas's extension principles are foundational:
 
 - **Builds on:** [Information Hiding (1972)](../papers/parnas-1972-modules.md)
 - **Influenced:** Plugin architecture, modularity thinking
-- **Related topic:** [Architecture](../../topics/architecture/)
+- **Related topic:** [Architecture](../../topics/architecture/index.md)
 - **Author:** [David Parnas](../../authors/david-parnas.md)

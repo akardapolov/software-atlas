@@ -31,4 +31,4 @@ Key principles:
 
 - [Clean Architecture](clean-architecture.md)
 - [Hexagonal Architecture](hexagonal-architecture.md)
-- [Functional Programming](../../functional/)
+- [Functional Programming](../../functional/index.md)

@@ -82,7 +82,7 @@ Ingalls and the Smalltalk team pioneered several windowing concepts that became 
 
 - [Adele Goldberg](adele-goldberg.md) - Smalltalk-80 system architecture
 - [Alan Kay](alan-kay.md) - OOP and messaging philosophy
-- [Smalltalk language page](../languages/smalltalk/) - Smalltalk language details
+- [Smalltalk language page](../languages/smalltalk/index.md) - Smalltalk language details
 
 ## Further Reading
 

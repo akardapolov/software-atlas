@@ -87,4 +87,4 @@ OCP remains influential:
 - **Author:** [Robert C. Martin](../../authors/robert-c-martin.md)
 - **Related Works:** [Agile Software Development (2003)](../books/martin-2003-agile-ppp.md)
 - **Related:** [Liskov Substitution](../papers/liskov-wing-1994-subtyping.md)
-- **Related topic:** [SOLID](../../topics/design/) (if exists)
+- **Related topic:** [SOLID](../../topics/design/index.md) (if exists)

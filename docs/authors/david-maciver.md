@@ -81,4 +81,4 @@ MacIver writes about:
 
 - [Hypothesis](../works/talks/maciver-2013-hypothesis.md)
 - [QuickCheck](../works/papers/hughes-claessen-2000-quickcheck.md)
-- [Property-Based Testing](../topics/process/#property-based-testing)
+- [Property-Based Testing](../topics/process/index.md#property-based-testing)

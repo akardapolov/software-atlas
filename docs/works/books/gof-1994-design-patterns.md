@@ -189,6 +189,6 @@ interfaces, favour composition — are universally applicable.
   Fowler — *Patterns of Enterprise Application Architecture* (2002) ·
   Pattern movement in software engineering
 - **Authors:** [Alan Kay](../../authors/alan-kay.md) (influenced via Smalltalk heritage)
-- **Related topic:** [OOP & Design](../../topics/design/) ·
-  [Paradigms](../../topics/paradigms/) ·
-  [Functional Programming](../../topics/functional/) (alternative approach)
+- **Related topic:** [OOP & Design](../../topics/design/index.md) ·
+  [Paradigms](../../topics/paradigms/index.md) ·
+  [Functional Programming](../../topics/functional/index.md) (alternative approach)

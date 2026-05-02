@@ -210,8 +210,8 @@ from selection is genuinely powerful, regardless of evaluation strategy.
 - **Builds on:** [Backus — FP Manifesto (1978)](backus-1978-liberated.md) ·
   Church — Lambda Calculus (1936)
 - **Led to:** Haskell (1990) · Wadler — "Monads for functional programming" (1995) ·
-  [Hickey — Clojure (2007)](../../languages/clojure/) ·
+  [Hickey — Clojure (2007)](../../languages/clojure/index.md) ·
   Bird & Wadler — *Introduction to Functional Programming* (1988)
 - **Author:** [John Hughes](../../authors/john-hughes.md)
-- **Related topic:** [Functional Programming](../../topics/functional/) ·
-  [Paradigms](../../topics/paradigms/)
+- **Related topic:** [Functional Programming](../../topics/functional/index.md) ·
+  [Paradigms](../../topics/paradigms/index.md)

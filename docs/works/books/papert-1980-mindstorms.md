@@ -78,7 +78,7 @@ Papert's influence continues:
 ## Connections
 
 - **Influenced:** Alan Kay (Dynabook, Smalltalk), Scratch, Lego Mindstorms
-- **Related topic:** [Education](../../topics/education/) (if exists)
+- **Related topic:** [Education](../../topics/education/index.md) (if exists)
 - **Author:** [Seymour Papert](../../authors/seymour-papert.md)
 
 ## Further Reading

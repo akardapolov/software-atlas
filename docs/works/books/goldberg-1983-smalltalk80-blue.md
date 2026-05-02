@@ -81,4 +81,4 @@ The Blue Book remains influential:
 - **Preceded by:** [Smalltalk-72/76](../papers/ingalls-1978-smalltalk76.md)
 - **Influenced:** JVM, modern language VMs, dynamic languages
 - **Author:** [Adele Goldberg](../../authors/adele-goldberg.md)
-- **Related language:** [Smalltalk](../../languages/smalltalk/)
+- **Related language:** [Smalltalk](../../languages/smalltalk/index.md)

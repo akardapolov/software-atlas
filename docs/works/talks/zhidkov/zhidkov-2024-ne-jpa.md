@@ -35,5 +35,5 @@ The argument ultimately comes down to development cost:
 ## Related Pages
 
 - [Alexander Zhidkov](../../authors/alexander-zhidkov.md)
-- [Functional Programming](../../topics/functional/)
-- [Type Systems](../../topics/types/)
+- [Functional Programming](../../topics/functional/index.md)
+- [Type Systems](../../topics/types/index.md)

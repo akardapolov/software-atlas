@@ -120,7 +120,7 @@ and ever-growing systems.
 
 ## Related Pages
 
-- [Architecture & Modularity](../topics/architecture/)
-- [Process & Testing](../topics/process/)
+- [Architecture & Modularity](../topics/architecture/index.md)
+- [Process & Testing](../topics/process/index.md)
 - [Edsger Dijkstra](edsger-dijkstra.md)
 - [David Parnas](david-parnas.md)

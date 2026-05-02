@@ -235,4 +235,4 @@ Careful strategy design is important.
 - **Complements:** TDD · Example-based testing
 - **Author:** [David MacIver](../../authors/david-maciver.md)
 - **Related work:** [QuickCheck](../papers/hughes-claessen-2000-quickcheck.md)
-- **Related topic:** [Testing](../../topics/process/#property-based-testing) · [Python](../../languages/python/)
+- **Related topic:** [Testing](../../topics/process/index.md#property-based-testing) · [Python](../../languages/python/index.md)

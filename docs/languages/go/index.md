@@ -343,16 +343,16 @@ GOOS=linux GOARCH=amd64 go build
 
 ## Code Examples
 
-See [examples/go/](../../../examples/go/) for runnable code:
+See [examples/go/](../../../examples/go/index.md) for runnable code:
 
 | Example | Description |
 |---------|-------------|
-| [01 Hello World](../../../examples/go/01-hello-world/) | Package, entry point, basic syntax |
-| [02 Variables & Types](../../../examples/go/02-variables-and-types/) | Type inference, zero values, pointers |
-| [03 Functions](../../../examples/go/03-functions/) | Multiple returns, defer, error handling |
-| [04 Control Flow](../../../examples/go/04-control-flow/) | For/range loops, select statements |
-| [05 Data Structures](../../../examples/go/05-data-structures/) | Slices, maps, structs |
-| [06 OOP/Modules](../../../examples/go/06-oop-modules/) | Interfaces, methods, packages |
+| [01 Hello World](../../../examples/go/01-hello-world/index.md) | Package, entry point, basic syntax |
+| [02 Variables & Types](../../../examples/go/02-variables-and-types/index.md) | Type inference, zero values, pointers |
+| [03 Functions](../../../examples/go/03-functions/index.md) | Multiple returns, defer, error handling |
+| [04 Control Flow](../../../examples/go/04-control-flow/index.md) | For/range loops, select statements |
+| [05 Data Structures](../../../examples/go/05-data-structures/index.md) | Slices, maps, structs |
+| [06 OOP/Modules](../../../examples/go/06-oop-modules/index.md) | Interfaces, methods, packages |
 
 ## Strengths and Weaknesses
 
@@ -382,10 +382,10 @@ See [examples/go/](../../../examples/go/) for runnable code:
 
 ## Related Topics
 
-- [Concurrency](../topics/concurrency/) — CSP, goroutines, channels |
-- [Type Systems](../topics/types/) — static typing, interfaces |
-- [Distributed Systems](../topics/distributed/) — Go's role in cloud-native |
-- [Process](../topics/process/) — Go's tooling impact |
+- [Concurrency](../topics/concurrency/index.md) — CSP, goroutines, channels |
+- [Type Systems](../topics/types/index.md) — static typing, interfaces |
+- [Distributed Systems](../topics/distributed/index.md) — Go's role in cloud-native |
+- [Process](../topics/process/index.md) — Go's tooling impact |
 
 ## Further Reading
 
@@ -406,4 +406,4 @@ See [examples/go/](../../../examples/go/) for runnable code:
 
 ---
 
-See [Languages Index](../languages/) for other language profiles.
+See [Languages Index](../languages/index.md) for other language profiles.

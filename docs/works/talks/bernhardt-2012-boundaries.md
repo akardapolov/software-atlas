@@ -41,7 +41,7 @@ This approach solves the classic problem: how to get the benefits of FP (testabi
 
 - **Speaker:** [Gary Bernhardt](../../authors/gary-bernhardt.md)
 - **Related talk:** [Hickey — Simple Made Easy](../talks/hickey-2011-simple-made-easy.md)
-- **Related topic:** [Functional Programming](../../topics/paradigms/functional/)
+- **Related topic:** [Functional Programming](../../topics/paradigms/functional/index.md)
 - **Related topic:** [Hexagonal Architecture](../../topics/architecture/hexagonal.md)
 - **Related pattern:** [Ports and Adapters](../../topics/architecture/ports-adapters.md)
 

@@ -33,5 +33,5 @@ This thesis formalized the principles behind Erlang/OTP and influenced:
 ## Connections
 
 - **Author:** [Joe Armstrong](../../authors/joe-armstrong.md)
-- **Related language:** [Erlang](../../languages/erlang/)
-- **Related topic:** [Concurrency](../../topics/concurrency/)
+- **Related language:** [Erlang](../../languages/erlang/index.md)
+- **Related topic:** [Concurrency](../../topics/concurrency/index.md)

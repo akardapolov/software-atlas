@@ -123,5 +123,5 @@ Blocks are first-class closures with:
 ## Related Pages
 
 - [Alan Kay](alan-kay.md)
-- [Ruby language](../languages/ruby/) (to be created)
-- [Smalltalk](../languages/smalltalk/)
+- [Ruby language](../languages/ruby/index.md) (to be created)
+- [Smalltalk](../languages/smalltalk/index.md)

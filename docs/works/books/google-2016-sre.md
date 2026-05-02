@@ -216,4 +216,4 @@ Google published additional books:
 - **Builds on:** DevOps · Monitoring practices · System administration
 - **Complements:** DevOps culture, Continuous Delivery
 - **Related work:** [Accelerate (Forsgren et al., 2018)](forsgren-2018-accelerate.md)
-- **Related topic:** [Process & Testing](../../topics/process/) · [Distributed Systems](../../topics/distributed/)
+- **Related topic:** [Process & Testing](../../topics/process/index.md) · [Distributed Systems](../../topics/distributed/index.md)

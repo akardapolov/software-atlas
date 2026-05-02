@@ -126,8 +126,8 @@ agility possible.
 
 ## Related Pages
 
-- [OOP & Design](../topics/design/)
-- [Architecture](../topics/architecture/)
+- [OOP & Design](../topics/design/index.md)
+- [Architecture](../topics/architecture/index.md)
 - [David Parnas](david-parnas.md)
 - [Barbara Liskov](barbara-liskov.md)
 - [Bertrand Meyer](bertrand-meyer.md)

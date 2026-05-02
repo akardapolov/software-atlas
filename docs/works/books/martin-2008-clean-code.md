@@ -33,4 +33,4 @@ The book influenced:
 ## Connections
 
 - **Author:** [Robert C. Martin](../../authors/robert-c-martin.md)
-- **Related topic:** [OOP & Design](../../topics/design/)
+- **Related topic:** [OOP & Design](../../topics/design/index.md)

@@ -64,7 +64,7 @@ Dynamo inspired an entire generation of distributed databases including Cassandr
 
 ## Related Pages
 
-- [Distributed Systems topic](../topics/distributed/) — CAP theorem and distributed systems
+- [Distributed Systems topic](../topics/distributed/index.md) — CAP theorem and distributed systems
 - [Amazon Dynamo paper](../works/papers/dynamo-2007-paper.md) — Dynamo architecture
 - [Jim Gray](jim-gray.md) — Transactions and ACID
 - [Leslie Lamport](leslie-lamport.md) — Distributed systems foundations

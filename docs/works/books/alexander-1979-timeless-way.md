@@ -85,7 +85,7 @@ Alexander's influence continues:
 
 - **Companion to:** [A Pattern Language (1977)](./alexander-1977-pattern-language.md)
 - **Influenced:** GoF, Kent Beck, software pattern community
-- **Related topic:** [Design Patterns](../../topics/design/)
+- **Related topic:** [Design Patterns](../../topics/design/index.md)
 - **Author:** [Christopher Alexander](../../authors/christopher-alexander.md)
 
 ## Further Reading

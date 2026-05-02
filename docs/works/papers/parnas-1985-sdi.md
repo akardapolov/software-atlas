@@ -71,4 +71,4 @@ Parnas's SDI paper remains a reference point for:
 ## Connections
 
 - **Author:** [David Parnas](../../authors/david-parnas.md)
-- **Related topic:** [Software Engineering](../../topics/process/) (if exists)
+- **Related topic:** [Software Engineering](../../topics/process/index.md) (if exists)

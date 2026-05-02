@@ -760,7 +760,7 @@ change* (PRs, CI/CD, trunk-based development).
 
 ## Related Topics
 
-- [Process & Testing](../process/) — CI/CD pipelines integrate with VCS workflows
-- [Distributed Systems](../distributed/) — consensus, replication, and distributed state
-- [Architecture & Modularity](../architecture/) — monorepo vs polyrepo impacts system structure
-- [Languages](../../languages/) — language-specific package managers (cargo, npm, go modules) interact with repositories
+- [Process & Testing](../process/index.md) — CI/CD pipelines integrate with VCS workflows
+- [Distributed Systems](../distributed/index.md) — consensus, replication, and distributed state
+- [Architecture & Modularity](../architecture/index.md) — monorepo vs polyrepo impacts system structure
+- [Languages](../../languages/index.md) — language-specific package managers (cargo, npm, go modules) interact with repositories

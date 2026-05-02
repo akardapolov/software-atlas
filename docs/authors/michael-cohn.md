@@ -82,7 +82,7 @@ Cohn contributed to estimation techniques:
 
 ## Related Pages
 
-- [Process topic](../topics/process/) — agile practices and requirements
+- [Process topic](../topics/process/index.md) — agile practices and requirements
 - [Alistair Cockburn](alistair-cockburn.md) — use cases
 - [Kent Beck](kent-beck.md) — XP and planning practices
 - [David Hussman](david-hussman.md) — co-author

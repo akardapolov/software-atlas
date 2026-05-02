@@ -134,11 +134,11 @@ Lambda calculus became to standard tool for:
 
 - **Builds on:** Hilbert's Entscheidungsproblem, Frege's function logic
 - **Contemporary:** Turing — "On Computable Numbers" (1936)
-- **Led to:** [McCarthy — Lisp (1958)](../../languages/lisp/) ·
-  [Milner — ML (1978)](../../languages/ml/) ·
-  [Haskell (1990)](../../languages/haskell/) ·
+- **Led to:** [McCarthy — Lisp (1958)](../../languages/lisp/index.md) ·
+  [Milner — ML (1978)](../../languages/ml/index.md) ·
+  [Haskell (1990)](../../languages/haskell/index.md) ·
   All functional programming
 - **Author:** [Alonzo Church](../../authors/alonzo-church.md)
-- **Related topic:** [Functional Programming](../../topics/functional/) ·
-  [Type Systems](../../topics/types/) ·
-  [Paradigms](../../topics/paradigms/)
+- **Related topic:** [Functional Programming](../../topics/functional/index.md) ·
+  [Type Systems](../../topics/types/index.md) ·
+  [Paradigms](../../topics/paradigms/index.md)

@@ -452,7 +452,7 @@ List<Number> numbers = new ArrayList<>();
 copy(numbers, integers);  // ✅ integers produce, numbers consume
 ```
 
-> See [Variance & Generics example](../../../examples/java/17-variance-generics/) for comprehensive tests demonstrating invariance, covariance, and contravariance in Java generics.
+> See [Variance & Generics example](../../../examples/java/17-variance-generics/index.md) for comprehensive tests demonstrating invariance, covariance, and contravariance in Java generics.
 
 #### Things You Cannot Do Due to Type Erasure
 **Seven things you cannot do because of type erasure in Java**
@@ -2500,24 +2500,24 @@ so the earlier write to `value` becomes visible as well.
 
 ## Code Examples
 
-See [`examples/java/`](../../../examples/java/) for runnable code:
+See [`examples/java/`](../../../examples/java/index.md) for runnable code:
 
 | # | Example | Focus |
 |---|---------|-------|
-| 01 | [Hello World](../../../examples/java/01-hello-world/) | Class structure, `main` method |
-| 02 | [Variables & Types](../../../examples/java/02-variables-and-types/) | Primitives, wrappers, `var` |
-| 03 | [Functions](../../../examples/java/03-functions/) | Methods, overloading, recursion |
-| 04 | [Control Flow](../../../examples/java/04-control-flow/) | Loops, conditionals, switch expressions |
-| 05 | [Data Structures](../../../examples/java/05-data-structures/) | Lists, Maps, Sets, records |
-| 06 | [OOP / Modules](../../../examples/java/06-oop-modules/) | Packages, interfaces, inheritance |
-| 07 | [FP Features](../../../examples/java/07-fp-features/) | Lambdas, streams, `Optional` |
-| 08 | [Error Handling](../../../examples/java/08-error-handling/) | Checked/unchecked, try-with-resources |
-| 09 | [Concurrency](../../../examples/java/09-concurrency/) | Threads, executors, virtual threads |
-| 14 | [Advanced Streams](../../../examples/java/14-streams-advanced/) | Reduce, mapMulti, takeWhile, merge |
-| 15 | [Thread States](../../../examples/java/15-concurrency-thread-states/) | BLOCKED, WAITING, TIMED_WAITING |
-| 16 | [Structured Concurrency](../../../examples/java/16-concurrency-structured/) | ShutdownOnFailure, ShutdownOnSuccess |
-| 17 | [Variance & Generics](../../../examples/java/17-variance-generics/) | Invariance, covariance, contravariance, PECS |
-| 10 | [Testing](../../../examples/java/10-testing/) | JUnit 5, Mockito, AssertJ |
+| 01 | [Hello World](../../../examples/java/01-hello-world/index.md) | Class structure, `main` method |
+| 02 | [Variables & Types](../../../examples/java/02-variables-and-types/index.md) | Primitives, wrappers, `var` |
+| 03 | [Functions](../../../examples/java/03-functions/index.md) | Methods, overloading, recursion |
+| 04 | [Control Flow](../../../examples/java/04-control-flow/index.md) | Loops, conditionals, switch expressions |
+| 05 | [Data Structures](../../../examples/java/05-data-structures/index.md) | Lists, Maps, Sets, records |
+| 06 | [OOP / Modules](../../../examples/java/06-oop-modules/index.md) | Packages, interfaces, inheritance |
+| 07 | [FP Features](../../../examples/java/07-fp-features/index.md) | Lambdas, streams, `Optional` |
+| 08 | [Error Handling](../../../examples/java/08-error-handling/index.md) | Checked/unchecked, try-with-resources |
+| 09 | [Concurrency](../../../examples/java/09-concurrency/index.md) | Threads, executors, virtual threads |
+| 14 | [Advanced Streams](../../../examples/java/14-streams-advanced/index.md) | Reduce, mapMulti, takeWhile, merge |
+| 15 | [Thread States](../../../examples/java/15-concurrency-thread-states/index.md) | BLOCKED, WAITING, TIMED_WAITING |
+| 16 | [Structured Concurrency](../../../examples/java/16-concurrency-structured/index.md) | ShutdownOnFailure, ShutdownOnSuccess |
+| 17 | [Variance & Generics](../../../examples/java/17-variance-generics/index.md) | Invariance, covariance, contravariance, PECS |
+| 10 | [Testing](../../../examples/java/10-testing/index.md) | JUnit 5, Mockito, AssertJ |
 
 ---
 
@@ -2534,11 +2534,11 @@ See [`examples/java/`](../../../examples/java/) for runnable code:
 
 ## Related Topics
 
-- [OOP & Design](../../topics/design/) — SOLID, GoF patterns, interfaces in practice
-- [Type Systems](../../topics/types/) — static nominal typing, generics, type erasure
-- [Architecture](../../topics/architecture/) — Java in enterprise, DDD, microservices
-- [Concurrency](../../topics/concurrency/) — threads, executors, virtual threads, CSP comparison
-- [Testing & Delivery](../../topics/process/) — JUnit, TDD, CI/CD on JVM
+- [OOP & Design](../../topics/design/index.md) — SOLID, GoF patterns, interfaces in practice
+- [Type Systems](../../topics/types/index.md) — static nominal typing, generics, type erasure
+- [Architecture](../../topics/architecture/index.md) — Java in enterprise, DDD, microservices
+- [Concurrency](../../topics/concurrency/index.md) — threads, executors, virtual threads, CSP comparison
+- [Testing & Delivery](../../topics/process/index.md) — JUnit, TDD, CI/CD on JVM
 
 ---
 
@@ -2568,5 +2568,5 @@ See [`examples/java/`](../../../examples/java/) for runnable code:
 
 ---
 
-*See [Languages Index](../../languages/) for other language profiles.*  
+*See [Languages Index](../../languages/index.md) for other language profiles.*  
 *See [Language Genealogy Map](../../maps/languages-genealogy.md) for the family tree.*

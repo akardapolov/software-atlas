@@ -128,4 +128,4 @@ Cohn's work on agile estimation includes:
 ## Related Pages
 
 - [User Stories Applied](../works/books/cohn-2004-user-stories.md)
-- [Requirements](../topics/process/) · [Agile](../topics/process/)
+- [Requirements](../topics/process/index.md) · [Agile](../topics/process/index.md)

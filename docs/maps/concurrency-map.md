@@ -129,7 +129,7 @@ go increment()
 | **Priority inversion** | Low-priority thread holds lock needed by high-priority thread |
 | **Lock contention** | Threads spend more time waiting than working |
 
-→ [Concurrency topic](../topics/concurrency/)
+→ [Concurrency topic](../topics/concurrency/index.md)
 
 ---
 
@@ -184,7 +184,7 @@ for value := range ch {
 | **OCaml** | `Eio` (effects-based), `Lwt` (promises) |
 
 → [Hoare — CSP (1978)](../works/papers/hoare-1978-csp.md) ·
-[Go language page](../../languages/go/)
+[Go language page](../../languages/go/index.md)
 
 ---
 
@@ -252,7 +252,7 @@ loop(Count) ->
 | **Orleans** (.NET) | Virtual actors ("grains") |
 
 → [Joe Armstrong](../../authors/joe-armstrong.md) ·
-[Erlang language page](../../languages/erlang/)
+[Erlang language page](../../languages/erlang/index.md)
 
 ---
 
@@ -334,7 +334,7 @@ fn main() {
 > `mpsc::Receiver` is **not** `Clone`.
 > For multiple consumers, use `crossbeam::channel` or wrap in `Arc<Mutex<Receiver>>`.
 
-→ [Rust language page](../../languages/rust/)
+→ [Rust language page](../../languages/rust/index.md)
 
 ---
 
@@ -354,14 +354,14 @@ fn main() {
 
 - [Hoare — CSP (1978)](../works/papers/hoare-1978-csp.md)
 - [Lamport — Time, Clocks... (1978)](../works/papers/lamport-1978-clocks.md)
-- [Go language page](../../languages/go/)
-- [Erlang language page](../../languages/erlang/)
-- [Concurrency topic](../topics/concurrency/)
+- [Go language page](../../languages/go/index.md)
+- [Erlang language page](../../languages/erlang/index.md)
+- [Concurrency topic](../topics/concurrency/index.md)
 
 ---
 
 ## Related Maps
 
 - [Process Map](./process-map.md) — how development practices evolved
-- [Distributed Systems Map](./distributed/) — consensus, replication, CAP
+- [Distributed Systems Map](./distributed/index.md) — consensus, replication, CAP
 - [Languages Genealogy](./languages-genealogy.md) — how languages influenced each other

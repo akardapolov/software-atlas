@@ -150,8 +150,8 @@ and computer science.
 ## Related Pages
 
 - [Time, Clocks paper](../works/papers/lamport-1978-clocks.md)
-- [Distributed Systems](../topics/distributed/)
-- [Concurrency](../topics/concurrency/)
+- [Distributed Systems](../topics/distributed/index.md)
+- [Concurrency](../topics/concurrency/index.md)
 - [Jim Gray](jim-gray.md)
 - [Martin Kleppmann](martin-kleppmann.md)
 - [Edsger Dijkstra](edsger-dijkstra.md)

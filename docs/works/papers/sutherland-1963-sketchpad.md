@@ -80,7 +80,7 @@ Sketchpad's concepts became foundational:
 ## Connections
 
 - **Influenced:** Alan Kay (Smalltalk), GUI industry, CAD systems
-- **Related topic:** [HCI](../../topics/hci/) · [Graphics](../../topics/graphics/) (if exists)
+- **Related topic:** [HCI](../../topics/hci/index.md) · [Graphics](../../topics/graphics/index.md) (if exists)
 - **Author:** [Ivan Sutherland](../../authors/ivan-sutherland.md)
 
 ## Further Reading

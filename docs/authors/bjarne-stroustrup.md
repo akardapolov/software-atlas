@@ -82,4 +82,4 @@ Stroustrup emphasized:
 
 - [Ole-Johan Dahl](ole-johan-dahl.md)
 - [Kristen Nygaard](kristen-nygaard.md)
-- [C++ language](../languages/c/) (if exists)
+- [C++ language](../languages/c/index.md) (if exists)

@@ -56,7 +56,7 @@ The book influenced:
 ## Connections
 
 - **Author:** [Fred Brooks](../../authors/fred-brooks.md)
-- **Related topic:** [Architecture](../../topics/architecture/)
+- **Related topic:** [Architecture](../../topics/architecture/index.md)
 - **Related work:** [Parnas — Information Hiding](../papers/parnas-1972-modules.md)
 - **Influenced by:** [Conway's Law](../../topics/architecture/conways-law.md)
 

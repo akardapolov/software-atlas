@@ -192,5 +192,5 @@ Lehman's laws inform the rewrite vs maintain decision:
 ## Related Pages
 
 - [Programs, Life Cycles, and Laws of Software Evolution](../works/papers/lehman-1980-laws.md)
-- [Software Evolution](../topics/process/) · [Legacy Code](../works/books/feathers-2004-legacy.md)
+- [Software Evolution](../topics/process/index.md) · [Legacy Code](../works/books/feathers-2004-legacy.md)
 - [Refactoring](../works/books/fowler-1999-refactoring.md)

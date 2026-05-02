@@ -31,5 +31,5 @@ The Actor Model influenced:
 ## Connections
 
 - **Related author:** [Carl Hewitt](../../authors/carl-hewitt.md)
-- **Related topic:** [Concurrency](../../topics/concurrency/)
-- **Related language:** [Erlang](../../languages/erlang/)
+- **Related topic:** [Concurrency](../../topics/concurrency/index.md)
+- **Related language:** [Erlang](../../languages/erlang/index.md)

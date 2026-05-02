@@ -89,4 +89,4 @@ Cardelli and Wegner's classification remains foundational:
 - **Influenced:** Modern type systems, OOP languages
 - **Related works:** [A Theory of Objects (1996)](./cardelli-abadi-1996-theory-objects.md)
 - **Author:** [Luca Cardelli](../../authors/luca-cardelli.md)
-- **Related topic:** [Type Systems](../../topics/type-systems/)
+- **Related topic:** [Type Systems](../../topics/type-systems/index.md)

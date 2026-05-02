@@ -238,4 +238,4 @@ flowchart TD
 
 - [Master Timeline](./master-timeline.md)
 - [Paradigms Map](./paradigms-map.md)
-- [Individual Language Pages](../languages/)
+- [Individual Language Pages](../languages/index.md)

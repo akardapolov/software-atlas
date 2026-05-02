@@ -33,4 +33,4 @@ Dynamo inspired:
 ## Connections
 
 - **Builds on:** [Brewer — CAP Conjecture](brewer-2000-cap.md)
-- **Related topic:** [Distributed Systems](../../topics/distributed/)
+- **Related topic:** [Distributed Systems](../../topics/distributed/index.md)

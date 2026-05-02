@@ -226,6 +226,6 @@ disappears:
 - **Led to:** [R.C. Martin — SOLID (2003)](../../authors/robert-c-martin.md) ·
   Variance in Java, C#, Kotlin, TypeScript
 - **Authors:** [Barara Liskov](../../authors/barara-liskov.md)
-- **Related topic:** [OOP & Design](../../topics/design/) ·
-  [Type Systems](../../topics/types/) ·
-  [Paradigms](../../topics/paradigms/)
+- **Related topic:** [OOP & Design](../../topics/design/index.md) ·
+  [Type Systems](../../topics/types/index.md) ·
+  [Paradigms](../../topics/paradigms/index.md)

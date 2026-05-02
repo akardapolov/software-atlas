@@ -96,6 +96,6 @@ CLU's innovations became standard:
 ## Connections
 
 - **Influenced:** Eiffel (DbC), Java interfaces, type theory
-- **Related topic:** [Type Systems](../../topics/type-systems/)
+- **Related topic:** [Type Systems](../../topics/type-systems/index.md)
 - **Related work:** [Behavioral Notion of Subtyping (1994)](./liskov-wing-1994-subtyping.md)
 - **Author:** [Barbara Liskov](../../authors/barbara-liskov.md)

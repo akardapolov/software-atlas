@@ -23,4 +23,4 @@ Though examples are in Ruby, principles are universal:
 ## Connections
 
 - **Related:** SOLID, Refactoring, TDD
-- **Related topic:** [OOP & Design](../../topics/design/)
+- **Related topic:** [OOP & Design](../../topics/design/index.md)

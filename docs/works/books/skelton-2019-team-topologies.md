@@ -39,4 +39,4 @@ and enabling teams reduce load and accelerate flow.
 
 - **Builds on:** Conway (1967)
 - **Related:** [Accelerate (2018)](forsgren-2018-accelerate.md)
-- **Related topic:** [Architecture](../../topics/architecture/) · [Process](../../topics/process/)
+- **Related topic:** [Architecture](../../topics/architecture/index.md) · [Process](../../topics/process/index.md)

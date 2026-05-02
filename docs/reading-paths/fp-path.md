@@ -40,6 +40,6 @@ Model a simple domain (e.g., "user registration"):
 
 ## Related
 
-- [Functional topic](../topics/functional/)
-- [Types topic](../topics/types/)
-- [Paradigms](../topics/paradigms/)
+- [Functional topic](../topics/functional/index.md)
+- [Types topic](../topics/types/index.md)
+- [Paradigms](../topics/paradigms/index.md)

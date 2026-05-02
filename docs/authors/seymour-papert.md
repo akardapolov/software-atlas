@@ -86,5 +86,5 @@ Papert showed that **direct manipulation** and **feedback** were powerful for le
 ## Related Pages
 
 - [Alan Kay](alan-kay.md)
-- [Education topics](../topics/process/)
+- [Education topics](../topics/process/index.md)
 - [Mindstorms book](../works/books/papert-1980-mindstorms.md)

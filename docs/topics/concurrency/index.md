@@ -126,10 +126,10 @@ This is compatible with:
 
 ## Related Topics
 
-- [Distributed Systems](../distributed/) — reliability, consensus, CAP
-- [Functional Programming](../functional/) — immutability prevents data races
-- [Paradigms](../paradigms/) — concurrency models in broader context
-- [Architecture & Modularity](../architecture/) — system decomposition
+- [Distributed Systems](../distributed/index.md) — reliability, consensus, CAP
+- [Functional Programming](../functional/index.md) — immutability prevents data races
+- [Paradigms](../paradigms/index.md) — concurrency models in broader context
+- [Architecture & Modularity](../architecture/index.md) — system decomposition
 
 ## Maps
 

@@ -2079,8 +2079,8 @@ continuous delivery, and safe refactoring.
 
 ## Related Topics
 
-- [Architecture & Modularity](../architecture/) — how process interacts with architecture
-- [OOP & Design](../design/) — refactoring, code quality
-- [Functional Programming](../functional/) — testability, refactoring in FP
-- [Version Control & Git](../vcs/) — branching, commit practices, code review workflows
-- [Languages](../../languages/) — language-specific processes (Rust cargo, Go conventions)
+- [Architecture & Modularity](../architecture/index.md) — how process interacts with architecture
+- [OOP & Design](../design/index.md) — refactoring, code quality
+- [Functional Programming](../functional/index.md) — testability, refactoring in FP
+- [Version Control & Git](../vcs/index.md) — branching, commit practices, code review workflows
+- [Languages](../../languages/index.md) — language-specific processes (Rust cargo, Go conventions)

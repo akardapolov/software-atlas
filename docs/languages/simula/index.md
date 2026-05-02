@@ -353,7 +353,7 @@ Simula was taught extensively in universities:
 
 ## Code Examples
 
-See [examples/simula/](../../../examples/simula/) for runnable code *(planned)*
+See [examples/simula/](../../../examples/simula/index.md) for runnable code *(planned)*
 
 ## Strengths and Weaknesses
 
@@ -383,10 +383,10 @@ See [examples/simula/](../../../examples/simula/) for runnable code *(planned)*
 
 ## Related Topics
 
-- [OOP & Design](../topics/design/) — Simula as OOP foundation |
-- [Paradigms](../topics/paradigms/) — Simula's role in OOP evolution |
-- [Type Systems](../topics/types/) — static typing, references |
-- [Architecture](../topics/architecture/) — classes as architectural pattern |
+- [OOP & Design](../topics/design/index.md) — Simula as OOP foundation |
+- [Paradigms](../topics/paradigms/index.md) — Simula's role in OOP evolution |
+- [Type Systems](../topics/types/index.md) — static typing, references |
+- [Architecture](../topics/architecture/index.md) — classes as architectural pattern |
 
 ## Further Reading
 
@@ -403,4 +403,4 @@ See [examples/simula/](../../../examples/simula/) for runnable code *(planned)*
 
 ---
 
-See [Languages Index](../languages/) for other language profiles.
+See [Languages Index](../languages/index.md) for other language profiles.

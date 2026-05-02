@@ -210,5 +210,5 @@ understand it — they thought it was about relativity, not computing.
   Mattern/Fidge — Vector Clocks (1988) ·
   [Kleppmann — DDIA (2017)](../books/kleppmann-2017-ddia.md)
 - **Author:** [Leslie Lamport](../../authors/leslie-lamport.md)
-- **Related topic:** [Distributed Systems](../../topics/distributed/) ·
-  [Concurrency](../../topics/concurrency/)
+- **Related topic:** [Distributed Systems](../../topics/distributed/index.md) ·
+  [Concurrency](../../topics/concurrency/index.md)

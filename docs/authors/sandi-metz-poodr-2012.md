@@ -66,10 +66,10 @@ Metz demonstrates how SOLID principles, originally formulated for statically-typ
 
 ## Related Pages
 
-- [OOP & Design topic](../topics/design/) — SOLID principles and object-oriented design
+- [OOP & Design topic](../topics/design/index.md) — SOLID principles and object-oriented design
 - [Robert C. Martin](robert-c-martin.md) — SOLID principles creator
 - [Kent Beck](kent-beck.md) — TDD and testing practices
-- [Ruby language page](../languages/ruby/) — Ruby OOP patterns
+- [Ruby language page](../languages/ruby/index.md) — Ruby OOP patterns
 
 ## Further Reading
 

@@ -109,5 +109,5 @@ The Java Programming Language series became:
 - **Follows:** [Java Language Specification (1996)](../papers/gosling-1996-jls.md)
 - **Co-authors:** Bill Joy, Guy Steele, Gilad Bracha
 - **Influenced:** Java 3, 4, 5 language evolution
-- **Related:** [Java language](../../languages/java/)
+- **Related:** [Java language](../../languages/java/index.md)
 - **Author:** [James Gosling](../../authors/james-gosling.md)

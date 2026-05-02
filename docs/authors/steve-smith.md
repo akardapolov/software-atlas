@@ -76,7 +76,7 @@ With Nicole Forsgren, Gene Kim, Smith documented key principles that distinguish
 
 ## Related Pages
 
-- [Process topic](../topics/process/) — DevOps, CI/CD, SRE
+- [Process topic](../topics/process/index.md) — DevOps, CI/CD, SRE
 - [Nicole Forsgren](nicole-forsgren.md) — DORA research and metrics
 - [Gene Kim](gene-kim.md) — Team dynamics and DORA
 - [Humble, Farley & Kim](https://humblefarleykim.com/) — Consulting company

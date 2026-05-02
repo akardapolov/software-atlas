@@ -485,10 +485,10 @@ The approach argues that functional style reduces development cost by:
 
 ## Related Topics
 
-- [Paradigms](../paradigms/) — FP in the context of all paradigms
-- [Type Systems](../types/) — how types support FP
-- [OOP & Design](../design/) — contrast with OOP
-- [Concurrency](../concurrency/) — FP's advantage for parallel code
+- [Paradigms](../paradigms/index.md) — FP in the context of all paradigms
+- [Type Systems](../types/index.md) — how types support FP
+- [OOP & Design](../design/index.md) — contrast with OOP
+- [Concurrency](../concurrency/index.md) — FP's advantage for parallel code
 
 ## Related Authors
 

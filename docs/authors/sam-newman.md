@@ -77,8 +77,8 @@ Newman's work influenced:
 
 ## Related Pages
 
-- [Distributed Systems topic](../topics/distributed/) — CAP, consistency, and distributed patterns
-- [Architecture & Modularity topic](../topics/architecture/) — microservices, Strangler Fig
+- [Distributed Systems topic](../topics/distributed/index.md) — CAP, consistency, and distributed patterns
+- [Architecture & Modularity topic](../topics/architecture/index.md) — microservices, Strangler Fig
 - [Martin Fowler](martin-fowler.md) — patterns and architecture
 - [Eric Evans](eric-evans.md) — DDD and bounded contexts
 

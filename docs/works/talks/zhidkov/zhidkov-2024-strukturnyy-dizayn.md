@@ -34,5 +34,5 @@ The article presents three case studies showing results of applying balanced for
 ## Related Pages
 
 - [Alexander Zhidkov](../../authors/alexander-zhidkov.md)
-- [OOP & Design](../../topics/design/)
+- [OOP & Design](../../topics/design/index.md)
 - [Ergonomic Approach](https://ergowiki.azhidkov.pro/docs/structural-design/)

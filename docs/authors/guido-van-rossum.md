@@ -102,5 +102,5 @@ Van Rossum fostered one of the largest open-source communities:
 ## Related Pages
 
 - [Alan Kay](alan-kay.md)
-- [Python language](../languages/python/)
-- [Dynamic typing topic](../topics/type-systems/)
+- [Python language](../languages/python/index.md)
+- [Dynamic typing topic](../topics/type-systems/index.md)

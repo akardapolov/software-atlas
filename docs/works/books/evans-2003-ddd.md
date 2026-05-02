@@ -211,5 +211,5 @@ Wlaschin showed that DDD's tactical patterns map naturally to FP:
   [Wlaschin — Domain Modeling FP (2018)](wlaschin-2018-dmf.md) ·
   Vernon — IDDD (2013) · Event Sourcing / CQRS
 - **Author:** [Eric Evans](../../authors/eric-evans.md)
-- **Related topic:** [Architecture & Modularity](../../topics/architecture/) ·
-  [OOP & Design](../../topics/design/)
+- **Related topic:** [Architecture & Modularity](../../topics/architecture/index.md) ·
+  [OOP & Design](../../topics/design/index.md)

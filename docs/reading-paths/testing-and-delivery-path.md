@@ -35,4 +35,4 @@ Goal: connect "tests" with design, and "deployment" with engineering practices.
 
 ## Related
 
-- [Process & Testing topic](../topics/process/)
+- [Process & Testing topic](../topics/process/index.md)

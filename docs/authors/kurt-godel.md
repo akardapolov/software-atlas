@@ -77,4 +77,4 @@ The contrast between Gödel's completeness (1929) and incompleteness (1931) resu
 - [Incompleteness paper](../works/papers/godel-1931-incompleteness.md)
 - [Alonzo Church](alonzo-church.md)
 - [Alan Turing](alan-turing.md)
-- [Mathematical Logic](../topics/types/)
+- [Mathematical Logic](../topics/types/index.md)

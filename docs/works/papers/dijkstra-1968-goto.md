@@ -146,5 +146,5 @@ The structured programming revolution is complete.
   Wirth — Pascal (1970) ·
   Structured Programming book (Dijkstra, Dahl, Hoare, 1972)
 - **Author:** [Edsger Dijkstra](../../authors/edsger-dijkstra.md)
-- **Related topic:** [Paradigms](../../topics/paradigms/) ·
-  [Architecture & Modularity](../../topics/architecture/)
+- **Related topic:** [Paradigms](../../topics/paradigms/index.md) ·
+  [Architecture & Modularity](../../topics/architecture/index.md)

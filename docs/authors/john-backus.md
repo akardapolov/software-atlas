@@ -110,8 +110,8 @@ outside, but a self-critique from one of the builders of the mainstream.
 
 ## Related Pages
 
-- [Functional Programming](../topics/functional/)
-- [Paradigms](../topics/paradigms/)
+- [Functional Programming](../topics/functional/index.md)
+- [Paradigms](../topics/paradigms/index.md)
 - [Alonzo Church](alonzo-church.md)
 - [Robin Milner](robin-milner.md)
-- [Haskell](../languages/haskell/)
+- [Haskell](../languages/haskell/index.md)

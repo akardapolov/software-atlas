@@ -139,8 +139,8 @@ Zhidkov explores the ambiguity of SRP, noting that "Single Responsibility" can m
 
 ## Related Pages
 
-- [Architecture & Modularity](../topics/architecture/)
-- [OOP & Design](../topics/design/)
-- [Functional Programming](../topics/functional/)
+- [Architecture & Modularity](../topics/architecture/index.md)
+- [OOP & Design](../topics/design/index.md)
+- [Functional Programming](../topics/functional/index.md)
 - [Eric Evans](eric-evans.md)
 - [Rich Hickey](rich-hickey.md)

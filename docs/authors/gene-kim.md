@@ -71,7 +71,7 @@ Kim's work emphasizes that team performance is not just about tools and processe
 
 ## Related Pages
 
-- [Process topic](../topics/process/) — DevOps, CI/CD, SRE
+- [Process topic](../topics/process/index.md) — DevOps, CI/CD, SRE
 - [Nicole Forsgren](nicole-forsgren.md) — DORA research and metrics
 - [Jez Humble](jez-humble.md) — Continuous Delivery
 - [David Farley](david-farley.md) — Continuous Delivery

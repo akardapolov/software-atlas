@@ -64,7 +64,7 @@ Raft became the dominant consensus algorithm for production systems:
 
 ## Related Pages
 
-- [Distributed Systems topic](../topics/distributed/) — Consensus, CAP, and distributed systems
+- [Distributed Systems topic](../topics/distributed/index.md) — Consensus, CAP, and distributed systems
 - [Leslie Lamport](leslie-lamport.md) — Paxos and distributed systems foundations
 - [John Ousterhout](john-ousterhout.md) — Systems thinking and design philosophy
 - [Paxos paper](../works/papers/lamport-1989-paxos.md) — Original consensus algorithm

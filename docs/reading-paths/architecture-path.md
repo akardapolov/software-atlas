@@ -49,7 +49,7 @@ flowchart LR
 - Focus: architecture = trade-offs on NFRs (latency, availability, modifiability…)
 
 ### 5) Turning dependencies inward
-- Read: [Cockburn — Hexagonal Architecture](../topics/architecture/) (section) + related literature
+- Read: [Cockburn — Hexagonal Architecture](../topics/architecture/index.md) (section) + related literature
 - Task: formulate "ports" for your service (which dependencies should be interfaces?)
 
 ### 6) DDD as architectural boundaries
@@ -73,6 +73,6 @@ Choose a familiar product and create 3 artifacts:
 
 ## Related
 
-- [Architecture topic](../topics/architecture/)
-- [OOP & Design](../topics/design/)
-- [Distributed Systems](../topics/distributed/)
+- [Architecture topic](../topics/architecture/index.md)
+- [OOP & Design](../topics/design/index.md)
+- [Distributed Systems](../topics/distributed/index.md)
