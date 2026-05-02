@@ -375,17 +375,17 @@ See [examples/go/](../../../examples/go/index.md) for runnable code:
 
 ## Related Authors
 
-- [Ken Thompson](../authors/ken-thompson.md) — co-creator, Unix, C influence
-- [Rob Pike](../authors/rob-pike.md) — co-creator, Plan 9, Unix experience
-- [Robert Griesemer](../authors/robert-griesemer.md) — co-creator, language design
-- [Tony Hoare](../authors/tony-hoare.md) — CSP (channels foundation)
+- [Ken Thompson](../../authors/ken-thompson.md) — co-creator, Unix, C influence
+- [Rob Pike](../../authors/rob-pike.md) — co-creator, Plan 9, Unix experience
+- [Robert Griesemer](../../authors/robert-griesemer.md) — co-creator, language design
+- [Tony Hoare](../../authors/tony-hoare.md) — CSP (channels foundation)
 
 ## Related Topics
 
-- [Concurrency](../topics/concurrency/index.md) — CSP, goroutines, channels |
-- [Type Systems](../topics/types/index.md) — static typing, interfaces |
-- [Distributed Systems](../topics/distributed/index.md) — Go's role in cloud-native |
-- [Process](../topics/process/index.md) — Go's tooling impact |
+- [Concurrency](../../topics/concurrency/index.md) — CSP, goroutines, channels |
+- [Type Systems](../../topics/types/index.md) — static typing, interfaces |
+- [Distributed Systems](../../topics/distributed/index.md) — Go's role in cloud-native |
+- [Process](../../topics/process/index.md) — Go's tooling impact |
 
 ## Further Reading
 

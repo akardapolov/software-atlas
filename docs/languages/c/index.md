@@ -436,17 +436,17 @@ See [examples/c/](../../../examples/c/index.md) for runnable code:
 
 ## Related Authors
 
-- [Dennis Ritchie](../authors/dennis-ritchie.md) — creator of C
-- [Ken Thompson](../authors/ken-thompson.md) — created B, Unix co-creator
-- [Bjarne Stroustrup](../authors/bjarne-stroustrup.md) — created C++
-- [Brian Kernighan](../authors/brian-kernighan.md) — K&R C co-author
+- [Dennis Ritchie](../../authors/dennis-ritchie.md) — creator of C
+- [Ken Thompson](../../authors/ken-thompson.md) — created B, Unix co-creator
+- [Bjarne Stroustrup](../../authors/bjarne-stroustrup.md) — created C++
+- [Brian Kernighan](../../authors/brian-kernighan.md) — K&R C co-author
 
 ## Related Topics
 
-- [Architecture](../topics/architecture/index.md) — C in systems programming |
-- [Type Systems](../topics/types/index.md) — static vs dynamic typing |
-- [Paradigms](../topics/paradigms/index.md) — procedural programming |
-- [Distributed](../topics/distributed/index.md) — C in low-level networking |
+- [Architecture](../../topics/architecture/index.md) — C in systems programming |
+- [Type Systems](../../topics/types/index.md) — static vs dynamic typing |
+- [Paradigms](../../topics/paradigms/index.md) — procedural programming |
+- [Distributed](../../topics/distributed/index.md) — C in low-level networking |
 
 ## Further Reading
 

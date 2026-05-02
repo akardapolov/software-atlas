@@ -49,7 +49,7 @@ This work remains required reading for distributed system architects.
 - **Builds on:** [Brewer — CAP Conjecture](../papers/brewer-2000-cap.md)
 - **Led to:** [Event Sourcing Pattern](../../topics/architecture/event-sourcing.md)
 - **Related author:** [Pat Helland](../../authors/pat-helland.md)
-- **Related topic:** [Distributed Systems](../../topics/distributed-systems/index.md)
+- **Related topic:** [Distributed Systems](../../topics/distributed/index.md)
 
 ## Personal Notes
 

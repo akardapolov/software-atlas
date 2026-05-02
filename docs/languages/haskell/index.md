@@ -368,27 +368,27 @@ See [examples/haskell/](../../../examples/haskell/index.md) for runnable code:
 
 ## Related Authors
 
-- [Haskell Curry](../authors/haskell-curry.md) — language namesake, combinatory logic
-- [Robin Milner](../authors/robin-milner.md) — type inference foundation
-- [Simon Peyton Jones](../authors/simon-peyton-jones.md) — GHC architect
-- [Philip Wadler](../authors/philip-wadler.md) — monads, list comprehensions
-- [John Hughes](../authors/john-hughes.md) — "Why FP Matters"
-- [Koen Claessen](../authors/koen-claessen.md) — QuickCheck
+- [Haskell Curry](../../authors/haskell-curry.md) — language namesake, combinatory logic
+- [Robin Milner](../../authors/robin-milner.md) — type inference foundation
+- [Simon Peyton Jones](../../authors/simon-peyton-jones.md) — GHC architect
+- [Philip Wadler](../../authors/philip-wadler.md) — monads, list comprehensions
+- [John Hughes](../../authors/john-hughes.md) — "Why FP Matters"
+- [Koen Claessen](../../authors/koen-claessen.md) — QuickCheck
 
 ## Related Topics
 
-- [Functional Programming](../topics/functional/index.md) — Haskell as pure FP exemplar
-- [Type Systems](../topics/types/index.md) — type classes, HM inference
-- [Concurrency](../topics/concurrency/index.md) — STM, async patterns
-- [Monads](../topics/monads/index.md) *(future topic)* — structured side effects
+- [Functional Programming](../../topics/functional/index.md) — Haskell as pure FP exemplar
+- [Type Systems](../../topics/types/index.md) — type classes, HM inference
+- [Concurrency](../../topics/concurrency/index.md) — STM, async patterns
+- [Monads](../../topics/monads/index.md) *(future topic)* — structured side effects
 
 ## Further Reading
 
 - Peyton Jones (ed.) — *Haskell 98 Language and Libraries* (1999)
 - O'Sullivan et al. — *Real World Haskell* (2008)
 - Learn You a Haskell — *Learn You a Haskell for Great Good!* (2011)
-- Hughes — ["Why Functional Programming Matters"](../works/papers/hughes-1989-why-fp.md) (1989)
-- Claessen & Hughes — ["QuickCheck"](../works/papers/hughes-claessen-2000-quickcheck.md) (2000)
+- Hughes — ["Why Functional Programming Matters"](../../works/papers/hughes-1989-why-fp.md) (1989)
+- Claessen & Hughes — ["QuickCheck"](../../works/papers/hughes-claessen-2000-quickcheck.md) (2000)
 
 ## Quotes
 

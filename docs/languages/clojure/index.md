@@ -380,22 +380,22 @@ See [examples/clojure/](../../../examples/clojure/index.md) for runnable code:
 
 ## Related Authors
 
-- [Rich Hickey](../authors/rich-hickey.md) — creator
-- [John McCarthy](../authors/john-mccarthy.md) — Lisp heritage
-- [Joe Armstrong](../authors/joe-armstrong.md) — concurrency influence
-- [John Hughes](../authors/john-hughes.md) — functional programming influence
+- [Rich Hickey](../../authors/rich-hickey.md) — creator
+- [John McCarthy](../../authors/john-mccarthy.md) — Lisp heritage
+- [Joe Armstrong](../../authors/joe-armstrong.md) — concurrency influence
+- [John Hughes](../../authors/john-hughes.md) — functional programming influence
 
 ## Related Topics
 
-- [Functional Programming](../topics/functional/index.md) — Clojure as practical FP
+- [Functional Programming](../../topics/functional/index.md) — Clojure as practical FP
 - [Lisp](../lisp/index.md) — Clojure as modern Lisp dialect
-- [Concurrency](../topics/concurrency/index.md) — STM, core.async
-- [Type Systems](../topics/types/index.md) — dynamic vs static typing
+- [Concurrency](../../topics/concurrency/index.md) — STM, core.async
+- [Type Systems](../../topics/types/index.md) — dynamic vs static typing
 
 ## Further Reading
 
-- Hickey — [Simple Made Easy](../works/talks/hickey-2011-simple-made-easy.md) (2011)
-- Hickey — [Are We There Yet?](../works/talks/hickey-2009-are-we-there-yet.md) (2009)
+- Hickey — [Simple Made Easy](../../works/talks/hickey-2011-simple-made-easy.md) (2011)
+- Hickey — [Are We There Yet?](../../works/talks/hickey-2009-are-we-there-yet.md) (2009)
 - Fogus & Houser — *Clojure Programming* (2014)
 - Grandstaff — *Elements of Clojure* (2012)
 - Rathore — *Clojure in Action* (2010)

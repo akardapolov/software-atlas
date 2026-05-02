@@ -358,22 +358,22 @@ See [examples/lisp/](../../../examples/lisp/index.md) for runnable code:
 
 ## Related Authors
 
-- [John McCarthy](../authors/john-mccarthy.md) — creator of Lisp
-- [Alonzo Church](../authors/alonzo-church.md) — lambda calculus inspiration
-- [Guy Steele](../authors/guy-steele.md) — Scheme co-creator
-- [Gerald Sussman](../authors/gerald-sussman.md) — Scheme co-creator
-- [Rich Hickey](../authors/rich-hickey.md) — Clojure creator
+- [John McCarthy](../../authors/john-mccarthy.md) — creator of Lisp
+- [Alonzo Church](../../authors/alonzo-church.md) — lambda calculus inspiration
+- [Guy Steele](../../authors/guy-steele.md) — Scheme co-creator
+- [Gerald Sussman](../../authors/gerald-sussman.md) — Scheme co-creator
+- [Rich Hickey](../../authors/rich-hickey.md) — Clojure creator
 
 ## Related Topics
 
-- [Functional Programming](../topics/functional/index.md) — Lisp as first FP language
-- [Type Systems](../topics/types/index.md) — dynamic typing vs static
-- [Paradigms](../topics/paradigms/index.md) — symbolic and imperative paradigms
-- [Macros & Meta-programming](../topics/macros/index.md) — code-as-data *(future topic)*
+- [Functional Programming](../../topics/functional/index.md) — Lisp as first FP language
+- [Type Systems](../../topics/types/index.md) — dynamic typing vs static
+- [Paradigms](../../topics/paradigms/index.md) — symbolic and imperative paradigms
+- [Macros & Meta-programming](../../topics/macros/index.md) — code-as-data *(future topic)*
 
 ## Further Reading
 
-- McCarthy — [Recursive Functions of Symbolic Expressions (1960)](../works/papers/mccarthy-1960-recursive.md)
+- McCarthy — [Recursive Functions of Symbolic Expressions (1960)](../../works/papers/mccarthy-1960-recursive.md)
 - Steele & Sussman — *Scheme: An Interpreter for Extended Lambda Calculus* (1975)
 - Graham — *On Lisp* (1993)
 - Abelson & Sussman — *Structure and Interpretation of Computer Programs* (SICP) (1985)

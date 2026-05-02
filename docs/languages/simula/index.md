@@ -375,22 +375,22 @@ See [examples/simula/](../../../examples/simula/index.md) for runnable code *(pl
 
 ## Related Authors
 
-- [Ole-Johan Dahl](../authors/ole-johan-dahl.md) — co-creator
-- [Kristen Nygaard](../authors/kristen-nygaard.md) — co-creator
-- [Alan Kay](../authors/alan-kay.md) — saw Simula, influenced Smalltalk
-- [Bjarne Stroustrup](../authors/bjarne-stroustrup.md) — C++ inheritance credited to Simula
-- [James Gosling](../authors/james-gosling.md) — studied Simula, Java classes
+- [Ole-Johan Dahl](../../authors/ole-johan-dahl.md) — co-creator
+- [Kristen Nygaard](../../authors/kristen-nygaard.md) — co-creator
+- [Alan Kay](../../authors/alan-kay.md) — saw Simula, influenced Smalltalk
+- [Bjarne Stroustrup](../../authors/bjarne-stroustrup.md) — C++ inheritance credited to Simula
+- [James Gosling](../../authors/james-gosling.md) — studied Simula, Java classes
 
 ## Related Topics
 
-- [OOP & Design](../topics/design/index.md) — Simula as OOP foundation |
-- [Paradigms](../topics/paradigms/index.md) — Simula's role in OOP evolution |
-- [Type Systems](../topics/types/index.md) — static typing, references |
-- [Architecture](../topics/architecture/index.md) — classes as architectural pattern |
+- [OOP & Design](../../topics/design/index.md) — Simula as OOP foundation |
+- [Paradigms](../../topics/paradigms/index.md) — Simula's role in OOP evolution |
+- [Type Systems](../../topics/types/index.md) — static typing, references |
+- [Architecture](../../topics/architecture/index.md) — classes as architectural pattern |
 
 ## Further Reading
 
-- Dahl & Nygaard — ["SIMULA — A Common Base Language for Discrete Simulation"](../works/papers/dahl-nygaard-1967-simula.md) (1967)
+- Dahl & Nygaard — ["SIMULA — A Common Base Language for Discrete Simulation"](../../works/papers/dahl-nygaard-1967-simula.md) (1967)
 - Birtwistle et al. — *Programming in Simula 67* (1983)
 - Holmevik — *Simula Common Base Language Programming* (1983)
 

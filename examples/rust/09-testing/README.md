@@ -37,4 +37,4 @@ Rust (2010) built testing into cargo from the start. The
 \`assert!\` macros provide compile-time checked assertions. Property-based
 testing from Haskell (QuickCheck) influenced Rust's proptest.
 
-For more on Rust, see [docs/languages/rust/](../../../docs/languages/rust/)
+For more on Rust, see [docs/languages/rust/](../../../docs/languages/rust/index.md)

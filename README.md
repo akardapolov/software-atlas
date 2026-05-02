@@ -513,13 +513,13 @@ but to compare how different languages express the same core ideas.
 
 Guided sequences for focused study.
 
-| Path | Focus | Start | End | Page |
-|------|-------|-------|-----|------|
-| 🏗 **Architecture** | Modularity → Hexagonal → DDD | Dijkstra 1968 | Skelton 2019 | [→](docs/reading-paths/architecture-path.md) |
-| 🧩 **OOP & Design** | Simula → Smalltalk → GoF → SOLID | Dahl 1967 | Metz 2012 | [→](docs/reading-paths/oop-and-design-path.md) |
-| λ **Functional Programming** | Lambda calculus → ML → Haskell → Clojure | Church 1936 | Wlaschin 2018 | [→](docs/reading-paths/fp-path.md) |
-| 🧪 **Testing & Delivery** | XP → TDD → CI/CD → DORA | Beck 1999 | Forsgren 2018 | [→](docs/reading-paths/testing-and-delivery-path.md) |
-| 🌐 **Distributed Systems** | Clocks → ACID → CAP → Streaming | Lamport 1978 | Kleppmann 2017 | [→](docs/reading-paths/distributed-systems-path.md) |
+| Path                         | Focus                                    | Start         | End            | Page                                                 |
+|------------------------------|------------------------------------------|---------------|----------------|------------------------------------------------------|
+| 🏗 **Architecture**          | Modularity → Hexagonal → DDD             | Dijkstra 1968 | Skelton 2019   | [→](docs/reading-paths/architecture-path.md)         |
+| 🧩 **OOP & Design**          | Simula → Smalltalk → GoF → SOLID         | Dahl 1967     | Metz 2012      | [→](docs/reading-paths/oop-and-design-path.md)       |
+| λ **Functional Programming** | Lambda calculus → ML → Haskell → Clojure | Church 1936   | Wlaschin 2018  | [→](docs/reading-paths/fp-path.md)                   |
+| 🧪 **Testing & Delivery**    | XP → TDD → CI/CD → DORA                  | Beck 1999     | Forsgren 2018  | [→](docs/reading-paths/testing-and-delivery-path.md) |
+| 🌐 **Distributed Systems**   | Clocks → ACID → CAP → Streaming          | Lamport 1978  | Kleppmann 2017 | [→](docs/reading-paths/distributed-systems-path.md)  |
 
 ---
 

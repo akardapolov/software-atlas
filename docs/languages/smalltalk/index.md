@@ -446,24 +446,24 @@ Smalltalk isn't just a language — it's a complete development environment:
 
 ### Strengths
 
-| Strength | Detail |
-|----------|--------|
-| **Pure OOP** | Consistent model, everything is object |
-| **Live coding** | Immediate feedback, no rebuild |
-| **Simple syntax** | Minimal, easy to learn |
-| **Powerful tools** | Integrated, reflective |
-| **Uniformity** | Same model everywhere |
-| **Educational** | Great for teaching OOP |
+| Strength           | Detail                                 |
+|--------------------|----------------------------------------|
+| **Pure OOP**       | Consistent model, everything is object |
+| **Live coding**    | Immediate feedback, no rebuild         |
+| **Simple syntax**  | Minimal, easy to learn                 |
+| **Powerful tools** | Integrated, reflective                 |
+| **Uniformity**     | Same model everywhere                  |
+| **Educational**    | Great for teaching OOP                 |
 
 ### Weaknesses
 
-| Weakness | Detail |
-|----------|--------|
-| **Performance** | Slower than compiled languages |
-| **Ecosystem** | Smaller than mainstream languages |
-| **Industry adoption** | Limited commercial use |
-| **Learning curve** | Different paradigm |
-| **Tooling** | Less mature than Java/JavaScript |
+| Weakness              | Detail                            |
+|-----------------------|-----------------------------------|
+| **Performance**       | Slower than compiled languages    |
+| **Ecosystem**         | Smaller than mainstream languages |
+| **Industry adoption** | Limited commercial use            |
+| **Learning curve**    | Different paradigm                |
+| **Tooling**           | Less mature than Java/JavaScript  |
 
 ---
 
@@ -471,14 +471,14 @@ Smalltalk isn't just a language — it's a complete development environment:
 
 See [`examples/smalltalk/`](../../examples/smalltalk/index.md) for runnable code:
 
-| Example | Description |
-|---------|-------------|
-| [01 Hello World](../../examples/smalltalk/01-hello-world/index.md) | Basic syntax, Transcript |
-| [02 Variables & Types](../../examples/smalltalk/02-variables-and-types/index.md) | Dynamic typing, objects |
-| [03 Functions](../../examples/smalltalk/03-functions/index.md) | Methods, blocks |
-| [04 Control Flow](../../examples/smalltalk/04-control-flow/index.md) | Conditionals, loops |
-| [05 Data Structures](../../examples/smalltalk/05-data-structures/index.md) | Collections, dictionaries |
-| [06 OOP/Modules](../../examples/smalltalk/06-oop-modules/index.md) | Classes, inheritance |
+| Example                                                                          | Description               |
+|----------------------------------------------------------------------------------|---------------------------|
+| [01 Hello World](../../examples/smalltalk/01-hello-world/index.md)               | Basic syntax, Transcript  |
+| [02 Variables & Types](../../examples/smalltalk/02-variables-and-types/index.md) | Dynamic typing, objects   |
+| [03 Functions](../../examples/smalltalk/03-functions/index.md)                   | Methods, blocks           |
+| [04 Control Flow](../../examples/smalltalk/04-control-flow/index.md)             | Conditionals, loops       |
+| [05 Data Structures](../../examples/smalltalk/05-data-structures/index.md)       | Collections, dictionaries |
+| [06 OOP/Modules](../../examples/smalltalk/06-oop-modules/index.md)               | Classes, inheritance      |
 
 ---
 
@@ -500,12 +500,12 @@ See [`examples/smalltalk/`](../../examples/smalltalk/index.md) for runnable code
 
 ## Further Reading
 
-| Author | Title | Year | Focus |
-|--------|-------|------|-------|
-| Goldberg & Robson | *Smalltalk-80: The Language* | 1989 | Language reference |
-| Goldberg & Robson | *Smalltalk-80: The Interactive Programming Environment* | 1989 | Environment |
-| Beck | *Smalltalk Best Practice Patterns* | 1997 | Idiomatic usage |
-| Ingalls et al. | *Back to the Future: The Story of Squeak* | 1997 | Squeak history |
+| Author            | Title                                                   | Year | Focus              |
+|-------------------|---------------------------------------------------------|------|--------------------|
+| Goldberg & Robson | *Smalltalk-80: The Language*                            | 1989 | Language reference |
+| Goldberg & Robson | *Smalltalk-80: The Interactive Programming Environment* | 1989 | Environment        |
+| Beck              | *Smalltalk Best Practice Patterns*                      | 1997 | Idiomatic usage    |
+| Ingalls et al.    | *Back to the Future: The Story of Squeak*               | 1997 | Squeak history     |
 
 ---
 
