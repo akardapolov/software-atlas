@@ -1,12 +1,11 @@
 # Can Programming Be Liberated from the von Neumann Style?
 
-| | |
-|---|---|
-| **Author** | John Backus |
-| **Year** | 1978 |
-| **Publication** | *Communications of the ACM*, 21(8), 613–641 (Turing Award Lecture) |
-| **Topic(s)** | Functional programming, paradigms, language design |
-| **PDF** | [Local copy](../../../library/open-access-papers/backus-1978-liberated.pdf) · [ACM](https://dl.acm.org/doi/10.1145/359576.359579) |
+|                 |                                                                                                                                   |
+|-----------------|-----------------------------------------------------------------------------------------------------------------------------------|
+| **Author**      | John Backus                                                                                                                       |
+| **Year**        | 1978                                                                                                                              |
+| **Publication** | *Communications of the ACM*, 21(8), 613–641 (Turing Award Lecture)                                                                |
+| **Topic(s)**    | Functional programming, paradigms, language design                                                                                |
 
 ## Summary
 

@@ -1,14 +1,14 @@
 # Python
 
-| | |
-|---|---|
-| **Year** | 1991 |
-| **Creator(s)** | Guido van Rossum |
-| **Paradigm(s)** | Multi-paradigm (OOP, functional, imperative) |
-| **Typing** | Dynamic, strong |
-| **Platform** | CPython, PyPy, Jython, IronPython |
-| **Key features** | Readable syntax, dynamic typing, extensive standard library |
-| **Current version** | Python 3.13 (2024) |
+|                     |                                                             |
+|---------------------|-------------------------------------------------------------|
+| **Year**            | 1991                                                        |
+| **Creator(s)**      | Guido van Rossum                                            |
+| **Paradigm(s)**     | Multi-paradigm (OOP, functional, imperative)                |
+| **Typing**          | Dynamic, strong                                             |
+| **Platform**        | CPython, PyPy, Jython, IronPython                           |
+| **Key features**    | Readable syntax, dynamic typing, extensive standard library |
+| **Current version** | Python 3.13 (2024)                                          |
 
 ---
 
@@ -667,20 +667,20 @@ Python's emphasis on readability influenced:
 
 ## Code Examples
 
-See [`examples/python/`](../../examples/python/index.md) for runnable code:
+See [`examples/python/`](../../../examples/python/index.md) for runnable code:
 
-| Example | Description |
-|---------|-------------|
-| [01 Hello World](../../examples/python/01-hello-world/index.md) | Basic syntax, print, input |
-| [02 Variables & Types](../../examples/python/02-variables-and-types/index.md) | Dynamic typing, type hints |
-| [03 Functions](../../examples/python/03-functions/index.md) | Functions, closures, decorators |
-| [04 Control Flow](../../examples/python/04-control-flow/index.md) | Loops, conditionals, match |
-| [05 Data Structures](../../examples/python/05-data-structures/index.md) | Lists, dicts, sets, comprehensions |
-| [06 OOP/Modules](../../examples/python/06-oop-modules/index.md) | Classes, inheritance, modules |
-| [07 FP Features](../../examples/python/07-fp-features/index.md) | Lambdas, map/filter/reduce |
-| [08 Error Handling](../../examples/python/08-error-handling/index.md) | Try/except, context managers |
-| [09 Concurrency](../../examples/python/09-concurrency/index.md) | Threading, asyncio, multiprocessing |
-| [10 Testing](../../examples/python/10-testing/index.md) | pytest, fixtures, mocks |
+| Example                                                                           | Description                         |
+|-----------------------------------------------------------------------------------|-------------------------------------|
+| [01 Hello World](../../../examples/python/01-hello-world/README.md)               | Basic syntax, print, input          |
+| [02 Variables & Types](../../../examples/python/02-variables-and-types/README.md) | Dynamic typing, type hints          |
+| [03 Functions](../../../examples/python/03-functions/README.md)                   | Functions, closures, decorators     |
+| [04 Control Flow](../../../examples/python/04-control-flow/README.md)             | Loops, conditionals, match          |
+| [05 Data Structures](../../../examples/python/05-data-structures/README.md)       | Lists, dicts, sets, comprehensions  |
+| [06 OOP/Modules](../../../examples/python/06-oop-modules/README.md)               | Classes, inheritance, modules       |
+| [07 FP Features](../../../examples/python/07-fp-features/README.md)               | Lambdas, map/filter/reduce          |
+| [08 Error Handling](../../../examples/python/07-error-handling/README.md)         | Try/except, context managers        |
+| [09 Concurrency](../../../examples/python/08-concurrency/README.md)               | Threading, asyncio, multiprocessing |
+| [10 Testing](../../../examples/python/09-testing/README.md)                       | pytest, fixtures, mocks             |
 
 ---
 
@@ -694,22 +694,22 @@ See [`examples/python/`](../../examples/python/index.md) for runnable code:
 
 ## Related Topics
 
-- [Functional Programming](../../topics/functional/index.md) — Python's FP features |
-- [Type Systems](../../topics/types/index.md) — dynamic vs static typing |
-- [Paradigms](../../topics/paradigms/index.md) — Python as multi-paradigm |
-- [Process](../../topics/process/index.md) — Python's tooling and packaging |
+- [Functional Programming](../../topics/functional/index.md) — Python's FP features
+- [Type Systems](../../topics/types/index.md) — dynamic vs static typing
+- [Paradigms](../../topics/paradigms/index.md) — Python as multi-paradigm
+- [Process](../../topics/process/index.md) — Python's tooling and packaging
 
 ---
 
 ## Further Reading
 
-| Author | Title | Year | Focus |
-|--------|-------|------|-------|
-| van Rossum | *The Python Language Reference* | Ongoing | Language specification |
-| Ramalho | *Fluent Python* | 2015 | Idiomatic, advanced Python |
-| Beazley & Jones | *Python Cookbook* | 2013 | Recipes, best practices |
-| C. Alvarado et al. | *Composing Programs* | 2016 | CS education in Python |
-| Lutz | *Learning Python* | 2013 | Comprehensive beginner guide |
+| Author             | Title                           | Year    | Focus                        |
+|--------------------|---------------------------------|---------|------------------------------|
+| van Rossum         | *The Python Language Reference* | Ongoing | Language specification       |
+| Ramalho            | *Fluent Python*                 | 2015    | Idiomatic, advanced Python   |
+| Beazley & Jones    | *Python Cookbook*               | 2013    | Recipes, best practices      |
+| C. Alvarado et al. | *Composing Programs*            | 2016    | CS education in Python       |
+| Lutz               | *Learning Python*               | 2013    | Comprehensive beginner guide |
 
 ---
 
@@ -728,4 +728,4 @@ See [`examples/python/`](../../examples/python/index.md) for runnable code:
 
 ---
 
-*See [Languages Index](../languages/index.md) for other language profiles.*
+*See [Languages Index](../index.md) for other language profiles.*

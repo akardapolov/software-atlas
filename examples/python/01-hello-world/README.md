@@ -35,4 +35,4 @@ Python was created by Guido van Rossum and first released in 1991. Key features:
 - Extensive standard library
 - Readability-focused design philosophy
 
-For more on Python, see [docs/languages/python/](../../../docs/languages/python/)
+For more on Python, see [docs/languages/python/](../../../docs/languages/python/index.md)

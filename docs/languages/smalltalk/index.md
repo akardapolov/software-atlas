@@ -1,14 +1,14 @@
 # Smalltalk
 
-| | |
-|---|---|
-| **Year** | 1972 |
-| **Creator(s)** | Alan Kay, Dan Ingalls, Adele Goldberg (Xerox PARC) |
-| **Paradigm(s)** | Object-oriented, message passing |
-| **Typing** | Dynamic |
-| **Platform** | Originally Smalltalk-80 VM, various implementations |
-| **Key features** | Pure OOP, image-based development, live coding |
-| **Major implementations** | Squeak, Pharo, VisualWorks |
+|                           |                                                     |
+|---------------------------|-----------------------------------------------------|
+| **Year**                  | 1972                                                |
+| **Creator(s)**            | Alan Kay, Dan Ingalls, Adele Goldberg (Xerox PARC)  |
+| **Paradigm(s)**           | Object-oriented, message passing                    |
+| **Typing**                | Dynamic                                             |
+| **Platform**              | Originally Smalltalk-80 VM, various implementations |
+| **Key features**          | Pure OOP, image-based development, live coding      |
+| **Major implementations** | Squeak, Pharo, VisualWorks                          |
 
 ---
 
@@ -525,4 +525,4 @@ See [`examples/smalltalk/`](../../examples/smalltalk/index.md) for runnable code
 
 ---
 
-*See [Languages Index](../languages/index.md) for other language profiles.*
+*See [Languages Index](../index.md) for other language profiles.*

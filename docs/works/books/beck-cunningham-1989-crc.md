@@ -1,11 +1,11 @@
 # A Laboratory for Teaching Object-Oriented Thinking
 
-| | |
-|---|---|
-| **Author** | Kent Beck, Ward Cunningham |
-| **Year** | 1989 |
+|                 |                                                                           |
+|-----------------|---------------------------------------------------------------------------|
+| **Author**      | Kent Beck, Ward Cunningham                                                |
+| **Year**        | 1989                                                                      |
 | **Publication** | OOPSLA (Object-Oriented Programming, Systems, Languages and Applications) |
-| **Topic(s)** | CRC cards, OOP teaching, object design |
+| **Topic(s)**    | CRC cards, OOP teaching, object design                                    |
 
 ## Summary
 
