@@ -31,9 +31,9 @@ Examples 09 (concurrency) and 10 (testing) use stdlib only.
 | 05 | [05-data-structures](05-data-structures/README.md)         | Lists, dicts, sets                  | `python3 main.py`  |
 | 06 | [06-oop-modules](06-oop-modules/README.md)                 | Classes, inheritance, modules       | `python3 main.py`  |
 | 07 | [07-fp-features](07-fp-features/README.md)                 | Lambdas, map/filter/reduce          | `python3 main.py`  |
-| 08 | [08-error-handling](07-error-handling/README.md)           | Try/except, context managers        | `python3 main.py`  |
-| 09 | [09-concurrency](08-concurrency/README.md)                 | Threading, asyncio, multiprocessing | `python3 main.py`  |
-| 10 | [10-testing](09-testing/README.md)                         | pytest, fixtures, mocks             | `python3 main.py`  |
+| 08 | [08-error-handling](08-error-handling/README.md)           | Try/except, context managers        | `python3 main.py`  |
+| 09 | [09-concurrency](09-concurrency/README.md)                 | Threading, asyncio, multiprocessing | `python3 main.py`  |
+| 10 | [10-testing](10-testing/README.md)                         | pytest, fixtures, mocks             | `python3 main.py`  |
 
 ---
 
@@ -48,9 +48,9 @@ Examples 09 (concurrency) and 10 (testing) use stdlib only.
 | [05-data-structures](05-data-structures/README.md)         | [main.py](05-data-structures/main.py)     |
 | [06-oop-modules](06-oop-modules/README.md)                 | [main.py](06-oop-modules/main.py)         |
 | [07-fp-features](07-fp-features/README.md)                 | [main.py](07-fp-features/main.py)         |
-| [08-error-handling](07-error-handling/README.md)           | [main.py](07-error-handling/main.py)      |
-| [09-concurrency](08-concurrency/README.md)                 | [main.py](08-concurrency/main.py)         |
-| [10-testing](09-testing/README.md)                         | [main.py](09-testing/main.py)             |
+| [08-error-handling](08-error-handling/README.md)           | [main.py](08-error-handling/main.py)      |
+| [09-concurrency](09-concurrency/README.md)                 | [main.py](09-concurrency/main.py)         |
+| [10-testing](10-testing/README.md)                         | [main.py](10-testing/main.py)             |
 
 ---
 

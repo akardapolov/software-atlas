@@ -678,9 +678,9 @@ See [`examples/python/`](../../../examples/python/index.md) for runnable code:
 | [05 Data Structures](../../../examples/python/05-data-structures/README.md)       | Lists, dicts, sets, comprehensions  |
 | [06 OOP/Modules](../../../examples/python/06-oop-modules/README.md)               | Classes, inheritance, modules       |
 | [07 FP Features](../../../examples/python/07-fp-features/README.md)               | Lambdas, map/filter/reduce          |
-| [08 Error Handling](../../../examples/python/07-error-handling/README.md)         | Try/except, context managers        |
-| [09 Concurrency](../../../examples/python/08-concurrency/README.md)               | Threading, asyncio, multiprocessing |
-| [10 Testing](../../../examples/python/09-testing/README.md)                       | pytest, fixtures, mocks             |
+| [08 Error Handling](../../../examples/python/08-error-handling/README.md)         | Try/except, context managers        |
+| [09 Concurrency](../../../examples/python/09-concurrency/README.md)               | Threading, asyncio, multiprocessing |
+| [10 Testing](../../../examples/python/10-testing/README.md)                       | pytest, fixtures, mocks             |
 
 ---
 

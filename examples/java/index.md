@@ -13,11 +13,11 @@ one or more `.java` files you can compile and run directly.
 cd examples/java/<example-dir>
 javac Main.java && java Main          # most examples
 javac HelloWorld.java && java HelloWorld   # 01-hello-world
-javac VarianceTest.java && java VarianceTest   # 17-variance-generics
+javac VarianceTest.java && java VarianceTest   # 14-variance-generics
 ```
 
-No external dependencies required for examples 01–08, 14–17.
-Example 09 (testing) uses JUnit (provided as a JAR).
+No external dependencies required for examples 01–09, 11–14.
+Example 10 (testing) uses JUnit (provided as a JAR).
 
 ---
 
@@ -32,13 +32,13 @@ Example 09 (testing) uses JUnit (provided as a JAR).
 | 05 | [05-data-structures](05-data-structures/README.md)                     | Lists, Maps, Sets, records                   | `javac Main.java && java Main`             |
 | 06 | [06-oop-modules](06-oop-modules/README.md)                             | Packages, interfaces, inheritance            | `javac Main.java && java Main`             |
 | 07 | [07-fp-features](07-fp-features/README.md)                             | Lambdas, streams, `Optional`                 | `javac Main.java && java Main`             |
-| 08 | [07-error-handling](07-error-handling/README.md)                       | Checked/unchecked, try-with-resources        | `javac Main.java && java Main`             |
-| 09 | [08-concurrency](08-concurrency/README.md)                             | Threads, executors, virtual threads          | `javac Main.java && java Main`             |
-| 10 | [09-testing](09-testing/README.md)                                     | JUnit 5, Mockito, AssertJ                    | `javac -cp junit.jar Main.java && java …`  |
-| 14 | [14-streams-advanced](14-streams-advanced/README.md)                   | Reduce, mapMulti, takeWhile, merge           | `javac Main.java && java Main`             |
-| 15 | [15-concurrency-thread-states](15-concurrency-thread-states/README.md) | BLOCKED, WAITING, TIMED_WAITING              | `javac Main.java && java Main`             |
-| 16 | [16-concurrency-structured](16-concurrency-structured/README.md)       | ShutdownOnFailure, ShutdownOnSuccess         | `javac Main.java && java Main`             |
-| 17 | [17-variance-generics](17-variance-generics/README.md)                 | Invariance, covariance, contravariance, PECS | `javac VarianceTest.java && java …`        |
+| 08 | [08-error-handling](08-error-handling/README.md)                       | Checked/unchecked, try-with-resources        | `javac Main.java && java Main`             |
+| 09 | [09-concurrency](09-concurrency/README.md)                             | Threads, executors, virtual threads          | `javac Main.java && java Main`             |
+| 10 | [10-testing](10-testing/README.md)                                     | JUnit 5, Mockito, AssertJ                    | `javac -cp junit.jar Main.java && java …`  |
+| 11 | [11-streams-advanced](11-streams-advanced/README.md)                   | Reduce, mapMulti, takeWhile, merge           | `javac Main.java && java Main`             |
+| 12 | [12-concurrency-thread-states](12-concurrency-thread-states/README.md) | BLOCKED, WAITING, TIMED_WAITING              | `javac Main.java && java Main`             |
+| 13 | [13-concurrency-structured](13-concurrency-structured/README.md)       | ShutdownOnFailure, ShutdownOnSuccess         | `javac Main.java && java Main`             |
+| 14 | [14-variance-generics](14-variance-generics/README.md)                 | Invariance, covariance, contravariance, PECS | `javac VarianceTest.java && java …`        |
 
 ---
 
@@ -53,13 +53,13 @@ Example 09 (testing) uses JUnit (provided as a JAR).
 | [05-data-structures](05-data-structures/README.md)                     | [Main.java](05-data-structures/Main.java)                               |
 | [06-oop-modules](06-oop-modules/README.md)                             | [Main.java](06-oop-modules/Main.java)                                   |
 | [07-fp-features](07-fp-features/README.md)                             | [main.java](07-fp-features/main.java)                                   |
-| [07-error-handling](07-error-handling/README.md)                       | [main.java](07-error-handling/main.java)                                |
-| [08-concurrency](08-concurrency/README.md)                             | [Main.java](08-concurrency/Main.java)                                   |
-| [09-testing](09-testing/README.md)                                     | [main.java](09-testing/main.java)                                       |
-| [14-streams-advanced](14-streams-advanced/README.md)                   | [Main.java](14-streams-advanced/Main.java)                              |
-| [15-concurrency-thread-states](15-concurrency-thread-states/README.md) | [Main.java](15-concurrency-thread-states/Main.java)                     |
-| [16-concurrency-structured](16-concurrency-structured/README.md)       | [Main.java](16-concurrency-structured/Main.java)                        |
-| [17-variance-generics](17-variance-generics/README.md)                 | [VarianceTest.java](17-variance-generics/VarianceTest.java)             |
+| [08-error-handling](08-error-handling/README.md)                       | [main.java](08-error-handling/main.java)                                |
+| [09-concurrency](09-concurrency/README.md)                             | [Main.java](09-concurrency/Main.java)                                   |
+| [10-testing](10-testing/README.md)                                     | [main.java](10-testing/main.java)                                       |
+| [11-streams-advanced](11-streams-advanced/README.md)                   | [Main.java](11-streams-advanced/Main.java)                              |
+| [12-concurrency-thread-states](12-concurrency-thread-states/README.md) | [Main.java](12-concurrency-thread-states/Main.java)                     |
+| [13-concurrency-structured](13-concurrency-structured/README.md)       | [Main.java](13-concurrency-structured/Main.java)                        |
+| [14-variance-generics](14-variance-generics/README.md)                 | [VarianceTest.java](14-variance-generics/VarianceTest.java)             |
 
 ---
 

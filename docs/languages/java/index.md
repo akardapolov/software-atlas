@@ -452,7 +452,7 @@ List<Number> numbers = new ArrayList<>();
 copy(numbers, integers);  // ✅ integers produce, numbers consume
 ```
 
-> See [Variance & Generics example](../../../examples/java/17-variance-generics/README.md) for comprehensive tests demonstrating invariance, covariance, and contravariance in Java generics.
+> See [Variance & Generics example](../../../examples/java/14-variance-generics/README.md) for comprehensive tests demonstrating invariance, covariance, and contravariance in Java generics.
 
 #### Things You Cannot Do Due to Type Erasure
 **Seven things you cannot do because of type erasure in Java**
@@ -2144,13 +2144,13 @@ See [`examples/java/`](../../../examples/java/index.md) for runnable code:
 | [05 Data Structures](../../../examples/java/05-data-structures/README.md)               | Lists, Maps, Sets, records                   |
 | [06 OOP / Modules](../../../examples/java/06-oop-modules/README.md)                     | Packages, interfaces, inheritance            |
 | [07 FP Features](../../../examples/java/07-fp-features/README.md)                       | Lambdas, streams, `Optional`                 |
-| [08 Error Handling](../../../examples/java/07-error-handling/README.md)                 | Checked/unchecked, try-with-resources        |
-| [09 Concurrency](../../../examples/java/08-concurrency/README.md)                       | Threads, executors, virtual threads          |
-| [10 Testing](../../../examples/java/09-testing/README.md)                               | JUnit 5, Mockito, AssertJ                    |
-| [14 Advanced Streams](../../../examples/java/14-streams-advanced/README.md)             | Reduce, mapMulti, takeWhile, merge           |
-| [15 Thread States](../../../examples/java/15-concurrency-thread-states/README.md)       | BLOCKED, WAITING, TIMED_WAITING              |
-| [16 Structured Concurrency](../../../examples/java/16-concurrency-structured/README.md) | ShutdownOnFailure, ShutdownOnSuccess         |
-| [17 Variance & Generics](../../../examples/java/17-variance-generics/README.md)         | Invariance, covariance, contravariance, PECS |
+| [08 Error Handling](../../../examples/java/08-error-handling/README.md)                 | Checked/unchecked, try-with-resources        |
+| [09 Concurrency](../../../examples/java/09-concurrency/README.md)                       | Threads, executors, virtual threads          |
+| [10 Testing](../../../examples/java/10-testing/README.md)                               | JUnit 5, Mockito, AssertJ                    |
+| [11 Advanced Streams](../../../examples/java/11-streams-advanced/README.md)             | Reduce, mapMulti, takeWhile, merge           |
+| [12 Thread States](../../../examples/java/12-concurrency-thread-states/README.md)       | BLOCKED, WAITING, TIMED_WAITING              |
+| [13 Structured Concurrency](../../../examples/java/13-concurrency-structured/README.md) | ShutdownOnFailure, ShutdownOnSuccess         |
+| [14 Variance & Generics](../../../examples/java/14-variance-generics/README.md)         | Invariance, covariance, contravariance, PECS |
 
 ---
 
