@@ -42,13 +42,13 @@ The client works with abstract interfaces only.
 
 ## How it works
 
-| Part | Role |
-|------|------|
-| `GUIFactory` | Abstract factory interface |
-| `WindowsFactory`, `MacFactory` | Concrete factories that create a family of products |
-| `Button`, `Checkbox` | Abstract product interfaces |
-| `WindowsButton`, `MacButton`, `WindowsCheckbox`, `MacCheckbox` | Concrete products |
-| Client | Uses the factory and product interfaces only |
+| Part                                                           | Role                                                |
+|----------------------------------------------------------------|-----------------------------------------------------|
+| `GUIFactory`                                                   | Abstract factory interface                          |
+| `WindowsFactory`, `MacFactory`                                 | Concrete factories that create a family of products |
+| `Button`, `Checkbox`                                           | Abstract product interfaces                         |
+| `WindowsButton`, `MacButton`, `WindowsCheckbox`, `MacCheckbox` | Concrete products                                   |
+| Client                                                         | Uses the factory and product interfaces only        |
 
 Typical flow:
 

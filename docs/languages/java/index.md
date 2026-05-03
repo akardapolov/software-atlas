@@ -1,14 +1,14 @@
 # Java
 
-| | |
-|---|---|
-| **Year** | 1995 |
-| **Creator(s)** | James Gosling (Sun Microsystems) |
-| **Paradigm(s)** | Object-oriented, imperative, (functional features since Java 8) |
-| **Typing** | Static, nominal, strong |
-| **Platform** | JVM (bytecode) |
-| **Key features** | Garbage collection, interfaces, generics, lambdas, streams, records, sealed classes, pattern matching, virtual threads |
-| **Current LTS (as of 2025)** | Java 25 |
+|                              |                                                                                                                        |
+|------------------------------|------------------------------------------------------------------------------------------------------------------------|
+| **Year**                     | 1995                                                                                                                   |
+| **Creator(s)**               | James Gosling (Sun Microsystems)                                                                                       |
+| **Paradigm(s)**              | Object-oriented, imperative, (functional features since Java 8)                                                        |
+| **Typing**                   | Static, nominal, strong                                                                                                |
+| **Platform**                 | JVM (bytecode)                                                                                                         |
+| **Key features**             | Garbage collection, interfaces, generics, lambdas, streams, records, sealed classes, pattern matching, virtual threads |
+| **Current LTS (as of 2025)** | Java 25                                                                                                                |
 
 ---
 
@@ -109,40 +109,40 @@ flowchart TD
 
 ### Key Design Decisions vs C++
 
-| Aspect | C++ | Java |
-|--------|-----|------|
-| Memory management | Manual (`new`/`delete`) | Garbage collection |
-| Pointers | Raw pointers, pointer arithmetic | References only |
-| Multiple inheritance | Classes + virtual tables | Single class inheritance, multiple interfaces |
-| Portability | Native binaries per platform | JVM bytecode |
-| Error handling | Return codes, SEH, exceptions | Checked + unchecked exceptions |
-| Templates / Generics | C++ templates (compile-time) | Generics (type erasure, runtime) |
-| Undefined behavior | Common | Largely avoided by the language and JVM specifications |
+| Aspect               | C++                              | Java                                                   |
+|----------------------|----------------------------------|--------------------------------------------------------|
+| Memory management    | Manual (`new`/`delete`)          | Garbage collection                                     |
+| Pointers             | Raw pointers, pointer arithmetic | References only                                        |
+| Multiple inheritance | Classes + virtual tables         | Single class inheritance, multiple interfaces          |
+| Portability          | Native binaries per platform     | JVM bytecode                                           |
+| Error handling       | Return codes, SEH, exceptions    | Checked + unchecked exceptions                         |
+| Templates / Generics | C++ templates (compile-time)     | Generics (type erasure, runtime)                       |
+| Undefined behavior   | Common                           | Largely avoided by the language and JVM specifications |
 
 ---
 
 ## Language Evolution
 
-| Version | Year | Key additions |
-|---------|------|---------------|
-| **1.0** | 1995 | Initial release: classes, interfaces, threads, applets |
-| **1.1** | 1997 | Inner classes, JDBC, RMI, reflection |
-| **1.2** | 1998 | Collections framework, Swing, JIT compiler |
-| **1.4** | 2002 | `assert`, regex, NIO |
-| **5** | 2004 | **Generics**, enhanced for-each, autoboxing, annotations, enums, varargs |
-| **6** | 2006 | Scripting API, JAXB improvements |
-| **7** | 2011 | Try-with-resources, diamond operator `<>`, `switch` on strings |
-| **8 LTS** | 2014 | **Lambdas**, **Stream API**, `Optional`, default methods, `java.time` |
-| **9** | 2017 | **JPMS modules**, `jshell`, `List.of()` factory methods |
-| **10** | 2018 | `var` local variable type inference |
-| **11 LTS** | 2018 | `var` in lambda parameters, HTTP client, new `String` methods |
-| **14** | 2020 | **Records** (preview), `switch` expressions |
-| **16** | 2021 | Records (stable), `instanceof` pattern matching |
-| **17 LTS** | 2021 | **Sealed classes**, pattern matching for `switch` (preview) |
-| **21 LTS** | 2023 | **Virtual threads** (Project Loom), pattern matching for `switch` (final), record patterns |
-| **22** | 2024 | Foreign Function & Memory API (final), Unnamed Variables & Patterns |
-| **23** | 2024 | Stream Gatherers (preview), Implicitly Declared Classes (second preview), Scoped Values (preview) |
-| **24** | 2025 | Scoped Values (final), Structured Concurrency (final), Implicitly Declared Classes (final), Primitive type patterns (preview) |
+| Version    | Year | Key additions                                                                                                                                                |
+|------------|------|--------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **1.0**    | 1995 | Initial release: classes, interfaces, threads, applets                                                                                                       |
+| **1.1**    | 1997 | Inner classes, JDBC, RMI, reflection                                                                                                                         |
+| **1.2**    | 1998 | Collections framework, Swing, JIT compiler                                                                                                                   |
+| **1.4**    | 2002 | `assert`, regex, NIO                                                                                                                                         |
+| **5**      | 2004 | **Generics**, enhanced for-each, autoboxing, annotations, enums, varargs                                                                                     |
+| **6**      | 2006 | Scripting API, JAXB improvements                                                                                                                             |
+| **7**      | 2011 | Try-with-resources, diamond operator `<>`, `switch` on strings                                                                                               |
+| **8 LTS**  | 2014 | **Lambdas**, **Stream API**, `Optional`, default methods, `java.time`                                                                                        |
+| **9**      | 2017 | **JPMS modules**, `jshell`, `List.of()` factory methods                                                                                                      |
+| **10**     | 2018 | `var` local variable type inference                                                                                                                          |
+| **11 LTS** | 2018 | `var` in lambda parameters, HTTP client, new `String` methods                                                                                                |
+| **14**     | 2020 | **Records** (preview), `switch` expressions                                                                                                                  |
+| **16**     | 2021 | Records (stable), `instanceof` pattern matching                                                                                                              |
+| **17 LTS** | 2021 | **Sealed classes**, pattern matching for `switch` (preview)                                                                                                  |
+| **21 LTS** | 2023 | **Virtual threads** (Project Loom), pattern matching for `switch` (final), record patterns                                                                   |
+| **22**     | 2024 | Foreign Function & Memory API (final), Unnamed Variables & Patterns                                                                                          |
+| **23**     | 2024 | Stream Gatherers (preview), Implicitly Declared Classes (second preview), Scoped Values (preview)                                                            |
+| **24**     | 2025 | Scoped Values (final), Structured Concurrency (final), Implicitly Declared Classes (final), Primitive type patterns (preview)                                |
 | **25 LTS** | 2025 | Consolidates recent additions such as FFM API, Scoped Values, Structured Concurrency, and the Class‑File API; preview/incubator features continue separately |
 
 > **LTS** = Long-Term Support release — recommended for production use.  
@@ -393,19 +393,19 @@ flowchart LR
 
 ## Summary Table: Variance in Java Generics
 
-| Criteria | `List<? extends Number>` | `List<? super Integer>` | `List<Number>` |
-|---|---|---|---|
-| **Name** | Covariance | Contravariance | Invariance |
-| **Role** | Producer | Consumer | Producer + Consumer |
+| Criteria             | `List<? extends Number>`                                                                              | `List<? super Integer>`                                                                               | `List<Number>`                                                                   |
+|----------------------|-------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
+| **Name**             | Covariance                                                                                            | Contravariance                                                                                        | Invariance                                                                       |
+| **Role**             | Producer                                                                                              | Consumer                                                                                              | Producer + Consumer                                                              |
 | **Input (examples)** | `List<Integer>` ✓<br/>`List<Double>` ✓<br/>`List<Number>` ✓<br/>`List<Object>` ✗<br/>`List<String>` ✗ | `List<Integer>` ✓<br/>`List<Number>` ✓<br/>`List<Object>` ✓<br/>`List<Double>` ✗<br/>`List<String>` ✗ | `List<Number>` ✓<br/>`List<Integer>` ✗<br/>`List<Object>` ✗<br/>`List<Double>` ✗ |
-| **Write** | ❌ Forbidden<br/>Compiler doesn't know<br/>the exact subtype | ✅ Allowed<br/>`list.add(42)`<br/>Integer fits any ancestor | ✅ Allowed<br/>`list.add(42)`<br/>`list.add(3.14)` |
-| **Read** | ✅ Allowed<br/>`Number n = list.get(0)`<br/>At least `T` is guaranteed | ⚠️ Only `Object`<br/>`Object o = list.get(0)` ✅<br/>`Number n = list.get(0)` ❌ | ✅ Allowed<br/>`Number n = list.get(0)`<br/>Exact type is known |
-| **null in add()** | ❌ add() unavailable | ✅ `list.add(null)` | ✅ `list.add(null)` |
-| **Mnemonic (PECS)** | **P**roducer — **E**xtends | **C**onsumer — **S**uper | — |
-| **Typical use-case** | Read data from collection | Write data into collection | Exact API contract |
-| **Method example** | `copy(List<? extends T> src)` | `copy(List<? super T> dst)` | `sort(List<T> list)` |
-| **Kotlin analogue** | `out T` | `in T` | `T` |
-| **C# analogue** | `IEnumerable<out T>` | `IEnumerable<in T>` | `List<T>` |
+| **Write**            | ❌ Forbidden<br/>Compiler doesn't know<br/>the exact subtype                                           | ✅ Allowed<br/>`list.add(42)`<br/>Integer fits any ancestor                                            | ✅ Allowed<br/>`list.add(42)`<br/>`list.add(3.14)`                                |
+| **Read**             | ✅ Allowed<br/>`Number n = list.get(0)`<br/>At least `T` is guaranteed                                 | ⚠️ Only `Object`<br/>`Object o = list.get(0)` ✅<br/>`Number n = list.get(0)` ❌                        | ✅ Allowed<br/>`Number n = list.get(0)`<br/>Exact type is known                   |
+| **null in add()**    | ❌ add() unavailable                                                                                   | ✅ `list.add(null)`                                                                                    | ✅ `list.add(null)`                                                               |
+| **Mnemonic (PECS)**  | **P**roducer — **E**xtends                                                                            | **C**onsumer — **S**uper                                                                              | —                                                                                |
+| **Typical use-case** | Read data from collection                                                                             | Write data into collection                                                                            | Exact API contract                                                               |
+| **Method example**   | `copy(List<? extends T> src)`                                                                         | `copy(List<? super T> dst)`                                                                           | `sort(List<T> list)`                                                             |
+| **Kotlin analogue**  | `out T`                                                                                               | `in T`                                                                                                | `T`                                                                              |
+| **C# analogue**      | `IEnumerable<out T>`                                                                                  | `IEnumerable<in T>`                                                                                   | `List<T>`                                                                        |
 
 ---
 
@@ -452,7 +452,7 @@ List<Number> numbers = new ArrayList<>();
 copy(numbers, integers);  // ✅ integers produce, numbers consume
 ```
 
-> See [Variance & Generics example](../../../examples/java/17-variance-generics/index.md) for comprehensive tests demonstrating invariance, covariance, and contravariance in Java generics.
+> See [Variance & Generics example](../../../examples/java/17-variance-generics/README.md) for comprehensive tests demonstrating invariance, covariance, and contravariance in Java generics.
 
 #### Things You Cannot Do Due to Type Erasure
 **Seven things you cannot do because of type erasure in Java**
@@ -716,13 +716,13 @@ System.out.println(square.transform(7));         // 49
 
 #### Built-in functional interfaces (`java.util.function`)
 
-| Interface | Signature | Description |
-|-----------|-----------|-------------|
-| `Predicate<T>` | `T → boolean` | Test / filter |
-| `Function<T,R>` | `T → R` | Transform |
-| `Consumer<T>` | `T → void` | Side effect |
-| `Supplier<T>` | `() → T` | Produce value |
-| `BiFunction<T,U,R>` | `T, U → R` | Two-arg transform |
+| Interface           | Signature     | Description       |
+|---------------------|---------------|-------------------|
+| `Predicate<T>`      | `T → boolean` | Test / filter     |
+| `Function<T,R>`     | `T → R`       | Transform         |
+| `Consumer<T>`       | `T → void`    | Side effect       |
+| `Supplier<T>`       | `() → T`      | Produce value     |
+| `BiFunction<T,U,R>` | `T, U → R`    | Two-arg transform |
 
 ---
 
@@ -1212,381 +1212,14 @@ flowchart TD
 
 #### Choosing the Right Type
 
-| Type | Use when | Example |
-|------|----------|---------|
-| **`Instant`** | Timestamp on UTC timeline, logging, database audit fields | `Instant.now()` |
-| **`LocalDate`** | Date only, no time or timezone (birthdate, holiday) | `LocalDate.of(1995, 5, 23)` |
-| **`LocalTime`** | Time only, no date or timezone (opening hours) | `LocalTime.of(9, 30)` |
-| **`LocalDateTime`** | Date + time, no timezone (meeting in local context) | `LocalDateTime.now()` |
-| **`ZonedDateTime`** | Full date+time+timezone (cross-timezone scheduling) | `ZonedDateTime.now(ZoneId.of("Europe/Paris"))` |
-| **`OffsetDateTime`** | Date+time+UTC offset (ISO-8601, APIs, serialization) | `OffsetDateTime.now()` |
-
----
-
-#### Common Operations
-
-**Creating dates:**
-
-```java
-// Current date/time
-Instant now = Instant.now();                          // UTC timestamp
-LocalDate today = LocalDate.now();                    // 2024-01-15
-LocalDateTime dateTime = LocalDateTime.now();         // 2024-01-15T10:30:00
-
-// Specific date/time
-LocalDate birthday = LocalDate.of(1995, Month.MAY, 23);
-LocalTime morning = LocalTime.of(9, 30, 0);
-LocalDateTime meeting = LocalDateTime.of(2024, 1, 15, 14, 30);
-
-// With timezone
-ZonedDateTime parisTime = ZonedDateTime.now(ZoneId.of("Europe/Paris"));
-ZonedDateTime specific = ZonedDateTime.of(
-    LocalDateTime.of(2024, 1, 15, 10, 30),
-    ZoneId.of("America/New_York")
-);
-
-// Parsing from string
-LocalDate parsed = LocalDate.parse("2024-01-15");
-Instant instant = Instant.parse("2024-01-15T10:30:00Z");
-```
-
-**Manipulating dates:**
-
-```java
-LocalDate date = LocalDate.of(2024, 1, 15);
-
-// Adding/subtracting
-LocalDate nextWeek = date.plusWeeks(1);               // 2024-01-22
-LocalDate lastMonth = date.minusMonths(1);            // 2023-12-15
-LocalDateTime later = dateTime.plusHours(3).plusMinutes(30);
-
-// Using TemporalAdjusters
-LocalDate firstDay = date.with(TemporalAdjusters.firstDayOfMonth());
-LocalDate nextMonday = date.with(TemporalAdjusters.next(DayOfWeek.MONDAY));
-LocalDate lastFriday = date.with(TemporalAdjusters.lastInMonth(DayOfWeek.FRIDAY));
-```
-
-**Comparing and measuring:**
-
-```java
-LocalDate start = LocalDate.of(2024, 1, 1);
-LocalDate end = LocalDate.of(2024, 12, 31);
-
-// Comparison
-boolean isBefore = start.isBefore(end);               // true
-boolean isAfter = start.isAfter(end);                 // false
-
-// Duration between times (hours, minutes, seconds)
-LocalTime t1 = LocalTime.of(9, 30);
-LocalTime t2 = LocalTime.of(17, 45);
-Duration duration = Duration.between(t1, t2);         // PT8H15M
-long hours = duration.toHours();                      // 8
-
-// Period between dates (years, months, days)
-Period period = Period.between(start, end);           // P11M30D
-int days = period.getDays();                          // 30
-long totalDays = ChronoUnit.DAYS.between(start, end); // 365
-```
-
-**Formatting and parsing:**
-
-```java
-// Built-in formatters
-LocalDate date = LocalDate.of(2024, 1, 15);
-String iso = date.format(DateTimeFormatter.ISO_DATE); // "2024-01-15"
-
-// Custom patterns
-DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-String formatted = date.format(formatter);            // "15/01/2024"
-
-// Parsing with custom format
-LocalDate parsed = LocalDate.parse("15/01/2024", formatter);
-
-// Localized formatting
-DateTimeFormatter germanFormat = 
-    DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG)
-                     .withLocale(Locale.GERMANY);
-String german = date.format(germanFormat);            // "15. Januar 2024"
-```
-
----
-
-#### Timezone Handling
-
-```mermaid
-flowchart LR
-    subgraph Conversion["Timezone Conversion"]
-        LA["Los Angeles<br/>2024-01-15T09:00<br/>America/Los_Angeles"]
-        
-        UTC["UTC<br/>2024-01-15T17:00Z"]
-        
-        TK["Tokyo<br/>2024-01-16T02:00<br/>Asia/Tokyo"]
-    end
-    
-    LA -->|toInstant| UTC
-    UTC -->|atZone| TK
-    
-    style LA fill:#e1f5fe,stroke:#0288d1
-    style UTC fill:#e8f5e9,stroke:#388e3c
-    style TK fill:#fce4ec,stroke:#e91e63
-```
-
-```java
-// Convert between timezones
-ZonedDateTime la = ZonedDateTime.of(
-    LocalDateTime.of(2024, 1, 15, 9, 0),
-    ZoneId.of("America/Los_Angeles")
-);
-
-ZonedDateTime tokyo = la.withZoneSameInstant(ZoneId.of("Asia/Tokyo"));
-// 2024-01-16T02:00+09:00[Asia/Tokyo]
-
-// To/from Instant (UTC timeline)
-Instant instant = la.toInstant();
-ZonedDateTime paris = instant.atZone(ZoneId.of("Europe/Paris"));
-```
-
-**Working with daylight saving time:**
-
-```java
-// DST transition example
-ZoneId newYork = ZoneId.of("America/New_York");
-ZonedDateTime beforeDST = ZonedDateTime.of(
-    LocalDateTime.of(2024, 3, 10, 1, 30),  // Before DST
-    newYork
-);
-
-ZonedDateTime afterDST = beforeDST.plusHours(2);      // Skips to 3:30
-// DST transition at 2:00 AM — 2:00-2:59 doesn't exist!
-```
-
----
-
-#### Interoperability: Legacy ↔ Modern
-
-When working with legacy code or libraries:
-
-```java
-// Legacy → Modern
-Date legacyDate = new Date();
-Instant instant = legacyDate.toInstant();
-LocalDateTime ldt = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
-
-// Modern → Legacy
-LocalDateTime modern = LocalDateTime.now();
-Instant inst = modern.atZone(ZoneId.systemDefault()).toInstant();
-Date legacy = Date.from(inst);
-
-// Calendar → Modern
-Calendar cal = Calendar.getInstance();
-Instant calInstant = cal.toInstant();
-ZonedDateTime zdt = ZonedDateTime.ofInstant(calInstant, ZoneId.systemDefault());
-```
-
----
-
-#### Quick Decision Guide
-
-```mermaid
-flowchart TD
-    Start{What do you need?}
-    
-    Start -->|Timestamp/audit| Instant["Use Instant<br/>Machine timestamp"]
-    Start -->|Date only| DateOnly{With timezone?}
-    Start -->|Time only| TimeOnly{With timezone?}
-    Start -->|Date + Time| DateTime{With timezone?}
-    
-    DateOnly -->|No| LD["LocalDate<br/>birthdate, holiday"]
-    DateOnly -->|Yes| ZD["ZonedDateTime<br/>(extract date)"]
-    
-    TimeOnly -->|No| LT["LocalTime<br/>opening hours"]
-    TimeOnly -->|Yes| ZT["ZonedDateTime<br/>(extract time)"]
-    
-    DateTime -->|No| LDT["LocalDateTime<br/>meeting in same city"]
-    DateTime -->|Offset only| OD["OffsetDateTime<br/>API, serialization"]
-    DateTime -->|Full zone| ZDT["ZonedDateTime<br/>cross-timezone event"]
-    
-    style Instant fill:#e8f5e9,stroke:#388e3c
-    style LD fill:#e1f5fe,stroke:#0288d1
-    style LT fill:#e1f5fe,stroke:#0288d1
-    style LDT fill:#fff3e0,stroke:#f4a261
-    style OD fill:#f5f0e8,stroke:#b0a090
-    style ZDT fill:#fce4ec,stroke:#e91e63
-```
-
-**Rules of thumb:**
-
-1. **Use `Instant`** for:
-   - Database timestamps
-   - Audit logs
-   - Event timestamps in distributed systems
-
-2. **Use `LocalDate`/`LocalTime`/`LocalDateTime`** for:
-   - User-facing dates (birthdays, appointments)
-   - Business logic without timezone concerns
-   - Internal application state
-
-3. **Use `ZonedDateTime`** for:
-   - Cross-timezone scheduling
-   - User-specific timezone display
-   - Calendar applications
-
-4. **Use `OffsetDateTime`** for:
-   - REST API responses (ISO-8601)
-   - Serialization/deserialization
-   - When you need offset but not full zone rules
-
-5. **Avoid legacy `Date`/`Calendar`** unless:
-   - Interfacing with old libraries
-   - Required by external APIs
-
----
-
-#### Common Patterns
-
-**Birthday calculation:**
-
-```java
-public static int calculateAge(LocalDate birthDate) {
-    return Period.between(birthDate, LocalDate.now()).getYears();
-}
-
-LocalDate birthday = LocalDate.of(1995, 5, 23);
-int age = calculateAge(birthday);  // 28 (in 2024)
-```
-
-**Business days calculation:**
-
-```java
-public static long countBusinessDays(LocalDate start, LocalDate end) {
-    return Stream.iterate(start, date -> date.plusDays(1))
-        .limit(ChronoUnit.DAYS.between(start, end) + 1)
-        .filter(date -> {
-            DayOfWeek day = date.getDayOfWeek();
-            return day != DayOfWeek.SATURDAY && day != DayOfWeek.SUNDAY;
-        })
-        .count();
-}
-```
-
-**Recurring events:**
-
-```java
-// Every Monday at 10:00 for next 4 weeks
-LocalDate start = LocalDate.now().with(TemporalAdjusters.next(DayOfWeek.MONDAY));
-List<LocalDateTime> meetings = Stream.iterate(
-        start.atTime(10, 0),
-        dt -> dt.plusWeeks(1)
-    )
-    .limit(4)
-    .toList();
-```
-
-**Database storage:**
-
-```java
-// Store as Instant (UTC) in database
-Instant now = Instant.now();
-// SQL: INSERT INTO events (timestamp) VALUES (?)
-// Use PreparedStatement with Timestamp.from(now)
-
-// Retrieve and convert to user's timezone
-Instant dbInstant = resultSet.getTimestamp("timestamp").toInstant();
-ZonedDateTime userTime = dbInstant.atZone(ZoneId.of("Europe/London"));
-```
-
----
-
-#### Performance Considerations
-
-- **`Instant`** — Most efficient, uses `long` seconds + `int` nanos
-- **`LocalDate`** — Three `int` fields (year, month, day)
-- **`ZonedDateTime`** — Heavier due to zone rules lookup
-- **Immutability** — All `java.time` objects are immutable, safe for caching
-
-**Avoid:**
-
-```java
-// ❌ Creating formatters repeatedly
-for (LocalDate date : dates) {
-    String s = date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-}
-
-// ✅ Reuse formatter (thread-safe)
-DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-for (LocalDate date : dates) {
-    String s = date.format(formatter);
-}
-```
-
----### Working with Dates and Times
-
-Java has two distinct APIs for working with dates and times: the **legacy API** (pre-Java 8) and the **modern `java.time` API** (Java 8+).
-
-#### Legacy Date/Time API (avoid in new code)
-
-Before Java 8, date/time handling was problematic:
-
-```java
-// Legacy API — mutable, thread-unsafe, confusing
-java.util.Date date = new java.util.Date();
-java.util.Calendar cal = java.util.Calendar.getInstance();
-cal.set(2024, 0, 15);  // months are 0-based! January = 0
-
-// SimpleDateFormat — not thread-safe
-SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-String formatted = sdf.format(date);
-```
-
-**Problems with legacy API:**
-
-- **Mutability** — `Date` and `Calendar` are mutable, causing concurrency issues
-- **Poor design** — months are 0-based, days are 1-based
-- **Thread-safety** — `SimpleDateFormat` is not thread-safe
-- **Mixing concerns** — `Date` conflates instant and local time
-
-> ⚠️ Use legacy API only when required for backward compatibility with old libraries.
-
----
-
-#### Modern `java.time` API (Java 8+)
-
-The `java.time` package provides immutable, thread-safe, well-designed date/time classes.
-
-```mermaid
-flowchart TD
-    subgraph Timeline["Date/Time Representations"]
-        I["Instant<br/>Point on UTC timeline<br/>2024-01-15T10:30:00Z"]
-        
-        LD["LocalDate<br/>Date without time/zone<br/>2024-01-15"]
-        
-        LT["LocalTime<br/>Time without date/zone<br/>10:30:00"]
-        
-        LDT["LocalDateTime<br/>Date + time, no zone<br/>2024-01-15T10:30:00"]
-        
-        ZDT["ZonedDateTime<br/>Full date+time+zone<br/>2024-01-15T10:30:00+01:00[Europe/Paris]"]
-        
-        OD["OffsetDateTime<br/>Date+time+offset<br/>2024-01-15T10:30:00+01:00"]
-    end
-    
-    style I fill:#e8f5e9,stroke:#388e3c
-    style LD fill:#e1f5fe,stroke:#0288d1
-    style LT fill:#e1f5fe,stroke:#0288d1
-    style LDT fill:#fff3e0,stroke:#f4a261
-    style ZDT fill:#fce4ec,stroke:#e91e63
-    style OD fill:#f5f0e8,stroke:#b0a090
-```
-
-#### Choosing the Right Type
-
-| Type | Use when | Example |
-|------|----------|---------|
-| **`Instant`** | Timestamp on UTC timeline, logging, database audit fields | `Instant.now()` |
-| **`LocalDate`** | Date only, no time or timezone (birthdate, holiday) | `LocalDate.of(1995, 5, 23)` |
-| **`LocalTime`** | Time only, no date or timezone (opening hours) | `LocalTime.of(9, 30)` |
-| **`LocalDateTime`** | Date + time, no timezone (meeting in local context) | `LocalDateTime.now()` |
-| **`ZonedDateTime`** | Full date+time+timezone (cross-timezone scheduling) | `ZonedDateTime.now(ZoneId.of("Europe/Paris"))` |
-| **`OffsetDateTime`** | Date+time+UTC offset (ISO-8601, APIs, serialization) | `OffsetDateTime.now()` |
+| Type                 | Use when                                                  | Example                                        |
+|----------------------|-----------------------------------------------------------|------------------------------------------------|
+| **`Instant`**        | Timestamp on UTC timeline, logging, database audit fields | `Instant.now()`                                |
+| **`LocalDate`**      | Date only, no time or timezone (birthdate, holiday)       | `LocalDate.of(1995, 5, 23)`                    |
+| **`LocalTime`**      | Time only, no date or timezone (opening hours)            | `LocalTime.of(9, 30)`                          |
+| **`LocalDateTime`**  | Date + time, no timezone (meeting in local context)       | `LocalDateTime.now()`                          |
+| **`ZonedDateTime`**  | Full date+time+timezone (cross-timezone scheduling)       | `ZonedDateTime.now(ZoneId.of("Europe/Paris"))` |
+| **`OffsetDateTime`** | Date+time+UTC offset (ISO-8601, APIs, serialization)      | `OffsetDateTime.now()`                         |
 
 ---
 
@@ -1890,21 +1523,21 @@ for (LocalDate date : dates) {
 
 ## Other Language Features
 
-| Feature | Version | Description | Example |
-|---------|---------|-------------|---------|
-| **Enums** | 5 | Type-safe named constants, can have fields and methods | `enum Day { MON, TUE }` |
-| **Annotations** | 5 | Metadata on declarations | `@Override`, `@Deprecated` |
-| **Autoboxing** | 5 | Automatic conversion between primitives and wrappers | `Integer i = 42;` |
-| **Varargs** | 5 | Variable-length argument lists | `void log(String... msgs)` |
-| **Enhanced for** | 5 | Iterate over `Iterable` or array | `for (String s : list)` |
-| **Try-with-resources** | 7 | Auto-close `AutoCloseable` | `try (var r = ...) {}` |
-| **Diamond operator** | 7 | Infer generic type from context | `List<String> l = new ArrayList<>()` |
-| **`var`** | 10 | Local variable type inference | `var map = new HashMap<String, Integer>()` |
-| **Switch expressions** | 14 | `switch` returns a value, arrow syntax | `int x = switch(day) { case MON -> 1; default -> 0; }` |
-| **Text blocks** | 15 | Multi-line string literals | `"""{"key": "value"}"""` |
-| **Unnamed variables** | 22 | `_` for intentionally unused bindings | `catch (IOException _) { ... }` |
-| **Stream Gatherers** | 24 | Custom intermediate operations in streams | `stream.gather(windowFixed(3))` |
-| **Class‑File API** | 25 | Standard API for parsing/generating bytecode | `ClassFile.of().parse(bytes)` |
+| Feature                | Version | Description                                            | Example                                                |
+|------------------------|---------|--------------------------------------------------------|--------------------------------------------------------|
+| **Enums**              | 5       | Type-safe named constants, can have fields and methods | `enum Day { MON, TUE }`                                |
+| **Annotations**        | 5       | Metadata on declarations                               | `@Override`, `@Deprecated`                             |
+| **Autoboxing**         | 5       | Automatic conversion between primitives and wrappers   | `Integer i = 42;`                                      |
+| **Varargs**            | 5       | Variable-length argument lists                         | `void log(String... msgs)`                             |
+| **Enhanced for**       | 5       | Iterate over `Iterable` or array                       | `for (String s : list)`                                |
+| **Try-with-resources** | 7       | Auto-close `AutoCloseable`                             | `try (var r = ...) {}`                                 |
+| **Diamond operator**   | 7       | Infer generic type from context                        | `List<String> l = new ArrayList<>()`                   |
+| **`var`**              | 10      | Local variable type inference                          | `var map = new HashMap<String, Integer>()`             |
+| **Switch expressions** | 14      | `switch` returns a value, arrow syntax                 | `int x = switch(day) { case MON -> 1; default -> 0; }` |
+| **Text blocks**        | 15      | Multi-line string literals                             | `"""{"key": "value"}"""`                               |
+| **Unnamed variables**  | 22      | `_` for intentionally unused bindings                  | `catch (IOException _) { ... }`                        |
+| **Stream Gatherers**   | 24      | Custom intermediate operations in streams              | `stream.gather(windowFixed(3))`                        |
+| **Class‑File API**     | 25      | Standard API for parsing/generating bytecode           | `ClassFile.of().parse(bytes)`                          |
 
 ---
 
@@ -2144,20 +1777,20 @@ flowchart LR
 
 ## 5. What Goes Where — Reference Table
 
-| What | Where | Rationale |
-|------|-------|-----------|
-| `new MyObject()` | Eden (heap) | All new objects start in Eden |
-| `new byte[50_000_000]` | Old Gen directly | Large object threshold bypassed Young Gen |
-| `int x = 42` (local) | Stack frame | Primitive local variable — no heap allocation |
-| `Integer x = 42` | Eden (heap) | Autoboxed to object; cached −128..127 may be pooled |
-| Object reference `p` (local) | Stack frame | The reference itself; the object is in heap |
-| `static final String X = "hi"` | String Pool → Old Gen | Interned strings are long-lived |
-| `"literal"` | String Pool (Old Gen / Metaspace border) | Deduplicated by JVM |
-| Class metadata (`Person.class`) | Metaspace | Loaded once per ClassLoader |
-| JIT-compiled method code | Code Cache | After warm-up threshold (~10k invocations) |
-| `ByteBuffer.allocateDirect(n)` | Off-heap (Direct) | Bypasses GC, managed by Cleaner |
-| `Arena.allocate(n)` (FFM API) | Off-heap (Direct) | Explicit lifetime via `Arena.close()` |
-| Surviving object after 15 GCs | Old Gen (Tenured) | Age threshold crossed |
+| What                            | Where                                    | Rationale                                           |
+|---------------------------------|------------------------------------------|-----------------------------------------------------|
+| `new MyObject()`                | Eden (heap)                              | All new objects start in Eden                       |
+| `new byte[50_000_000]`          | Old Gen directly                         | Large object threshold bypassed Young Gen           |
+| `int x = 42` (local)            | Stack frame                              | Primitive local variable — no heap allocation       |
+| `Integer x = 42`                | Eden (heap)                              | Autoboxed to object; cached −128..127 may be pooled |
+| Object reference `p` (local)    | Stack frame                              | The reference itself; the object is in heap         |
+| `static final String X = "hi"`  | String Pool → Old Gen                    | Interned strings are long-lived                     |
+| `"literal"`                     | String Pool (Old Gen / Metaspace border) | Deduplicated by JVM                                 |
+| Class metadata (`Person.class`) | Metaspace                                | Loaded once per ClassLoader                         |
+| JIT-compiled method code        | Code Cache                               | After warm-up threshold (~10k invocations)          |
+| `ByteBuffer.allocateDirect(n)`  | Off-heap (Direct)                        | Bypasses GC, managed by Cleaner                     |
+| `Arena.allocate(n)` (FFM API)   | Off-heap (Direct)                        | Explicit lifetime via `Arena.close()`               |
+| Surviving object after 15 GCs   | Old Gen (Tenured)                        | Age threshold crossed                               |
 
 ---
 
@@ -2331,25 +1964,25 @@ does not always match the simple source-level picture.
 
 ### Main runtime areas
 
-| Area | Shared? | Typical contents | Reclaimed how |
-|------|---------|------------------|---------------|
-| **Thread stack** | No, per thread | Stack frames, local variables, references, partial results | Automatically on method return / thread exit |
-| **Heap** | Yes | Most Java objects and arrays | Garbage collection |
-| **Young generation** | Yes | Newly allocated objects | Minor GC |
-| **Old generation** | Yes | Long-lived objects | Major/mixed/concurrent GC depending on collector |
-| **Metaspace** | Yes | Class metadata, method metadata, runtime class structures | Class unloading / JVM runtime |
-| **Code cache** | Yes | JIT-compiled native machine code | JVM runtime management |
+| Area                       | Shared?        | Typical contents                                                    | Reclaimed how                                        |
+|----------------------------|----------------|---------------------------------------------------------------------|------------------------------------------------------|
+| **Thread stack**           | No, per thread | Stack frames, local variables, references, partial results          | Automatically on method return / thread exit         |
+| **Heap**                   | Yes            | Most Java objects and arrays                                        | Garbage collection                                   |
+| **Young generation**       | Yes            | Newly allocated objects                                             | Minor GC                                             |
+| **Old generation**         | Yes            | Long-lived objects                                                  | Major/mixed/concurrent GC depending on collector     |
+| **Metaspace**              | Yes            | Class metadata, method metadata, runtime class structures           | Class unloading / JVM runtime                        |
+| **Code cache**             | Yes            | JIT-compiled native machine code                                    | JVM runtime management                               |
 | **Direct/off-heap memory** | Usually shared | NIO direct buffers, foreign memory segments, JNI/native allocations | Cleaner/arena/native lifecycle, not ordinary heap GC |
 
 ### Garbage Collectors
 
-| GC | JDK | Best for |
-|----|-----|---------|
-| **G1** | 9+ (default) | Balanced throughput and latency |
-| **ZGC** | 15+ (production) | Ultra-low pause, large heaps |
-| **Shenandoah** | 12+ | Low-pause, concurrent compaction |
-| **Serial** | All | Single-threaded, small heaps |
-| **Parallel** | All | Maximum throughput, batch workloads |
+| GC             | JDK              | Best for                            |
+|----------------|------------------|-------------------------------------|
+| **G1**         | 9+ (default)     | Balanced throughput and latency     |
+| **ZGC**        | 15+ (production) | Ultra-low pause, large heaps        |
+| **Shenandoah** | 12+              | Low-pause, concurrent compaction    |
+| **Serial**     | All              | Single-threaded, small heaps        |
+| **Parallel**   | All              | Maximum throughput, batch workloads |
 
 ---
 
@@ -2400,14 +2033,14 @@ so the earlier write to `value` becomes visible as well.
 
 ### Common synchronization tools
 
-| Mechanism | Purpose |
-|-----------|---------|
-| `synchronized` | Mutual exclusion + visibility guarantees |
-| `volatile` | Visibility and ordering for a single variable |
-| `final` fields | Safe publication guarantees after construction |
-| `AtomicInteger`, `AtomicReference`, etc. | Lock-free atomic operations |
-| `Lock`, `ReadWriteLock`, `StampedLock` | Explicit locking APIs |
-| `ExecutorService`, `CompletableFuture`, structured concurrency | Higher-level coordination |
+| Mechanism                                                      | Purpose                                        |
+|----------------------------------------------------------------|------------------------------------------------|
+| `synchronized`                                                 | Mutual exclusion + visibility guarantees       |
+| `volatile`                                                     | Visibility and ordering for a single variable  |
+| `final` fields                                                 | Safe publication guarantees after construction |
+| `AtomicInteger`, `AtomicReference`, etc.                       | Lock-free atomic operations                    |
+| `Lock`, `ReadWriteLock`, `StampedLock`                         | Explicit locking APIs                          |
+| `ExecutorService`, `CompletableFuture`, structured concurrency | Higher-level coordination                      |
 
 ---
 
@@ -2415,32 +2048,32 @@ so the earlier write to `value` becomes visible as well.
 
 ### Build and Dependency Management
 
-| Tool | Role |
-|------|------|
-| **Maven** | Declarative build + dependency management (`pom.xml`) |
+| Tool       | Role                                                     |
+|------------|----------------------------------------------------------|
+| **Maven**  | Declarative build + dependency management (`pom.xml`)    |
 | **Gradle** | Scriptable build with Groovy/Kotlin DSL (`build.gradle`) |
-| **javac** | Java compiler |
-| **java** | JVM launcher |
-| **jar** | Package Java archives |
-| **jshell** | REPL (Java 9+) |
+| **javac**  | Java compiler                                            |
+| **java**   | JVM launcher                                             |
+| **jar**    | Package Java archives                                    |
+| **jshell** | REPL (Java 9+)                                           |
 
 ### Major Frameworks
 
-| Framework | Domain |
-|-----------|--------|
-| **Spring Boot** | Web, REST, microservices |
-| **Quarkus** | Cloud-native, GraalVM |
-| **Micronaut** | Fast startup, serverless |
-| **Hibernate / JPA** | ORM, database mapping |
-| **Jakarta EE** | Enterprise standards |
+| Framework           | Domain                   |
+|---------------------|--------------------------|
+| **Spring Boot**     | Web, REST, microservices |
+| **Quarkus**         | Cloud-native, GraalVM    |
+| **Micronaut**       | Fast startup, serverless |
+| **Hibernate / JPA** | ORM, database mapping    |
+| **Jakarta EE**      | Enterprise standards     |
 
 ### Testing Ecosystem
 
-| Tool | Role |
-|------|------|
-| **JUnit 5** | Unit testing |
-| **Mockito** | Mocking framework |
-| **AssertJ** | Fluent assertions |
+| Tool               | Role                                   |
+|--------------------|----------------------------------------|
+| **JUnit 5**        | Unit testing                           |
+| **Mockito**        | Mocking framework                      |
+| **AssertJ**        | Fluent assertions                      |
 | **Testcontainers** | Integration tests with real containers |
 
 ---
@@ -2449,14 +2082,14 @@ so the earlier write to `value` becomes visible as well.
 
 ### Languages on the JVM (or inspired by Java)
 
-| Language | Year | Relation |
-|----------|------|---------|
-| **Groovy** | 2003 | Dynamic JVM language, scripting |
-| **Scala** | 2004 | JVM, FP + OOP, Akka ecosystem |
-| **Clojure** | 2007 | JVM, Lisp, immutability first |
-| **Kotlin** | 2011 | JVM, concise Java, null safety, coroutines |
-| **Dart** | 2011 | Java-like syntax, Flutter frontend |
-| **C#** | 2000 | .NET parallel: similar exception model, generics, evolution path |
+| Language    | Year | Relation                                                         |
+|-------------|------|------------------------------------------------------------------|
+| **Groovy**  | 2003 | Dynamic JVM language, scripting                                  |
+| **Scala**   | 2004 | JVM, FP + OOP, Akka ecosystem                                    |
+| **Clojure** | 2007 | JVM, Lisp, immutability first                                    |
+| **Kotlin**  | 2011 | JVM, concise Java, null safety, coroutines                       |
+| **Dart**    | 2011 | Java-like syntax, Flutter frontend                               |
+| **C#**      | 2000 | .NET parallel: similar exception model, generics, evolution path |
 
 ### Java's Impact on Platform Design
 
@@ -2474,27 +2107,27 @@ so the earlier write to `value` becomes visible as well.
 
 ### Strengths
 
-| Strength | Detail |
-|----------|--------|
-| **Platform independence** | Write once, run anywhere — JVM abstraction |
-| **Backward compatibility** | Strong long-term compatibility across releases |
-| **Ecosystem depth** | Maven Central contains a vast library ecosystem |
-| **Tooling** | IntelliJ IDEA, JUnit, profilers, monitoring |
-| **Safety** | No raw pointers, strong typing, GC |
-| **Concurrency** | `java.util.concurrent`, virtual threads (Java 21+) |
-| **Enterprise adoption** | Standard in banking, finance, large-scale systems |
-| **GraalVM** | Ahead-of-time native compilation for fast startup |
+| Strength                   | Detail                                             |
+|----------------------------|----------------------------------------------------|
+| **Platform independence**  | Write once, run anywhere — JVM abstraction         |
+| **Backward compatibility** | Strong long-term compatibility across releases     |
+| **Ecosystem depth**        | Maven Central contains a vast library ecosystem    |
+| **Tooling**                | IntelliJ IDEA, JUnit, profilers, monitoring        |
+| **Safety**                 | No raw pointers, strong typing, GC                 |
+| **Concurrency**            | `java.util.concurrent`, virtual threads (Java 21+) |
+| **Enterprise adoption**    | Standard in banking, finance, large-scale systems  |
+| **GraalVM**                | Ahead-of-time native compilation for fast startup  |
 
 ### Weaknesses
 
-| Weakness | Detail |
-|----------|--------|
-| **Verbosity** | Getters/setters, checked exceptions, boilerplate (mitigated by records and modern syntax) |
-| **JVM startup** | Slower cold start vs native binaries (mitigated by GraalVM, CDS, AOT options) |
-| **Type erasure** | Generic type info not generally available at runtime |
-| **Primitive boxing** | Performance cost converting between `int` and `Integer` |
-| **Null** | `null` is still part of the language |
-| **Slow feature adoption** | Some major features arrived later than in competing languages |
+| Weakness                  | Detail                                                                                    |
+|---------------------------|-------------------------------------------------------------------------------------------|
+| **Verbosity**             | Getters/setters, checked exceptions, boilerplate (mitigated by records and modern syntax) |
+| **JVM startup**           | Slower cold start vs native binaries (mitigated by GraalVM, CDS, AOT options)             |
+| **Type erasure**          | Generic type info not generally available at runtime                                      |
+| **Primitive boxing**      | Performance cost converting between `int` and `Integer`                                   |
+| **Null**                  | `null` is still part of the language                                                      |
+| **Slow feature adoption** | Some major features arrived later than in competing languages                             |
 
 ---
 
@@ -2502,22 +2135,22 @@ so the earlier write to `value` becomes visible as well.
 
 See [`examples/java/`](../../../examples/java/index.md) for runnable code:
 
-| # | Example | Focus |
-|---|---------|-------|
-| 01 | [Hello World](../../../examples/java/01-hello-world/index.md) | Class structure, `main` method |
-| 02 | [Variables & Types](../../../examples/java/02-variables-and-types/index.md) | Primitives, wrappers, `var` |
-| 03 | [Functions](../../../examples/java/03-functions/index.md) | Methods, overloading, recursion |
-| 04 | [Control Flow](../../../examples/java/04-control-flow/index.md) | Loops, conditionals, switch expressions |
-| 05 | [Data Structures](../../../examples/java/05-data-structures/index.md) | Lists, Maps, Sets, records |
-| 06 | [OOP / Modules](../../../examples/java/06-oop-modules/index.md) | Packages, interfaces, inheritance |
-| 07 | [FP Features](../../../examples/java/07-fp-features/index.md) | Lambdas, streams, `Optional` |
-| 08 | [Error Handling](../../../examples/java/08-error-handling/index.md) | Checked/unchecked, try-with-resources |
-| 09 | [Concurrency](../../../examples/java/09-concurrency/index.md) | Threads, executors, virtual threads |
-| 14 | [Advanced Streams](../../../examples/java/14-streams-advanced/index.md) | Reduce, mapMulti, takeWhile, merge |
-| 15 | [Thread States](../../../examples/java/15-concurrency-thread-states/index.md) | BLOCKED, WAITING, TIMED_WAITING |
-| 16 | [Structured Concurrency](../../../examples/java/16-concurrency-structured/index.md) | ShutdownOnFailure, ShutdownOnSuccess |
-| 17 | [Variance & Generics](../../../examples/java/17-variance-generics/index.md) | Invariance, covariance, contravariance, PECS |
-| 10 | [Testing](../../../examples/java/10-testing/index.md) | JUnit 5, Mockito, AssertJ |
+| Example                                                                                 | Focus                                        |
+|-----------------------------------------------------------------------------------------|----------------------------------------------|
+| [01 Hello World](../../../examples/java/01-hello-world/README.md)                       | Class structure, `main` method               |
+| [02 Variables & Types](../../../examples/java/02-variables-and-types/README.md)         | Primitives, wrappers, `var`                  |
+| [03 Functions](../../../examples/java/03-functions/README.md)                           | Methods, overloading, recursion              |
+| [04 Control Flow](../../../examples/java/04-control-flow/README.md)                     | Loops, conditionals, switch expressions      |
+| [05 Data Structures](../../../examples/java/05-data-structures/README.md)               | Lists, Maps, Sets, records                   |
+| [06 OOP / Modules](../../../examples/java/06-oop-modules/README.md)                     | Packages, interfaces, inheritance            |
+| [07 FP Features](../../../examples/java/07-fp-features/README.md)                       | Lambdas, streams, `Optional`                 |
+| [08 Error Handling](../../../examples/java/07-error-handling/README.md)                 | Checked/unchecked, try-with-resources        |
+| [09 Concurrency](../../../examples/java/08-concurrency/README.md)                       | Threads, executors, virtual threads          |
+| [10 Testing](../../../examples/java/09-testing/README.md)                               | JUnit 5, Mockito, AssertJ                    |
+| [14 Advanced Streams](../../../examples/java/14-streams-advanced/README.md)             | Reduce, mapMulti, takeWhile, merge           |
+| [15 Thread States](../../../examples/java/15-concurrency-thread-states/README.md)       | BLOCKED, WAITING, TIMED_WAITING              |
+| [16 Structured Concurrency](../../../examples/java/16-concurrency-structured/README.md) | ShutdownOnFailure, ShutdownOnSuccess         |
+| [17 Variance & Generics](../../../examples/java/17-variance-generics/README.md)         | Invariance, covariance, contravariance, PECS |
 
 ---
 
@@ -2544,14 +2177,14 @@ See [`examples/java/`](../../../examples/java/index.md) for runnable code:
 
 ## Further Reading
 
-| Author | Title | Year | Focus |
-|--------|-------|------|-------|
-| Gosling, Joy, Steele, Bracha | *The Java Language Specification* | 1996 | Language reference |
-| Bloch | *Effective Java* | 2001, 2018 | Idiomatic usage, best practices |
-| Goetz et al. | *Java Concurrency in Practice* | 2006 | Threading, memory model |
-| Evans | *Domain-Driven Design* | 2003 | DDD patterns often in Java |
-| Fowler | *Refactoring* | 1999, 2018 | Java-centric refactoring catalog |
-| Gamma et al. | *Design Patterns* | 1994 | GoF patterns, Java examples |
+| Author                       | Title                             | Year       | Focus                            |
+|------------------------------|-----------------------------------|------------|----------------------------------|
+| Gosling, Joy, Steele, Bracha | *The Java Language Specification* | 1996       | Language reference               |
+| Bloch                        | *Effective Java*                  | 2001, 2018 | Idiomatic usage, best practices  |
+| Goetz et al.                 | *Java Concurrency in Practice*    | 2006       | Threading, memory model          |
+| Evans                        | *Domain-Driven Design*            | 2003       | DDD patterns often in Java       |
+| Fowler                       | *Refactoring*                     | 1999, 2018 | Java-centric refactoring catalog |
+| Gamma et al.                 | *Design Patterns*                 | 1994       | GoF patterns, Java examples      |
 
 ---
 
