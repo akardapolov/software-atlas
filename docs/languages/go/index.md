@@ -343,16 +343,20 @@ GOOS=linux GOARCH=amd64 go build
 
 ## Code Examples
 
-See [examples/go/](../../../examples/go/index.md) for runnable code:
+See [`examples/go/`](../../../examples/go/index.md) for runnable code:
 
-| Example | Description |
-|---------|-------------|
-| [01 Hello World](../../../examples/go/01-hello-world/index.md) | Package, entry point, basic syntax |
-| [02 Variables & Types](../../../examples/go/02-variables-and-types/index.md) | Type inference, zero values, pointers |
-| [03 Functions](../../../examples/go/03-functions/index.md) | Multiple returns, defer, error handling |
-| [04 Control Flow](../../../examples/go/04-control-flow/index.md) | For/range loops, select statements |
-| [05 Data Structures](../../../examples/go/05-data-structures/index.md) | Slices, maps, structs |
-| [06 OOP/Modules](../../../examples/go/06-oop-modules/index.md) | Interfaces, methods, packages |
+| Example                                                                       | Description                                    |
+|-------------------------------------------------------------------------------|------------------------------------------------|
+| [01 Hello World](../../../examples/go/01-hello-world/README.md)               | Package, entry point, basic syntax             |
+| [02 Variables & Types](../../../examples/go/02-variables-and-types/README.md) | Type inference, zero values, pointers          |
+| [03 Functions](../../../examples/go/03-functions/README.md)                   | Multiple returns, defer, error handling        |
+| [04 Control Flow](../../../examples/go/04-control-flow/README.md)             | For/range loops, select statements             |
+| [05 Data Structures](../../../examples/go/05-data-structures/README.md)       | Slices, maps, structs                          |
+| [06 OOP/Modules](../../../examples/go/06-oop-modules/README.md)               | Interfaces, methods, packages                  |
+| [07 FP Features](../../../examples/go/07-fp-features/README.md)               | First-class functions, closures, generics      |
+| [08 Error Handling](../../../examples/go/08-error-handling/README.md)         | Multi-return values, error type, panic/recover |
+| [09 Concurrency](../../../examples/go/09-concurrency/README.md)               | Goroutines, channels, select                   |
+| [10 Testing](../../../examples/go/10-testing/README.md)                       | testing package, table-driven tests            |
 
 ## Strengths and Weaknesses
 

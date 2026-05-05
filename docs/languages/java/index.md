@@ -1557,59 +1557,130 @@ It is useful to distinguish:
 ## 1. Complete JVM Memory Picture
 
 ```mermaid
-flowchart TD
-    subgraph Process["☕ Java Process (OS view)"]
-        
-        subgraph HEAP["🗂️ HEAP — Garbage Collected Region"]
-            direction TB
+graph TB
+    subgraph OS["🖥️ OPERATING SYSTEM"]
+        subgraph PROCESS["⚙️ JVM PROCESS (java.exe)"]
             
-            subgraph YOUNG["Young Generation (~25–33% of heap)"]
-                direction LR
-                EDEN["🌱 Eden\n~80% of young gen\n\nNew objects born here\nnew MyObject()\nnew int[100]\n"]
-                S0["📦 Survivor 0\n~10% of young gen\n\nObjects that survived\n1+ minor GC"]
-                S1["📦 Survivor 1\n~10% of young gen\n\nAlternates with S0\nalways one is empty"]
+            subgraph NATIVE_MEM["📦 Process Native Memory (Virtual Address Space)"]
+                
+                subgraph HEAP_AREA["🟢 JVM HEAP (shared by all threads)"]
+                    direction TB
+                    subgraph YOUNG["Young Generation"]
+                        EDEN["Eden Space\n(new objects)"]
+                        S0["Survivor 0"]
+                        S1["Survivor 1"]
+                    end
+                    subgraph OLD["Old Generation (Tenured)"]
+                        OLD_OBJ["Long-lived objects"]
+                    end
+                    
+                    OBJ1["🔵 Object: Person\n{ name='Alice', age=30 }"]
+                    OBJ2["🔵 Object: int[]\n{ 1,2,3,4,5 }"]
+                    OBJ3["🔵 Object: String\n'Hello World'"]
+                end
+
+                subgraph METASPACE_AREA["🟣 METASPACE (native memory)"]
+                    CLASS_META["Class Metadata"]
+                    METHODS["Method Bytecode"]
+                    STATIC_VARS["⚡ Static Variables\nClass.staticField"]
+                    CONST_POOL["Constant Pool"]
+                    STRING_POOL["String Pool (interned strings)"]
+                end
+
+                subgraph CODE_CACHE["🟡 CODE CACHE"]
+                    JIT["JIT-compiled\nnative code"]
+                end
+
+                subgraph THREADS_MEM["🔴 THREAD MEMORY (separate for each thread)"]
+                    
+                    subgraph THREAD1["🧵 Thread-1 (main)"]
+                        subgraph STACK1["Thread STACK (512KB-1MB)"]
+                            direction TB
+                            FRAME3["┌─ Stack Frame: main()\n│  args: String[] → REF→HEAP\n│  person → REF→HEAP\n│  numbers → REF→HEAP\n└─────────────────────"]
+                            FRAME2["┌─ Stack Frame: calculate()\n│  x: int = 42  ← PRIMITIVE\n│  y: int = 10  ← PRIMITIVE\n│  result: int = 420\n└────────────────────"]
+                            FRAME1["┌─ Stack Frame: process()\n│  obj → REF→HEAP\n│  flag: boolean = true\n│  count: long = 100L\n└────────────────────"]
+                        end
+                        PC1["PC Register\n(address of next instruction)"]
+                        NATIVE_STACK1["Native Method Stack"]
+                    end
+
+                    subgraph THREAD2["🧵 Thread-2 (worker)"]
+                        subgraph STACK2["Thread STACK (512KB-1MB)"]
+                            FRAME4["┌─ Stack Frame: run()\n│  task → REF→HEAP\n│  i: int = 0\n└────────────────"]
+                        end
+                        PC2["PC Register"]
+                        NATIVE_STACK2["Native Method Stack"]
+                    end
+
+                    subgraph THREAD3["🧵 Thread-3 (gc)"]
+                        subgraph STACK3["Thread STACK"]
+                            FRAME5["GC frames..."]
+                        end
+                        PC3["PC Register"]
+                    end
+                end
+
             end
-            
-            subgraph OLD["Old Generation / Tenured (~66–75% of heap)"]
-                TENURED["🏛️ Tenured Space\n\nLong-lived objects\nage threshold reached (default: 15 GC cycles)\nLarge objects (bypassed directly from Eden)\nStatic field references keep objects alive here"]
+
+            subgraph GC_ENGINE["♻️ GARBAGE COLLECTOR"]
+                GC_LOGIC["Tracks references\nStack REF → Heap Objects\nCollects unreachable objects"]
             end
         end
-        
-        subgraph NON_HEAP["🔧 Non-Heap — JVM Internal Memory"]
-            direction TB
-            
-            META["📚 Metaspace\n(native memory, no fixed limit by default)\n\nClass metadata\nMethod bytecode descriptors\nRuntime constant pool\nAnnotation data\nField and method info\nGrows as classes are loaded\nShrinks on class unloading"]
-            
-            CODE["⚡ Code Cache\n\nJIT-compiled native machine code\nInterpreted → C1 compiled → C2 compiled\nCode stubs, JVM runtime routines"]
+
+        subgraph OS_KERNEL["🔧 OS KERNEL"]
+            VMALLOC["Virtual Memory Allocator\n(mmap / VirtualAlloc)"]
+            PHYS_MEM["Physical Memory Manager\n(RAM Pages)"]
+            SWAP["💾 SWAP / Page File"]
         end
-        
-        subgraph THREADS["🧵 Thread-Local Memory (per thread)"]
-            direction LR
-            T1["Thread A\n──────\nStack frames\nlocal primitives\nlocal references\noperand stack\nreturn address\n──────\nProgram Counter"]
-            T2["Thread B\n──────\nStack frames\nlocal primitives\nlocal references\noperand stack\nreturn address\n──────\nProgram Counter"]
-            T3["Thread C\n──────\nStack frames\n..."]
-        end
-        
-        DIRECT["💾 Direct / Off-Heap Memory\n\nNIO ByteBuffer.allocateDirect()\nForeign Memory API (Arena)\nJNI native allocations\nnot subject to heap GC\nmanaged by Cleaner or Arena lifecycle"]
     end
 
-    style Process fill:#f8f9fa,stroke:#495057,stroke-width:2px
-    style HEAP fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
-    style YOUNG fill:#fff9c4,stroke:#f9a825,stroke-width:2px
-    style OLD fill:#fce4ec,stroke:#c62828,stroke-width:2px
-    style NON_HEAP fill:#e3f2fd,stroke:#1565c0,stroke-width:2px
-    style THREADS fill:#f3e5f5,stroke:#6a1b9a,stroke-width:2px
-    style DIRECT fill:#efebe9,stroke:#4e342e,stroke-width:2px
-    style EDEN fill:#fff176,stroke:#f9a825
-    style S0 fill:#ffe082,stroke:#f9a825
-    style S1 fill:#ffe082,stroke:#f9a825
-    style TENURED fill:#ef9a9a,stroke:#c62828
-    style META fill:#90caf9,stroke:#1565c0
-    style CODE fill:#81d4fa,stroke:#1565c0
-    style T1 fill:#ce93d8,stroke:#6a1b9a
-    style T2 fill:#ce93d8,stroke:#6a1b9a
-    style T3 fill:#ce93d8,stroke:#6a1b9a
-    style DIRECT fill:#bcaaa4,stroke:#4e342e
+    subgraph RAM["🔋 PHYSICAL MEMORY (RAM)"]
+        RAM_PAGES["Memory Pages\n(4KB pages)"]
+    end
+
+    %% Connections: JVM requests memory from OS
+    HEAP_AREA -->|"-Xms (start)\n-Xmx (max)\nmmap/VirtualAlloc"| VMALLOC
+    THREADS_MEM -->|"-Xss per thread\nwhen creating a thread"| VMALLOC
+    METASPACE_AREA -->|"-XX:MaxMetaspaceSize\nnative calls"| VMALLOC
+    CODE_CACHE -->|"-XX:ReservedCodeCacheSize"| VMALLOC
+
+    VMALLOC -->|"allocates virtual\npages"| PHYS_MEM
+    PHYS_MEM -->|"mapping"| RAM_PAGES
+    PHYS_MEM <-->|"page swapping"| SWAP
+
+    %% Connections: Stack REF → Heap Objects
+    FRAME3 -.->|"person REF"| OBJ1
+    FRAME3 -.->|"numbers REF"| OBJ2
+    FRAME1 -.->|"obj REF"| OBJ3
+    FRAME4 -.->|"task REF"| OBJ1
+
+    %% GC monitors
+    GC_ENGINE -->|"scans Roots\n(Stack Frames)"| STACK1
+    GC_ENGINE -->|"scans Roots"| STACK2
+    GC_ENGINE -->|"manages"| HEAP_AREA
+
+    %% Classes in Metaspace
+    STATIC_VARS -.->|"static REF\nto objects"| HEAP_AREA
+
+    %% Styles
+    style HEAP_AREA fill:#e8f5e9,stroke:#4CAF50,color:#1b5e20
+    style YOUNG fill:#f1f8e9,stroke:#66BB6A,color:#33691e
+    style OLD fill:#e8f5e9,stroke:#388E3C,color:#1b5e20
+    style METASPACE_AREA fill:#f3e5f5,stroke:#9C27B0,color:#4a148c
+    style CODE_CACHE fill:#fff8e1,stroke:#FFA000,color:#3e2723
+    style THREAD1 fill:#ffebee,stroke:#f44336,color:#b71c1c
+    style THREAD2 fill:#ffebee,stroke:#f44336,color:#b71c1c
+    style THREAD3 fill:#ffebee,stroke:#f44336,color:#b71c1c
+    style STACK1 fill:#fce4ec,stroke:#EF9A9A,color:#880e4f
+    style STACK2 fill:#fce4ec,stroke:#EF9A9A,color:#880e4f
+    style STACK3 fill:#fce4ec,stroke:#EF9A9A,color:#880e4f
+    style OS_KERNEL fill:#e8eaf6,stroke:#3F51B5,color:#1a237e
+    style RAM fill:#e0f7fa,stroke:#00BCD4,color:#004d40
+    style PROCESS fill:#fafafa,stroke:#78909C,color:#263238
+    style OS fill:#eceff1,stroke:#546e7a,color:#263238
+    style GC_ENGINE fill:#fffde7,stroke:#FDD835,color:#3e2723
+    style THREADS_MEM fill:#fbe9e7,stroke:#FF5722,color:#bf360c
+    style NATIVE_MEM fill:#eceff1,stroke:#607D8B,color:#263238
 ```
 
 ---
