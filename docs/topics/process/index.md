@@ -36,6 +36,15 @@ embracing uncertainty through continuous feedback.
   - [Site Reliability Engineering — SRE (2016)](#site-reliability-engineering--sre-2016)
   - [Team Topologies (2019)](#team-topologies-2019)
   - [Code Review](#code-review)
+- [CI/CD Providers](#cicd-providers)
+  - [Overview](#overview)
+  - [GitHub Actions](#github-actions)
+  - [GitLab CI/CD](#gitlab-cicd)
+  - [Jenkins](#jenkins)
+  - [CircleCI](#circleci)
+  - [Azure DevOps Pipelines](#azure-devops-pipelines)
+  - [Bitbucket Pipelines](#bitbucket-pipelines)
+  - [TeamCity](#teamcity)
   - [Technical Debt](#technical-debt)
 - [System Evolution](#system-evolution)
   - [Software Evolution & Lehman's Laws](#software-evolution--lehmans-laws)
@@ -2024,6 +2033,224 @@ ALTER TABLE users RENAME COLUMN name TO username;
 | **Versioned endpoints** | Separate endpoints for each version | Clear separation, more maintenance |
 | **Adapter layer** | Translation layer for legacy clients | Central logic, performance overhead |
 | **Feature flags** | Enable new features selectively | Gradual rollout, added complexity |
+
+---
+
+## CI/CD Providers
+
+> Detailed guides for each provider: [docs/topics/process/ci-cd/](ci-cd/index.md)
+
+**Core idea:** CI/CD providers automate the build → test → deploy pipeline.
+They differ in hosting model, pricing, ecosystem integration, and configuration approach.
+
+### Overview
+
+| Provider | Hosting | Config file | Native VCS | Best for |
+|----------|---------|-------------|-----------|----------|
+| **GitHub Actions** | Cloud (SaaS) | `.github/workflows/*.yml` | GitHub | GitHub-first teams |
+| **GitLab CI/CD** | Cloud + Self-hosted | `.gitlab-ci.yml` | GitLab | GitLab-first / on-prem |
+| **Jenkins** | Self-hosted | `Jenkinsfile` | Any | Full control, enterprise |
+| **CircleCI** | Cloud + Self-hosted | `.circleci/config.yml` | GitHub, Bitbucket, GitLab | Speed, parallelism |
+| **Azure DevOps** | Cloud (SaaS) | `azure-pipelines.yml` | Azure Repos, GitHub | Microsoft / .NET stack |
+| **Bitbucket Pipelines** | Cloud (SaaS) | `bitbucket-pipelines.yml` | Bitbucket | Atlassian stack |
+| **TeamCity** | Self-hosted + Cloud | Kotlin DSL / UI | Any | JetBrains / enterprise |
+
+### GitHub Actions
+
+Configuration: `.github/workflows/<name>.yml` in repository root.
+
+UI path: `Repository → Actions → Workflows → <workflow name> → <run>`.
+
+```yaml
+# .github/workflows/ci.yml
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm ci
+      - run: npm test
+```
+
+→ [GitHub Actions — detailed guide](ci-cd/github-actions.md)
+
+### GitLab CI/CD
+
+Configuration: `.gitlab-ci.yml` in repository root.
+
+UI path: `Project → Build → Pipelines → <pipeline> → <job>`.
+
+```yaml
+# .gitlab-ci.yml
+stages:
+  - build
+  - test
+  - deploy
+
+build:
+  stage: build
+  script:
+    - npm ci
+
+test:
+  stage: test
+  script:
+    - npm test
+
+deploy:
+  stage: deploy
+  script:
+    - ./deploy.sh
+  only:
+    - main
+```
+
+→ [GitLab CI/CD — detailed guide](ci-cd/gitlab-ci.md)
+
+### Jenkins
+
+Configuration: `Jenkinsfile` in repository root (declarative or scripted pipeline).
+
+UI path: `Jenkins Dashboard → <Job> → Build History → <Build #> → Console Output`.
+
+```groovy
+// Jenkinsfile (Declarative)
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps { sh 'npm ci' }
+        }
+        stage('Test') {
+            steps { sh 'npm test' }
+        }
+        stage('Deploy') {
+            when { branch 'main' }
+            steps { sh './deploy.sh' }
+        }
+    }
+}
+```
+
+→ [Jenkins — detailed guide](ci-cd/jenkins.md)
+
+### CircleCI
+
+Configuration: `.circleci/config.yml` in repository root.
+
+UI path: `CircleCI Dashboard → Projects → <project> → Pipelines → <workflow> → <job>`.
+
+```yaml
+# .circleci/config.yml
+version: 2.1
+jobs:
+  build-and-test:
+    docker:
+      - image: cimg/node:20.0
+    steps:
+      - checkout
+      - run: npm ci
+      - run: npm test
+
+workflows:
+  ci:
+    jobs:
+      - build-and-test
+```
+
+→ [CircleCI — detailed guide](ci-cd/circleci.md)
+
+### Azure DevOps Pipelines
+
+Configuration: `azure-pipelines.yml` in repository root.
+
+UI path: `Azure DevOps → Project → Pipelines → <pipeline> → <run> → Jobs → <job> → Steps`.
+
+```yaml
+# azure-pipelines.yml
+trigger:
+  - main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '20.x'
+  - script: npm ci
+  - script: npm test
+```
+
+→ [Azure DevOps Pipelines — detailed guide](ci-cd/azure-devops.md)
+
+### Bitbucket Pipelines
+
+Configuration: `bitbucket-pipelines.yml` in repository root.
+
+UI path: `Bitbucket Repository → Pipelines → <pipeline run> → <step>`.
+
+```yaml
+# bitbucket-pipelines.yml
+image: node:20
+
+pipelines:
+  default:
+    - step:
+        name: Build and Test
+        script:
+          - npm ci
+          - npm test
+  branches:
+    main:
+      - step:
+          name: Deploy
+          script:
+            - ./deploy.sh
+```
+
+→ [Bitbucket Pipelines — detailed guide](ci-cd/bitbucket-pipelines.md)
+
+### TeamCity
+
+Configuration: Kotlin DSL in `.teamcity/settings.kts` **or** via UI.
+
+UI path: `TeamCity → Projects → <project> → Build Configurations → <config> → Edit → Build Steps`.
+
+```kotlin
+// .teamcity/settings.kts
+project {
+    buildType(Build)
+}
+
+object Build : BuildType({
+    name = "Build and Test"
+    vcs { root(DslContext.settingsRoot) }
+    steps {
+        script {
+            scriptContent = """
+                npm ci
+                npm test
+            """.trimIndent()
+        }
+    }
+    triggers {
+        vcs { branchFilter = "+:*" }
+    }
+})
+```
+
+→ [TeamCity — detailed guide](ci-cd/teamcity.md)
 
 ---
 
