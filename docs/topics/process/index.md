@@ -1762,15 +1762,15 @@ flowchart LR
 
 ```mermaid
 flowchart LR
-    A["🔬 Discovery<br/><b>Collaboration</b><br/>High uncertainty"] 
-    -->|"Interface stabilises"| 
-    B["📦 Delivery<br/><b>X-as-a-Service</b><br/>Clear boundaries"]
+    A["🔬 Discovery\n**Collaboration**\nHigh uncertainty"]
+    B["📦 Delivery\n**X-as-a-Service**\nClear boundaries"]
+    C["⚠️ Capability gap\ndetected"]
+    D["🎓 **Facilitating**\nSkill transfer"]
+    E["✅ Enabling team\nsteps out"]
 
-    C["⚠️ Capability gap<br/>detected"]
-    -->|"Enabling team steps in"| 
-    D["🎓 <b>Facilitating</b><br/>Skill transfer"]
-    -->|"Capability built"| 
-    E["✅ Enabling team<br/>steps out"]
+    A -->|"Interface stabilises"| B
+    C -->|"Enabling team steps in"| D
+    D -->|"Capability built"| E
 
     style A fill:#ffccbc
     style B fill:#90caf9
