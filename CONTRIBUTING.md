@@ -1,10 +1,10 @@
-# Contributing to Software Atlas
+# Contributing to Software Engineering Atlas
 
-Thank you for your interest in contributing to Software Atlas!
+Thank you for your interest in contributing to Software Engineering Atlas!
 
 ## About This Project
 
-Software Atlas is primarily a **personal knowledge base** documenting the evolution
+Software Engineering Atlas is primarily a **personal knowledge base** documenting the evolution
 of software development ideas, practices, and technologies. It serves as a
 reference for understanding how concepts connect and influence each other over time.
 

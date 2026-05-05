@@ -23,7 +23,7 @@ print(f"active = {active}, type = {type(active)}")
 print(f"True + True = {True + True}")  # 2 — because bool is int
 
 # Strings — immutable sequences of Unicode characters
-name: str = "Software Atlas"
+name: str = "Software Engineering Atlas"
 print(f"name = {name}, type = {type(name)}")
 print(f"name[0] = {name[0]}, name[-1] = {name[-1]}")
 

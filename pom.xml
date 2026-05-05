@@ -10,7 +10,7 @@
     <version>1.0.0</version>
     <packaging>pom</packaging>
 
-    <name>Software Atlas</name>
+    <name>Software Engineering Atlas</name>
     <description>A knowledge base on the evolution of software development</description>
 
     <properties>

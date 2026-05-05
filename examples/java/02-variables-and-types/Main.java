@@ -49,7 +49,7 @@ public class Main {
 
         System.out.println("\n--- Reference types ---");
 
-        String name = "Software Atlas";
+        String name = "Software Engineering Atlas";
         System.out.println("name = " + name);
         System.out.println("name.length() = " + name.length());
         System.out.println("name.charAt(0) = " + name.charAt(0));

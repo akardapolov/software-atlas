@@ -17,7 +17,7 @@ fn main() {
     let active = true; // inferred as bool
     println!("active = {active}");
 
-    let name = "Software Atlas"; // inferred as &str (string slice)
+    let name = "Software Engineering Atlas"; // inferred as &str (string slice)
     println!("name = {name}");
 
     // ── Immutability by default ──────────────────────────

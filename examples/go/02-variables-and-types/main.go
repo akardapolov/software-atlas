@@ -48,7 +48,7 @@ func main() {
 	active := true // inferred as bool
 	fmt.Printf("active = %t, type = %T\n", active, active)
 
-	name := "Software Atlas" // inferred as string
+	name := "Software Engineering Atlas" // inferred as string
 	fmt.Printf("name = %s, type = %T\n", name, name)
 
 	// ── Zero values ──────────────────────────────────────

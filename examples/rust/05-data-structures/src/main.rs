@@ -281,7 +281,7 @@ fn demonstrate_binaryheap() {
 fn demonstrate_strings() {
     println!("\n--- Strings ---");
 
-    let name = String::from("Software Atlas");
+    let name = String::from("Software Engineering Atlas");
     println!("name = {}", name);
 
     // Indexing (returns char, not string!)

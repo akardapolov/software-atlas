@@ -26,7 +26,7 @@ void demonstrate_arrays(void) {
     printf("After modification numbers[2] = %d\n", numbers[2]);
 
     // Array as string (char array)
-    char name[] = "Software Atlas";
+    char name[] = "Software Engineering Atlas";
     printf("name = %s\n", name);
     printf("name[0] = %c, name[4] = %c\n", name[0], name[4]);
 

@@ -1,4 +1,4 @@
-# Software Atlas
+# Software Engineering Atlas
 
 A navigable knowledge map of software engineering — ideas, authors, works, languages, paradigms, architecture, and practices.
 
@@ -8,7 +8,7 @@ A navigable knowledge map of software engineering — ideas, authors, works, lan
 
 ## What is this?
 
-Software Atlas is a structured, interconnected reference on how
+Software Engineering Atlas is a structured, interconnected reference on how
 software development thinking evolved — from lambda calculus (1936)
 to modern distributed systems and DevOps practices.
 
@@ -28,7 +28,7 @@ It is **not** a textbook. It is a **navigable map**:
 
 ### The Atlas Approach
 
-Software Atlas is organized as a connected map of software ideas.
+Software Engineering Atlas is organized as a connected map of software ideas.
 
 Instead of treating software knowledge as a single linear curriculum or a fixed taxonomy, the atlas shows how concepts relate to each other across time, context, and practice.
 
@@ -429,6 +429,7 @@ timeline
 | 2000 | Brewer                  | CAP conjecture (keynote)                                       | Distributed            | —                                                                     | [→](docs/works/papers/brewer-2000-cap.md)        |
 | 2002 | Amazon                  | Dynamo: Amazon's Highly Available Key-value Store              | Distributed            | —                                                                     | [→](docs/works/papers/dynamo-2007-paper.md)      |
 | 2007 | Helland                 | Life Beyond Distributed Transactions                           | Distributed            | —                                                                     | [→](docs/works/papers/helland-2007-beyond-dt.md) |
+
 ### 📚 Books
 
 | Year | Author(s)              | Title                                                           | Topic                         | Page                                                                 |

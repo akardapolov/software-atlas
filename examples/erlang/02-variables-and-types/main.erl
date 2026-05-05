@@ -29,7 +29,7 @@ start() ->
     io:format("Active = ~p~n", [Active]),
 
     %% Strings — actually lists of integers (Unicode code points)
-    Name = "Software Atlas",
+    Name = "Software Engineering Atlas",
     io:format("Name = ~p~n", [Name]),
     io:format("Name as list = ~w~n", [Name]),  % shows integer list
 

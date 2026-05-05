@@ -27,7 +27,7 @@ main = do
     let pi'   = 3.14159 :: Double  -- 64-bit float
     let active = True :: Bool
     let letter = 'A' :: Char
-    let name   = "Software Atlas" :: String  -- String = [Char]
+    let name   = "Software Engineering Atlas" :: String  -- String = [Char]
 
     putStrLn $ "count = " ++ show count
     putStrLn $ "big = " ++ show big

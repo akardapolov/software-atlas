@@ -10,7 +10,7 @@
 const count: number = 42;          // all numbers are IEEE 754 doubles
 const pi: number =3.14159;
 const active: boolean = true;
-const name: string = "Software Atlas";
+const name: string = "Software Engineering Atlas";
 const nothing: null = null;
 const missing: undefined = undefined;
 

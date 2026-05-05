@@ -30,7 +30,7 @@
 (println "active =" active "type =" (type active))
 
 ;; Strings — Java String
-(def name' "Software Atlas")
+(def name' "Software Engineering Atlas")
 (println "name =" name' "type =" (type name'))
 
 ;; Characters

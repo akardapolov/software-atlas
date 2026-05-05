@@ -1,6 +1,6 @@
 # Glossary
 
-Key terms and definitions used throughout Software Atlas.
+Key terms and definitions used throughout Software Engineering Atlas.
 
 !!! note "Work in progress"
     This glossary is being built incrementally as content is added.

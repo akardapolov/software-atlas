@@ -1,6 +1,6 @@
 # Bibliography
 
-Complete reference list for all works cited in Software Atlas.
+Complete reference list for all works cited in Software Engineering Atlas.
 
 ## Papers
 

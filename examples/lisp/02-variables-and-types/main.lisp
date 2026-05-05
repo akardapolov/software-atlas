@@ -23,7 +23,7 @@
 (format t "1/2 + 2/3 = ~A~%" (+ one-half two-thirds))  ; 7/6
 
 ;; Strings — sequences of characters
-(setq name "Software Atlas")
+(setq name "Software Engineering Atlas")
 (format t "name = ~A~%" name)
 (format t "name[0] = ~A, name[-1] = ~A~%" (aref name 0) (aref name -1))
 
