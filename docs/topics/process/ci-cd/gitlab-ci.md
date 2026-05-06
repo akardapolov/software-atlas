@@ -475,5 +475,6 @@ Self-managed GitLab: limits depend on your runner capacity — no minute cap.
 ## Related
 
 - [CI/CD Providers Overview](index.md)
+- [Containers & Orchestration](../../containers/index.md) — Docker / Kubernetes executors
 - [GitHub Actions](github-actions.md)
 - [Continuous Delivery](../index.md#continuous-delivery-2010)

@@ -311,6 +311,7 @@ timeline
 | 6 | [**Concurrency**](docs/topics/concurrency/)                | Threads, CSP, Actors, async/await                                      | How we handle parallelism          |
 | 7 | [**Process & Testing**](docs/topics/process/)              | Agile, XP, TDD, CI/CD, DevOps                                          | How we build and ship              |
 | 8 | [**Distributed Systems**](docs/topics/distributed/)        | Clocks, CAP, consensus, consistency, streaming                         | How we scale across machines       |
+| 9 | [**Containers & Orchestration**](docs/topics/containers/)  | Docker, Podman, Kubernetes, OCI, runtimes                              | How we package and run workloads   |
 
 ---
 

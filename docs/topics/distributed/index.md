@@ -552,4 +552,5 @@ Google's globally distributed database:
 - [Concurrency](../concurrency/index.md) — shared-memory vs distributed
 - [Architecture & Modularity](../architecture/index.md) — microservices, system design
 - [Process](../process/index.md) — how teams build distributed systems
+- [Containers & Orchestration](../containers/index.md) — runtime substrate for distributed systems (Kubernetes uses etcd / Raft)
 - [Languages](../../languages/index.md) — Erlang (actor model), Go (CSP)

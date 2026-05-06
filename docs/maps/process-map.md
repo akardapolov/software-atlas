@@ -23,6 +23,8 @@ flowchart TD
         LeanStartup["Lean Startup<br/>Ries, 2011"]
         DevOps["DevOps<br/>2009"]
         Continuous["Continuous Delivery<br/>2010"]
+        Docker["Docker / Containers<br/>Hykes, 2013"]
+        K8s["Kubernetes<br/>Google, 2014"]
         TeamTopo["Team Topologies<br/>2019"]
     end
 
@@ -34,7 +36,9 @@ flowchart TD
     Agile01 --> Kanban
     Agile01 --> DevOps
     DevOps --> Continuous
-    Continuous --> TeamTopo
+    Continuous --> Docker
+    Docker --> K8s
+    K8s --> TeamTopo
     XP --> LeanStartup
 
     style Traditional fill:#ffcdd2
@@ -59,6 +63,8 @@ timeline
     2009 : DevOps movement begins
     2010 : Continuous Delivery book (Humble, Farley)
     2011 : Lean Startup (Ries)
+    2013 : Docker released (Hykes)
+    2014 : Kubernetes 1.0 (Google)
     2018 : Accelerate (Forsgren, Humble, Kim)
     2019 : Team Topologies (Skelton, Pais)
 ```
@@ -216,4 +222,5 @@ _While there is value in the items on the right, we value the items on the left 
 
 - [Team Topologies Authors](../authors/matthew-skelton.md)
 - [Brooks — Mythical Man-Month](../works/books/brooks-1975-mmm.md)
+- [Containers & Orchestration](../topics/containers/index.md)
 - [Architecture Map](./architecture-map.md)

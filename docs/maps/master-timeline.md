@@ -46,7 +46,8 @@ timeline
         2009 : DevOps movement : Go / channels (Google)
         2010 : Continuous Delivery (Humble & Farley) : Rust / ownership types
         2011 : Microservices emerging : C4 Model (Brown) : CRDTs (Shapiro et al.)
-        2014 : Raft (Ongaro & Ousterhout)
+        2013 : Docker / OCI containers (Hykes)
+        2014 : Raft (Ongaro & Ousterhout) : Kubernetes 1.0 (Google)
         2016 : SRE book (Google)
         2018 : DORA metrics
         2019 : Team Topologies (Skelton & Pais)
@@ -136,6 +137,8 @@ timeline
 | 2011 | Simple Made Easy | Hickey | Simplicity manifesto |
 | 2012 | TypeScript | Microsoft | Typed JavaScript |
 | 2012 | Boundaries | Bernhardt | FP/OOP synthesis |
+| 2013 | Docker | Hykes / dotCloud | Container packaging, OCI standard |
+| 2014 | Kubernetes 1.0 | Google | Container orchestration, declarative ops |
 | 2014 | Microservices | Various | Architectural style named |
 | 2015 | Building Microservices | Newman | Practical guide |
 | 2017 | DDIA | Kleppmann | Distributed systems guide |

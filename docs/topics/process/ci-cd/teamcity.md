@@ -538,6 +538,7 @@ JetBrains Cloud (via JetBrains Space) provides a hosted option.
 ## Related
 
 - [CI/CD Providers Overview](index.md)
+- [Containers & Orchestration](../../containers/index.md) — Docker support in build steps
 - [GitHub Actions](github-actions.md)
 - [GitLab CI/CD](gitlab-ci.md)
 - [Jenkins](jenkins.md)

@@ -1531,6 +1531,21 @@ If deploying is routine and automated, you can ship continuously.
 
 → [Continuous Delivery](../../works/books/humble-2010-cd.md)
 
+### Containerization (2013)
+
+**Core idea:** Package an application and its dependencies into an
+immutable, portable artifact that runs the same way everywhere.
+
+Docker (Solomon Hykes, 2013) made Linux primitives — namespaces,
+cgroups, union filesystems — accessible to ordinary developers through
+a single CLI, a `Dockerfile`, and a shared registry. Kubernetes
+(Google, 2014) followed with a declarative orchestrator for running
+those containers across a cluster. Together they made fine-grained
+microservices and continuous delivery operationally affordable.
+
+→ [Containers & Orchestration](../containers/index.md) — full chapter
+on Docker, Podman, Kubernetes, and alternatives.
+
 ### Site Reliability Engineering — SRE (2016)
 
 **Core idea:** Apply software engineering practices to operations.
@@ -2310,4 +2325,5 @@ continuous delivery, and safe refactoring.
 - [OOP & Design](../design/index.md) — refactoring, code quality
 - [Functional Programming](../functional/index.md) — testability, refactoring in FP
 - [Version Control & Git](../vcs/index.md) — branching, commit practices, code review workflows
+- [Containers & Orchestration](../containers/index.md) — runtime substrate for CI/CD, DevOps, microservices
 - [Languages](../../languages/index.md) — language-specific processes (Rust cargo, Go conventions)

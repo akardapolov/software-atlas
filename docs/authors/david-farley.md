@@ -73,6 +73,7 @@ Farley documented various testing approaches for CD:
 ## Related Pages
 
 - [Process topic](../topics/process/index.md) — DevOps, CI/CD, and deployment
+- [Containers & Orchestration](../topics/containers/index.md) — runtime substrate that CD assumes
 - [Jez Humble](jez-humble.md) — Co-author, Continuous Delivery
 - [Kent Beck](kent-beck.md) — XP and continuous integration
 - [Martin Fowler](martin-fowler.md) — Refactoring and CI/CD

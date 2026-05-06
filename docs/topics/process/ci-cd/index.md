@@ -88,5 +88,6 @@ Every CI/CD provider uses slightly different terminology, but the concepts map t
 
 - [Continuous Delivery](../index.md#continuous-delivery-2010) — the practice these tools implement
 - [DevOps](../index.md#devops-2009) — cultural context
+- [Containers & Orchestration](../../containers/index.md) — Docker, Kubernetes, and the runtime substrate pipelines build for
 - [Static Analysis](../index.md#static-analysis) — tools commonly run inside pipelines
 - [Observability](../index.md#observability) — what you monitor after deployment
