@@ -7,12 +7,12 @@ languages, paradigms, architecture, and practices.
 
 ## Contents
 
-- [Maps](#maps) — visual timelines and relationship diagrams
-- [Topics](#topics) — knowledge organized by domain
-- [Languages](#languages) — programming language profiles
-- [Authors](#authors) — biography cards of key contributors
-- [Works](#works) — papers, books, and talks
-- [Reading Paths](#reading-paths) — guided study sequences
+- [Maps](maps/index.md) — visual timelines and relationship diagrams
+- [Topics](topics/index.md) — knowledge organized by domain
+- [Languages](languages/index.md) — programming language profiles
+- [Authors](authors/index.md) — biography cards of key contributors
+- [Works](works/index.md) — papers, books, and talks
+- [Reading Paths](reading-paths/index.md) — guided study sequences
 
 ---
 
@@ -53,6 +53,8 @@ Topic pages collect related ideas into one domain. They are meant for focused st
 **Process and Testing** covers how teams organize work and verify software: agile methods, extreme programming, test-driven development, continuous integration and delivery, and the DORA metrics for measuring delivery performance. It connects practices to the ideas and people behind them.
 
 **Distributed Systems** covers the fundamental challenges of systems that span multiple machines: logical time and causality, ACID transactions, the CAP theorem, consensus algorithms, consistency models, and event streaming. It traces the lineage from Lamport's early papers through modern cloud-era practice.
+
+**Containers and Orchestration** covers how applications are packaged, distributed, and run at scale on shared infrastructure — from early Linux primitives like cgroups and namespaces, through Docker's portable images in 2013 and Kubernetes in 2014, to OCI standards and modern runtimes such as containerd, Podman, and CRI-O. It is the operational substrate that ties together CI/CD pipelines, microservice architectures, and the DevOps and SRE practices built around them.
 
 ---
 

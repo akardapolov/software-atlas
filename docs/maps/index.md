@@ -26,7 +26,7 @@ connect and influence each other over time.
 ## Detailed overview — lineages x era
 
 > This map expands the [Overview map](../../README.md#overview-timeline-major-lineages--era)
-> by splitting the four coarse tracks into **seven thematic lineages**
+> by splitting the four coarse tracks into **eight thematic lineages**
 > and adding second-order nodes that were deliberately omitted from
 > the overview for clarity.
 >
@@ -48,7 +48,7 @@ connect and influence each other over time.
 
 ```mermaid
 timeline
-    title Detailed Overview - 7 lineages x 4 eras
+    title Detailed Overview - 8 lineages x 4 eras
 
     section 1936-1967 Foundations
         FP 1936             : [P] lambda-calculus (Church 1936)
@@ -150,6 +150,9 @@ timeline
         Distributed 2011    : [P] CRDTs (Shapiro et al 2011)
         Distributed 2014    : [P] Raft (Ongaro and Ousterhout 2014)
         Distributed 2017    : [B] DDIA (Kleppmann 2017)
+        Containers 2013     : [L] Docker (Hykes 2013)
+        Containers 2014     : [L] Kubernetes (Google 2014)
+        Containers 2015     : [R] OCI standard (2015)
 ```
 
 ---
@@ -311,6 +314,19 @@ flowchart TB
     Raft --> Kleppmann
   end
 
+  subgraph CONT["Containers and Orchestration"]
+    LXC["LXC 2008\nLinux containers"]
+    Docker["Hykes 2013\nDocker"]
+    K8s["Google 2014\nKubernetes"]
+    OCI["OCI 2015\nImage / runtime spec"]
+    Helm["Helm 2016\nK8s package manager"]
+
+    LXC --> Docker
+    Docker --> K8s
+    Docker --> OCI
+    K8s --> Helm
+  end
+
   %% Cross-track edges
   Parnas -. "modularity" .-> Martin
   Parnas -. "modularity" .-> Evans
@@ -323,6 +339,9 @@ flowchart TB
   WadlerTypes --> Haskell
   WadlerMonads --> Hickey
   Milner -. "ML lineage" .-> Wlaschin
+  CD -. "containers enable CD at scale" .-> Docker
+  Newman -. "microservices need orchestration" .-> K8s
+  Raft -. "etcd uses Raft" .-> K8s
 
   style ARCH fill:#dbeafe,stroke:#3b82f6,stroke-width:2px
   style OOP  fill:#fef9c3,stroke:#eab308,stroke-width:2px
@@ -331,6 +350,7 @@ flowchart TB
   style PROC fill:#dcfce7,stroke:#22c55e,stroke-width:2px
   style CONC fill:#e0f2fe,stroke:#0ea5e9,stroke-width:2px
   style DIST fill:#f3e8ff,stroke:#a855f7,stroke-width:2px
+  style CONT fill:#fee2e2,stroke:#ef4444,stroke-width:2px
 ```
 
 ---
@@ -356,6 +376,9 @@ that cross lineage boundaries and make the atlas a graph, not a tree.
 | Milner (Types)       | Wlaschin (FP)        | ML lineage to F#                | Wlaschin works in F#, a direct descendant of ML via OCaml.                                          |
 | Wadler Types (Types) | Haskell (FP)         | type classes to Haskell         | Wadler and Blott's 1989 type classes paper was directly incorporated into Haskell.                  |
 | Wadler Monads (FP)   | Hickey (FP)          | monadic patterns                | Clojure's sequence abstractions and transducers echo monadic composition.                           |
+| CD (Process)         | Docker (Containers)  | containers enable CD at scale   | Reproducible images turned the CD pipeline's "deployable artifact" into a portable, hermetic unit.  |
+| Newman (Arch)        | Kubernetes (Cont)    | microservices need orchestration| Microservice architectures multiplied operational complexity that orchestrators were built to absorb. |
+| Raft (Distributed)   | Kubernetes (Cont)    | etcd uses Raft                  | Kubernetes' control plane stores cluster state in etcd, which uses Raft for replicated consensus.   |
 
 ---
 
@@ -432,6 +455,7 @@ with its type and the lineage(s) it belongs to.
 | 2007    | Amazon — Dynamo paper                        | [P]    | Distributed           | foundation     |
 | 2007    | Helland — Life Beyond DT                     | [P]    | Distributed           | foundation     |
 | 2007    | Hickey — Clojure                             | [L]    | FP                    | embodiment     |
+| 2008    | LXC — Linux containers                       | [L]    | Containers            | foundation     |
 | 2009    | Debois — DevOps movement                     | [X]    | Process               | popularization |
 | 2009    | Go language                                  | [L]    | Concurrency           | embodiment     |
 | 2010    | Humble and Farley — Continuous Delivery      | [B]    | Process               | popularization |
@@ -444,11 +468,15 @@ with its type and the lineage(s) it belongs to.
 | 2012    | Bernhardt — Boundaries / FC-IS               | [T]    | FP, Architecture      | popularization |
 | 2012    | Metz — POODR                                 | [B]    | OOP                   | popularization |
 | 2012    | TypeScript                                   | [L]    | Types                 | embodiment     |
+| 2013    | Hykes — Docker                               | [L]    | Containers            | embodiment     |
+| 2014    | Google — Kubernetes                          | [L]    | Containers            | embodiment     |
 | 2014    | Java 8 lambdas                               | [L]    | FP                    | embodiment     |
 | 2014    | Ongaro and Ousterhout — Raft                 | [P]    | Distributed           | formalization  |
 | 2015    | Newman — Building Microservices              | [B]    | Architecture          | popularization |
+| 2015    | OCI — Image / runtime spec                   | [R]    | Containers            | formalization  |
 | 2015    | Rust stable release                          | [L]    | Types, Concurrency    | embodiment     |
 | 2016    | Google — SRE book                            | [B]    | Process               | popularization |
+| 2016    | Helm — K8s package manager                   | [L]    | Containers            | embodiment     |
 | 2016    | Kotlin stable                                | [L]    | Types, FP             | embodiment     |
 | 2017    | Kleppmann — DDIA                             | [B]    | Distributed           | synthesis      |
 | 2018    | Forsgren et al. — Accelerate / DORA          | [B]    | Process               | synthesis      |
@@ -478,11 +506,11 @@ To avoid ambiguity, this atlas uses the following notation:
 
 | Aspect            | Overview (README)                                   | Detailed map (this page)                                                       |
 |-------------------|-----------------------------------------------------|--------------------------------------------------------------------------------|
-| Tracks            | 4 coarse (Arch, OOP+FP+Types, Process, Distributed) | 7 (Arch, OOP, Types, FP, Process, Concurrency, Distributed)                    |
+| Tracks            | 4 coarse (Arch, OOP+FP+Types, Process, Distributed) | 8 (Arch, OOP, Types, FP, Process, Concurrency, Distributed, Containers)        |
 | Nodes per epoch   | 2-4 anchors per track                               | 4-8 nodes per track                                                            |
 | Node types        | Implicit                                            | Explicitly marked ([P] [B] [T] [L] [R] [X] [A])                                |
 | Atlas roles       | Implicit                                            | Labeled (foundation / formalization / embodiment / popularization / synthesis) |
-| Cross-track links | 4 dotted edges                                      | 14 documented edges with explanations                                          |
+| Cross-track links | 4 dotted edges                                      | 17 documented edges with explanations                                          |
 | Purpose           | Orientation, "where am I?"                          | Navigation, "what connects to what and why?"                                   |
 
 > Next level of detail: individual [topic pages](../topics/index.md)
