@@ -69,6 +69,74 @@ timeline
     2019 : Team Topologies (Skelton, Pais)
 ```
 
+## Build Tools Evolution
+
+Build systems evolved alongside the methodologies above. Each generation
+solved specific pain points: dependency resolution, cross-platform
+config, polyglot monorepos, hermetic reproducibility.
+
+```mermaid
+flowchart TD
+    subgraph Native["🛠 Native (C / C++)"]
+        Make["Make<br/>Stallman et al, 1976<br/><i>dependency graph,<br/>timestamps</i>"]
+        CMake["CMake<br/>Kitware, 2000<br/><i>cross-platform<br/>generator</i>"]
+        Ninja["Ninja<br/>Martin, 2010<br/><i>minimal, fast<br/>backend</i>"]
+    end
+
+    subgraph JVM["☕ JVM"]
+        Ant["Ant<br/>2000<br/><i>XML build<br/>for Java</i>"]
+        Maven["Maven<br/>2004<br/><i>convention over<br/>configuration</i>"]
+        Gradle["Gradle<br/>2007<br/><i>Groovy/Kotlin DSL,<br/>incremental</i>"]
+        Sbt["sbt<br/>2008<br/><i>Scala REPL,<br/>Zinc compiler</i>"]
+    end
+
+    subgraph Lang["📦 Per-language"]
+        Npm["npm<br/>2010<br/><i>JS registry,<br/>lockfile</i>"]
+        Cargo["Cargo<br/>2012<br/><i>Rust toolchain,<br/>lockfile by default</i>"]
+    end
+
+    subgraph Hermetic["🔒 Hermetic / monorepo"]
+        Bazel["Bazel<br/>Google, 2015<br/><i>polyglot, hermetic,<br/>remote cache</i>"]
+    end
+
+    Make --> CMake
+    CMake --> Ninja
+    CMake --> Bazel
+    Ant --> Maven
+    Maven --> Gradle
+    Maven -.->|"repos, coords"| Sbt
+    Maven --> Bazel
+    Make --> Bazel
+    Npm -->|"lockfile idea"| Cargo
+
+    style Make fill:#ffcdd2
+    style CMake fill:#ffcdd2
+    style Ninja fill:#ffcdd2
+    style Ant fill:#bbdefb
+    style Maven fill:#bbdefb
+    style Gradle fill:#bbdefb
+    style Sbt fill:#bbdefb
+    style Npm fill:#fff59d
+    style Cargo fill:#fff59d
+    style Bazel fill:#a5d6a7
+```
+
+| Year | Tool | Ecosystem | Key innovation |
+|------|------|-----------|---------------|
+| 1976 | **Make** | Native | Dependency graph + timestamp-based rebuilds |
+| 2000 | **Ant** | JVM | XML build script, Java-aware (predecessor of Maven) |
+| 2000 | **CMake** | Native | Cross-platform meta-build, generates Make/Ninja/MSBuild |
+| 2004 | **Maven** | JVM | Convention over configuration; central repository |
+| 2007 | **Gradle** | JVM, polyglot | Groovy/Kotlin DSL, task graph, incremental builds |
+| 2008 | **sbt** | Scala | Interactive shell, Zinc incremental Scala compiler |
+| 2010 | **Ninja** | Native | Minimal, fast build executor (CMake/Bazel backend) |
+| 2010 | **npm** | JavaScript | Public registry + lockfile for transitive deps |
+| 2012 | **Cargo** | Rust | First-class package manager bundled with the toolchain |
+| 2015 | **Bazel** | Polyglot | Hermetic builds + remote cache + remote execution |
+
+→ See [Build Systems chapter](../topics/process/build-systems/index.md)
+for detailed per-tool guides.
+
 ## Key Methodologies
 
 ### 📋 Waterfall (1970)
@@ -222,5 +290,6 @@ _While there is value in the items on the right, we value the items on the left 
 
 - [Team Topologies Authors](../authors/matthew-skelton.md)
 - [Brooks — Mythical Man-Month](../works/books/brooks-1975-mmm.md)
+- [Build Systems](../topics/process/build-systems/index.md)
 - [Containers & Orchestration](../topics/containers/index.md)
 - [Architecture Map](./architecture-map.md)

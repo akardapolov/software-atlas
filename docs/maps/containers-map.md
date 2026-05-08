@@ -201,7 +201,7 @@ flowchart TD
 | **Buildah** | No | Yes | OCI image | Podman's build tool; scriptable beyond Dockerfile |
 | **Kaniko** | No | Yes | OCI image | Runs inside K8s pods; popular in CI |
 | **ko** | No | Yes | OCI image | Go-specific; no Dockerfile needed |
-| **Jib** | No | Yes | OCI image | Maven / Gradle plugin for Java |
+| **Jib** | No | Yes | OCI image | [Maven](../topics/process/build-systems/maven.md) / [Gradle](../topics/process/build-systems/gradle.md) plugin for Java |
 
 ---
 

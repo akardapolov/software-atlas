@@ -36,6 +36,16 @@ embracing uncertainty through continuous feedback.
   - [Site Reliability Engineering — SRE (2016)](#site-reliability-engineering--sre-2016)
   - [Team Topologies (2019)](#team-topologies-2019)
   - [Code Review](#code-review)
+- [Build Systems](#build-systems)
+  - [Overview of Build Systems](#overview-of-build-systems)
+  - [Make](#make)
+  - [CMake](#cmake)
+  - [Maven](#maven)
+  - [Gradle](#gradle)
+  - [sbt](#sbt)
+  - [npm](#npm)
+  - [Cargo](#cargo)
+  - [Bazel](#bazel)
 - [CI/CD Providers](#cicd-providers)
   - [Overview](#overview)
   - [GitHub Actions](#github-actions)
@@ -2051,6 +2061,222 @@ ALTER TABLE users RENAME COLUMN name TO username;
 
 ---
 
+## Build Systems
+
+> Detailed guides for each build tool: [docs/topics/process/build-systems/](build-systems/index.md)
+
+**Core idea:** Build systems take source code and a set of declarations
+and produce a runnable, testable, distributable artifact. They resolve
+dependencies, execute task graphs, cache intermediate results, and
+produce reproducible artifacts. Choice of build tool is usually
+dictated by language ecosystem.
+
+### Overview of Build Systems
+
+| Tool | Year | Ecosystem | Config file | Best for |
+|------|------|-----------|-------------|----------|
+| **Make** | 1976 | Native (C/C++) | `Makefile` | Small native projects, ad-hoc task runners |
+| **CMake** | 2000 | Native (C/C++) | `CMakeLists.txt` | Cross-platform native projects |
+| **Maven** | 2004 | JVM | `pom.xml` | Conventional Java/JVM projects |
+| **Gradle** | 2007 | JVM, polyglot | `build.gradle(.kts)` | Large JVM / Android, incremental builds |
+| **sbt** | 2008 | Scala | `build.sbt` | Scala / Akka / Play projects |
+| **npm** | 2010 | JavaScript / TypeScript | `package.json` | Node apps and libraries |
+| **Cargo** | 2012 | Rust | `Cargo.toml` | Anything Rust |
+| **Bazel** | 2015 | Polyglot | `BUILD.bazel` | Monorepos, polyglot, large scale |
+
+### Make
+
+Configuration: `Makefile` in repository root.
+
+```makefile
+CC      := gcc
+CFLAGS  := -Wall -O2 -std=c11
+
+SOURCES := $(wildcard src/*.c)
+OBJECTS := $(patsubst src/%.c,build/%.o,$(SOURCES))
+
+all: build/my-app
+
+build/my-app: $(OBJECTS)
+	$(CC) -o $@ $^
+
+build/%.o: src/%.c
+	@mkdir -p $(@D)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+clean:
+	rm -rf build
+.PHONY: all clean
+```
+
+→ [Make — detailed guide](build-systems/make.md)
+
+### CMake
+
+Configuration: `CMakeLists.txt`. Two-step: `cmake -S . -B build` then `cmake --build build`.
+
+```cmake
+cmake_minimum_required(VERSION 3.20)
+project(my-app VERSION 1.0.0 LANGUAGES CXX)
+
+set(CMAKE_CXX_STANDARD 20)
+
+add_executable(my-app src/main.cpp)
+target_compile_options(my-app PRIVATE -Wall -Wextra)
+```
+
+→ [CMake — detailed guide](build-systems/cmake.md)
+
+### Maven
+
+Configuration: `pom.xml` in repository root (and per module).
+
+```xml
+<project>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.example</groupId>
+    <artifactId>my-app</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <properties>
+        <maven.compiler.release>21</maven.compiler.release>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.10.0</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>
+```
+
+Run: `mvn clean install`.
+
+→ [Maven — detailed guide](build-systems/maven.md)
+
+### Gradle
+
+Configuration: `build.gradle.kts` (Kotlin DSL preferred) + `settings.gradle.kts`.
+
+```kotlin
+plugins {
+    java
+    application
+}
+
+repositories { mavenCentral() }
+
+dependencies {
+    implementation("org.slf4j:slf4j-simple:2.0.9")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
+}
+
+application { mainClass.set("com.example.App") }
+
+tasks.test { useJUnitPlatform() }
+```
+
+Run: `./gradlew build` (use the wrapper).
+
+→ [Gradle — detailed guide](build-systems/gradle.md)
+
+### sbt
+
+Configuration: `build.sbt` + `project/build.properties`.
+
+```scala
+ThisBuild / scalaVersion := "3.4.0"
+
+lazy val root = (project in file("."))
+    .settings(
+        name := "my-app",
+        libraryDependencies ++= Seq(
+            "org.typelevel" %% "cats-core" % "2.10.0",
+            "org.scalatest" %% "scalatest" % "3.2.18" % Test
+        )
+    )
+```
+
+Interactive shell: `sbt`, then `compile`, `test`, `~test`.
+
+→ [sbt — detailed guide](build-systems/sbt.md)
+
+### npm
+
+Configuration: `package.json` with scripts as build steps.
+
+```json
+{
+  "name": "my-app",
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "test": "vitest",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "react": "^18.2.0"
+  },
+  "devDependencies": {
+    "vite": "^5.2.0",
+    "vitest": "^1.4.0"
+  }
+}
+```
+
+Run: `npm ci && npm run build`.
+
+→ [npm — detailed guide](build-systems/npm.md)
+
+### Cargo
+
+Configuration: `Cargo.toml` per crate; `Cargo.lock` per workspace.
+
+```toml
+[package]
+name = "my-app"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow = "1.0"
+clap = { version = "4.5", features = ["derive"] }
+tokio = { version = "1.36", features = ["full"] }
+```
+
+Run: `cargo build --release` or `cargo test`.
+
+→ [Cargo — detailed guide](build-systems/cargo.md)
+
+### Bazel
+
+Configuration: `MODULE.bazel` (workspace) + `BUILD.bazel` per package.
+
+```python
+# BUILD.bazel
+load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library")
+
+cc_library(
+    name = "math",
+    srcs = ["math.cc"],
+    hdrs = ["math.h"],
+)
+
+cc_binary(
+    name = "app",
+    srcs = ["main.cc"],
+    deps = [":math"],
+)
+```
+
+Run: `bazel build //...` or `bazel test //app:test`.
+
+→ [Bazel — detailed guide](build-systems/bazel.md)
+
+---
+
 ## CI/CD Providers
 
 > Detailed guides for each provider: [docs/topics/process/ci-cd/](ci-cd/index.md)
@@ -2325,5 +2551,6 @@ continuous delivery, and safe refactoring.
 - [OOP & Design](../design/index.md) — refactoring, code quality
 - [Functional Programming](../functional/index.md) — testability, refactoring in FP
 - [Version Control & Git](../vcs/index.md) — branching, commit practices, code review workflows
+- [Build Systems](build-systems/index.md) — Maven, Gradle, Bazel, Cargo, npm, and friends
 - [Containers & Orchestration](../containers/index.md) — runtime substrate for CI/CD, DevOps, microservices
 - [Languages](../../languages/index.md) — language-specific processes (Rust cargo, Go conventions)

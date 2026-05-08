@@ -137,7 +137,7 @@ a `Dockerfile`, and a shared registry.
 | **Kaniko** | No | Yes | OCI image | Runs inside K8s pods; popular in CI |
 | **img** | No | Yes | OCI image | Standalone BuildKit frontend |
 | **ko** | No | Yes | OCI image | Go-specific; no Dockerfile needed |
-| **Jib** | No | Yes | OCI image | Maven / Gradle plugin for Java |
+| **Jib** | No | Yes | OCI image | [Maven](../process/build-systems/maven.md) / [Gradle](../process/build-systems/gradle.md) plugin for Java |
 
 ---
 

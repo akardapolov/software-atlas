@@ -2121,8 +2121,8 @@ so the earlier write to `value` becomes visible as well.
 
 | Tool       | Role                                                     |
 |------------|----------------------------------------------------------|
-| **Maven**  | Declarative build + dependency management (`pom.xml`)    |
-| **Gradle** | Scriptable build with Groovy/Kotlin DSL (`build.gradle`) |
+| **Maven**  | Declarative build + dependency management (`pom.xml`) — see [Maven detailed guide](../../topics/process/build-systems/maven.md) |
+| **Gradle** | Scriptable build with Groovy/Kotlin DSL (`build.gradle`) — see [Gradle detailed guide](../../topics/process/build-systems/gradle.md) |
 | **javac**  | Java compiler                                            |
 | **java**   | JVM launcher                                             |
 | **jar**    | Package Java archives                                    |

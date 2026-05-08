@@ -852,7 +852,7 @@ SELECT name, age FROM users WHERE age > 18 ORDER BY name;
 | SQL | Data querying | `SELECT name FROM users WHERE age > 18` |
 | HTML / CSS | Document structure and style | `<h1>Hello</h1>` |
 | Regular expressions | Text pattern matching | `\d{3}-\d{4}` |
-| Build DSLs | Build configuration | Makefile, Gradle DSL |
+| Build DSLs | Build configuration | Makefile, Gradle DSL — see [Build Systems](../process/build-systems/index.md) |
 | Infrastructure as Code | Provisioning and deployment | Terraform, Kubernetes YAML |
 | Annotations / Metadata | Framework configuration | Spring `@Transactional` |
 

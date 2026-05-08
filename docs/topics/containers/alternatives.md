@@ -71,7 +71,7 @@ want **a container that looks like a server**, not a single-process app.
 
 ### Jib
 
-- **Type:** Maven / Gradle plugin (Google)
+- **Type:** [Maven](../process/build-systems/maven.md) / [Gradle](../process/build-systems/gradle.md) plugin (Google)
 - **Solves:** Build container images for JVM apps without a Docker daemon
 - **Fits:** Java / Kotlin / Scala projects in CI
 - **Status:** Active.
