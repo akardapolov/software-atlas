@@ -2132,7 +2132,7 @@ so the earlier write to `value` becomes visible as well.
 
 | Framework           | Domain                   |
 |---------------------|--------------------------|
-| **Spring Boot**     | Web, REST, microservices |
+| **Spring Boot**     | Web, REST, microservices — see [Spring Boot Testing](spring-testing.md) |
 | **Quarkus**         | Cloud-native, GraalVM    |
 | **Micronaut**       | Fast startup, serverless |
 | **Hibernate / JPA** | ORM, database mapping    |
@@ -2140,12 +2140,13 @@ so the earlier write to `value` becomes visible as well.
 
 ### Testing Ecosystem
 
-| Tool               | Role                                   |
-|--------------------|----------------------------------------|
-| **JUnit 5**        | Unit testing                           |
-| **Mockito**        | Mocking framework                      |
-| **AssertJ**        | Fluent assertions                      |
-| **Testcontainers** | Integration tests with real containers |
+| Tool                 | Role                                                                                          |
+|----------------------|-----------------------------------------------------------------------------------------------|
+| **Spring Boot Test** | Slice + integration testing for Spring apps — see [Spring Boot Testing](spring-testing.md)    |
+| **JUnit 5**          | Unit testing                                                                                  |
+| **Mockito**          | Mocking framework                                                                             |
+| **AssertJ**          | Fluent assertions                                                                             |
+| **Testcontainers**   | Integration tests with real containers                                                        |
 
 ---
 
@@ -2217,7 +2218,7 @@ See [`examples/java/`](../../../examples/java/index.md) for runnable code:
 | [07 FP Features](../../../examples/java/07-fp-features/README.md)                       | Lambdas, streams, `Optional`                 |
 | [08 Error Handling](../../../examples/java/08-error-handling/README.md)                 | Checked/unchecked, try-with-resources        |
 | [09 Concurrency](../../../examples/java/09-concurrency/README.md)                       | Threads, executors, virtual threads          |
-| [10 Testing](../../../examples/java/10-testing/README.md)                               | JUnit 5, Mockito, AssertJ                    |
+| [10 Testing](../../../examples/java/10-testing/README.md)                               | JUnit 5, Mockito, AssertJ — see also [Spring Boot Testing](spring-testing.md) for framework-specific patterns |
 | [11 Advanced Streams](../../../examples/java/11-streams-advanced/README.md)             | Reduce, mapMulti, takeWhile, merge           |
 | [12 Thread States](../../../examples/java/12-concurrency-thread-states/README.md)       | BLOCKED, WAITING, TIMED_WAITING              |
 | [13 Structured Concurrency](../../../examples/java/13-concurrency-structured/README.md) | ShutdownOnFailure, ShutdownOnSuccess         |
