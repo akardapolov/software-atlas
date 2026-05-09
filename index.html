@@ -407,116 +407,16 @@
       children: [
         { label: "Overview",  path: "docs/topics/index.md" },
         { label: "Paradigms", path: "docs/topics/paradigms/index.md" },
-        {
-          label: "Architecture",
-          children: [
-            { label: "Overview", path: "docs/topics/architecture/index.md" },
-            { label: "Domain-centric", children: [
-              { label: "Clean Architecture",     path: "docs/topics/architecture/domain-centric/clean-architecture.md" },
-              { label: "Hexagonal Architecture", path: "docs/topics/architecture/domain-centric/hexagonal-architecture.md" },
-              { label: "Industrial Functional",  path: "docs/topics/architecture/domain-centric/industrial-functional-architecture.md" },
-              { label: "Layered Architecture",   path: "docs/topics/architecture/domain-centric/layered-architecture.md" },
-              { label: "Onion Architecture",     path: "docs/topics/architecture/domain-centric/onion-architecture.md" },
-            ]},
-            { label: "Structural", children: [
-              { label: "Microservices",    path: "docs/topics/architecture/structural/microservices.md" },
-              { label: "Modular Monolith", path: "docs/topics/architecture/structural/modular-monolith.md" },
-              { label: "Monolith",         path: "docs/topics/architecture/structural/monolith.md" },
-            ]},
-            { label: "Communication", children: [
-              { label: "Event-Driven",   path: "docs/topics/architecture/communication/event-driven-architecture.md" },
-              { label: "Message-Driven", path: "docs/topics/architecture/communication/message-driven-architecture.md" },
-              { label: "Pub/Sub",        path: "docs/topics/architecture/communication/publish-subscribe.md" },
-              { label: "SOA",            path: "docs/topics/architecture/communication/service-oriented-architecture.md" },
-            ]},
-            { label: "Data", children: [
-              { label: "CQRS",           path: "docs/topics/architecture/data/cqrs.md" },
-              { label: "Event Sourcing", path: "docs/topics/architecture/data/event-sourcing.md" },
-            ]},
-            { label: "Integration", children: [
-              { label: "Ambassador Pattern",    path: "docs/topics/architecture/integration/ambassador-pattern.md" },
-              { label: "Anti-Corruption Layer", path: "docs/topics/architecture/integration/anti-corruption-layer.md" },
-              { label: "API Gateway",           path: "docs/topics/architecture/integration/api-gateway.md" },
-              { label: "Backend for Frontend",  path: "docs/topics/architecture/integration/backend-for-frontend.md" },
-            ]},
-            { label: "Resilience", children: [
-              { label: "Bulkhead",        path: "docs/topics/architecture/resilience/bulkhead.md" },
-              { label: "Circuit Breaker", path: "docs/topics/architecture/resilience/circuit-breaker.md" },
-              { label: "Retry Pattern",   path: "docs/topics/architecture/resilience/retry-pattern.md" },
-              { label: "Saga Pattern",    path: "docs/topics/architecture/resilience/saga-pattern.md" },
-            ]},
-          ]
-        },
-        {
-          label: "OOP & Design",
-          children: [
-            { label: "Overview",      path: "docs/topics/design/index.md" },
-            { label: "OOP Deep Dive", path: "docs/topics/design/oop-deep-dive.md" },
-            { label: "Creational Patterns", children: [
-              { label: "Abstract Factory", path: "docs/topics/design/creational/abstract-factory.md" },
-              { label: "Builder",          path: "docs/topics/design/creational/builder.md" },
-              { label: "Factory Method",   path: "docs/topics/design/creational/factory-method.md" },
-              { label: "Prototype",        path: "docs/topics/design/creational/prototype.md" },
-              { label: "Singleton",        path: "docs/topics/design/creational/singleton.md" },
-            ]},
-            { label: "Structural Patterns", children: [
-              { label: "Adapter",   path: "docs/topics/design/structural/adapter.md" },
-              { label: "Bridge",    path: "docs/topics/design/structural/bridge.md" },
-              { label: "Composite", path: "docs/topics/design/structural/composite.md" },
-              { label: "Decorator", path: "docs/topics/design/structural/decorator.md" },
-              { label: "Facade",    path: "docs/topics/design/structural/facade.md" },
-              { label: "Flyweight", path: "docs/topics/design/structural/flyweight.md" },
-              { label: "Proxy",     path: "docs/topics/design/structural/proxy.md" },
-            ]},
-            { label: "Behavioral Patterns", children: [
-              { label: "Chain of Responsibility", path: "docs/topics/design/behavioral/chain-of-responsibility.md" },
-              { label: "Command",         path: "docs/topics/design/behavioral/command.md" },
-              { label: "Interpreter",     path: "docs/topics/design/behavioral/interpreter.md" },
-              { label: "Iterator",        path: "docs/topics/design/behavioral/iterator.md" },
-              { label: "Mediator",        path: "docs/topics/design/behavioral/mediator.md" },
-              { label: "Memento",         path: "docs/topics/design/behavioral/memento.md" },
-              { label: "Observer",        path: "docs/topics/design/behavioral/observer.md" },
-              { label: "State",           path: "docs/topics/design/behavioral/state.md" },
-              { label: "Strategy",        path: "docs/topics/design/behavioral/strategy.md" },
-              { label: "Template Method", path: "docs/topics/design/behavioral/template-method.md" },
-              { label: "Visitor",         path: "docs/topics/design/behavioral/visitor.md" },
-            ]},
-          ]
-        },
+        { label: "Architecture",           path: "docs/topics/architecture/index.md" },
+        { label: "OOP & Design",             path: "docs/topics/design/index.md" },
         { label: "Type Systems",           path: "docs/topics/types/index.md" },
         { label: "Functional Programming", path: "docs/topics/functional/index.md" },
         { label: "Concurrency",            path: "docs/topics/concurrency/index.md" },
         { label: "Process & Testing",      path: "docs/topics/process/index.md" },
-        {
-          label: "Build Systems",
-          children: [
-            { label: "Overview", path: "docs/topics/process/build-systems/index.md" },
-            { label: "Make",     path: "docs/topics/process/build-systems/make.md" },
-            { label: "CMake",    path: "docs/topics/process/build-systems/cmake.md" },
-            { label: "Maven",    path: "docs/topics/process/build-systems/maven.md" },
-            { label: "Gradle",   path: "docs/topics/process/build-systems/gradle.md" },
-            { label: "sbt",      path: "docs/topics/process/build-systems/sbt.md" },
-            { label: "npm",      path: "docs/topics/process/build-systems/npm.md" },
-            { label: "Cargo",    path: "docs/topics/process/build-systems/cargo.md" },
-            { label: "Bazel",    path: "docs/topics/process/build-systems/bazel.md" },
-          ]
-        },
+        { label: "Build Systems",            path: "docs/topics/process/build-systems/index.md" },
         { label: "Version Control",        path: "docs/topics/vcs/index.md" },
         { label: "Distributed Systems",    path: "docs/topics/distributed/index.md" },
-        {
-          label: "Containers & Orchestration",
-          children: [
-            { label: "Overview",     path: "docs/topics/containers/index.md" },
-            { label: "Docker",       path: "docs/topics/containers/docker.md" },
-            { label: "Podman",       path: "docs/topics/containers/podman.md" },
-            { label: "containerd",   path: "docs/topics/containers/containerd.md" },
-            { label: "Kubernetes",   path: "docs/topics/containers/kubernetes.md" },
-            { label: "Docker Swarm", path: "docs/topics/containers/docker-swarm.md" },
-            { label: "Nomad",        path: "docs/topics/containers/nomad.md" },
-            { label: "Helm",         path: "docs/topics/containers/helm.md" },
-            { label: "Alternatives", path: "docs/topics/containers/alternatives.md" },
-          ]
-        },
+        { label: "Containers & Orchestration", path: "docs/topics/containers/index.md" },
       ]
     },
     {
