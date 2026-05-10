@@ -7,11 +7,15 @@ history, key concepts, typing, influences, and links to code examples.
 
 | Language                  | Year | Creator(s)                | Primary paradigm(s)    | Typing             |
 |---------------------------|------|---------------------------|------------------------|--------------------|
+| [Fortran](fortran/index.md) | 1957 | John Backus (IBM)         | Imperative, array      | Static             |
 | [Lisp](lisp/index.md)      | 1958 | John McCarthy             | Functional, symbolic   | Dynamic            |
+| [ALGOL](algol/index.md)    | 1960 | International committee   | Imperative, structured | Static             |
+| [BASIC](basic/index.md)    | 1964 | Kemeny, Kurtz             | Imperative             | Weak / dynamic     |
 | [Simula](simula/index.md)  | 1967 | Dahl, Nygaard             | OOP                    | Static             |
 | [Smalltalk](smalltalk/index.md) | 1972 | Alan Kay et al.           | OOP, message passing   | Dynamic            |
 | [C](c/index.md)            | 1972 | Dennis Ritchie            | Imperative, procedural | Static, weak       |
 | [ML](ml/index.md)          | 1978 | Robin Milner              | Functional             | Static, inferred   |
+| [Ada](ada/index.md)        | 1983 | Jean Ichbiah et al.       | Multi-paradigm, concurrent | Static, strong |
 | [Erlang](erlang/index.md)  | 1986 | Joe Armstrong             | Functional, concurrent | Dynamic            |
 | [Haskell](haskell/index.md) | 1990 | Committee                 | Functional, pure       | Static, inferred   |
 | [Python](python/index.md)  | 1991 | Guido van Rossum          | Multi-paradigm         | Dynamic, strong    |

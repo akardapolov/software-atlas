@@ -293,25 +293,34 @@ timeline
 ```
 
 > 🔍 **Detailed maps:** [Detailed overview](docs/maps/index.md) ·
+> [Master timeline](docs/maps/master-timeline.md) ·
 > [Ideas evolution](docs/maps/ideas-evolution.md) ·
 > [Languages genealogy](docs/maps/languages-genealogy.md) ·
-> [Paradigms](docs/maps/paradigms-map.md)
+> [Paradigms](docs/maps/paradigms-map.md) ·
+> [Architecture](docs/maps/architecture-map.md) ·
+> [Concurrency](docs/maps/concurrency-map.md) ·
+> [Process](docs/maps/process-map.md) ·
+> [Containers](docs/maps/containers-map.md) ·
+> [Databases](docs/maps/databases-map.md)
 
 ---
 
 ## Topics
 
-| # | Topic                                                      | Key ideas                                                              | Details                            |
-|---|------------------------------------------------------------|------------------------------------------------------------------------|------------------------------------|
-| 1 | [**Paradigms**](docs/topics/paradigms/)                    | Imperative↔Declarative, Procedural/OOP/FP/Logic, Sequential/Concurrent | How we think about computation     |
-| 2 | [**Architecture & Modularity**](docs/topics/architecture/) | Layered, Hexagonal, DDD, Microservices, C4                             | How we structure systems           |
-| 3 | [**OOP & Design**](docs/topics/design/)                    | SOLID, GoF patterns, Refactoring, DbC                                  | How we design components           |
-| 4 | [**Type Systems**](docs/topics/types/)                     | Static/dynamic, nominal/structural, ADTs, generics                     | How types help us reason           |
-| 5 | [**Functional Programming**](docs/topics/functional/)      | Purity, immutability, composition, monads                              | How we avoid accidental complexity |
-| 6 | [**Concurrency**](docs/topics/concurrency/)                | Threads, CSP, Actors, async/await                                      | How we handle parallelism          |
-| 7 | [**Process & Testing**](docs/topics/process/)              | Agile, XP, TDD, CI/CD, DevOps                                          | How we build and ship              |
-| 8 | [**Distributed Systems**](docs/topics/distributed/)        | Clocks, CAP, consensus, consistency, streaming                         | How we scale across machines       |
-| 9 | [**Containers & Orchestration**](docs/topics/containers/)  | Docker, Podman, Kubernetes, OCI, runtimes                              | How we package and run workloads   |
+| #  | Topic                                                                  | Key ideas                                                              | Details                            |
+|----|------------------------------------------------------------------------|------------------------------------------------------------------------|------------------------------------|
+| 1  | [**Paradigms**](docs/topics/paradigms/)                                | Imperative↔Declarative, Procedural/OOP/FP/Logic, Sequential/Concurrent | How we think about computation     |
+| 2  | [**Architecture & Modularity**](docs/topics/architecture/)             | Layered, Hexagonal, DDD, Microservices, C4                             | How we structure systems           |
+| 3  | [**OOP & Design**](docs/topics/design/)                                | SOLID, GoF patterns, Refactoring, DbC                                  | How we design components           |
+| 4  | [**Type Systems**](docs/topics/types/)                                 | Static/dynamic, nominal/structural, ADTs, generics                     | How types help us reason           |
+| 5  | [**Functional Programming**](docs/topics/functional/)                  | Purity, immutability, composition, monads                              | How we avoid accidental complexity |
+| 6  | [**Concurrency**](docs/topics/concurrency/)                            | Threads, CSP, Actors, async/await                                      | How we handle parallelism          |
+| 7  | [**Process & Testing**](docs/topics/process/)                          | Agile, XP, TDD, CI/CD, DevOps                                          | How we build and ship              |
+| 8  | [**Build Systems**](docs/topics/process/build-systems/)                | Make, Maven, Gradle, Bazel, npm, Cargo                                 | How we turn source into artifacts  |
+| 9  | [**Version Control**](docs/topics/vcs/)                                | RCS → CVS → SVN → Git, branching strategies, monorepos                 | How we manage change over time     |
+| 10 | [**Distributed Systems**](docs/topics/distributed/)                    | Clocks, CAP, consensus, consistency, streaming                         | How we scale across machines       |
+| 11 | [**Containers & Orchestration**](docs/topics/containers/)              | Docker, Podman, Kubernetes, OCI, runtimes                              | How we package and run workloads   |
+| 12 | [**Databases**](docs/topics/databases/)                                | Relational model, transactions, NoSQL, OLTP/OLAP, indexing             | How we store and query data        |
 
 ---
 
@@ -319,11 +328,15 @@ timeline
 
 | Language       | Year | Creator(s)                | Style / model                | Typing             | Page                            | Examples                  |
 |----------------|------|---------------------------|------------------------------|--------------------|---------------------------------|---------------------------|
+| **Fortran**    | 1957 | John Backus (IBM)         | Imperative, array-oriented   | Static             | [→](docs/languages/fortran/)    | —                         |
 | **Lisp**       | 1958 | John McCarthy             | Functional, symbolic         | Dynamic            | [→](docs/languages/lisp/)       | [→](examples/lisp/)       |
+| **ALGOL**      | 1960 | International committee   | Imperative, structured       | Static             | [→](docs/languages/algol/)      | —                         |
+| **BASIC**      | 1964 | Kemeny, Kurtz             | Imperative                   | Weak / dynamic     | [→](docs/languages/basic/)      | —                         |
 | **Simula**     | 1967 | Dahl, Nygaard             | OOP                          | Static             | [→](docs/languages/simula/)     | —                         |
 | **Smalltalk**  | 1972 | Alan Kay et al.           | OOP, message passing         | Dynamic            | [→](docs/languages/smalltalk/)  | —                         |
 | **C**          | 1972 | Dennis Ritchie            | Imperative, procedural       | Static, weak       | [→](docs/languages/c/)          | [→](examples/c/)          |
 | **ML**         | 1978 | Robin Milner              | Functional                   | Static, inferred   | [→](docs/languages/ml/)         | —                         |
+| **Ada**        | 1983 | Jean Ichbiah et al.       | Multi-paradigm, concurrent   | Static, strong     | [→](docs/languages/ada/)        | —                         |
 | **Erlang**     | 1986 | Joe Armstrong             | Functional, concurrent       | Dynamic            | [→](docs/languages/erlang/)     | [→](examples/erlang/)     |
 | **Haskell**    | 1990 | Committee                 | Functional, pure             | Static, inferred   | [→](docs/languages/haskell/)    | [→](examples/haskell/)    |
 | **Python**     | 1991 | Guido van Rossum          | Multi-paradigm               | Dynamic, strong    | [→](docs/languages/python/)     | [→](examples/python/)     |
@@ -660,6 +673,8 @@ software-atlas/
 │   │   ├── index.md       ← maps index and detailed overview
 │   │   ├── architecture-map.md
 │   │   ├── concurrency-map.md
+│   │   ├── containers-map.md
+│   │   ├── databases-map.md
 │   │   ├── ideas-evolution.md
 │   │   ├── languages-genealogy.md
 │   │   ├── master-timeline.md
