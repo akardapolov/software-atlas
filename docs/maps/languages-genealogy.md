@@ -11,14 +11,14 @@ flowchart TD
         Turing["Turing Machine<br/>Turing, 1936\n[→](../authors/alan-turing.md)"]
     end
 
-    subgraph FirstGen["📜 First Generation: 1950s"]
+    subgraph FirstGen["📜 First Generation: 1950s–60s"]
         Fortran["Fortran<br/>1957"]
         Lisp["Lisp<br/>McCarthy, 1958"]
-        Algol["Algol<br/>1958"]
+        Algol["ALGOL 60<br/>1960"]
     end
 
     subgraph Structured["🏗 Structured Era: 1960s-70s"]
-        Simula["Simula<br/>Dahl & Nygaard, 1962"]
+        Simula["Simula<br/>Dahl & Nygaard, 1967"]
         C["C<br/>Ritchie, 1972"]
         Smalltalk["Smalltalk<br/>Kay, 1972"]
         ML["ML<br/>Milner, 1978"]
@@ -63,7 +63,7 @@ flowchart TD
 
     %% Structured → OOP Era
     C --> Cpp
-    Smalltalk --> Cpp
+    Simula --> Cpp
     Lisp --> Erlang
     C --> Perl
     ML --> Haskell
@@ -76,7 +76,6 @@ flowchart TD
     Smalltalk --> Java
     Scheme --> JavaScript
     Self --> JavaScript
-    ML --> Haskell
 
     %% Modern → 21st Century
     Java --> CSharp
@@ -101,6 +100,8 @@ flowchart TD
     style OOPEra fill:#e8f5e9
     style ModernOOP fill:#fce4ec
     style TwentyFirst fill:#e0f7fa
+    style Algol fill:#fff3e0
+    style Self fill:#ffe0b2
 ```
 
 ## Language Families
@@ -129,7 +130,7 @@ flowchart LR
 
 ```mermaid
 flowchart LR
-    Simula["Simula<br/>1962"] --> Smalltalk["Smalltalk<br/>1972"]
+    Simula["Simula<br/>1967"] --> Smalltalk["Smalltalk<br/>1972"]
     Simula --> Cpp["C++<br/>1983"]
     Smalltalk --> Java["Java<br/>1995"]
     Smalltalk --> Ruby["Ruby<br/>1995"]
@@ -149,7 +150,7 @@ flowchart LR
 
 ```mermaid
 flowchart LR
-    Algol["Algol<br/>1958"] --> C["C<br/>1972"]
+    Algol["ALGOL 60<br/>1960"] --> C["C<br/>1972"]
     C --> Cpp["C++<br/>1983"]
     Cpp --> Rust["Rust<br/>2010"]
     C --> Go["Go<br/>2009"]
@@ -169,12 +170,13 @@ flowchart LR
     Perl["Perl<br/>1987"] --> PHP["PHP<br/>1995"]
     Perl --> Ruby["Ruby<br/>1995"]
     Scheme --> JavaScript["JavaScript<br/>1995"]
-    Self --> JavaScript
+    Self["Self<br/>1993"] --> JavaScript
     JavaScript --> TypeScript["TypeScript<br/>2012"]
     JavaScript --> CoffeeScript["CoffeeScript<br/>2009"]
 
     style JavaScript fill:#fff59d
     style TypeScript fill:#ffeb3b
+    style Self fill:#ffe0b2
 ```
 
 **Characteristics:** Dynamic typing, rapid development, web-native.
@@ -184,8 +186,8 @@ flowchart LR
 | Language | Year | Primary Paradigm | Influenced By | Influenced |
 |----------|------|------------------|---------------|------------|
 | Lisp | 1958 | Functional | Lambda calculus | Scheme, ML, Clojure, Ruby |
-| Simula | 1962 | OOP | Algol | Smalltalk, C++, all OOP |
-| C | 1972 | Imperative | Algol, BCPL | C++, Go, Rust, most systems |
+| Simula | 1967 | OOP | ALGOL 60 | Smalltalk, C++, all OOP |
+| C | 1972 | Imperative | ALGOL 60, BCPL | C++, Go, Rust, most systems |
 | Smalltalk | 1972 | OOP | Simula | Ruby, Python, Java, ObjC |
 | ML | 1978 | Functional | Lisp | Haskell, OCaml, Rust |
 | Erlang | 1986 | Functional, Actor | Lisp, Prolog | Go (concurrency), Elixir |

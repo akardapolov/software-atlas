@@ -38,7 +38,7 @@ A common mistake is arranging paradigms in a strict hierarchy:
 "OOP is a kind of imperative programming," "functional is a kind of
 declarative." This mixes levels of abstraction and conflates independent
 dimensions. In reality, a paradigm is best understood as **a point in a
-multi-dimensional space**, not a node in a tree.
+multidimensional space**, not a node in a tree.
 
 Not every important language property is itself a paradigm. Some describe
 the **structure** of programs, some describe **control**, some describe
@@ -88,19 +88,37 @@ Assembly → C → Java → Java Streams → Haskell → SQL → Prolog
 The same language can sit at different points depending on how you write:
 
 ```java
-// Java — imperative end of the spectrum
-BigDecimal sum = BigDecimal.ZERO;
-for (Order o : orders) {
-    if (o.getPrice().compareTo(threshold) > 0) {
-        sum = sum.add(o.getPrice());
-    }
+import java.math.BigDecimal;
+import java.util.List;
+
+class Order {
+  private BigDecimal price;
+
+  public BigDecimal getPrice() {
+    return price;
+  }
 }
 
-// Java — declarative end of the spectrum
-BigDecimal sum = orders.stream()
-    .map(Order::getPrice)
-    .filter(p -> p.compareTo(threshold) > 0)
-    .reduce(BigDecimal.ZERO, BigDecimal::add);
+public class Example {
+  public static void main(String[] args) {
+    List<Order> orders = List.of();
+    BigDecimal threshold = BigDecimal.ZERO;
+
+    // Java — imperative end of the spectrum
+    BigDecimal sum = BigDecimal.ZERO;
+    for (Order o : orders) {
+      if (o.getPrice().compareTo(threshold) > 0) {
+        sum = sum.add(o.getPrice());
+      }
+    }
+
+    // Java — declarative end of the spectrum
+    BigDecimal sum2 = orders.stream()
+        .map(Order::getPrice)
+        .filter(p -> p.compareTo(threshold) > 0)
+        .reduce(BigDecimal.ZERO, BigDecimal::add);
+  }
+}
 ```
 
 ```haskell
@@ -112,10 +130,10 @@ main = do
 ```
 
 !!! note "Imperative and Declarative are properties, not paradigms"
-    They describe *how code is written*, not *what the program is made of*.
-    Any organization model (OOP, FP, etc.) can be used more imperatively
-    or more declaratively. Putting "Imperative" and "Functional" in the
-    same flat list is a category error — they answer different questions.
+They describe *how code is written*, not *what the program is made of*.
+Any organization model (OOP, FP, etc.) can be used more imperatively
+or more declaratively. Putting "Imperative" and "Functional" in the
+same flat list is a category error — they answer different questions.
 
 ---
 
@@ -149,11 +167,11 @@ computational tasks relate to each other in time.
 | **Event-driven** | Callbacks or handlers triggered by external/internal events | Node.js, GUI frameworks |
 
 !!! warning "Concurrent ≠ Parallel"
-    Concurrency is about **structure** (dealing with multiple things at once).
-    Parallelism is about **execution** (doing multiple things simultaneously).
-    A concurrent program may run on a single core. A parallel computation
-    may have no explicit concurrency structure at all.
-    See Rob Pike — ["Concurrency Is Not Parallelism"](https://go.dev/blog/waza-talk).
+Concurrency is about **structure** (dealing with multiple things at once).
+Parallelism is about **execution** (doing multiple things simultaneously).
+A concurrent program may run on a single core. A parallel computation
+may have no explicit concurrency structure at all.
+See Rob Pike — ["Concurrency Is Not Parallelism"](https://go.dev/blog/waza-talk).
 
 ---
 
@@ -193,10 +211,10 @@ Type discipline is **orthogonal** to the other axes:
 - **multi-paradigm and strongly static** (Rust, Scala)
 
 !!! note "Typing is not a paradigm in the same sense as OOP or FP"
-    A type discipline does not answer the question "what is a program?"
-    It answers a different question: **what kinds of values may appear,
-    and how does the language enforce constraints on them?**
-    That makes it a separate classificatory axis rather than a structural paradigm.
+A type discipline does not answer the question "what is a program?"
+It answers a different question: **what kinds of values may appear,
+and how does the language enforce constraints on them?**
+That makes it a separate classificatory axis rather than a structural paradigm.
 
 ---
 
@@ -220,9 +238,9 @@ Type discipline is **orthogonal** to the other axes:
 | Python | Mixed | Multi (OOP + Proc + FP) | Sequential* | Dynamic |
 
 !!! note "Most modern languages are multi-paradigm"
-    Python supports imperative, OOP, and functional styles. Scala blends
-    OOP with FP. Rust is imperative with strong FP features. The paradigm
-    is in how you *use* the language, not just in the language itself.
+Python supports imperative, OOP, and functional styles. Scala blends
+OOP with FP. Rust is imperative with strong FP features. The paradigm
+is in how you *use* the language, not just in the language itself.
 
     The same is true of type discipline in practice: many ecosystems support
     annotations, inference, optional checking, code generation, or external
@@ -318,15 +336,15 @@ inheritance, and encapsulation through access modifiers.
 ```java
 // Java — Simula-tradition OOP
 public class Animal {
-    private String name;
-    public Animal(String name) { this.name = name; }
-    public void speak() { System.out.println("..."); }
+  private String name;
+  public Animal(String name) { this.name = name; }
+  public void speak() { System.out.println("..."); }
 }
 
 public class Dog extends Animal {
-    public Dog(String name) { super(name); }
-    @Override
-    public void speak() { System.out.println("Woof!"); }
+  public Dog(String name) { super(name); }
+  @Override
+  public void speak() { System.out.println("Woof!"); }
 }
 ```
 
@@ -355,22 +373,22 @@ whether the language is *statically or dynamically typed* (axis D):
 ```java
 // Same OOP class, imperative control style
 class OrderService {
-    BigDecimal totalPrice(List<Order> orders) {
-        BigDecimal sum = BigDecimal.ZERO;
-        for (Order o : orders) {
-            sum = sum.add(o.getPrice());
-        }
-        return sum;
+  BigDecimal totalPrice(List<Order> orders) {
+    BigDecimal sum = BigDecimal.ZERO;
+    for (Order o : orders) {
+      sum = sum.add(o.getPrice());
     }
+    return sum;
+  }
 }
 
 // Same OOP class, more declarative control style
 class OrderService {
-    BigDecimal totalPrice(List<Order> orders) {
-        return orders.stream()
-            .map(Order::getPrice)
-            .reduce(BigDecimal.ZERO, BigDecimal::add);
-    }
+  BigDecimal totalPrice(List<Order> orders) {
+    return orders.stream()
+        .map(Order::getPrice)
+        .reduce(BigDecimal.ZERO, BigDecimal::add);
+  }
 }
 ```
 
@@ -710,11 +728,11 @@ Concatenative languages occupy a small but durable niche. They are used where:
 | Shell pipelines | Unix pipes share the concatenative data-flow idea |
 
 !!! note "Unix pipes as concatenative thinking"
-    `cat file | grep pattern | sort | uniq -c` is concatenative in spirit:
-    each command consumes its input stream and produces an output stream,
-    and composition is juxtaposition (`|`). There are no named intermediates.
-    The data flows left to right through the pipeline exactly as words flow
-    left to right in a Forth program.
+`cat file | grep pattern | sort | uniq -c` is concatenative in spirit:
+each command consumes its input stream and produces an output stream,
+and composition is juxtaposition (`|`). There are no named intermediates.
+The data flows left to right through the pipeline exactly as words flow
+left to right in a Forth program.
 
 #### Point-Free Style in Applicative Languages
 
@@ -814,13 +832,13 @@ func main() {
 
 ### Comparison
 
-| Aspect | Actors | CSP |
-|--------|--------|-----|
-| Communication | Asynchronous messages | Channel communication |
-| Identity | Named actors/processes | Processes + channels |
-| Buffering | Mailbox-based | Usually explicit |
-| Languages | Erlang, Elixir, Akka | Go, occam, core.async |
-| Theory | Hewitt 1973 | Hoare 1978 |
+| Aspect        | Actors                 | CSP                   |
+|---------------|------------------------|-----------------------|
+| Communication | Asynchronous messages  | Channel communication |
+| Identity      | Named actors/processes | Processes + channels  |
+| Buffering     | Mailbox-based          | Usually explicit      |
+| Languages     | Erlang, Elixir, Akka   | Go, occam, core.async |
+| Theory        | Hewitt 1973            | Hoare 1978            |
 
 → [Tony Hoare](../../authors/tony-hoare.md) ·
 [Joe Armstrong](../../authors/joe-armstrong.md) ·
@@ -847,22 +865,22 @@ SELECT name, age FROM users WHERE age > 18 ORDER BY name;
 <!-- We describe WHAT the page looks like. The browser decides HOW to render. -->
 ```
 
-| Technique | Domain | Example |
-|-----------|--------|---------|
-| SQL | Data querying | `SELECT name FROM users WHERE age > 18` |
-| HTML / CSS | Document structure and style | `<h1>Hello</h1>` |
-| Regular expressions | Text pattern matching | `\d{3}-\d{4}` |
-| Build DSLs | Build configuration | Makefile, Gradle DSL — see [Build Systems](../process/build-systems/index.md) |
-| Infrastructure as Code | Provisioning and deployment | Terraform, Kubernetes YAML |
-| Annotations / Metadata | Framework configuration | Spring `@Transactional` |
+| Technique              | Domain                       | Example                                                                       |
+|------------------------|------------------------------|-------------------------------------------------------------------------------|
+| SQL                    | Data querying                | `SELECT name FROM users WHERE age > 18`                                       |
+| HTML / CSS             | Document structure and style | `<h1>Hello</h1>`                                                              |
+| Regular expressions    | Text pattern matching        | `\d{3}-\d{4}`                                                                 |
+| Build DSLs             | Build configuration          | Makefile, Gradle DSL — see [Build Systems](../process/build-systems/index.md) |
+| Infrastructure as Code | Provisioning and deployment  | Terraform, Kubernetes YAML                                                    |
+| Annotations / Metadata | Framework configuration      | Spring `@Transactional`                                                       |
 
 !!! note "Annotations are a mechanism, not a paradigm"
-    Spring's `@Transactional`, `@Cacheable`, `@RestController` are
-    **declarative configuration** implemented via metaprogramming and
-    AOP (Aspect-Oriented Programming). You declare *what* behaviour
-    you want; the framework generates the imperative code at runtime
-    (often through proxies or bytecode instrumentation). This is a powerful
-    technique *within* a broader organization model — not a separate paradigm.
+Spring's `@Transactional`, `@Cacheable`, `@RestController` are
+**declarative configuration** implemented via metaprogramming and
+AOP (Aspect-Oriented Programming). You declare *what* behaviour
+you want; the framework generates the imperative code at runtime
+(often through proxies or bytecode instrumentation). This is a powerful
+technique *within* a broader organization model — not a separate paradigm.
 
     Similarly, AOP is a **modularization technique** for cross-cutting concerns
     (logging, security, transactions), not a standalone answer to the question
@@ -954,38 +972,60 @@ flowchart LR
     subgraph First ["First Languages · 1950s–60s"]
         Turing --> Fortran["Fortran<br/>1957"]
         Church --> Lisp["Lisp<br/>1958"]
-        Fortran --> Simula["Simula<br/>1967"]
+        Algol["ALGOL 60<br/>1960"]
     end
 
     subgraph Seventies ["Paradigm Explosion · 1970s"]
-        Simula --> Smalltalk["Smalltalk<br/>1972"]
-        Fortran --> C["C<br/>1972"]
-        Church --> Prolog["Prolog<br/>1972"]
-        Smalltalk --> Hewitt["Actor Model<br/>Hewitt 1973"]
-        Lisp --> Scheme["Scheme<br/>1975"]
-        Church --> ML["ML<br/>1978"]
-        Church --> Backus78["Backus FP<br/>Manifesto 1978"]
-        Turing --> Forth["Forth<br/>Moore 1970"]
+        Simula["Simula<br/>1967"]
+        C["C<br/>1972"]
+        Prolog["Prolog<br/>1972"]
+        Smalltalk["Smalltalk<br/>1972"]
+        Hewitt["Actor Model<br/>Hewitt 1973"]
+        Scheme["Scheme<br/>1975"]
+        ML["ML<br/>1978"]
+        Backus78["Backus FP<br/>Manifesto 1978"]
+        Forth["Forth<br/>Moore 1970"]
+        Church --> Prolog
+        Simula --> Smalltalk
+        Smalltalk --> Hewitt
+        Lisp --> Scheme
+        Church --> ML
+        Church --> Backus78
+        Turing --> Forth
     end
 
     subgraph Eighties ["Maturation · 1980s–90s"]
-        Simula --> CPP["C++<br/>1985"]
-        Prolog --> Erlang["Erlang<br/>1986"]
+        CPP["C++<br/>1983"]
+        Erlang["Erlang<br/>1986"]
+        Haskell["Haskell<br/>1990"]
+        Java["Java<br/>1995"]
+        PostScript["PostScript<br/>1982"]
+        Simula --> CPP
+        Prolog --> Erlang
         Hewitt --> Erlang
-        ML --> Haskell["Haskell<br/>1990"]
-        CPP --> Java["Java<br/>1995"]
-        Forth --> PostScript["PostScript<br/>1982"]
-        Forth --> Joy["Joy<br/>von Thun 2001"]
+        ML --> Haskell
+        CPP --> Java
+        Forth --> PostScript
     end
 
     subgraph Modern ["Modern Era · 2000s–10s"]
-        Lisp --> Clojure["Clojure<br/>2007"]
+        Clojure["Clojure<br/>2007"]
+        Go["Go<br/>2009"]
+        Rust["Rust<br/>2010"]
+        Joy["Joy<br/>von Thun 2001"]
+        Factor["Factor<br/>2003"]
+        Lisp --> Clojure
         Haskell --> Clojure
-        C --> Go["Go<br/>2009"]
-        ML --> Rust["Rust<br/>2015"]
+        C --> Go
+        ML --> Rust
         Haskell --> Rust
-        Joy --> Factor["Factor<br/>2003"]
+        Joy --> Factor
     end
+
+    %% Cross-subgraph edges
+    Algol --> Simula
+    Algol --> C
+    Forth --> Joy
 
     style Church fill:#e1f5fe
     style Lisp fill:#e1f5fe
@@ -998,6 +1038,7 @@ flowchart LR
     style CPP fill:#fff3e0
     style Java fill:#fff3e0
     style Fortran fill:#f3e5f5
+    style Algol fill:#f3e5f5
     style C fill:#f3e5f5
     style Go fill:#e8f5e9
     style Erlang fill:#e8f5e9
@@ -1015,33 +1056,35 @@ flowchart LR
 
 ### Timeline
 
-| Year | Event | Significance |
-|------|-------|-------------|
-| 1936 | Church — Lambda Calculus | Theoretical foundation of FP |
-| 1936 | Turing — Turing Machine | Theoretical foundation of imperative computation |
-| 1957 | Backus — Fortran | First high-level imperative language |
-| 1958 | McCarthy — Lisp | First FP language |
-| 1967 | Dahl & Nygaard — Simula | Invention of OOP (classes, inheritance) |
-| 1968 | Dijkstra — Go To Considered Harmful | Birth of structured programming |
-| 1970 | Moore — Forth | First concatenative language |
-| 1972 | Kay — Smalltalk | Message-passing OOP |
-| 1972 | Ritchie — C | Dominant procedural language |
-| 1972 | Colmerauer — Prolog | Logic programming |
-| 1973 | Hewitt — Actor Model | Theoretical model for concurrency |
-| 1978 | Hoare — CSP | Channel-based concurrency model |
-| 1978 | Milner — ML | Typed FP, type inference |
-| 1978 | Backus — "Can Programming Be Liberated?" | The case against imperative |
-| 1982 | Warnock & Geschke — PostScript | Concatenative language in every printer |
-| 1985 | Stroustrup — C++ | OOP goes mainstream |
-| 1986 | Armstrong — Erlang | Actor model in industrial practice |
-| 1989 | Hughes — "Why Functional Programming Matters" | The case for FP |
-| 1990 | Committee — Haskell 1.0 | Pure FP with lazy evaluation |
-| 1995 | Gosling — Java | OOP for the masses |
-| 2001 | von Thun — Joy | Formal algebra of concatenative programs |
-| 2003 | Pestov — Factor | Modern practical concatenative language |
-| 2007 | Hickey — Clojure | Practical FP on the JVM |
-| 2009 | Pike, Thompson — Go | CSP for the masses |
-| 2015 | Mozilla — Rust 1.0 | Multi-paradigm with ownership and safety |
+| Year | Event                                         | Significance                                     |
+|------|-----------------------------------------------|--------------------------------------------------|
+| 1936 | Church — Lambda Calculus                      | Theoretical foundation of FP                     |
+| 1936 | Turing — Turing Machine                       | Theoretical foundation of imperative computation |
+| 1957 | Backus — Fortran                              | First high-level imperative language             |
+| 1958 | McCarthy — Lisp                               | First FP language                                |
+| 1960 | Naur et al. — ALGOL 60                        | Foundation for structured programming and Simula |
+| 1967 | Dahl & Nygaard — Simula 67                    | Invention of OOP (classes, inheritance)          |
+| 1968 | Dijkstra — Go To Considered Harmful           | Birth of structured programming                  |
+| 1970 | Moore — Forth                                 | First concatenative language                     |
+| 1972 | Kay — Smalltalk                               | Message-passing OOP                              |
+| 1972 | Ritchie — C                                   | Dominant procedural language                     |
+| 1972 | Colmerauer — Prolog                           | Logic programming                                |
+| 1973 | Hewitt — Actor Model                          | Theoretical model for concurrency                |
+| 1978 | Hoare — CSP                                   | Channel-based concurrency model                  |
+| 1978 | Milner — ML                                   | Typed FP, type inference                         |
+| 1978 | Backus — "Can Programming Be Liberated?"      | The case against imperative                      |
+| 1982 | Adobe (Warnock et al.) — PostScript           | Concatenative language in every printer          |
+| 1983 | Stroustrup — C++                              | OOP goes mainstream                              |
+| 1986 | Armstrong — Erlang                            | Actor model in industrial practice               |
+| 1989 | Hughes — "Why Functional Programming Matters" | The case for FP                                  |
+| 1990 | Committee — Haskell 1.0                       | Pure FP with lazy evaluation                     |
+| 1995 | Gosling — Java                                | OOP for the masses                               |
+| 2001 | von Thun — Joy                                | Formal algebra of concatenative programs         |
+| 2003 | Pestov — Factor                               | Modern practical concatenative language          |
+| 2007 | Hickey — Clojure                              | Practical FP on the JVM                          |
+| 2009 | Pike, Thompson — Go                           | CSP for the masses                               |
+| 2010 | Mozilla — Rust                                | Memory safety without GC                         |
+| 2015 | Mozilla — Rust 1.0                            | First stable release                             |
 
 ---
 

@@ -27,7 +27,7 @@ in 2002 before they could deliver their Turing Award lectures.
 
 ## Key Contributions
 
-### Simula I (1962) and Simula 67 (1967)
+### Simula I (1965) and Simula 67 (1967)
 
 Simula began as a language for **discrete event simulation** — modelling
 systems like queuing networks, traffic flows, and manufacturing processes.

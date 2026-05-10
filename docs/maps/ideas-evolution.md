@@ -29,7 +29,7 @@ flowchart TD
     end
 
     subgraph OOP["📦 OOP: 1960s-1990s"]
-        Simula["Dahl & Nygaard<br/>Simula<br/>1962"]
+        Simula["Dahl & Nygaard<br/>Simula 67<br/>1967"]
         Smalltalk["Kay<br/>Smalltalk<br/>1972"]
         GoF["GoF<br/>Design Patterns<br/>1995"]
 
@@ -89,7 +89,7 @@ flowchart TD
 | Era | Key Ideas | Authors | Legacy |
 |------|-----------|----------|--------|
 | 1930-1950 | Incompleteness, Lambda calculus, Universal Machine | Gödel, Church, Turing | Theoretical CS foundation |
-| 1950-1970 | Lisp, Algol, Structured programming | McCarthy, Dijkstra | First programming paradigms |
+| 1950-1970 | Lisp, ALGOL 60, Structured programming | McCarthy, Dijkstra | First programming paradigms |
 | 1970-1980 | Information Hiding, OOP, CSP | Parnas, Kay, Hoare | Modularity, concurrency |
 | 1980-1990 | Why FP Matters, Erlang, ML | Hughes, Armstrong | FP renaissance seeds |
 | 1990-2000 | Design Patterns, Agile, Refactoring | GoF, Beck, Fowler | OOP maturity, process revolution |
@@ -123,13 +123,13 @@ From Simula to modern design patterns.
 
 ```mermaid
 flowchart LR
-    Simula62["Simula<br/>1962"] --> Smalltalk72["Smalltalk<br/>1972"]
+    Simula67["Simula 67<br/>1967"] --> Smalltalk72["Smalltalk<br/>1972"]
     Smalltalk72 --> GoF95["Design Patterns<br/>1995"]
     GoF95 --> SOLID["SOLID Principles<br/>2000s"]
     Smalltalk72 --> Refactoring99["Refactoring<br/>1999"]
     GoF95 --> DDD03["DDD<br/>2003"]
 
-    style Simula62 fill:#ffcc80
+    style Simula67 fill:#ffcc80
     style DDD03 fill:#81c784
 ```
 

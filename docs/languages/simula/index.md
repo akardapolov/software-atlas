@@ -17,15 +17,15 @@
 1. [Overview](#overview)
 2. [Historical Context](#historical-context)
 3. [Key Ideas](#key-ideas)
-   - [Classes and Objects](#classes-and-objects)
-   - [Objects and References](#objects-and-references)
-   - [Inheritance](#inheritance)
-   - [Coroutines](#coroutines)
+    - [Classes and Objects](#classes-and-objects)
+    - [Objects and References](#objects-and-references)
+    - [Inheritance](#inheritance)
+    - [Coroutines](#coroutines)
 4. [Language Features](#language-features)
-   - [Block Structure](#block-structure)
-   - [Types](#types)
-   - [Control Flow](#control-flow)
-   - [Procedures and Functions](#procedures-and-functions)
+    - [Block Structure](#block-structure)
+    - [Types](#types)
+    - [Control Flow](#control-flow)
+    - [Procedures and Functions](#procedures-and-functions)
 5. [Ecosystem](#ecosystem)
 6. [Influence](#influence)
 7. [Strengths and Weaknesses](#strengths-and-weaknesses)
@@ -42,29 +42,29 @@ Simula (SIMulation LAnguage) was the first language to introduce
 **true object-oriented programming**. Created by Ole-Johan Dahl and
 Kristen Nygaard at the Norwegian Computing Centre in Oslo in 1967,
 Simula pioneered concepts that would become foundational to
-modern OOP.
+modern OOP. The canonical OOP release, Simula 67, formalised
+classes, inheritance, and virtual methods.
 
 Simula's revolutionary ideas:
 - **Classes and objects** — combining data with behaviour
-- **Inheritance** — allowing code reuse and specialisation
+- **Inheritance** — added in Simula 67, allowing code reuse and specialisation
 - **Objects as instances** — creating multiple instances of a class
 - **Coroutines** — cooperative multitasking before threads
 
 Simula became popular beyond simulation, paving the way
-for Smalltalk, C++, Java, and other OOP languages.
+for Smalltalk, Objective-C, C++, Java, and other OOP languages.
 
 ## Historical Context
 
 ```mermaid
 flowchart TD
     subgraph Predecessors
-        Algol["Algol 60<br/>1960"]
+        Algol["ALGOL 60<br/>1960"]
     end
 
     subgraph Simula_Versions
-        SimulaI["Simula I<br/>Dahl & Nygaard<br/>1967"]
-        SimulaII["Simula II<br/>1972"]
-        Simula67["Simula 67<br/>1970s"]
+        SimulaI["Simula I<br/>1965"]
+        Simula67["Simula 67<br/>1967"]
     end
 
     subgraph OOP_Descendants
@@ -76,12 +76,12 @@ flowchart TD
     end
 
     Algol --> SimulaI
-    SimulaI --> SimulaII
     SimulaI --> Simula67
-    SimulaI --> Smalltalk
-    SimulaI --> Cpp
-    Cpp --> ObjectiveC
+    Simula67 --> Smalltalk
+    Simula67 --> Cpp
+    Smalltalk --> ObjectiveC
     Cpp --> Java
+    Smalltalk --> Java
     Java --> Csharp
 
     style Predecessors fill:#e8f5e9,stroke:#388e3c
@@ -89,7 +89,6 @@ flowchart TD
     style OOP_Descendants fill:#fff3e0,stroke:#f4a261
     style Algol fill:#e8f5e9,stroke:#388e3c
     style SimulaI fill:#e1f5fe,stroke:#0288d1
-    style SimulaII fill:#e1f5fe,stroke:#0288d1
     style Simula67 fill:#e1f5fe,stroke:#0288d1
     style Smalltalk fill:#fff3e0,stroke:#f4a261
     style Cpp fill:#fff3e0,stroke:#f4a261
@@ -113,11 +112,11 @@ This was the step from procedural programming to OOP.
 
 | Version | Year | Key features |
 |---------|-------|---------------|
-| Simula I | 1967 | Classes, objects, coroutines |
-| Simula II | 1972 | Extended coroutines, string handling |
-| Simula 67 | 1970s | Standardised version |
+| Simula I | 1965 | Classes, objects, coroutines |
+| Simula 67 | 1967 | Classes, inheritance, virtual methods, coroutines |
 
-Simula 67 unified Simula I and II into a single language.
+Simula 67 was the canonical public release. It unified the language
+and made inheritance and virtual methods part of the standard model.
 
 ## Key Ideas
 
@@ -131,52 +130,56 @@ CLASS Account;
 BEGIN
     REAL balance;
 
-    PROCEDURE deposit(REAL amount);
+    PROCEDURE deposit(amount);
+    REAL amount;
     BEGIN
-        IF amount < 0 THEN
-            OutText("Invalid deposit");
-        ELSE
-            balance :- balance + amount;
+        balance := balance + amount;
     END deposit;
 
-    PROCEDURE withdraw(REAL amount);
+    PROCEDURE withdraw(amount);
+    REAL amount;
     BEGIN
-        IF amount > balance THEN
-            OutText("Insufficient funds");
+        IF amount <= balance THEN
+            balance := balance - amount;
         ELSE
-            balance :- balance - amount;
+            OutText("Insufficient funds");
+            OutImage;
     END withdraw;
 END Account;
 ```
 
 **Key innovations:**
-- **CLASS declaration** — `CLASS Name; ... END Name;`
+- **CLASS declaration** — `Class Name; ... End;`
 - **Objects** — instances created with `NEW ClassName(args)`
 - **Procedures** — methods grouped within classes
-- **Prefix notation** — `object.method(args)`
+- **Class prefixing** — superclass-before-subclass inheritance syntax
 
 ### Objects and References
 
 Simula pioneered object references (similar to pointers):
 
 ```simula
-!-- Creating objects
+CLASS Point(x, y);
+INTEGER x, y;
+BEGIN
+END Point;
+
 REF(Point) p1;
 REF(Point) p2;
 
-p1 :- NEW Point(0, 0);   ! Create new point
-p2 :- NEW Point(10, 10); ! Create another point
+comment Creating objects;
+p1 :- NEW Point(0, 0);
+p2 :- NEW Point(10, 10);
 
-!-- Pass references
-PROCEDURE printLocation(point);
+PROCEDURE printLocation(p);
+REF(Point) p;
 BEGIN
-    CLASS Point;
-    BEGIN
-        REF(Point) loc;
-        loc :- point;
-        OutText("Location: ", loc.x, ",", loc.y);
-    END printLocation;
-END;
+    OutText("Location: ");
+    OutInt(p.x, 0);
+    OutText(",");
+    OutInt(p.y, 0);
+    OutImage;
+END printLocation;
 ```
 
 References enable:
@@ -194,43 +197,32 @@ BEGIN
     PROCEDURE speak;
     BEGIN
         OutText("Animal sound");
+        OutImage;
     END speak;
 END Animal;
 
-CLASS Dog SUBCLASS Animal;
+Animal class Dog;
 BEGIN
     PROCEDURE speak;
     BEGIN
         OutText("Bark!");
+        OutImage;
     END speak;
 END Dog;
 ```
 
 **Subclasses** — classes that inherit all behaviour and add
-specialisation (added in Simula II).
+specialisation (introduced in Simula 67).
 
 ### Coroutines
 
-Simula I included **coroutines** — cooperative multitasking:
+Simula supported cooperative multitasking for simulations.
+The exact coroutine/process syntax varied across implementations,
+but the key idea was that a process could yield control and resume later.
 
 ```simula
-!-- Coroutine definition
-INSPECT CLASS Coroutine;
-BEGIN
-    BOOLEAN resume;
-END Coroutine;
-
-!-- Coroutine class
-CLASS Producer IMPLEMENTS Coroutine;
-BEGIN
-    PROCEDURE produce;
-    BEGIN
-        OutInt(1);  ! Produced item
-    END produce;
-END Producer;
-
-!-- Detaching coroutines (resume later)
-DETACH p;
+comment Simplified coroutine-style yield;
+detach;
 ```
 
 Coroutines enable:
@@ -245,18 +237,18 @@ Coroutines enable:
 Simula uses explicit `BEGIN` and `END` for blocks:
 
 ```simula
-!-- Outer block
+comment Outer block;
 BEGIN
-    ! Declarations
-    ! Procedure definitions
+    comment Declarations;
+    comment Procedure definitions;
 END;
 
-!-- Inner block (class or procedure)
+comment Inner block (class or procedure);
 CLASS Example;
 BEGIN
     PROCEDURE method;
     BEGIN
-        ! Method body
+        comment Method body;
     END method;
 END Example;
 ```
@@ -278,35 +270,33 @@ Simula supports several structured types:
 ### Control Flow
 
 ```simula
-!-- Conditional
+comment Conditional;
 IF condition THEN
-    ! True branch
+    comment True branch;
 ELSE
-    ! False branch
-END IF;
+    comment False branch;
 
-!-- Loops
+comment Loops;
 WHILE condition DO
-    ! Body
-END WHILE;
+    comment Body;
 
-!-- For loop
+comment For loop;
 FOR i := 1 STEP 1 UNTIL 10 DO
-    ! Body
-END FOR;
+    comment Body;
 
-!-- GOTO (use sparingly)
+comment GOTO (use sparingly);
 GOTO label;
 ```
 
 ### Procedures and Functions
 
 ```simula
-!-- Procedure definition
-PROCEDURE name(PARAM1, PARAM2);
+comment Procedure definition;
+PROCEDURE name(param1, param2);
+REAL param1;
+INTEGER param2;
 BEGIN
-    ! Procedure body
-    ! RETURN value (optional)
+    comment Procedure body;
 END name;
 ```
 
@@ -327,7 +317,7 @@ Procedures are the primary building blocks for code reuse in Simula.
 | Language | Simula contribution |
 |-----------|-----------------|
 | **Smalltalk** | Classes, objects (via Kay) |
-| **C++** | Classes, inheritance (Stroustrup cited Simula) |
+| **C++** | Classes, inheritance (Stroustrup explicitly cited Simula) |
 | **Java** | Classes, OOP (Gosling studied Simula) |
 | **C#** | Classes, OOP |
 | **Python** | Classes, OOP |
@@ -338,10 +328,10 @@ Procedures are the primary building blocks for code reuse in Simula.
 | Concept | Origin | Modern equivalent |
 |----------|---------|-------------------|
 | **Classes** | Simula I | Classes in all OOP languages |
-| **Inheritance** | Simula II | Subclassing in C++, Java, etc. |
+| **Inheritance** | Simula 67 | Subclassing in C++, Java, etc. |
 | **Coroutines** | Simula I | Generators (Python), async/await (JavaScript) |
-| **Object references** | Simula I | Smart pointers (C++), References (Java, C#) |
-| **Prefix notation** | Simula I | Method chaining (Ruby, Eiffel) |
+| **Object references** | Simula I | References and pointers in OOP languages |
+| **Class prefixing** | Simula 67 | Inheritance syntax in class-based OOP |
 
 ### Academic Impact
 
@@ -367,11 +357,11 @@ See [examples/simula/](../../../examples/simula/index.md) for runnable code *(pl
 
 ### Weaknesses
 
-- **Complex syntax** — verbose block structure, prefix notation
-- **Slow compilation** — compiled to bytecode, not native
+- **Complex syntax** — verbose block structure and class prefixing syntax
+- **Historically slower compilation** — implementations varied, tooling was limited
 - **Limited ecosystem** — few modern tools or libraries
 - **Runtime overhead** — more resource usage than C-like languages
-- **No modern implementations** — primarily historical interest now
+- **Limited modern implementations** — primarily historical interest now
 
 ## Related Authors
 
@@ -383,10 +373,10 @@ See [examples/simula/](../../../examples/simula/index.md) for runnable code *(pl
 
 ## Related Topics
 
-- [OOP & Design](../../topics/design/index.md) — Simula as OOP foundation |
-- [Paradigms](../../topics/paradigms/index.md) — Simula's role in OOP evolution |
-- [Type Systems](../../topics/types/index.md) — static typing, references |
-- [Architecture](../../topics/architecture/index.md) — classes as architectural pattern |
+- [OOP & Design](../../topics/design/index.md) — Simula as OOP foundation
+- [Paradigms](../../topics/paradigms/index.md) — Simula's role in OOP evolution
+- [Type Systems](../../topics/types/index.md) — static typing, references
+- [Architecture](../../topics/architecture/index.md) — classes as architectural pattern
 
 ## Further Reading
 

@@ -11,7 +11,7 @@ timeline
     section 1936–1967 · Foundations
         1936 : λ-calculus (Church)
         1958 : Lisp (McCarthy)
-        1967 : Simula (Dahl & Nygaard) : Conway's Law
+        1967 : Simula 67 (Dahl & Nygaard) : Conway's Law
 
     section 1968–1989 · Formalization
         1968 : NATO conference — software engineering
@@ -21,8 +21,8 @@ timeline
         1974 : Abstract Data Types (Liskov)
         1975 : Mythical Man-Month (Brooks)
         1978 : ML / Hindley–Milner (Milner) : CSP (Hoare) : Logical Clocks (Lamport) : FP Manifesto (Backus)
-        1982 : Byzantine Generals (Lamport et al.)
         1981 : Gray — Transaction Concept
+        1982 : Byzantine Generals (Lamport et al.)
         1983 : ACID (Haerder & Reuter)
         1986 : Erlang (Armstrong)
         1987 : LSP introduced (Liskov)
@@ -45,9 +45,9 @@ timeline
     section 2006–present · Scaling & Operations
         2007 : Clojure (Hickey) : Dynamo / cloud era (Amazon) : PostgreSQL matures
         2009 : DevOps movement : Go / channels (Google)
-        2012 : Spanner — global distributed SQL (Google)
         2010 : Continuous Delivery (Humble & Farley) : Rust / ownership types
         2011 : Microservices emerging : C4 Model (Brown) : CRDTs (Shapiro et al.)
+        2012 : Spanner — global distributed SQL (Google)
         2013 : Docker / OCI containers (Hykes)
         2014 : Raft (Ongaro & Ousterhout) : Kubernetes 1.0 (Google)
         2016 : SRE book (Google)
@@ -72,7 +72,8 @@ timeline
 
 | Year | Event | Author/Creator | Significance |
 |------|-------|----------------|--------------|
-| 1962 | Simula | Dahl & Nygaard | First OOP concepts (classes, objects) |
+| 1960 | ALGOL 60 | Naur et al. | Foundation for structured programming and Simula |
+| 1967 | Simula 67 | Dahl & Nygaard | First true OOP language (classes, inheritance) |
 | 1967 | Conway's Law | Melvin Conway | Organizations shape systems |
 | 1968 | Go To Considered Harmful | Dijkstra | Structured programming manifesto |
 | 1968 | NATO Conference | Various | Term "Software Engineering" coined |
@@ -141,11 +142,11 @@ timeline
 | 2011 | Simple Made Easy | Hickey | Simplicity manifesto |
 | 2012 | TypeScript | Microsoft | Typed JavaScript |
 | 2012 | Boundaries | Bernhardt | FP/OOP synthesis |
+| 2012 | Spanner | Google | Globally distributed SQL |
 | 2013 | Docker | Hykes / dotCloud | Container packaging, OCI standard |
 | 2014 | Kubernetes 1.0 | Google | Container orchestration, declarative ops |
 | 2014 | Microservices | Various | Architectural style named |
 | 2015 | Building Microservices | Newman | Practical guide |
-| 2012 | Spanner | Google | Globally distributed SQL |
 | 2017 | DDIA | Kleppmann | Distributed systems guide |
 | 2019 | Team Topologies | Skelton & Pais | Org design for flow |
 
