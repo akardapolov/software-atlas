@@ -314,6 +314,34 @@
       text-decoration: underline;
     }
 
+    .toc-return {
+      position: fixed;
+      top: calc(var(--header-h) + 16px);
+      right: 24px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 8px 16px;
+      font-size: .85rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,.18);
+      opacity: 0;
+      transform: translateY(-10px);
+      pointer-events: none;
+      transition: opacity .25s, transform .25s, background .15s;
+      z-index: 95;
+    }
+    .toc-return.visible {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    .toc-return:hover {
+      background: var(--text-link);
+    }
+
     .mermaid { text-align: center; margin: 16px 0; overflow-x: auto; }
 
     .breadcrumb { font-size: .82rem; color: var(--text-muted); margin-bottom: 20px; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
@@ -976,6 +1004,7 @@
         e.preventDefault();
         heading.scrollIntoView({ behavior: 'smooth' });
         history.replaceState(null, null, `#${heading.id}`);
+        showTocReturnButton();
       });
       li.appendChild(a);
       list.appendChild(li);
@@ -983,6 +1012,50 @@
 
     toc.appendChild(list);
     return toc;
+  }
+
+  // ═══════════════════════════════════════
+  // "BACK TO CONTENTS" FLOATING BUTTON
+  // ═══════════════════════════════════════
+  let tocObserver = null;
+
+  function ensureTocReturnButton() {
+    let btn = document.getElementById('toc-return-btn');
+    if (btn) return btn;
+    btn = document.createElement('button');
+    btn.id = 'toc-return-btn';
+    btn.className = 'toc-return';
+    btn.textContent = '↑ Contents';
+    btn.addEventListener('click', () => {
+      const toc = document.querySelector('.md-body .toc');
+      if (toc) toc.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      hideTocReturnButton();
+    });
+    document.body.appendChild(btn);
+    return btn;
+  }
+
+  function showTocReturnButton() {
+    if (!document.querySelector('.md-body .toc')) return;
+    ensureTocReturnButton().classList.add('visible');
+  }
+
+  function hideTocReturnButton() {
+    const btn = document.getElementById('toc-return-btn');
+    if (btn) btn.classList.remove('visible');
+  }
+
+  function watchTocVisibility(toc) {
+    if (tocObserver) tocObserver.disconnect();
+    tocObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) hideTocReturnButton();
+      });
+    }, {
+      root: document.getElementById('main'),
+      threshold: 0.3,
+    });
+    tocObserver.observe(toc);
   }
 
   // ═══════════════════════════════════════
@@ -1003,6 +1076,7 @@
   async function loadPage(path) {
     currentPath = path;
     renderSidebar(path);
+    hideTocReturnButton();
 
     const content = document.getElementById("content");
     content.innerHTML = `
@@ -1042,6 +1116,10 @@
 
       content.appendChild(body);
 
+      if (toc) {
+        watchTocVisibility(toc);
+      }
+
       // Делегированные клики по MD-ссылкам и якорным ссылкам
       body.addEventListener("click", (e) => {
         const a = e.target.closest("a[data-nav]");
@@ -1058,6 +1136,7 @@
           if (target) {
             target.scrollIntoView({ behavior: 'smooth' });
             history.replaceState(null, null, `#${id}`);
+            showTocReturnButton();
           }
         }
       });
