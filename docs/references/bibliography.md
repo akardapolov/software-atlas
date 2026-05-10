@@ -58,6 +58,12 @@ Complete reference list for all works cited in Software Engineering Atlas.
 
 - Humble, J. & Farley, D. (2010). *Continuous Delivery.* Addison-Wesley.
 
+- Codd, E.F. (1970). "A Relational Model of Data for Large Shared Data
+  Banks." *Communications of the ACM*, 13(6), 377–387.
+
+- Gray, J. & Reuter, A. (1993). *Transaction Processing: Concepts and
+  Techniques.* Morgan Kaufmann.
+
 - Kleppmann, M. (2017). *Designing Data-Intensive Applications.* O'Reilly.
 
 - Wlaschin, S. (2018). *Domain Modeling Made Functional.* Pragmatic Bookshelf.

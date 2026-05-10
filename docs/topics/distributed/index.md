@@ -549,6 +549,7 @@ Google's globally distributed database:
 
 ## Related Topics
 
+- [Databases](../databases/index.md) — storage engines, data models, query languages (the foundation distributed systems build on)
 - [Concurrency](../concurrency/index.md) — shared-memory vs distributed
 - [Architecture & Modularity](../architecture/index.md) — microservices, system design
 - [Process](../process/index.md) — how teams build distributed systems

@@ -17,6 +17,7 @@ from foundational concepts to modern practice.
 | 8  | [Version Control & Git](vcs/index.md)              | How we track and evolve code       | Git, branching, workflows              |
 | 9  | [Distributed Systems](distributed/index.md)        | How we scale across machines       | Clocks, CAP, consensus, streaming      |
 | 10 | [Containers & Orchestration](containers/index.md)  | How we package and run workloads   | Docker, Kubernetes, OCI, runtimes      |
+| 11 | [Databases](databases/index.md)                    | How we store and query structured data | Relational, NoSQL, transactions, storage engines |
 
 ## Cross-cutting Themes
 
@@ -25,4 +26,5 @@ Many ideas appear across multiple topics:
 - **Modularity** touches architecture, design, and FP
 - **Types** connect to design, FP, and languages
 - **Testing** relates to process, design, and architecture
+- **Data** connects databases (models, transactions), distributed systems (replication, sharding), and architecture (CQRS, Event Sourcing)
 - **Simplicity** is a recurring theme from Dijkstra to Hickey

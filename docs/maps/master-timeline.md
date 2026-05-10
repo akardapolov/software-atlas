@@ -15,14 +15,15 @@ timeline
 
     section 1968–1989 · Formalization
         1968 : NATO conference — software engineering
-        1970 : Royce — phased lifecycle
+        1970 : Royce — phased lifecycle : Codd — Relational Model
         1972 : Information Hiding (Parnas) : Smalltalk (Kay) : Prolog (Colmerauer)
         1973 : Actor Model (Hewitt)
         1974 : Abstract Data Types (Liskov)
         1975 : Mythical Man-Month (Brooks)
         1978 : ML / Hindley–Milner (Milner) : CSP (Hoare) : Logical Clocks (Lamport) : FP Manifesto (Backus)
         1982 : Byzantine Generals (Lamport et al.)
-        1983 : ACID (Gray)
+        1981 : Gray — Transaction Concept
+        1983 : ACID (Haerder & Reuter)
         1986 : Erlang (Armstrong)
         1987 : LSP introduced (Liskov)
         1988 : Design by Contract (Meyer)
@@ -42,8 +43,9 @@ timeline
         2005 : Hexagonal Architecture (Cockburn)
 
     section 2006–present · Scaling & Operations
-        2007 : Clojure (Hickey) : Dynamo / cloud era (Amazon)
+        2007 : Clojure (Hickey) : Dynamo / cloud era (Amazon) : PostgreSQL matures
         2009 : DevOps movement : Go / channels (Google)
+        2012 : Spanner — global distributed SQL (Google)
         2010 : Continuous Delivery (Humble & Farley) : Rust / ownership types
         2011 : Microservices emerging : C4 Model (Brown) : CRDTs (Shapiro et al.)
         2013 : Docker / OCI containers (Hykes)
@@ -81,6 +83,7 @@ timeline
 
 | Year | Event | Author/Creator | Significance |
 |------|-------|----------------|--------------|
+| 1970 | Relational Model | Codd | Foundation of database theory |
 | 1972 | Information Hiding | Parnas | Foundation of modular design |
 | 1972 | Smalltalk | Alan Kay | Pure OOP, GUI concepts |
 | 1972 | C Language | Ritchie | Systems programming lingua franca |
@@ -93,6 +96,7 @@ timeline
 
 | Year | Event | Author/Creator | Significance |
 |------|-------|----------------|--------------|
+| 1981 | Transaction Concept | Gray | ACID properties formalised |
 | 1983 | C++ | Stroustrup | OOP for systems programming |
 | 1986 | Erlang | Ericsson | Concurrency, fault tolerance |
 | 1987 | Perl | Larry Wall | Text processing, CGI scripting |
@@ -141,6 +145,7 @@ timeline
 | 2014 | Kubernetes 1.0 | Google | Container orchestration, declarative ops |
 | 2014 | Microservices | Various | Architectural style named |
 | 2015 | Building Microservices | Newman | Practical guide |
+| 2012 | Spanner | Google | Globally distributed SQL |
 | 2017 | DDIA | Kleppmann | Distributed systems guide |
 | 2019 | Team Topologies | Skelton & Pais | Org design for flow |
 

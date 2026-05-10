@@ -115,6 +115,7 @@ Kleppmann is an engaging speaker whose talks complement DDIA:
 ## Related Pages
 
 - [DDIA](../works/books/kleppmann-2017-ddia.md)
+- [Databases](../topics/databases/index.md)
 - [Distributed Systems](../topics/distributed/index.md)
 - [Leslie Lamport](leslie-lamport.md)
 - [Jim Gray](jim-gray.md)

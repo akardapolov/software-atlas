@@ -34,6 +34,7 @@ Key academic papers that shaped software development.
 | 1996 | Martin | The Open-Closed Principle | SOLID |
 | 1997 | Kay | The Computer Revolution Hasn't Happened Yet | Computing vision |
 | 1997 | Ingalls | Back to the Future: Squeak | Squeak |
+| 1970 | Codd | A Relational Model of Data for Large Shared Data Banks | Databases |
 | 2000 | Brewer | CAP conjecture | Distributed |
 | 2000 | Claessen & Hughes | QuickCheck: A Lightweight Tool for Random Testing | Property-based testing |
 | 2002 | Fowler | Patterns of Enterprise Application Architecture | Enterprise patterns |

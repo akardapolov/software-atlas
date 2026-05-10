@@ -58,6 +58,8 @@ Topic pages collect related ideas into one domain. They are meant for focused st
 
 **Containers and Orchestration** covers how applications are packaged, distributed, and run at scale on shared infrastructure — from early Linux primitives like cgroups and namespaces, through Docker's portable images in 2013 and Kubernetes in 2014, to OCI standards and modern runtimes such as containerd, Podman, and CRI-O. It is the operational substrate that ties together CI/CD pipelines, microservice architectures, and the DevOps and SRE practices built around them.
 
+**Databases** covers how we store, structure, and query data — from Codd's relational model through SQL, NoSQL data models (document, graph, key-value), storage engines (B-trees, LSM-trees), transactions and isolation levels, indexing strategies, and the distributed database era (Dynamo, Spanner, NewSQL). It connects to distributed systems through replication and consensus, and to architecture through data patterns like CQRS and Event Sourcing.
+
 ---
 
 ## Languages
@@ -107,6 +109,8 @@ Reading paths provide guided sequences through the atlas for those who prefer a 
 **Testing and Delivery path** starts with extreme programming and test-driven development, moves through continuous integration, continuous delivery, and DevOps, and ends with the DORA metrics and evidence-based delivery improvement. It covers the practices that connect writing code to shipping working software reliably.
 
 **Distributed Systems path** starts with Lamport's logical clocks, moves through ACID, the CAP theorem, Paxos, Raft, and consistency models, and ends with the synthesis in Designing Data-Intensive Applications. It is a path through the most mathematically demanding part of the atlas, but also one of the most practically relevant for modern systems work.
+
+**Databases path** starts with Codd's relational model, moves through storage engines, transactions, and indexing, and ends with distributed databases and the synthesis in Designing Data-Intensive Applications.
 
 ---
 

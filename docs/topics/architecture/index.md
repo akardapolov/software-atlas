@@ -517,6 +517,7 @@ Across all architectural approaches, these principles recur:
 - [OOP & Design](../design/index.md) — component-level design (SOLID, patterns)
 - [Paradigms](../paradigms/index.md) — how paradigms shape architecture
 - [Distributed Systems](../distributed/index.md) — architecture across machines
+- [Databases](../databases/index.md) — data models and storage that architectural patterns (CQRS, Event Sourcing) depend on
 - [Process & Testing](../process/index.md) — how process supports architecture
 
 ---

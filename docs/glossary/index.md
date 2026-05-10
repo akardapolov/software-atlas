@@ -7,6 +7,11 @@ Key terms and definitions used throughout Software Engineering Atlas.
 
 ## A
 
+**ACID**
+:   Atomicity, Consistency, Isolation, Durability — the four properties
+    of reliable transactions. Formalised by Jim Gray (1981), terminology
+    by Haerder and Reuter (1983).
+
 **Abstract Data Type (ADT)**
 :   A type defined by its operations rather than its implementation.
     Introduced by Barbara Liskov (CLU, 1974).
@@ -51,6 +56,14 @@ Key terms and definitions used throughout Software Engineering Atlas.
 :   An approach to software design that centres the model on
     business domain. Introduced by Eric Evans (2003).
 
+## B
+
+**B-Tree**
+:   A self-balancing tree data structure optimised for disk-based storage.
+    Keeps data sorted and enables efficient insertion, deletion, and
+    range queries. Used by most traditional relational databases
+    (PostgreSQL, MySQL, SQL Server).
+
 ## H
 
 **Hexagonal Architecture**
@@ -74,12 +87,22 @@ Key terms and definitions used throughout Software Engineering Atlas.
     a subtype without altering correctness. Formalised by
     Barbara Liskov and Jeannette Wing (1994).
 
+**LSM-Tree (Log-Structured Merge Tree)**
+:   A write-optimised storage structure that batches writes sequentially
+    and merges sorted files over time. Used by RocksDB, Cassandra,
+    LevelDB.
+
 ## M
 
 **Monad**
 :   An abstraction for sequencing computations with context (effects,
     failure, state, IO). Widely used in Haskell. Informally: a design
     pattern for composable computation chains.
+
+**MVCC (Multi-Version Concurrency Control)**
+:   A concurrency control method where each transaction sees a consistent
+    snapshot of data, enabling readers and writers to proceed without
+    blocking each other. Used by PostgreSQL, MySQL (InnoDB), SQL Server.
 
 **MVC (Model-View-Controller)**
 :   A UI architecture pattern separating data (Model), presentation
@@ -95,7 +118,28 @@ Key terms and definitions used throughout Software Engineering Atlas.
 :   Software distributed under licenses that allow modification and
     redistribution. Many foundational tools (GCC, Git, Linux) are OSS.
 
+## N
+
+**NoSQL**
+:   A broad category of non-relational databases emphasising scalability,
+    flexible schemas, and specialised data models. Emerged in the late 2000s
+    as a response to the limitations of relational systems at web scale.
+
+**Normalization**
+:   Organising data to reduce redundancy and improve integrity.
+    Codd defined normal forms (1NF, 2NF, 3NF, BCNF) that progressively
+    eliminate data duplication and prevent update anomalies.
+
 ## S
+
+**Sharding**
+:   Partitioning data across multiple machines. Each shard holds a subset
+    of the data, enabling horizontal scaling. See also: partitioning
+    in distributed systems.
+
+**SQL (Structured Query Language)**
+:   Declarative language for querying and manipulating relational data.
+    First standardised in 1986 (ANSI). Based on Codd's relational algebra.
 
 **SOLID**
 :   Five design principles for object-oriented software:

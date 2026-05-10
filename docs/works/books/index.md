@@ -7,6 +7,7 @@ Foundational books in software development.
 | 1941 | Church | The Calculi of Lambda Conversion | FP foundations |
 | 1962 | McCarthy | LISP 1.5 Programmer's Manual | Lisp |
 | 1975 | Brooks | The Mythical Man-Month | Architecture, process |
+| 1993 | Gray & Reuter | Transaction Processing: Concepts and Techniques | Databases |
 | 1979 | Alexander | The Timeless Way of Building | Architecture, patterns |
 | 1980 | Papert | Mindstorms | Constructivism, Logo |
 | 1983 | Goldberg | Smalltalk-80: The Language | Smalltalk |

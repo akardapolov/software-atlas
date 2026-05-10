@@ -14,6 +14,7 @@ connect and influence each other over time.
 | [Languages Genealogy](languages-genealogy.md) | Language family tree                         |
 | [Process](process-map.md)                     | Development methodology evolution            |
 | [Containers](containers-map.md)               | Container runtime and orchestrator evolution |
+| [Databases](databases-map.md)                 | Evolution of database models and engines |
 
 ## How to Read the Maps
 
@@ -78,6 +79,7 @@ timeline
         Architecture 1968a  : [P] Go To Considered Harmful (Dijkstra 1968)
         Architecture 1968b  : [X] NATO Software Engineering conf (1968)
         Architecture 1970   : [P] Relational Model (Codd 1970)
+        Databases 1970      : [P] Relational Model (Codd 1970)
         Architecture 1972   : [P] Information Hiding (Parnas 1972)
         Architecture 1975   : [B] Mythical Man-Month (Brooks 1975)
         Architecture 1986   : [P] No Silver Bullet (Brooks 1986)
@@ -90,7 +92,9 @@ timeline
         Concurrency 1986    : [L] Erlang (Armstrong 1986)
         Distributed 1978    : [P] Logical Clocks (Lamport 1978)
         Distributed 1982    : [P] Byzantine Generals (Lamport et al 1982)
+        Databases 1981      : [P] Transactions concept (Gray 1981)
         Distributed 1983    : [R] ACID (Haerder and Reuter 1983)
+        Databases 1983      : [R] ACID (Haerder and Reuter 1983)
         Distributed 1989    : [P] Paxos circulated (Lamport 1989)
 
     section 1990-2005 Consolidation
@@ -151,6 +155,10 @@ timeline
         Distributed 2011    : [P] CRDTs (Shapiro et al 2011)
         Distributed 2014    : [P] Raft (Ongaro and Ousterhout 2014)
         Distributed 2017    : [B] DDIA (Kleppmann 2017)
+        Databases 2004      : [P] Bigtable (Google 2004)
+        Databases 2006      : [P] Dynamo (Amazon 2007)
+        Databases 2012      : [P] Spanner (Google 2012)
+        Databases 2017      : [B] DDIA (Kleppmann 2017)
         Containers 2013     : [L] Docker (Hykes 2013)
         Containers 2014     : [L] Kubernetes (Google 2014)
         Containers 2015     : [R] OCI standard (2015)
@@ -315,6 +323,23 @@ flowchart TB
     Raft --> Kleppmann
   end
 
+  subgraph DB["Databases"]
+    CoddDB["Codd 1970\nRelational Model"]
+    GrayDB["Gray 1981\nTransactions"]
+    SQLDB["SQL Standard\n1986"]
+    PostgreSQL["PostgreSQL\n1989"]
+    DynamoDB["Dynamo 2007\nLeaderless KV"]
+    SpannerDB["Spanner 2012\nGlobal SQL"]
+    KleppmannDB["Kleppmann 2017\nDDIA"]
+
+    CoddDB --> SQLDB
+    GrayDB --> SQLDB
+    SQLDB --> PostgreSQL
+    PostgreSQL --> DynamoDB
+    DynamoDB --> SpannerDB
+    SpannerDB --> KleppmannDB
+  end
+
   subgraph CONT["Containers and Orchestration"]
     LXC["LXC 2008\nLinux containers"]
     Docker["Hykes 2013\nDocker"]
@@ -343,6 +368,9 @@ flowchart TB
   CD -. "containers enable CD at scale" .-> Docker
   Newman -. "microservices need orchestration" .-> K8s
   Raft -. "etcd uses Raft" .-> K8s
+  CoddDB -. "relational model" .-> Codd
+  GrayDB -. "ACID foundations" .-> HaerderReuter
+  DynamoDB -. "leaderless AP" .-> Brewer
 
   style ARCH fill:#dbeafe,stroke:#3b82f6,stroke-width:2px
   style OOP  fill:#fef9c3,stroke:#eab308,stroke-width:2px
@@ -351,6 +379,7 @@ flowchart TB
   style PROC fill:#dcfce7,stroke:#22c55e,stroke-width:2px
   style CONC fill:#e0f2fe,stroke:#0ea5e9,stroke-width:2px
   style DIST fill:#f3e8ff,stroke:#a855f7,stroke-width:2px
+  style DB   fill:#fef3c7,stroke:#d97706,stroke-width:2px
   style CONT fill:#fee2e2,stroke:#ef4444,stroke-width:2px
 ```
 
@@ -380,6 +409,9 @@ that cross lineage boundaries and make the atlas a graph, not a tree.
 | CD (Process)         | Docker (Containers)  | containers enable CD at scale   | Reproducible images turned the CD pipeline's "deployable artifact" into a portable, hermetic unit.  |
 | Newman (Arch)        | Kubernetes (Cont)    | microservices need orchestration| Microservice architectures multiplied operational complexity that orchestrators were built to absorb. |
 | Raft (Distributed)   | Kubernetes (Cont)    | etcd uses Raft                  | Kubernetes' control plane stores cluster state in etcd, which uses Raft for replicated consensus.   |
+| CoddDB (Databases)   | Codd (Arch)          | relational model to architecture | The relational model underpins how systems structure and reason about data.                         |
+| GrayDB (Databases)   | HaerderReuter (Dist) | ACID to distributed recovery    | Distributed transaction recovery builds on single-node ACID foundations.                            |
+| DynamoDB (Databases) | Brewer (Distributed) | leaderless to CAP               | Dynamo-style systems are a practical exploration of the AP choice under CAP.                        |
 
 ---
 
@@ -400,8 +432,9 @@ with its type and the lineage(s) it belongs to.
 | 1968    | Dijkstra — Structured Programming            | [P]    | Architecture          | foundation     |
 | 1968    | NATO conference                              | [X]    | Process               | foundation     |
 | 1969    | Hindley — HM type inference                  | [P]    | Types                 | foundation     |
-| 1970    | Codd — Relational Model                      | [P]    | Architecture (data)   | foundation     |
+| 1970    | Codd — Relational Model                      | [P]    | Architecture, Databases | foundation     |
 | 1970    | Royce — Phased lifecycle                     | [P]    | Process               | foundation     |
+| 1981    | Gray — Transaction Concept                   | [P]    | Databases             | foundation     |
 | 1972    | Kay — Smalltalk                              | [L]    | OOP                   | embodiment     |
 | 1972    | Parnas — Information Hiding                  | [P]    | Architecture          | foundation     |
 | 1972/74 | Girard / Reynolds — System F                 | [P]    | Types                 | foundation     |
@@ -416,7 +449,7 @@ with its type and the lineage(s) it belongs to.
 | 1982    | Damas and Milner — Algorithm W               | [P]    | Types                 | formalization  |
 | 1982    | Deming — Quality / PDCA                      | [B]    | Process               | foundation     |
 | 1982    | Lamport et al. — Byzantine Generals          | [P]    | Distributed           | foundation     |
-| 1983    | Haerder and Reuter — ACID                    | [P]    | Distributed           | formalization  |
+| 1983    | Haerder and Reuter — ACID                    | [P]    | Distributed, Databases | formalization  |
 | 1985    | Turner — Miranda                             | [L]    | FP                    | embodiment     |
 | 1986    | Agha — Actors formalized                     | [P]    | Concurrency           | formalization  |
 | 1986    | Armstrong — Erlang                           | [L]    | Concurrency, FP       | embodiment     |
@@ -426,6 +459,7 @@ with its type and the lineage(s) it belongs to.
 | 1988    | Meyer — DbC / CQS                            | [R]    | OOP                   | formalization  |
 | 1989    | Hughes — Why FP Matters                      | [P]    | FP                    | foundation     |
 | 1989    | Lamport — Paxos (circulated)                 | [P]    | Distributed           | foundation     |
+| 1989    | PostgreSQL project begins                    | [L]    | Databases             | embodiment     |
 | 1989    | Wadler and Blott — Type classes              | [P]    | Types, FP             | formalization  |
 | 1990    | Haskell 1.0                                  | [L]    | FP, Types             | embodiment     |
 | 1992    | Wadler — Monads for FP                       | [P]    | FP, Types             | formalization  |
@@ -453,8 +487,9 @@ with its type and the lineage(s) it belongs to.
 | 2004    | Feathers — Working with Legacy Code          | [B]    | Process               | popularization |
 | 2004    | Odersky — Scala                              | [L]    | FP, Types             | embodiment     |
 | 2005    | Cockburn — Hexagonal Architecture            | [A]    | Architecture          | formalization  |
-| 2007    | Amazon — Dynamo paper                        | [P]    | Distributed           | foundation     |
+| 2007    | Amazon — Dynamo paper                        | [P]    | Distributed, Databases | foundation     |
 | 2007    | Helland — Life Beyond DT                     | [P]    | Distributed           | foundation     |
+| 2012    | Google — Spanner                             | [P]    | Databases, Distributed | synthesis      |
 | 2007    | Hickey — Clojure                             | [L]    | FP                    | embodiment     |
 | 2008    | LXC — Linux containers                       | [L]    | Containers            | foundation     |
 | 2009    | Debois — DevOps movement                     | [X]    | Process               | popularization |
@@ -479,7 +514,7 @@ with its type and the lineage(s) it belongs to.
 | 2016    | Google — SRE book                            | [B]    | Process               | popularization |
 | 2016    | Helm — K8s package manager                   | [L]    | Containers            | embodiment     |
 | 2016    | Kotlin stable                                | [L]    | Types, FP             | embodiment     |
-| 2017    | Kleppmann — DDIA                             | [B]    | Distributed           | synthesis      |
+| 2017    | Kleppmann — DDIA                             | [B]    | Distributed, Databases | synthesis      |
 | 2018    | Forsgren et al. — Accelerate / DORA          | [B]    | Process               | synthesis      |
 | 2018    | Ousterhout — Philosophy of SW Design         | [B]    | OOP, Architecture     | popularization |
 | 2018    | Wlaschin — Domain Modeling Made Functional   | [B]    | FP, Architecture      | synthesis      |

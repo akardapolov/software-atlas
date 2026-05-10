@@ -122,6 +122,7 @@ and data science movements.
 
 ## Related Pages
 
+- [Databases](../topics/databases/index.md)
 - [Distributed Systems](../topics/distributed/index.md)
 - [Leslie Lamport](leslie-lamport.md)
 - [Martin Kleppmann](martin-kleppmann.md)

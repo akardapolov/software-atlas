@@ -12,6 +12,7 @@ a logical thread through authors, works, and ideas.
 | [λ Functional Programming](fp-path.md) | Lambda calculus → Typed FP | ~8 works | Church 1936 → Wlaschin 2018 |
 | [🧪 Testing & Delivery](testing-and-delivery-path.md) | XP → TDD → CI/CD | ~6 works | Beck 1999 → Forsgren 2018 |
 | [🌐 Distributed Systems](distributed-systems-path.md) | Clocks → CAP → Streaming | ~6 works | Lamport 1978 → Kleppmann 2017 |
+| [🗄️ Databases](databases-path.md) | Relational Model → Storage → Distributed DBs | ~5 works | Codd 1970 → Kleppmann 2017 |
 
 ## How to Use
 

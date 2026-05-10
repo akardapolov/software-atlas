@@ -35,6 +35,8 @@ biography, key contributions, works, and influence connections.
 | David Parnas | 1941– | Information hiding | [→](david-parnas.md) ✅ |
 | Leslie Lamport | 1941– | Logical clocks, Paxos | [→](leslie-lamport.md) ✅ |
 | Jim Gray | 1944–2007 | Transactions, ACID | [→](jim-gray.md) ✅ |
+| Edgar F. Codd | 1923–2003 | Relational model | [→](edgar-codd.md) ✅ |
+| Michael Stonebraker | 1943– | PostgreSQL, Ingres, NewSQL | [→](michael-stonebraker.md) ✅ |
 | Bertrand Meyer | 1950– | Eiffel, DbC, CQS | [→](bertrand-meyer.md) ✅ |
 | John Hughes | 1958– | Why FP Matters, QuickCheck | [→](john-hughes.md) ✅ |
 
@@ -86,7 +88,7 @@ biography, key contributions, works, and influence connections.
 
 ## Summary
 
-**All 50 author cards complete.** ✅
+**All 52 author cards complete.** ✅
 
 ## Influence Web
 
@@ -109,6 +111,8 @@ Parnas → Martin (SOLID)
 Parnas → Wirfs-Brock → Metz
 Hoare → Meyer (DbC ← Hoare Logic)
 Hoare → Liskov → ADT
+Codd → Stonebraker → PostgreSQL/NewSQL
+Codd → Gray → Kleppmann
 Lamport → Gray → Kleppmann
 Beck → Fowler → industry
 Beck → Cunningham → Wirfs-Brock → Metz
