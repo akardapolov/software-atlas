@@ -223,6 +223,16 @@ Patterns for managing data in distributed and complex systems:
 - [CQRS](data/cqrs.md) — Command Query Responsibility Segregation
 - [Event Sourcing](data/event-sourcing.md)
 
+### Data Access Patterns
+
+Patterns for how applications interact with persistent storage:
+
+- [Repository](data-access/repository.md) — Collection-like interface for domain objects
+- [Active Record](data-access/active-record.md) — Domain object with built-in persistence
+- [Data Mapper](data-access/data-mapper.md) — Separate mapping layer between objects and database
+- [Unit of Work](data-access/unit-of-work.md) — Coordinates atomic changes across multiple objects
+- [Gateway](data-access/gateway.md) — Thin SQL wrapper for tables and records
+
 ### Integration Patterns
 
 Patterns for connecting systems and services:
@@ -240,6 +250,18 @@ Patterns for keeping systems available under failure:
 - [Saga Pattern](resilience/saga-pattern.md)
 - [Bulkhead](resilience/bulkhead.md) — Nygard, 2007
 - [Retry Pattern](resilience/retry-pattern.md)
+
+### Presentation Patterns
+
+Patterns for structuring the user interface layer:
+
+- [Model-View-Controller (MVC)](presentation/mvc.md) — Reenskaug / Smalltalk-80, 1979
+- [Model-View-Presenter (MVP)](presentation/mvp.md) — Potel / Fowler, 1996+
+- [Model-View-ViewModel (MVVM)](presentation/mvvm.md) — Microsoft / Gossman, 2005
+- [Unidirectional Data Flow](presentation/unidirectional-data-flow.md) — Facebook / Redux, 2014–2015
+- [Model-View-Intent (MVI)](presentation/mvi.md) — Staltz / Dorfmann, 2015–2016
+- [Component-Based Architecture](presentation/component-based.md) — Web Components / React, 2011–2013
+- [Micro-frontends](presentation/micro-frontends.md) — ThoughtWorks / Geers, 2016–2020
 
 ---
 

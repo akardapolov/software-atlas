@@ -236,6 +236,8 @@ controller view: view.
 
 MVC became foundational for GUI frameworks across all platforms.
 
+→ [MVC Pattern](../../topics/architecture/presentation/mvc.md)
+
 ---
 
 ## Language Features

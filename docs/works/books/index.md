@@ -23,6 +23,7 @@ Foundational books in software development.
 | 1999 | Fowler | Refactoring | Design |
 | 2000 | Gosling | The Java Programming Language | Java |
 | 2002 | Beck | TDD by Example | Testing |
+| 2002 | Fowler | Patterns of Enterprise Application Architecture | Architecture, data access |
 | 2003 | Evans | Domain-Driven Design | Architecture |
 | 2003 | Martin | Agile Software Development: PPP | SOLID, agile |
 | 2004 | Feathers | Working Effectively with Legacy Code | Testing |

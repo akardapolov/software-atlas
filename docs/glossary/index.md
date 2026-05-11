@@ -24,6 +24,11 @@ Key terms and definitions used throughout Software Engineering Atlas.
 :   A set of values and principles for software development,
     formalised in the Agile Manifesto (2001).
 
+**Active Record**
+:   A pattern where a domain object encapsulates both data and
+    the logic to access the database (CRUD). The object saves,
+    loads, and deletes itself. Popularised by Rails.
+
 ## C
 
 **CAP Theorem**
@@ -45,6 +50,11 @@ Key terms and definitions used throughout Software Engineering Atlas.
 :   Command Query Responsibility Segregation — separating read and write models
     for improved performance and scalability in distributed systems.
 
+**Component-Based Architecture**
+:   Decomposing a UI into independent, reusable, self-contained components
+    that manage their own state and rendering. Popularised by React, Vue,
+    Angular, and Web Components.
+
 ## D
 
 **DbC (Design by Contract)**
@@ -56,6 +66,11 @@ Key terms and definitions used throughout Software Engineering Atlas.
 :   An approach to software design that centres the model on
     business domain. Introduced by Eric Evans (2003).
 
+**Data Mapper**
+:   A layer that moves data between in-memory objects and a
+    database while keeping them independent. Used by Hibernate,
+    Entity Framework, SQLAlchemy.
+
 ## B
 
 **B-Tree**
@@ -63,6 +78,14 @@ Key terms and definitions used throughout Software Engineering Atlas.
     Keeps data sorted and enables efficient insertion, deletion, and
     range queries. Used by most traditional relational databases
     (PostgreSQL, MySQL, SQL Server).
+
+## G
+
+**Gateway**
+:   A pattern that encapsulates access to an external system or
+    database table behind a simple interface. Table Data Gateway
+    provides one object per table; Row Data Gateway provides one
+    per record.
 
 ## H
 
@@ -108,6 +131,25 @@ Key terms and definitions used throughout Software Engineering Atlas.
 :   A UI architecture pattern separating data (Model), presentation
     (View), and input handling (Controller). Originated in Smalltalk-80.
 
+**MVP (Model-View-Presenter)**
+:   A UI pattern where a Presenter mediates all communication between
+    the passive View and the Model. The View contains no logic.
+
+**MVVM (Model-View-ViewModel)**
+:   A UI pattern using declarative data binding between the View and
+    a ViewModel that exposes data from the Model. Popular in WPF,
+    SwiftUI, Jetpack Compose, Vue, Angular.
+
+**MVI (Model-View-Intent)**
+:   A reactive UI pattern where the View emits Intents as a stream,
+    a Processor reduces them into state, and the View observes the
+    resulting state stream. Popular in Android with Jetpack Compose.
+
+**Micro-frontend**
+:   An independently deployable frontend module that composes with
+    other modules to form a complete web application. The frontend
+    analogue of microservices.
+
 ## O
 
 **OOP (Object-Oriented Programming)**
@@ -117,6 +159,12 @@ Key terms and definitions used throughout Software Engineering Atlas.
 **OSS (Open Source Software)**
 :   Software distributed under licenses that allow modification and
     redistribution. Many foundational tools (GCC, Git, Linux) are OSS.
+
+## P
+
+**Presenter**
+:   In MVP, the component that contains all presentation logic and
+    mediates between the passive View and the Model.
 
 ## N
 
@@ -151,6 +199,13 @@ Key terms and definitions used throughout Software Engineering Atlas.
 :   A concurrency primitive allowing atomic operations on shared memory.
     Key part of Clojure's concurrency model.
 
+## V
+
+**ViewModel**
+:   In MVVM, an abstraction of the View that exposes observable
+    properties and commands. The UI framework binds View elements
+    to ViewModel properties automatically.
+
 ## T
 
 **TDD (Test-Driven Development)**
@@ -161,3 +216,14 @@ Key terms and definitions used throughout Software Engineering Atlas.
 **Use Case**
 :   A description of how a user interacts with a system to achieve
     a goal. Used in requirements gathering and system design.
+
+**Unit of Work**
+:   A pattern that maintains a list of objects affected by a
+    business transaction and coordinates writing out changes
+    atomically. Introduced by Martin Fowler.
+
+**Unidirectional Data Flow**
+:   A UI architecture where all state changes follow a single
+    direction: actions are dispatched to a central store, which
+    updates state and notifies views to re-render. Redux, Flux,
+    Vuex, and NgRx implement this pattern.

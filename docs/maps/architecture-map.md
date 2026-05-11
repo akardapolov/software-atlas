@@ -202,6 +202,49 @@ flowchart LR
 | **Cons** | Cold starts, vendor lock-in |
 | **When to use** | Event-driven, sporadic workloads |
 
+### 🖥️ Presentation Patterns
+
+```mermaid
+flowchart LR
+    subgraph MVC["MVC (1979)"]
+        M["Model"]
+        V["View"]
+        C["Controller"]
+        M -->|notifies| V
+        C -->|updates| M
+    end
+
+    subgraph MVP["MVP (1996)"]
+        MP["Model"]
+        VP["View (passive)"]
+        P["Presenter"]
+        P -->|updates| VP
+        P -->|reads/writes| MP
+    end
+
+    subgraph MVVM["MVVM (2005)"]
+        MM["Model"]
+        VM["ViewModel"]
+        VV["View (declarative)"]
+        VM <-->|data binding| VV
+        VM -->|reads/writes| MM
+    end
+
+    MVC --> MVP
+    MVP --> MVVM
+
+    style MVC fill:#ffcdd2
+    style MVP fill:#fff9c4
+    style MVVM fill:#c8e6c9
+```
+
+| Aspect | MVC | MVP | MVVM |
+|--------|-----|-----|------|
+| **View role** | Observes Model directly | Passive, delegates to Presenter | Declarative, bound to ViewModel |
+| **Logic location** | Controller + View | Presenter | ViewModel |
+| **Testability** | Moderate | High | High |
+| **Best for** | Web frameworks | Android, test-heavy UIs | Modern declarative UI frameworks |
+
 ## Architecture Decision Framework
 
 ### Trade-offs Considerations

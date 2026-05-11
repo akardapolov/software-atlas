@@ -85,3 +85,6 @@ flowchart TD
 - [Hexagonal Architecture](hexagonal-architecture.md)
 - [Onion Architecture](onion-architecture.md)
 - [Clean Architecture](clean-architecture.md)
+- [Repository](../data-access/repository.md)
+- [Gateway](../data-access/gateway.md)
+- [Data Access Patterns](../data-access/index.md)
