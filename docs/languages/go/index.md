@@ -18,6 +18,7 @@
 2. [Historical Context](#historical-context)
 3. [Key Ideas](#key-ideas)
    - [Goroutines](#goroutines)
+   - [Scheduling Model](#scheduling-model)
    - [Channels (CSP)](#channels-csp)
    - [Error Handling](#error-handling)
    - [Interfaces](#interfaces)
@@ -150,8 +151,26 @@ result := <-ch  // Receive (blocks until available)
 **Why goroutines?**
 - **Lightweight** — 2KB stack vs ~1MB for OS thread
 - **Fast spawn** — thousands per goroutine per core
-- **Scheduled by runtime** — cooperative scheduling
+- **Scheduled by runtime** — preemptive since Go 1.14 (2020); was cooperative before
 - **Communicate via channels** — no shared memory access needed
+
+### Scheduling Model
+
+Go runtime implements an **M:N scheduler**: many goroutines (G) are multiplexed
+onto a smaller pool of OS threads (M), executed on logical processors (P).
+This lets a single Go process run millions of goroutines cheaply.
+
+The scheduling discipline has evolved:
+
+| Version | Year | Behaviour |
+|---|---|---|
+| Go ≤ 1.13 | 2009–2019 | **Cooperative** — yield only at function calls, channel ops, blocking syscalls. CPU-tight loops without function calls could starve other goroutines. |
+| Go ≥ 1.14 | 2020+ | **Preemptive** — runtime sends a signal (SIGURG on Unix) to interrupt a goroutine that has been running too long, even inside a tight loop. |
+
+In practice goroutines now behave much like preemptive OS threads, but with
+1000× less overhead per task.
+
+→ [Scheduling: Preemptive vs Cooperative](../../topics/concurrency/index.md#scheduling-preemptive-vs-cooperative)
 
 ### Channels (CSP)
 

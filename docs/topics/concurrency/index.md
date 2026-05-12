@@ -92,6 +92,63 @@ It changes how you write I/O-bound concurrent code:
 
 But it doesn't automatically solve shared-state issues; it just changes scheduling.
 
+## Scheduling: Preemptive vs Cooperative
+
+Scheduling is an **orthogonal axis** to shared-memory vs message-passing.
+The same CSP-style code can run on preemptive OS threads or on a cooperative
+event loop — these are independent design choices.
+
+### Preemptive
+
+The scheduler can take control away from a task **at any point** —
+typically via a timer interrupt or a runtime-level counter (reduction count).
+The running task does not have to cooperate.
+
+- **Pros** — fairness, no starvation from a "greedy" task, predictable latency
+- **Cons** — context switches are more expensive, memory barriers required,
+  more complex to implement
+- **Examples** — OS threads on Linux / Windows / macOS, Erlang BEAM processes
+  (reduction-based preemption), Go goroutines since 1.14 (2020)
+
+### Cooperative
+
+A task **yields control voluntarily** — at explicit `yield`, `await`, or
+when it makes a blocking I/O call. Between yield points the task runs uninterrupted.
+
+- **Pros** — cheap switches, simpler memory model, well-defined switch points
+- **Cons** — a single "greedy" CPU-bound task blocks everyone else;
+  requires programmer discipline
+- **Examples** — Simula coroutines (1967), classic Mac OS / Windows 3.x,
+  Python generators and `asyncio`, JavaScript event loop, Kotlin coroutines,
+  Java virtual threads, Go goroutines before 1.14
+
+### Where the Scheduler Lives
+
+The scheduler can sit at three different levels of the stack:
+
+| Level | Mechanism | Scheduling |
+|---|---|---|
+| **OS kernel** | Threads / processes (Linux CFS, Windows scheduler) | Preemptive |
+| **Language runtime** | Go goroutines, Erlang BEAM, JVM virtual threads, Kotlin coroutines | Mixed — preemptive runtime over user-space tasks, or cooperative continuations |
+| **User code** | Simula coroutines, Python generators, JS Promises, async tasks | Cooperative |
+
+A useful rule of thumb: *the lower the scheduler sits, the more preemptive it tends to be*.
+
+### Quick Comparison
+
+| Property | Preemptive | Cooperative |
+|---|---|---|
+| Switch point | Anywhere | Only at `yield` / `await` / blocking I/O |
+| Starvation risk | Low | High (one greedy task blocks all) |
+| Switch cost | Higher (full context save) | Lower (continuation only) |
+| Typical use | OS threads, fault-isolated runtimes | I/O-bound concurrency, lightweight tasks |
+
+→ [Simula coroutines](../../languages/simula/index.md) ·
+  [Erlang processes](../../languages/erlang/index.md) ·
+  [Go goroutines](../../languages/go/index.md) ·
+  [Java virtual threads](../../languages/java/index.md) ·
+  [Kotlin coroutines](../../languages/kotlin/index.md)
+
 ## A Practical Rule: Prefer Immutability + Explicit Boundaries
 
 A useful modern default:
@@ -114,8 +171,10 @@ This is compatible with:
 | 1978 | Hoare — CSP | Channels + process algebra |
 | 1978 | Lamport — logical clocks | Ordering without global time |
 | 1986 | Erlang begins | Industrial actor model |
+| 1995 | Windows 95 / NT preemptive | End of cooperative consumer OS era |
 | 2009 | Go | CSP for everyday developers |
 | 2014+ | async/await mainstream | Task concurrency everywhere |
+| 2020 | Go 1.14 fully preemptive runtime | User-space preemption matures |
 
 ## Further Reading
 

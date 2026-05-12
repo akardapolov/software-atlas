@@ -881,6 +881,26 @@ try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
 > Virtual threads make the traditional one-request-per-thread style viable
 > at much higher concurrency levels, especially for I/O-heavy workloads.
 
+#### Scheduling Model
+
+Java has **two distinct scheduling models** depending on which thread type you use:
+
+| Thread type | Mapping | Scheduler | Discipline |
+|---|---|---|---|
+| **Platform Thread** | 1:1 with OS thread | OS kernel | **Preemptive** — kernel can interrupt at any instruction |
+| **Virtual Thread** | M:N over carrier threads | JVM scheduler (ForkJoinPool) | **Cooperative** — yields at blocking points (park/unpark, I/O) |
+
+A virtual thread yields its carrier thread automatically whenever it would block
+(`Thread.sleep`, blocking I/O, `LockSupport.park`, `Object.wait`).
+Between such suspension points it runs uninterrupted on its carrier.
+
+**Practical consequence:** a CPU-bound loop without blocking calls inside a virtual
+thread **monopolises its carrier thread** — exactly the same trap as in any other
+cooperative model (Kotlin coroutines, Python asyncio). For CPU-heavy workloads,
+platform threads or `ForkJoinPool` are still the right tool.
+
+→ [Scheduling: Preemptive vs Cooperative](../../topics/concurrency/index.md#scheduling-preemptive-vs-cooperative)
+
 ---
 
 ### Thread States
