@@ -451,7 +451,7 @@ Saga: Book Flight + Book Hotel
 | **Saga** | Sequence of compensating transactions |
 | **Eventual consistency + reconciliation** | Accept temporary inconsistency, fix later |
 | **CRDTs** | Conflict-free merge for specific data types |
-| **Idempotent operations** | Retry-safe operations |
+| **[Idempotent operations](../distributed/idempotency.md)** | Retry-safe operations — applying an operation twice has the same effect as once |
 
 ## Consensus in Practice
 
@@ -551,6 +551,7 @@ Google's globally distributed database:
 
 - [Databases](../databases/index.md) — storage engines, data models, query languages (the foundation distributed systems build on)
 - [Concurrency](../concurrency/index.md) — shared-memory vs distributed
+- [Idempotency](../distributed/idempotency.md) — retry-safe operations in distributed systems
 - [Architecture & Modularity](../architecture/index.md) — microservices, system design
 - [Process](../process/index.md) — how teams build distributed systems
 - [Containers & Orchestration](../containers/index.md) — runtime substrate for distributed systems (Kubernetes uses etcd / Raft)

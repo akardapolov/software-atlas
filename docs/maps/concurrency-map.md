@@ -58,6 +58,7 @@ flowchart TD
 | 2015 | Rust 1.0 | Ownership-based concurrency safety |
 | 2017 | JavaScript async/await (ES2017) | Async in the browser and Node |
 | 2019 | Rust async/await (1.39) | Zero-cost futures |
+| 2023 | Java 21 — Virtual Threads | Blocking code becomes cheap |
 
 ---
 
@@ -280,6 +281,7 @@ const user = await fetchUser(123);
 | **Python** | 3.5 (2015) | Single-threaded event loop (asyncio) |
 | **Rust** | 1.39 (2019) | Pluggable executor (tokio, async-std) |
 | **Kotlin** | 1.3 (2018) | Coroutines + dispatchers |
+| **Java** | 21 (2023) | Virtual Threads — blocking code with async-level efficiency |
 
 > **Note:** Go's goroutines serve a similar purpose (cheap concurrent tasks)
 > but use a different mechanism — multiplexed green threads, not async/await syntax.

@@ -122,7 +122,7 @@ add 3 4 + add 3 4
 | **Testability** | No setup/teardown — just call the function and check the result |
 | **Reasoning** | Understand each function in isolation |
 | **Parallelism** | Pure functions can run in any order — no data races |
-| **Caching** | Same input = same output = safe to memoize |
+| **Memoization** | Same input = same output = [safe to memoize](./memoization.md) |
 | **Refactoring** | Substitution is always safe |
 
 ### 2. Immutability
@@ -435,6 +435,7 @@ managed by convention and architecture rather than the type system.
 | ADTs + pattern matching | Handle cases | `if/else` chains, `instanceof` |
 | `Option`/`Maybe` | Absence of value | Null checks |
 | `Result`/`Either` | Error handling | Try/catch, error codes |
+| `memoize` | Cache pure function results | Manual cache lookup |
 | Monads | Sequence effects | Imperative statements |
 
 ## Timeline
@@ -485,10 +486,12 @@ The approach argues that functional style reduces development cost by:
 
 ## Related Topics
 
+- [Memoization](./memoization.md) — caching results of pure functions
 - [Paradigms](../paradigms/index.md) — FP in the context of all paradigms
 - [Type Systems](../types/index.md) — how types support FP
 - [OOP & Design](../design/index.md) — contrast with OOP
 - [Concurrency](../concurrency/index.md) — FP's advantage for parallel code
+- [Idempotency](../distributed/idempotency.md) — purity vs idempotency
 
 ## Related Authors
 

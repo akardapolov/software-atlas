@@ -92,6 +92,15 @@ It changes how you write I/O-bound concurrent code:
 
 But it doesn't automatically solve shared-state issues; it just changes scheduling.
 
+### The Event Loop
+
+Many async/await systems (JavaScript, Python asyncio) run on a
+**single-threaded event loop**: tasks yield at `await` points, and the
+loop picks the next ready task. Between yields, a task runs
+uninterrupted. A CPU-bound task that never yields blocks everything.
+
+→ [Synchronous vs Asynchronous: Four Axes](./sync-async-axes.md)
+
 ## Scheduling: Preemptive vs Cooperative
 
 Scheduling is an **orthogonal axis** to shared-memory vs message-passing.
@@ -175,6 +184,8 @@ This is compatible with:
 | 2009 | Go | CSP for everyday developers |
 | 2014+ | async/await mainstream | Task concurrency everywhere |
 | 2020 | Go 1.14 fully preemptive runtime | User-space preemption matures |
+| 2022 | Java 19 — Structured Concurrency (preview) | Scoped parallel tasks |
+| 2023 | Java 21 — Virtual Threads GA | Blocking code becomes cheap |
 
 ## Further Reading
 
@@ -185,6 +196,7 @@ This is compatible with:
 
 ## Related Topics
 
+- [Synchronous vs Asynchronous: Four Axes](./sync-async-axes.md) — the four axes of execution models
 - [Distributed Systems](../distributed/index.md) — reliability, consensus, CAP
 - [Functional Programming](../functional/index.md) — immutability prevents data races
 - [Paradigms](../paradigms/index.md) — concurrency models in broader context

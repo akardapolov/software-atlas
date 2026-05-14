@@ -344,6 +344,7 @@ timeline
 | **Clojure**    | 2007 | Rich Hickey               | Functional, Lisp             | Dynamic, strong    | [→](docs/languages/clojure/)    | [→](examples/clojure/)    |
 | **Go**         | 2009 | Pike, Thompson, Griesemer | Imperative, concurrent (CSP) | Static, structural | [→](docs/languages/go/)         | [→](examples/go/)         |
 | **Rust**       | 2010 | Graydon Hoare             | Multi-paradigm               | Static, affine     | [→](docs/languages/rust/)       | [→](examples/rust/)       |
+| **Kotlin**     | 2011 | JetBrains (Breslav)       | Multi-paradigm, concurrent   | Static, inferred   | [→](docs/languages/kotlin/)     | —                         |
 | **TypeScript** | 2012 | Anders Hejlsberg          | Multi-paradigm               | Static, structural | [→](docs/languages/typescript/) | [→](examples/typescript/) |
 
 > 📊 **Visual:** [Language genealogy map](docs/maps/languages-genealogy.md)
