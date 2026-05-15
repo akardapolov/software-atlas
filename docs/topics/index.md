@@ -18,6 +18,7 @@ from foundational concepts to modern practice.
 | 9  | [Distributed Systems](distributed/index.md)        | How we scale across machines       | Clocks, CAP, consensus, streaming      |
 | 10 | [Containers & Orchestration](containers/index.md)  | How we package and run workloads   | Docker, Kubernetes, OCI, runtimes      |
 | 11 | [Databases](databases/index.md)                    | How we store and query structured data | Relational, NoSQL, transactions, storage engines |
+| 12 | [Developer Tools](dev-tools/index.md)              | Tools developers use daily             | IDE, HTTP clients, terminal, debuggers           |
 
 ## Cross-cutting Themes
 

@@ -60,6 +60,8 @@ Topic pages collect related ideas into one domain. They are meant for focused st
 
 **Databases** covers how we store, structure, and query data — from Codd's relational model through SQL, NoSQL data models (document, graph, key-value), storage engines (B-trees, LSM-trees), transactions and isolation levels, indexing strategies, and the distributed database era (Dynamo, Spanner, NewSQL). It connects to distributed systems through replication and consensus, and to architecture through data patterns like CQRS and Event Sourcing.
 
+**Developer Tools** covers the software developers use every day to write, test, and interact with code — from text editors and IDEs through HTTP clients and API testing tools, terminal multiplexers and shells, to debuggers and profilers. These tools shape developer productivity and workflow ergonomics as much as language choice or architecture decisions.
+
 ---
 
 ## Languages
