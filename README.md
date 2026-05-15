@@ -17,7 +17,7 @@ It is **not** a textbook. It is a **navigable map**:
 - **Authors** — who shaped the field, with biography cards
 - **Works** — papers, books, and talks that became canon
 - **Languages** — programming languages as embodiments of ideas
-- **Topics** — paradigms, architecture, design, types, FP, testing, delivery, distributed systems
+- **Topics** — paradigms, architecture, design, types, FP, testing, delivery, distributed systems, developer tools
 - **Examples** — runnable, comparable code in multiple languages
 - **Maps** — visual diagrams showing how everything connects
 - **Reading paths** — guided sequences for deep dives
@@ -321,6 +321,7 @@ timeline
 | 10 | [**Distributed Systems**](docs/topics/distributed/)                    | Clocks, CAP, consensus, consistency, streaming                         | How we scale across machines       |
 | 11 | [**Containers & Orchestration**](docs/topics/containers/)              | Docker, Podman, Kubernetes, OCI, runtimes                              | How we package and run workloads   |
 | 12 | [**Databases**](docs/topics/databases/)                                | Relational model, transactions, NoSQL, OLTP/OLAP, indexing             | How we store and query data        |
+| 13 | [**Developer Tools**](docs/topics/dev-tools/)                          | IDE, HTTP clients, terminal, debuggers                                 | Tools developers use every day     |
 
 ---
 
