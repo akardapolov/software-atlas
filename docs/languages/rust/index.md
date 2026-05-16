@@ -18,18 +18,30 @@
 2. [Historical Context](#historical-context)
 3. [Key Ideas](#key-ideas)
    - [Ownership](#ownership)
+     - [Drop Flags](#drop-flags)
    - [Borrowing and References](#borrowing-and-references)
+     - [Aliasing Models: Stacked vs. Tree Borrows](#aliasing-models-stacked-vs-tree-borrows)
+     - [Strict Provenance](#strict-provenance)
    - [Lifetimes](#lifetimes)
    - [Zero-Cost Abstractions](#zero-cost-abstractions)
+     - [Compilation Pipeline](#compilation-pipeline)
+     - [MIR: Basic Blocks and the Borrow Checker](#mir-basic-blocks-and-the-borrow-checker)
    - [Pattern Matching](#pattern-matching)
 4. [Core Features](#core-features)
    - [Structs and Enums](#structs-and-enums)
+     - [Niche Optimization](#niche-optimization)
    - [Traits](#traits)
    - [Error Handling](#error-handling)
    - [Generics](#generics)
+     - [Monomorphization](#monomorphization)
    - [Iterators and Closures](#iterators-and-closures)
    - [Concurrency](#concurrency)
 5. [Modern Rust Features](#modern-rust-features)
+   - [Async/Await](#asyncawait-rust-139)
+     - [Compiler Lowering: async → state machine](#compiler-lowering-async-state-machine)
+   - [Const Generics](#const-generics-rust-151)
+   - [Const Evaluation](#const-evaluation)
+   - [Let-Else](#let-else-rust-165)
 6. [Ecosystem and Tools](#ecosystem-and-tools)
 7. [Influence](#influence)
 8. [Strengths and Weaknesses](#strengths-and-weaknesses)
@@ -155,6 +167,52 @@ println!("{}", x);  // OK
 2. There can only be one owner at a time
 3. When the owner goes out of scope, the value is dropped
 
+Dropping is governed by the `Drop` trait, whose `drop` method runs automatically
+when a value goes out of scope. For composite values where ownership of fields
+can be transferred independently, the compiler tracks **drop flags** to decide
+which fields still need dropping at scope exit.
+
+#### Drop Flags
+
+Partial moves mean `drop` cannot always be decided statically for every field.
+The compiler inserts hidden boolean **drop flags** into the stack frame (outside
+`size_of`); at scope exit each field's flag is consulted, and LLVM usually
+elides the check entirely when the result is provable.
+
+```mermaid
+flowchart LR
+    subgraph STACK["Stack frame"]
+        VAR["Variable b: { name: String, payload: Vec }"]
+        FLAGS["Drop flags — hidden bitmask,<br/>not included in size_of"]
+    end
+
+    subgraph CHECK["Check on scope exit"]
+        Q1{"flag name == 1?"}
+        Q2{"flag payload == 1?"}
+        DN["drop(name)"]
+        DP["drop(payload)"]
+        SKIP["skip"]
+    end
+
+    VAR --- FLAGS
+    FLAGS --> Q1
+    FLAGS --> Q2
+    Q1 -->|"yes"| DN
+    Q1 -->|"no"| SKIP
+    Q2 -->|"yes"| DP
+    Q2 -->|"no"| SKIP
+
+    style STACK fill:#fff3e0,stroke:#e07b39,color:#000
+    style CHECK fill:#fff3e0,stroke:#e07b39,color:#000
+    style VAR fill:#ffffff,stroke:#e07b39,color:#000
+    style FLAGS fill:#fff9c4,stroke:#fbc02d,color:#000
+    style Q1 fill:#fff9c4,stroke:#fbc02d,color:#000
+    style Q2 fill:#fff9c4,stroke:#fbc02d,color:#000
+    style DN fill:#e8f5e9,stroke:#4caf50,color:#1b5e20
+    style DP fill:#e8f5e9,stroke:#4caf50,color:#1b5e20
+    style SKIP fill:#fafafa,stroke:#9e9e9e,color:#000
+```
+
 ### Borrowing and References
 
 You can **borrow** a value without taking ownership:
@@ -176,6 +234,104 @@ r1.push_str(" world");
 **Borrow Checker Rules:**
 - Any number of immutable borrows OR exactly one mutable borrow
 - Borrows must last no longer than the owner
+
+#### Aliasing Models: Stacked vs. Tree Borrows
+
+Rust's aliasing rules give LLVM `noalias` annotations so it can optimize
+aggressively (similar to C's `restrict`, but stricter). The original
+**Stacked Borrows** model proved too strict for legitimate raw-pointer
+code, so Rust is migrating to the more permissive **Tree Borrows** model
+based on a tree of borrow provenances.
+
+```mermaid
+flowchart TD
+    subgraph SB["Stacked Borrows"]
+        SB1["Each reference gets a tag,<br/>tags live on a stack"]
+        SB2["New &amp;mut → push tag on top"]
+        SB3["Old tag used over new → UB"]
+        SB_LIMIT["Too strict: forbids legal<br/>patterns with raw pointers"]
+        SB1 --> SB2 --> SB3 --> SB_LIMIT
+    end
+
+    subgraph TB["Tree Borrows"]
+        TB1["Each reference is a node<br/>in a provenance tree"]
+        TB2["New &amp;mut → child node,<br/>parent is not invalidated"]
+        TB3["Access through parent allowed<br/>if child is inactive"]
+        TB_ADV["Permits self-referential via Pin,<br/>intrusive lists"]
+        TB1 --> TB2 --> TB3 --> TB_ADV
+    end
+
+    subgraph LLVM_ALIAS["What this gives LLVM"]
+        NOALIAS["noalias on parameters —<br/>references do not overlap"]
+        RESTRICT["Aggressive optimizations,<br/>like C's restrict but stricter"]
+        NOALIAS --> RESTRICT
+    end
+
+    SB_LIMIT -->|"replaced by"| TB
+    TB_ADV --> NOALIAS
+
+    style SB fill:#fff3e0,stroke:#e07b39,color:#000
+    style TB fill:#fff3e0,stroke:#e07b39,color:#000
+    style LLVM_ALIAS fill:#fff3e0,stroke:#e07b39,color:#000
+    style SB1 fill:#ffebee,stroke:#f44336,color:#b71c1c
+    style SB2 fill:#ffebee,stroke:#f44336,color:#b71c1c
+    style SB3 fill:#ffebee,stroke:#f44336,color:#b71c1c
+    style SB_LIMIT fill:#ffebee,stroke:#f44336,color:#b71c1c
+    style TB1 fill:#e8f5e9,stroke:#4caf50,color:#1b5e20
+    style TB2 fill:#e8f5e9,stroke:#4caf50,color:#1b5e20
+    style TB3 fill:#e8f5e9,stroke:#4caf50,color:#1b5e20
+    style TB_ADV fill:#e8f5e9,stroke:#4caf50,color:#1b5e20
+    style NOALIAS fill:#fafafa,stroke:#9e9e9e,color:#000
+    style RESTRICT fill:#fafafa,stroke:#9e9e9e,color:#000
+```
+
+#### Strict Provenance
+
+Casting a pointer to `usize` and back loses **provenance** and can become
+silent UB under `-O2` because LLVM's alias analysis assumes that distinct
+provenances never refer to the same object. **Strict Provenance** replaces
+such casts with `.addr()` / `.with_addr()`, keeping provenance attached
+so alias analysis stays sound.
+
+```mermaid
+flowchart LR
+    subgraph OLD["Old way — risk of UB"]
+        OP1["let p: *const T = &amp;x as *const T"]
+        OP2["let n = p as usize<br/>(provenance lost)"]
+        OP3["let q = (n+4) as *const T<br/>(no provenance, UB on deref)"]
+        OP1 --> OP2 --> OP3
+    end
+
+    subgraph NEW["Strict Provenance API"]
+        NP1["let p: *const T = &amp;x as *const T"]
+        NP2["let addr = p.addr()<br/>(address only)"]
+        NP3["let q = p.with_addr(addr+4)<br/>(provenance preserved)"]
+        NP1 --> NP2 --> NP3
+    end
+
+    subgraph WHY["Why LLVM cares"]
+        AA["Alias Analysis:<br/>different provenance = different objects"]
+        OPT["GVN and LICM reorder<br/>reads and writes"]
+        BUG["Broken usize cast =<br/>hidden UB only at -O2"]
+        AA --> OPT --> BUG
+    end
+
+    OP3 -.->|"causes"| BUG
+    NP3 -.->|"protects from"| BUG
+
+    style OLD fill:#fff3e0,stroke:#e07b39,color:#000
+    style NEW fill:#fff3e0,stroke:#e07b39,color:#000
+    style WHY fill:#fff3e0,stroke:#e07b39,color:#000
+    style OP1 fill:#ffebee,stroke:#f44336,color:#b71c1c
+    style OP2 fill:#ffebee,stroke:#f44336,color:#b71c1c
+    style OP3 fill:#ffebee,stroke:#f44336,color:#b71c1c
+    style NP1 fill:#e8f5e9,stroke:#4caf50,color:#1b5e20
+    style NP2 fill:#e8f5e9,stroke:#4caf50,color:#1b5e20
+    style NP3 fill:#e8f5e9,stroke:#4caf50,color:#1b5e20
+    style AA fill:#fafafa,stroke:#9e9e9e,color:#000
+    style OPT fill:#fafafa,stroke:#9e9e9e,color:#000
+    style BUG fill:#ffebee,stroke:#f44336,color:#b71c1c
+```
 
 ### Lifetimes
 
@@ -219,6 +375,127 @@ fn sum_squares(numbers: &[i32]) -> i32 {
 fn identity<T>(x: T) -> T { x }
 // Compiles to specialized versions for each type used
 ```
+
+#### Compilation Pipeline
+
+Rust compiles through several well-separated stages. The frontend lowers
+source to HIR and MIR; the borrow checker, const evaluator and drop-flag
+insertion all run on MIR; LLVM then optimizes and emits a native binary.
+MIRI is a separate interpreter over MIR used in tests to catch undefined
+behavior that the borrow checker cannot.
+
+```mermaid
+flowchart TD
+    subgraph RUST["🦀 RUST COMPILER PATH"]
+        R1["📄 main.rs<br/>source code file"]
+        R2["🔤 LEXER / TOKENIZER<br/>text → tokens<br/>─────────────────<br/>fn main ( ) { let x = 1 + 1 ; }"]
+        R3["🌳 PARSER → AST<br/>Abstract Syntax Tree<br/>─────────────────<br/>FnDef → LetStmt → BinOp +"]
+        R4["⬆️ HIR<br/>High-level IR<br/>─────────────────<br/>• macro expansion<br/>  vec![] → Vec::new + push<br/>• desugaring<br/>  for → loop + match<br/>  ? → match Ok/Err"]
+        R5["⚙️ MIR<br/>Mid-level IR<br/>─────────────────<br/>• only primitive steps<br/>• no loops — only goto<br/>• basic blocks"]
+        R5A["🔒 BORROW CHECKER<br/>Non-Lexical Lifetimes<br/>─────────────────<br/>• ownership<br/>• lifetimes<br/>• borrowing rules"]
+        R5B["📐 CONST EVALUATOR<br/>─────────────────<br/>fib(30) → 832040<br/>computed here"]
+        R5C["🚩 DROP FLAGS<br/>─────────────────<br/>inserts flags<br/>for what and when to drop"]
+        R5D["🔬 MIRI<br/>cargo miri run<br/>─────────────────<br/>interprets MIR<br/>catches UB at test time"]
+        R6["📦 LLVM IR<br/>─────────────────<br/>• noalias from Stacked Borrows<br/>• Niche Opt: Option‹&amp;T› = &amp;T<br/>• monomorphization of generics"]
+        R7["⚡ LLVM OPTIMIZER<br/>─────────────────<br/>• constant folding: 1+1 → 2<br/>• inlining<br/>• dead code elimination<br/>• vectorization → SIMD"]
+        R8["🖥️ CODEGEN<br/>─────────────────<br/>x86_64 / ARM64 / WASM"]
+        R9["✅ binary<br/>./main<br/>native, no runtime"]
+    end
+
+    R1 --> R2 --> R3 --> R4 --> R5
+    R5 --- R5A
+    R5 --- R5B
+    R5 --- R5C
+    R5 -.- R5D
+    R5 --> R6 --> R7 --> R8 --> R9
+
+    style RUST fill:#fff3e0,stroke:#e07b39,color:#000
+    style R1  fill:#ffffff,stroke:#e07b39,color:#000
+    style R2  fill:#fafafa,stroke:#9e9e9e,color:#000
+    style R3  fill:#fafafa,stroke:#9e9e9e,color:#000
+    style R4  fill:#fafafa,stroke:#9e9e9e,color:#000
+    style R5  fill:#fff9c4,stroke:#fbc02d,color:#000
+    style R5A fill:#e8f5e9,stroke:#4caf50,color:#1b5e20
+    style R5B fill:#e8f5e9,stroke:#4caf50,color:#1b5e20
+    style R5C fill:#e8f5e9,stroke:#4caf50,color:#1b5e20
+    style R5D fill:#ffebee,stroke:#f44336,color:#b71c1c
+    style R6  fill:#fafafa,stroke:#9e9e9e,color:#000
+    style R7  fill:#fafafa,stroke:#9e9e9e,color:#000
+    style R8  fill:#fafafa,stroke:#9e9e9e,color:#000
+    style R9  fill:#e8f5e9,stroke:#4caf50,color:#1b5e20
+```
+
+#### MIR: Basic Blocks and the Borrow Checker
+
+MIR is a control-flow graph of **basic blocks**, each ending in an explicit
+terminator (`goto`, `switchInt`, `return`, `drop`). A `while` loop becomes
+four blocks; the borrow checker reasons over this graph, which is exactly
+why **NLL** (Non-Lexical Lifetimes) accepts patterns the old AST-level
+checker rejected.
+
+```rust
+const fn fib(n: u32) -> u64 {
+    let (mut a, mut b) = (0u64, 1u64);
+    let mut i = 0;
+    while i < n { let t = a + b; a = b; b = t; i += 1; }
+    a
+}
+```
+
+```mermaid
+flowchart TD
+    subgraph BB0["BB0 — entry"]
+        S0["a = 0u64"]
+        S1["b = 1u64"]
+        S2["i = 0u32"]
+        T0["goto BB1"]
+        S0 --> S1 --> S2 --> T0
+    end
+
+    subgraph BB1["BB1 — loop condition"]
+        S3["cond = i &lt; n"]
+        T1["switchInt(cond):<br/>true → BB2, false → BB3"]
+        S3 --> T1
+    end
+
+    subgraph BB2["BB2 — loop body"]
+        S4["t = a + b"]
+        S5["a = b"]
+        S6["b = t"]
+        S7["i = i + 1"]
+        T2["goto BB1"]
+        S4 --> S5 --> S6 --> S7 --> T2
+    end
+
+    subgraph BB3["BB3 — exit"]
+        T3["return a"]
+    end
+
+    T0 --> BB1
+    T1 -->|"true"| BB2
+    T1 -->|"false"| BB3
+    T2 --> BB1
+
+    style BB0 fill:#fff3e0,stroke:#e07b39,color:#000
+    style BB1 fill:#fff3e0,stroke:#e07b39,color:#000
+    style BB2 fill:#fff3e0,stroke:#e07b39,color:#000
+    style BB3 fill:#fff3e0,stroke:#e07b39,color:#000
+    style S0 fill:#ffffff,stroke:#e07b39,color:#000
+    style S1 fill:#ffffff,stroke:#e07b39,color:#000
+    style S2 fill:#ffffff,stroke:#e07b39,color:#000
+    style T0 fill:#fafafa,stroke:#9e9e9e,color:#000
+    style S3 fill:#fff9c4,stroke:#fbc02d,color:#000
+    style T1 fill:#fff9c4,stroke:#fbc02d,color:#000
+    style S4 fill:#fff9c4,stroke:#fbc02d,color:#000
+    style S5 fill:#fff9c4,stroke:#fbc02d,color:#000
+    style S6 fill:#fff9c4,stroke:#fbc02d,color:#000
+    style S7 fill:#fff9c4,stroke:#fbc02d,color:#000
+    style T2 fill:#fafafa,stroke:#9e9e9e,color:#000
+    style T3 fill:#e8f5e9,stroke:#4caf50,color:#1b5e20
+```
+
+After borrow checking, MIR is lowered to LLVM IR where the same graph
+structure appears as `br`, `switch` and `ret` instructions.
 
 ### Pattern Matching
 
@@ -295,6 +572,84 @@ impl Option<i32> {
         }
     }
 }
+```
+
+#### Niche Optimization
+
+Rust enums store their discriminant in unused bit patterns ("niches") of
+their payload whenever possible. The result: `Option<&T>` is the size of
+one pointer (`None` is the null address), and `Option<NonZeroU8>` is one
+byte. The same trick stacks recursively — `Option<Option<bool>>` still
+fits in a single byte.
+
+```mermaid
+flowchart LR
+    subgraph TYPES["Type and its niche"]
+        REF["&amp;T — no null address,<br/>niche = 0x0"]
+        NZU8["NonZeroU8 — range 1..=255,<br/>niche = 0"]
+        BOOL["bool — values 0 and 1,<br/>niche = 2..=255"]
+        CHAR["char — valid 0..=0x10FFFF,<br/>niche = the rest"]
+    end
+
+    subgraph WRAP["Option without discriminant"]
+        O_REF["Option&lt;&amp;T&gt; = 1 pointer,<br/>None = 0x0"]
+        O_NZU8["Option&lt;NonZeroU8&gt; = 1 byte,<br/>None = 0"]
+        O_BOOL["Option&lt;bool&gt; = 1 byte,<br/>None = 2"]
+    end
+
+    subgraph NESTED["Nesting"]
+        OO_BOOL["Option&lt;Option&lt;bool&gt;&gt; = 1 byte,<br/>None-outer = 3, None-inner = 2"]
+        RES["Result&lt;Option&lt;&amp;T&gt;, ()&gt; = 1 pointer,<br/>Err = 1"]
+    end
+
+    REF --> O_REF
+    NZU8 --> O_NZU8
+    BOOL --> O_BOOL
+    O_BOOL --> OO_BOOL
+    O_REF --> RES
+
+    style TYPES fill:#fff3e0,stroke:#e07b39,color:#000
+    style WRAP fill:#fff3e0,stroke:#e07b39,color:#000
+    style NESTED fill:#fff3e0,stroke:#e07b39,color:#000
+    style REF fill:#ffffff,stroke:#e07b39,color:#000
+    style NZU8 fill:#ffffff,stroke:#e07b39,color:#000
+    style BOOL fill:#ffffff,stroke:#e07b39,color:#000
+    style CHAR fill:#ffffff,stroke:#e07b39,color:#000
+    style O_REF fill:#fff9c4,stroke:#fbc02d,color:#000
+    style O_NZU8 fill:#fff9c4,stroke:#fbc02d,color:#000
+    style O_BOOL fill:#fff9c4,stroke:#fbc02d,color:#000
+    style OO_BOOL fill:#e8f5e9,stroke:#4caf50,color:#1b5e20
+    style RES fill:#e8f5e9,stroke:#4caf50,color:#1b5e20
+```
+
+Across crate boundaries the compiler treats foreign layouts as **unstable**,
+so niche optimization only applies when the outer enum has variants with
+no payload. A wrapper that adds a non-trivial variant pays a separate
+discriminant byte instead.
+
+```mermaid
+flowchart TD
+    subgraph CRATE_A["Crate A"]
+        INNER["enum Inner { A, B }<br/>unstable layout, niche 2..=255"]
+    end
+
+    subgraph CRATE_B["Crate B"]
+        OUTER["enum Outer { V1(Inner), V2(Inner) }"]
+        RESULT["Size = 2 bytes,<br/>separate discriminant,<br/>compiler is conservative"]
+        OUTER2["enum Outer2 { V1, V2(Inner) }"]
+        RESULT2["Size = 1 byte,<br/>V1 = value 2 in Inner's byte"]
+    end
+
+    INNER --> OUTER --> RESULT
+    INNER --> OUTER2 --> RESULT2
+
+    style CRATE_A fill:#fff3e0,stroke:#e07b39,color:#000
+    style CRATE_B fill:#fff3e0,stroke:#e07b39,color:#000
+    style INNER fill:#ffffff,stroke:#e07b39,color:#000
+    style OUTER fill:#fafafa,stroke:#9e9e9e,color:#000
+    style OUTER2 fill:#fafafa,stroke:#9e9e9e,color:#000
+    style RESULT fill:#ffebee,stroke:#f44336,color:#b71c1c
+    style RESULT2 fill:#e8f5e9,stroke:#4caf50,color:#1b5e20
 ```
 
 ### Traits
@@ -429,6 +784,36 @@ trait StreamingIterator {
 }
 ```
 
+#### Monomorphization
+
+Every concrete use of a generic produces a specialized copy: `process<i32>`,
+`process<String>`, `process<f64>`. When the type parameter is unused in
+the body, **polymorphization** collapses copies; **share-generics** lets
+downstream crates reuse upstream instantiations to fight binary bloat.
+
+```mermaid
+flowchart TD
+    GEN["fn process&lt;T&gt;(x: T)<br/>one function in source"]
+
+    M1["process_i32(x: i32)"]
+    M2["process_String(x: String)"]
+    M3["process_f64(x: f64)"]
+
+    POLY["polymorphization:<br/>T unused in body —<br/>one copy for all"]
+    SHARE["share-generics:<br/>crates reuse each<br/>other's instantiations"]
+
+    GEN --> M1 & M2 & M3
+    M1 & M2 & M3 -->|"T not needed in body"| POLY
+    M1 & M2 & M3 -->|"across crates"| SHARE
+
+    style GEN fill:#ffffff,stroke:#e07b39,color:#000
+    style M1 fill:#fafafa,stroke:#9e9e9e,color:#000
+    style M2 fill:#fafafa,stroke:#9e9e9e,color:#000
+    style M3 fill:#fafafa,stroke:#9e9e9e,color:#000
+    style POLY fill:#fff9c4,stroke:#fbc02d,color:#000
+    style SHARE fill:#fff9c4,stroke:#fbc02d,color:#000
+```
+
 ### Iterators and Closures
 
 ```rust
@@ -521,6 +906,58 @@ async fn main() {
 }
 ```
 
+#### Compiler Lowering: async → state machine
+
+`async fn` is compiled into a state-machine enum implementing
+`Future::poll`. Locals that live across `.await` become enum fields,
+which is why a future holding a 1 KB stack buffer is itself at least
+1 KB; non-overlapping lifetimes can share a slot, and `Pin` keeps the
+address stable so self-references in the enum remain valid.
+
+```mermaid
+flowchart LR
+    subgraph ASYNC_SRC["async fn big()"]
+        SRC2["let buf = [0u8; 1024];<br/>small().await;<br/>println!(buf.len())"]
+    end
+
+    subgraph TRANSFORM["Compiler expands into enum"]
+        E0["State0 — start"]
+        E1["State1 — { buf: 1024 B, small_fut }<br/>lives across .await"]
+        E2["State2 — { buf }<br/>after small returns"]
+        EDONE["Done"]
+        E0 --> E1 --> E2 --> EDONE
+    end
+
+    subgraph POLL["impl Future"]
+        POLL_FN["fn poll(Pin&lt;&amp;mut Self&gt;, cx):<br/>match self.state { ... }"]
+    end
+
+    subgraph SIZE["Future size"]
+        BIG_SIZE["size_of &gt; 1024 B —<br/>buf sits inside the enum"]
+        OPT_LAY["generator layout opt:<br/>non-overlapping lifetimes<br/>share a slot"]
+        BOX_FUT["Box&lt;dyn Future&gt; pins the<br/>address — required for Pin"]
+    end
+
+    SRC2 --> E0
+    TRANSFORM --> POLL_FN
+    POLL_FN --> BIG_SIZE --> OPT_LAY
+    POLL_FN --> BOX_FUT
+
+    style ASYNC_SRC fill:#fff3e0,stroke:#e07b39,color:#000
+    style TRANSFORM fill:#fff3e0,stroke:#e07b39,color:#000
+    style POLL fill:#fff3e0,stroke:#e07b39,color:#000
+    style SIZE fill:#fff3e0,stroke:#e07b39,color:#000
+    style SRC2 fill:#ffffff,stroke:#e07b39,color:#000
+    style E0 fill:#fafafa,stroke:#9e9e9e,color:#000
+    style E1 fill:#fff9c4,stroke:#fbc02d,color:#000
+    style E2 fill:#fff9c4,stroke:#fbc02d,color:#000
+    style EDONE fill:#e8f5e9,stroke:#4caf50,color:#1b5e20
+    style POLL_FN fill:#fff9c4,stroke:#fbc02d,color:#000
+    style BIG_SIZE fill:#fafafa,stroke:#9e9e9e,color:#000
+    style OPT_LAY fill:#fafafa,stroke:#9e9e9e,color:#000
+    style BOX_FUT fill:#fafafa,stroke:#9e9e9e,color:#000
+```
+
 ### Const Generics (Rust 1.51+)
 
 ```rust
@@ -535,6 +972,50 @@ impl<T: Default, const N: usize> Default for Array<T, N> {
         }
     }
 }
+```
+
+### Const Evaluation
+
+`const fn` is executed at compile time by a **MIR interpreter** with its
+own memory model and UB checks. The interpreter walks the same basic-block
+graph used by codegen (see [MIR: Basic Blocks](#mir-basic-blocks-and-the-borrow-checker)
+above), then emits the result as a constant directly into LLVM IR.
+
+```mermaid
+flowchart TD
+    subgraph MIR_LEVEL["MIR graph of the function"]
+        BB0_C["BB0: a=0, b=1, i=0, goto BB1"]
+        BB1_C["BB1: cond = i &lt; n,<br/>switchInt → BB2 / BB3"]
+        BB2_C["BB2: t=a+b; a=b; b=t;<br/>i+=1; goto BB1"]
+        BB3_C["BB3: return a"]
+
+        BB0_C --> BB1_C
+        BB1_C -->|"true"| BB2_C
+        BB1_C -->|"false"| BB3_C
+        BB2_C --> BB1_C
+    end
+
+    subgraph CONST_VM["Const Evaluator"]
+        VM["MIR interpreter —<br/>executes rather than compiles"]
+        MEM["Memory model, UB checks,<br/>own allocator"]
+        OUT["Result: FIB30 = 832040u64"]
+
+        VM --> MEM --> OUT
+    end
+
+    BB3_C -->|"const fn —<br/>goes to interpreter"| VM
+    OUT -.->|"embedded as constant<br/>in LLVM IR"| LLVM_IR_C["LLVM IR"]
+
+    style MIR_LEVEL fill:#fff3e0,stroke:#e07b39,color:#000
+    style CONST_VM fill:#fff3e0,stroke:#e07b39,color:#000
+    style BB0_C fill:#fff9c4,stroke:#fbc02d,color:#000
+    style BB1_C fill:#fff9c4,stroke:#fbc02d,color:#000
+    style BB2_C fill:#fff9c4,stroke:#fbc02d,color:#000
+    style BB3_C fill:#fff9c4,stroke:#fbc02d,color:#000
+    style VM fill:#e8f5e9,stroke:#4caf50,color:#1b5e20
+    style MEM fill:#e8f5e9,stroke:#4caf50,color:#1b5e20
+    style OUT fill:#e8f5e9,stroke:#4caf50,color:#1b5e20
+    style LLVM_IR_C fill:#fafafa,stroke:#9e9e9e,color:#000
 ```
 
 ### Let-Else (Rust 1.65+)
@@ -553,6 +1034,7 @@ let Some(x) = opt else { return };
 | **rustup** | Toolchain installer |
 | **rustfmt** | Code formatter |
 | **clippy** | Linter with suggestions |
+| **miri** | MIR interpreter, detects UB at test time (`cargo miri run`) |
 | **rust-analyzer** | Language server for IDEs |
 
 ```bash
