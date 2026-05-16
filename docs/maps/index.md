@@ -265,7 +265,7 @@ flowchart TB
     Hickey --> Bernhardt
   end
 
-  subgraph PROC["Process and Testing"]
+  subgraph PROC["Engineering Practices (Process · Testing)"]
     NATO68["NATO conf 1968\nSoftware Engineering"]
     Royce["Royce 1970\nPhased lifecycle"]
     Deming["Deming 1982\nQuality / PDCA"]

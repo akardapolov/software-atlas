@@ -134,5 +134,6 @@ Mentioned for context — full pages not included.
 - [Containers & Orchestration](../../containers/index.md) — Jib (Maven/Gradle plugin) builds OCI images without a Docker daemon; multi-stage Dockerfiles often invoke a build tool
 - [Process Map](../../../maps/process-map.md#build-tools-evolution) — historical view of how build tools evolved
 - [Java](../../../languages/java/index.md) — Maven and Gradle are the JVM ecosystem's defaults
-- [Process & Testing](../index.md) — the surrounding chapter on methodologies, testing, observability
+- [Process](../index.md) — the surrounding chapter on methodologies, CI/CD, and observability
+- [Testing](../../testing/index.md) — TDD, the pyramid, property-based testing
 </content>

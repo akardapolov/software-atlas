@@ -313,4 +313,4 @@ consistency models, and streaming — see [Distributed Systems](../distributed/i
 - [Architecture & Modularity](../architecture/index.md) — data patterns (CQRS, Event Sourcing)
 - [Concurrency](../concurrency/index.md) — locking, serialisability
 - [Containers & Orchestration](../containers/index.md) — operational substrate for stateful workloads
-- [Process & Testing](../process/index.md) — CI/CD for schema changes
+- [Process](../process/index.md) — CI/CD for schema changes

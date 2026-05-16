@@ -285,6 +285,33 @@ class InsufficientFundsException extends RuntimeException {
 }
 ```
 
+#### Exception in catch block
+
+An exception thrown inside a `catch` block **silently replaces** the original
+exception — the primary cause is lost from the stack trace.
+
+> In production systems, exception handling code itself may fail
+> (logging, cleanup, metrics, network calls). Preserving the original
+> exception is often critical for debugging.
+
+Use `addSuppressed()` to preserve both:
+
+```java
+try {
+    riskyOperation();
+} catch (RuntimeException primary) {
+    try {
+        cleanup();
+    } catch (RuntimeException secondary) {
+        primary.addSuppressed(secondary);  // attach, don't lose
+        throw primary;
+    }
+}
+```
+
+Try-with-resources handles this automatically — exceptions from `close()`
+become suppressed exceptions on the primary.
+
 ---
 
 ## Key Features In Depth
@@ -2263,7 +2290,8 @@ See [`examples/java/`](../../../examples/java/index.md) for runnable code:
 - [Type Systems](../../topics/types/index.md) — static nominal typing, generics, type erasure
 - [Architecture](../../topics/architecture/index.md) — Java in enterprise, DDD, microservices
 - [Concurrency](../../topics/concurrency/index.md) — threads, executors, virtual threads, CSP comparison
-- [Testing & Delivery](../../topics/process/index.md) — JUnit, TDD, CI/CD on JVM
+- [Testing](../../topics/testing/index.md) — JUnit, TDD on the JVM
+- [Process](../../topics/process/index.md) — CI/CD, build systems, delivery
 
 ---
 

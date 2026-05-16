@@ -103,4 +103,5 @@ The book became a bridge between:
   [GoF — Design Patterns (1994)](gof-1994-design-patterns.md)
 - **Author:** [Martin Fowler](../../authors/martin-fowler.md)
 - **Related topics:** [OOP & Design](../../topics/design/index.md) ·
-  [Process & Testing](../../topics/process/index.md)
+  [Testing](../../topics/testing/index.md) ·
+  [Process](../../topics/process/index.md)

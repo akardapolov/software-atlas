@@ -188,5 +188,6 @@ Developed by Jon Skinner. A proprietary editor focused on speed and minimalism.
 - [Build Systems](../process/build-systems/index.md) — build tools integrate deeply with IDEs
 - [Languages](../../languages/index.md) — each language has preferred editor support
 - [Version Control & Git](../vcs/index.md) — editors embed Git workflows
-- [Process & Testing](../process/index.md) — TDD and CI/CD workflows are editor-integrated
+- [Testing](../testing/index.md) — TDD is editor-integrated
+- [Process](../process/index.md) — CI/CD workflows triggered from the editor
 - [Developer Tools Overview](index.md) — back to the developer tools overview

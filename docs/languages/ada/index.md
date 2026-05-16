@@ -406,7 +406,7 @@ end Factorial;
 
 - [Type Systems](../../topics/types/index.md) — Ada's strong typing model
 - [Concurrency](../../topics/concurrency/index.md) — tasks and protected objects
-- [Process & Testing](../../topics/process/index.md) — SPARK and formal verification
+- [Testing](../../topics/testing/index.md) — SPARK and formal verification
 - [Paradigms](../../topics/paradigms/index.md) — Ada as multi-paradigm
 
 ## Further Reading

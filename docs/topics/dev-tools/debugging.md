@@ -302,6 +302,6 @@ rr replay
 - [Languages](../../languages/index.md) — debuggers are language-specific
 - [Build Systems](../process/build-systems/index.md) — debug builds require `-g` flags
 - [CI/CD Providers](../process/ci-cd/index.md) — tests and profilers run in pipelines
-- [Process & Testing](../process/index.md) — TDD and debugging are intertwined practices
+- [Testing](../testing/index.md) — TDD and debugging are intertwined practices
 - [Containers & Orchestration](../containers/index.md) — remote debugging in containers
 - [Developer Tools Overview](index.md) — back to the developer tools overview

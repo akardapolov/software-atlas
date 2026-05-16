@@ -50,7 +50,9 @@ Topic pages collect related ideas into one domain. They are meant for focused st
 
 **Concurrency** covers different models for handling parallelism and asynchrony: shared memory and threads, communicating sequential processes (CSP), the actor model, and async/await. It shows how design choices in this area reflect deeper trade-offs between safety, performance, and expressiveness.
 
-**Process and Testing** covers how teams organize work and verify software: agile methods, extreme programming, test-driven development, continuous integration and delivery, and the DORA metrics for measuring delivery performance. It connects practices to the ideas and people behind them.
+**Process** covers how teams organize work and ship software: agile methods, extreme programming, continuous integration and delivery, DevOps, SRE, and the DORA metrics for measuring delivery performance. It connects practices to the ideas and people behind them.
+
+**Testing** covers how we gain confidence that software does what it should: TDD, the testing pyramid, test doubles, property-based testing, BDD, mutation testing, fuzzing, contract testing, and snapshot/approval testing. It also traces the deeper theoretical thread from Hoare's axiomatic basis and Dijkstra's critique of testing to modern property-based approaches.
 
 **Build Systems** covers the tools that turn source code and declarations into runnable, testable, distributable artifacts — Make, CMake, Maven, Gradle, sbt, npm, Cargo, and Bazel. The chapter traces how build tools evolved from Make's timestamp-based dependency graph (1976) through convention-driven Maven (2004) and incremental Gradle (2007) to hermetic, polyglot, remote-cached Bazel (2015), and gives per-tool guides covering project structure, lifecycles, dependency models, and common patterns.
 

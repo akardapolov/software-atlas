@@ -148,5 +148,6 @@ questions.
 - [CI/CD Providers](../process/ci-cd/index.md) — tools that automate testing and deployment
 - [Version Control & Git](../vcs/index.md) — tools that track code history
 - [Containers & Orchestration](../containers/index.md) — tools that run code in isolated environments
-- [Process & Testing](../process/index.md) — methodologies that the tools enable
+- [Process](../process/index.md) — methodologies that the tools enable
+- [Testing](../testing/index.md) — TDD, test runners, coverage tooling
 - [Languages](../../languages/index.md) — programming languages that the tools support

@@ -140,6 +140,7 @@ Manifesto's content.
 ## Related Pages
 
 - [TDD by Example](../works/books/beck-2002-tdd.md)
-- [Process & Testing](../topics/process/index.md)
+- [Process](../topics/process/index.md)
+- [Testing](../topics/testing/index.md)
 - [Martin Fowler](martin-fowler.md)
 - [Michael Feathers → Legacy Code](../works/books/feathers-2004-legacy.md)

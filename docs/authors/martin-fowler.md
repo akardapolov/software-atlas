@@ -136,7 +136,8 @@ defining and clarifying concepts that the industry uses daily:
 
 - [Refactoring](../works/books/fowler-1999-refactoring.md)
 - [OOP & Design](../topics/design/index.md)
-- [Process & Testing](../topics/process/index.md)
+- [Process](../topics/process/index.md)
+- [Testing](../topics/testing/index.md)
 - [Architecture](../topics/architecture/index.md)
 - [Kent Beck](kent-beck.md)
 - [Eric Evans](eric-evans.md)

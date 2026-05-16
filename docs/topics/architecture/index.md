@@ -540,7 +540,8 @@ Across all architectural approaches, these principles recur:
 - [Paradigms](../paradigms/index.md) — how paradigms shape architecture
 - [Distributed Systems](../distributed/index.md) — architecture across machines
 - [Databases](../databases/index.md) — data models and storage that architectural patterns (CQRS, Event Sourcing) depend on
-- [Process & Testing](../process/index.md) — how process supports architecture
+- [Process](../process/index.md) — how process supports architecture
+- [Testing](../testing/index.md) — testability as an architectural concern
 
 ---
 
