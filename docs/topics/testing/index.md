@@ -18,7 +18,7 @@ flowchart TD
 
     Cunningham["Cunningham<br/>Wiki, FIT<br/>1992+"]
     Beck["Beck<br/>SUnit/JUnit<br/>TDD<br/>1994/2002"]
-    Fowler["Fowler<br/>Refactoring,<br/>Mocks Aren't Stubs<br/>1999/2007"]
+    Fowler["Fowler<br/>Refactoring,<br/>Mocks Aren't Stubs<br/>1999/2004"]
     Feathers["Feathers<br/>Legacy Code,<br/>Characterization<br/>2004"]
     North["Dan North<br/>BDD<br/>2006"]
     Hughes["Hughes & Claessen<br/>QuickCheck<br/>2000"]
@@ -161,14 +161,17 @@ A tester writing equivalence classes is writing predicates:
 predicate. Where they diverge is what they do with it:
 
 - The **tester** picks values satisfying `P`, runs `S`, checks `Q`.
-- The **verifier** reasons symbolically about `S` to *prove* `P ⇒ wp(S, Q)`.
+- The **verifier** reasons symbolically about `S` to prove that `Q`
+  holds after `S` for every input satisfying `P`.
 
 [Property-based testing](#property-based-testing) — covered below —
-is the modern synthesis. The engineer writes the property (the
+sits close to this boundary. The engineer writes the property (the
 predicate `Q`), the framework generates inputs satisfying `P`
 *including the boundaries*, and the runtime checks the property
-across thousands of cases. It is sampling done at machine scale,
-guided by Dijkstra-style thinking about invariants.
+across thousands of cases. It borrows the language of invariants from
+formal methods and applies it at machine scale — sampling done
+systematically, guided by Dijkstra-style thinking about what must
+always hold.
 
 ## Two Axes of Tests
 
@@ -179,7 +182,7 @@ exercises) and **style** (how cases are produced):
 |--------------------|--------------|-------------|----------------|---------------------|
 | **Unit**           | Classic TDD  | QuickCheck  | Mutation       | Jest snapshots      |
 | **Integration**    | API tests    | Stateful PBT | Fuzz harness  | Approval on records |
-| **E2E**            | Cypress flow | rare        | Chaos / fuzz   | Golden-master       |
+| **E2E**            | Cypress flow | rare        | Chaos engineering / fuzz | Golden-master |
 
 The Pyramid (below) governs the *scope* axis. The newer practices —
 property, mutation, fuzzing, approval — extend the *style* axis.
@@ -246,6 +249,21 @@ Beck's most important claim: **TDD is a design technique**, not just testing.
 - Small steps prevent over-engineering
 - Refactoring keeps design clean
 
+### Classicist vs Mockist TDD
+
+Two schools have long debated *how* to isolate the unit under test:
+
+| School | Also called | Approach |
+|--------|-------------|----------|
+| **Classicist** | Detroit school | Prefer real collaborators; use doubles only for slow or external dependencies |
+| **Mockist** | London school | Isolate every collaborator with mocks; verify interactions |
+
+Beck and Fowler lean classicist. The London school grew from early
+adopters of JMock and influenced BDD tooling. The debate is covered
+in Fowler's *Mocks Aren't Stubs* (2004) — neither approach is
+universally correct; the right choice depends on the design and
+the team's goals.
+
 → [Kent Beck](../../authors/kent-beck.md) ·
 [TDD by Example](../../works/books/beck-2002-tdd.md)
 
@@ -253,7 +271,8 @@ Beck's most important claim: **TDD is a design technique**, not just testing.
 
 **Core idea:** More tests at lower levels, fewer at higher levels.
 
-The testing pyramid organises tests by speed, cost, and scope:
+The testing pyramid, popularised by Mike Cohn (*Succeeding with Agile*,
+2009), organises tests by speed, cost, and scope:
 
 ```mermaid
 flowchart TB
@@ -275,9 +294,9 @@ flowchart TB
 
 | Level | What it tests | Typical tools | Speed |
 |-------|---------------|---------------|-------|
-| **Unit** | Single function/class in isolation | JUnit, pytest, Jest | < 1ms |
-| **Integration** | Multiple components working together | TestContainers, integration tests | 100ms-1s |
-| **E2E** | Full system through UI | Selenium, Playwright, Cypress | 1-10s |
+| **Unit** | Single function/class in isolation | JUnit, pytest, Jest | Microseconds to low milliseconds |
+| **Integration** | Multiple components working together | TestContainers, integration tests | 100ms–1s |
+| **E2E** | Full system through UI | Selenium, Playwright, Cypress | 1–10s |
 
 ### Unit Tests
 
@@ -367,7 +386,7 @@ describe("Checkout flow", () => {
 
 Test doubles allow testing components in isolation by substituting real
 dependencies (databases, APIs, filesystems) with controlled implementations.
-Martin Fowler's *Mocks Aren't Stubs* (2007) is the canonical taxonomy.
+Martin Fowler's *Mocks Aren't Stubs* (2004) is the canonical taxonomy.
 
 ### Types of Test Doubles
 
@@ -424,7 +443,7 @@ def test_user_service_with_doubles():
 | **Unreliable network** | Yes | Fake or Stub |
 | **External API with rate limits** | Yes | Fake or Stub |
 | **Need to verify interaction** | Yes | Spy or Mock |
-| **Need real database semantics** | No | Use real DB (TestContainers) |
+| **Need real database semantics** | Prefer real infrastructure | TestContainers or equivalent |
 
 ### Criticism and Best Practices
 
@@ -436,7 +455,7 @@ def test_user_service_with_doubles():
 **Best practices:**
 - Prefer fakes over mocks (working simplifications vs expectations)
 - Test behaviour, not implementation
-- Use real infrastructure when possible (TestContainers)
+- Use real infrastructure when semantics matter (TestContainers)
 - Keep test doubles close to real behaviour
 
 → [Martin Fowler](../../authors/martin-fowler.md)
@@ -543,22 +562,26 @@ prop_sort_sorted xs = isSorted (sort xs)
 prop_sort_length :: [Int] -> Bool
 prop_sort_length xs = length (sort xs) == length xs
 
-prop_sort_contains :: [Int] -> Int -> Property
-prop_sort_contains xs x = elem x xs ==> elem x (sort xs)
+-- Containment: membership is preserved in both directions
+prop_sort_contains :: [Int] -> Int -> Bool
+prop_sort_contains xs x = elem x (sort xs) == elem x xs
 ```
 
 ### Shrinking
 
 When a property fails, property-based testing frameworks **shrink**
-the counterexample to the minimal failing case:
+the counterexample to the minimal failing case. QuickCheck introduced
+shrinking; Hypothesis (MacIver, 2013) made it significantly more
+effective through integrated, type-aware shrinking strategies that
+tend to find smaller and more readable counterexamples.
 
 ```python
 # Hypothesis (Python) example
 # Failing input found: [1000, 50, 3, -7, 0, 42, -1]
 # After shrinking: [-7]
+# The framework removes elements and simplifies values
+# until no further reduction still triggers the failure
 ```
-
-Shrinking makes debugging much easier by removing irrelevant details.
 
 ### When to Use Property-Based Testing
 
@@ -591,8 +614,9 @@ Shrinking makes debugging much easier by removing irrelevant details.
 The intellectual root is DeMillo, Lipton, and Sayward's 1978 paper
 *Hints on Test Data Selection: Help for the Practicing Programmer*, which
 argued that good test suites should be sensitive to small program
-perturbations. Jeff Offutt's later work moved the technique from theory
-to practice.
+perturbations. The technique was formalised and industrialised through
+the 1980s and 1990s, notably by Timothy Budd and Jeff Offutt, whose
+work moved it from theory to practical tooling.
 
 ### How It Works
 
@@ -616,24 +640,24 @@ Coverage answers *"was this line executed?"*. Mutation testing answers
 def is_adult(age):
     return age >= 18
 
-# Tests
+# Tests — note: boundary 18 is tested, but 19 is not
 def test_adult():
-    assert is_adult(18) == True
+    assert is_adult(20) == True
 
 def test_child():
-    assert is_adult(17) == False
+    assert is_adult(15) == False
 ```
 
 A mutation tool may produce:
 
-| Mutant | Code change | Killed? |
-|--------|-------------|---------|
-| `age >  18` | strict | ✅ kills via `is_adult(18)` |
-| `age >= 17` | off-by-one | ❌ survives (no test at 16 or 17 boundary) |
-| `return False` | always false | ✅ kills via `is_adult(18)` |
-| `return True` | always true | ✅ kills via `is_adult(17)` |
+| Mutant | Code change | Result |
+|--------|-------------|--------|
+| `age > 18` | strict greater-than | ✅ killed — `is_adult(20)` still True, but `is_adult(18)` would now return False; a test on 18 would catch it |
+| `age >= 19` | off-by-one | ❌ survives — `is_adult(20)` returns True, `is_adult(15)` returns False; no test covers the 18–19 boundary |
+| `return False` | always false | ✅ killed — `is_adult(20)` expects True |
+| `return True` | always true | ✅ killed — `is_adult(15)` expects False |
 
-The surviving mutant exposes a missing edge case.
+The surviving mutant (`age >= 19`) exposes a missing boundary test at 18.
 
 ### Tooling
 
@@ -685,11 +709,13 @@ Three generations of fuzzers:
 |------------|----------|---------|
 | **Random** | Pure random bytes | Miller's 1990 study |
 | **Mutational** | Mutate a seed corpus | radamsa |
-| **Coverage-guided** | Mutate, then favour inputs that hit new branches | **AFL** (Michał Zalewski, 2013), **libFuzzer**, **honggfuzz** |
+| **Coverage-guided** | Mutate, then favour inputs that hit new branches | **AFL** (Michał Zalewski, 2013), **libFuzzer** (2015), **honggfuzz** |
 
 Coverage-guided fuzzing turned fuzzing from a smoke test into a
-**continuous correctness tool**: Google's OSS-Fuzz fuzzes hundreds of
-open-source projects 24/7 and has filed thousands of bugs.
+**continuous correctness tool**. Zalewski's AFL popularised the approach
+by making coverage feedback practical at scale; Google's OSS-Fuzz
+subsequently fuzzes hundreds of open-source projects 24/7 and has
+filed thousands of bugs.
 
 ### Fuzz Targets
 
@@ -770,7 +796,7 @@ deployment.
 
 | Tool | Notes |
 |------|-------|
-| **Pact** | Polyglot (JVM, JS, .NET, Go, Python, Ruby), with a shared Pact Broker for sharing contracts |
+| **Pact** | Polyglot (JVM, JS, .NET, Go, Python, Ruby), with a Pact Broker or PactFlow for sharing contracts across teams |
 | **Spring Cloud Contract** | JVM-native, Groovy/YAML DSL, generates stubs |
 | **OpenAPI schema diffing** | Lightweight alternative — verify both sides implement the same schema |
 
@@ -902,17 +928,18 @@ proceed.
 | Richard DeMillo, Richard Lipton, Frederick Sayward | Mutation testing — *Hints on Test Data Selection* | 1978 | — |
 | Glenford Myers | *The Art of Software Testing* — equivalence partitioning, boundary analysis | 1979 | — |
 | Barton Miller | Coined "fuzz" — *Empirical Study of UNIX Utilities* | 1990 | [Barton Miller](../../authors/barton-miller.md) |
-| Ward Cunningham | Wiki, FIT (Framework for Integrated Test) | 1992+ | [Ward Cunningham](../../authors/ward-cunningham.md) |
+| Ward Cunningham | Wiki, FIT (Framework for Integrated Tests) | 1992+ | [Ward Cunningham](../../authors/ward-cunningham.md) |
 | Kent Beck | SUnit (1994), JUnit (1997 with Erich Gamma), TDD | 1994/2002 | [Kent Beck](../../authors/kent-beck.md) |
-| Martin Fowler | *Refactoring*, *Mocks Aren't Stubs* taxonomy | 1999/2007 | [Martin Fowler](../../authors/martin-fowler.md) |
+| Martin Fowler | *Refactoring*, *Mocks Aren't Stubs* taxonomy | 1999/2004 | [Martin Fowler](../../authors/martin-fowler.md) |
 | Koen Claessen & John Hughes | QuickCheck — property-based testing | 2000 | [Hughes](../../authors/john-hughes.md) · [Claessen](../../authors/koen-claessen.md) |
 | Michael Feathers | Characterization tests, seams | 2004 | [Michael Feathers](../../authors/michael-feathers.md) |
 | Dan North | Behaviour-Driven Development | 2006 | [Dan North](../../authors/dan-north.md) |
 | Ian Robinson | Consumer-driven contracts | 2006 | — |
+| Mike Cohn | Testing Pyramid | 2009 | — |
 | Llewellyn Falco | Approval testing (the framework + practice) | 2011+ | — |
-| David MacIver | Hypothesis (PBT for Python, with shrinking) | 2013 | [David MacIver](../../authors/david-maciver.md) |
+| Michał Zalewski | AFL — popularised coverage-guided fuzzing | 2013 | — |
+| David MacIver | Hypothesis (PBT for Python, with superior shrinking) | 2013 | [David MacIver](../../authors/david-maciver.md) |
 | Emily Bache | Refactoring + approval-testing katas and books | 2014+ | — |
-| Michał Zalewski | AFL — coverage-guided fuzzing | 2013 | — |
 
 ## Timeline
 
@@ -930,12 +957,14 @@ proceed.
 | 2000 | Claessen & Hughes — QuickCheck | Property-based testing |
 | 2002 | Beck — *Test-Driven Development by Example* | TDD as a design discipline |
 | 2004 | Feathers — *Working Effectively with Legacy Code* | Seams + characterization tests |
+| 2004 | Fowler — *Mocks Aren't Stubs* | Test-double taxonomy |
 | 2006 | North — *Introducing BDD* | Behaviour as the unit of test |
 | 2006 | Robinson — Consumer-driven contracts | Microservices testing |
-| 2007 | Fowler — *Mocks Aren't Stubs* | Test-double taxonomy |
+| 2009 | Cohn — *Succeeding with Agile* | Testing Pyramid popularised |
 | 2010 | PIT (Java mutation testing) released | Mutation testing in CI |
 | 2013 | Zalewski — AFL | Coverage-guided fuzzing mainstream |
-| 2013 | MacIver — Hypothesis | PBT for Python with great shrinking |
+| 2013 | MacIver — Hypothesis | PBT for Python with superior shrinking |
+| 2015 | libFuzzer added to LLVM | Coverage-guided fuzzing in compiler toolchain |
 | 2016 | Stryker (JavaScript mutation testing) | Mutation testing for JS / TS |
 | 2017 | Jest snapshots become widespread | Approval-style tests in front-end |
 | 2022 | Go 1.18 — native fuzzing | Fuzzing in the standard toolchain |
@@ -972,10 +1001,11 @@ Continuous Delivery, see the dedicated
 
 - Beck — *Test-Driven Development: By Example* (2002)
 - Beck — *Extreme Programming Explained* (1999)
+- Cohn — *Succeeding with Agile* (2009)
 - Dijkstra — *The Humble Programmer* (Turing Award lecture, 1972)
 - Feathers — *Working Effectively with Legacy Code* (2004)
 - Fowler — *Refactoring* (1999, 2nd ed. 2018)
-- Fowler — *Mocks Aren't Stubs* (2007)
+- Fowler — *Mocks Aren't Stubs* (2004)
 - Hoare — *An Axiomatic Basis for Computer Programming* (1969)
 - Hughes & Claessen — *QuickCheck: A Lightweight Tool for Random Testing* (2000)
 - Miller et al. — *An Empirical Study of the Reliability of UNIX Utilities* (1990)
