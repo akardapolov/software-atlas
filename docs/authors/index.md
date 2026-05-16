@@ -57,6 +57,11 @@ biography, key contributions, works, and influence connections.
 | Ward Cunningham | 1949– | CRC Cards, Technical Debt | [→](ward-cunningham.md) ✅ |
 | Sandi Metz | — | POODR, Practical OOP | [→](sandi-metz.md) ✅ |
 | Alexander Zhidkov | — | Ergonomic Approach, Structural Design | [→](alexander-zhidkov.md) ✅ |
+| Michael Feathers | 1964– | Legacy code, characterization tests | [→](michael-feathers.md) ✅ |
+| Dan North | — | BDD, Given–When–Then, JBehave | [→](dan-north.md) ✅ |
+| David MacIver | — | Hypothesis, property-based testing | [→](david-maciver.md) ✅ |
+| Koen Claessen | — | QuickCheck, property-based testing | [→](koen-claessen.md) ✅ |
+| Barton Miller | 1953– | Fuzz testing, Paradyn | [→](barton-miller.md) ✅ |
 
 ## Language Creators
 

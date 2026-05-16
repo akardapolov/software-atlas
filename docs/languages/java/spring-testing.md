@@ -45,7 +45,7 @@ most important annotations form a spectrum from heaviest to lightest:
 Choosing the right annotation per test is the single largest lever for
 suite speed. The general principle behind it — more fast tests at lower
 levels, fewer slow ones at higher levels — is described in the
-language-agnostic [Testing Pyramid](../../topics/process/index.md#the-testing-pyramid).
+language-agnostic [Testing Pyramid](../../topics/testing/index.md#the-testing-pyramid).
 
 ---
 
@@ -225,7 +225,7 @@ injected via `@InjectMocks`.
 | **Cache impact**   | None                                 | Different mocks → different cached contexts  |
 
 For the broader taxonomy of dummies, stubs, spies, mocks, and fakes that
-informs which tool to reach for, see [Test Doubles](../../topics/process/index.md#test-doubles).
+informs which tool to reach for, see [Test Doubles](../../topics/testing/index.md#test-doubles).
 
 ---
 
@@ -363,8 +363,9 @@ suite into a 2-minute suite.
 
 ## Related Topics
 
-- [Testing Pyramid](../../topics/process/index.md#the-testing-pyramid) — language-agnostic framing for why slice tests matter
-- [Test Doubles](../../topics/process/index.md#test-doubles) — taxonomy of dummies, stubs, spies, mocks, fakes
+- [Testing](../../topics/testing/index.md) — TDD, Pyramid, Test Doubles, PBT, BDD, mutation, fuzzing
+- [Testing Pyramid](../../topics/testing/index.md#the-testing-pyramid) — language-agnostic framing for why slice tests matter
+- [Test Doubles](../../topics/testing/index.md#test-doubles) — taxonomy of dummies, stubs, spies, mocks, fakes
 - [Maven](../../topics/process/build-systems/maven.md) and [Gradle](../../topics/process/build-systems/gradle.md) — wiring `spring-boot-starter-test` into a build
 - [Java — Testing Ecosystem](index.md#testing-ecosystem) — the broader JVM testing toolchain
 - [`examples/java/10-testing/`](../../../examples/java/10-testing/README.md) — runnable JUnit 5 + Mockito examples

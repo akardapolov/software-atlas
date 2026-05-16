@@ -4,6 +4,12 @@ Goal: connect "tests" with design, and "deployment" with engineering practices.
 
 ## Steps
 
+### 0) Overview
+
+- Read: [Testing topic](../topics/testing/index.md) — the hub page covering
+  TDD, the Pyramid, Test Doubles, PBT, BDD, mutation testing, fuzzing,
+  and contract / approval testing.
+
 ### 1) TDD as design
 - Read: [Beck — TDD (2002)](../works/books/beck-2002-tdd.md)
 - Practice: Red/Green/Refactor as the basic development cycle
@@ -35,4 +41,5 @@ Goal: connect "tests" with design, and "deployment" with engineering practices.
 
 ## Related
 
-- [Process & Testing topic](../topics/process/index.md)
+- [Testing topic](../topics/testing/index.md)
+- [Process topic](../topics/process/index.md)
