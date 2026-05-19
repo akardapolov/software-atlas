@@ -70,6 +70,7 @@ biography, key contributions, works, and influence connections.
 | Bjarne Stroustrup | 1950– | C++ | [→](bjarne-stroustrup.md) ✅ |
 | Brad Cox | 1944–2021 | Objective-C | [→](brad-cox.md) ✅ |
 | James Gosling | 1955– | Java | [→](james-gosling.md) ✅ |
+| Anders Hejlsberg | 1960– | C#, TypeScript, Delphi | [→](anders-hejlsberg.md) ✅ |
 | Guido van Rossum | 1956– | Python | [→](guido-van-rossum.md) ✅ |
 | Yukihiro Matsumoto | 1965– | Ruby | [→](yukihiro-matsumoto.md) ✅ |
 

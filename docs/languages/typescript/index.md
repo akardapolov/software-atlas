@@ -74,7 +74,7 @@ flowchart TD
 
     subgraph Microsoft_Languages
         Delphi["Delphi<br/>Anders Hejlsberg<br/>1995"]
-        Csharp["C#<br/>Anders Hejlsberg<br/>2000"]
+        Csharp["C#<br/>Anders Hejlsberg<br/>2000<br/>[→](../csharp/index.md)"]
     end
 
     subgraph TypeScript_Evolution

@@ -71,7 +71,7 @@ flowchart TD
         Java["Java<br/>1995"]
         Scala["Scala<br/>2004"]
         Groovy["Groovy<br/>2003"]
-        CSharp["C#<br/>2002"]
+        CSharp["C#<br/>2002<br/>[→](../csharp/index.md)"]
     end
 
     subgraph Origins
@@ -459,7 +459,7 @@ g.greet("Hi");
 
 - **[Java](../java/index.md)** — JVM target, syntax baseline, ecosystem
 - **Scala** — type inference, function literals, multiparadigm approach
-- **C#** — properties, extension methods, data classes, `async`-style scoping
+- **[C#](../csharp/index.md)** — properties, extension methods, data classes, `async`-style scoping
 - **Groovy** — builder DSLs, named arguments
 - **Python** — concise syntax, default arguments, ranges
 

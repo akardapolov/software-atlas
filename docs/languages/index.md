@@ -20,6 +20,7 @@ history, key concepts, typing, influences, and links to code examples.
 | [Haskell](haskell/index.md) | 1990 | Committee                 | Functional, pure       | Static, inferred   |
 | [Python](python/index.md)  | 1991 | Guido van Rossum          | Multi-paradigm         | Dynamic, strong    |
 | [Java](java/index.md)      | 1995 | James Gosling             | OOP, imperative        | Static, nominal    |
+| [C#](csharp/index.md)      | 2000 | Anders Hejlsberg (Microsoft) | OOP, functional, component-oriented | Static, nominal |
 | [Clojure](clojure/index.md) | 2007 | Rich Hickey               | Functional, Lisp       | Dynamic, strong    |
 | [Go](go/index.md)          | 2009 | Pike, Thompson, Griesemer | Imperative, CSP        | Static, structural |
 | [Rust](rust/index.md)      | 2010 | Graydon Hoare             | Multi-paradigm         | Static, affine     |

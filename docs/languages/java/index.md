@@ -2208,7 +2208,7 @@ so the earlier write to `value` becomes visible as well.
 | **Clojure** | 2007 | JVM, Lisp, immutability first                                    |
 | **Kotlin**  | 2011 | JVM, concise Java, null safety, coroutines                       |
 | **Dart**    | 2011 | Java-like syntax, Flutter frontend                               |
-| **C#**      | 2000 | .NET parallel: similar exception model, generics, evolution path |
+| **[C#](../csharp/index.md)** | 2000 | .NET parallel: similar exception model, generics, evolution path |
 
 ### Java's Impact on Platform Design
 
