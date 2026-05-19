@@ -4,6 +4,7 @@
 
 import java.util.*;
 import java.util.concurrent.*;
+import java.util.concurrent.locks.*;
 import java.util.stream.*;
 
 public class Main {
@@ -65,6 +66,64 @@ public class Main {
                 .thenApplyAsync(String::toUpperCase)
                 .thenAcceptAsync(msg -> System.out.println("Message: " + msg))
                 .join();
+
+        // thenCompose — chain dependent async operations
+        System.out.println("\n--- CompletableFuture thenCompose ---");
+
+        CompletableFuture<String> userFuture = CompletableFuture
+                .supplyAsync(() -> 42L)
+                .thenCompose(id -> CompletableFuture.supplyAsync(() -> "User#" + id));
+        System.out.println("Chained result: " + userFuture.join());
+
+        // allOf — wait for multiple futures
+        System.out.println("\n--- CompletableFuture allOf ---");
+
+        CompletableFuture<Integer> price = CompletableFuture.supplyAsync(() -> 100);
+        CompletableFuture<Integer> stock = CompletableFuture.supplyAsync(() -> 50);
+        CompletableFuture<Void> all = CompletableFuture.allOf(price, stock);
+        all.thenRun(() -> {
+            int p = price.resultNow();
+            int s = stock.resultNow();
+            System.out.println("Price: " + p + ", Stock: " + s);
+        }).join();
+
+        // anyOf — first to complete wins
+        System.out.println("\n--- CompletableFuture anyOf ---");
+
+        CompletableFuture<Object> fastest = CompletableFuture.anyOf(
+                CompletableFuture.supplyAsync(() -> {
+                    try { Thread.sleep(300); } catch (Exception e) {}
+                    return "primary";
+                }),
+                CompletableFuture.supplyAsync(() -> {
+                    try { Thread.sleep(100); } catch (Exception e) {}
+                    return "fallback";
+                })
+        );
+        System.out.println("Fastest: " + fastest.join());
+
+        // exceptionally — recover from error
+        System.out.println("\n--- CompletableFuture exceptionally ---");
+
+        CompletableFuture<String> withFallback = CompletableFuture
+                .<String>supplyAsync(() -> { throw new RuntimeException("oops"); })
+                .exceptionally(ex -> "recovered: " + ex.getMessage());
+        System.out.println("Result: " + withFallback.join());
+
+        // orTimeout — fail if not completed in time (Java 9+)
+        System.out.println("\n--- CompletableFuture orTimeout ---");
+
+        try {
+            CompletableFuture<String> timeout = CompletableFuture
+                    .supplyAsync(() -> {
+                        try { Thread.sleep(5000); } catch (Exception e) {}
+                        return "too late";
+                    })
+                    .orTimeout(100, TimeUnit.MILLISECONDS);
+            System.out.println("Result: " + timeout.join());
+        } catch (CompletionException e) {
+            System.out.println("Timed out as expected: " + e.getCause().getClass().getSimpleName());
+        }
 
         // ── Parallel stream ───────────────────────────
         System.out.println("\n--- Parallel stream ---");
