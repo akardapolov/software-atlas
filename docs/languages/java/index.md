@@ -35,6 +35,7 @@
    - [11. Foreign Function & Memory API](#11-foreign-function--memory-api)
    - [12. Scoped Values and Structured Concurrency](#12-scoped-values-and-structured-concurrency)
    - [13. Working with Dates and Times](#13-working-with-dates-and-times)
+   - [14. Collections Framework](#14-collections-framework)
 6. [Other Language Features](#other-language-features)
 7. [Runtime Memory Layout](#runtime-memory-layout)
 8. [Java Memory Model (JMM)](#java-memory-model-jmm)
@@ -461,6 +462,34 @@ Read more: **[Detailed description and examples](./13-date-time.md)**
 
 ---
 
+### 14. Collections Framework
+
+| Section | Content |
+| :--- | :--- |
+| **Description** | The Collections Framework provides a unified architecture for storing and manipulating groups of objects through a hierarchy of interfaces (`List`, `Set`, `Queue`, `Map`) and reusable implementations. |
+| **API Purpose** | Managing ordered sequences, unique elements, key-value mappings, and priority queues with predictable performance characteristics. |
+| **Terminology** | `ArrayList`, `LinkedList`, `HashSet`, `TreeSet`, `HashMap`, `TreeMap`, `LinkedHashMap`, `ArrayDeque`, `PriorityQueue`, `Iterator`, `Comparable`, `Comparator`. |
+| **Notes** | Prefer `ArrayList` over `LinkedList`; prefer `ArrayDeque` over `Stack` for LIFO. Use immutable factories `List.of()`, `Set.of()`, `Map.of()` (Java 9+) over `Collections.unmodifiable*`. |
+
+```mermaid
+flowchart TD
+    subgraph Collections["Core Interfaces"]
+        List["List<E>"] --> AL["ArrayList · O(1) get"]
+        Set["Set<E>"] --> HS["HashSet · O(1) ops"]
+        Queue["Queue<E>"] --> AD["ArrayDeque · O(1) ops"]
+        Map["Map<K,V>"] --> HM["HashMap · O(1) ops"]
+    end
+    style Collections fill:#e1f5fe,stroke:#0288d1
+    style AL fill:#e8f5e9,stroke:#388e3c
+    style HS fill:#e8f5e9,stroke:#388e3c
+    style AD fill:#e8f5e9,stroke:#388e3c
+    style HM fill:#e8f5e9,stroke:#388e3c
+```
+
+Read more: **[Detailed description and examples](./14-collections.md)**
+
+---
+
 ## Other Language Features
 
 | Feature                | Version | Description                                            | Example                                                |
@@ -598,6 +627,7 @@ flowchart LR
 | [01 Generics](../../../examples/java/14-variance-generics/README.md) | Invariance, covariance, contravariance, PECS |
 | [02 Streams](../../../examples/java/11-streams-advanced/README.md) | Advanced Stream operations: reduce, mapMulti, takeWhile |
 | [03 Virtual Threads](../../../examples/java/09-concurrency/README.md) | Virtual threads, ExecutorServices and async tasks |
+| [04 Collections](../../../examples/java/05-data-structures/README.md) | Lists, Sets, Maps, Queues, iteration, ordering |
 
 ---
 
