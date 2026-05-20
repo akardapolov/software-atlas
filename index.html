@@ -286,34 +286,6 @@
     .md-body hr { border: none; border-top: 2px solid var(--border); margin: 32px 0; }
     .md-body img { max-width: 100%; border-radius: 6px; }
 
-    .toc {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 16px 20px;
-      margin: 16px 0 32px;
-      font-size: .9rem;
-    }
-    .toc__title {
-      font-weight: 700;
-      margin-bottom: 12px;
-      font-size: .95rem;
-    }
-    .toc__list {
-      list-style: none;
-      padding: 0;
-    }
-    .toc__list li {
-      margin-bottom: 4px;
-    }
-    .toc__list a {
-      color: var(--text-link);
-      text-decoration: none;
-    }
-    .toc__list a:hover {
-      text-decoration: underline;
-    }
-
     .toc-return {
       position: fixed;
       top: calc(var(--header-h) + 16px);
@@ -1050,43 +1022,19 @@
   }
 
   // ═══════════════════════════════════════
-  // TABLE OF CONTENTS
+  // "RETURN TO CONTENTS" FLOATING BUTTON
   // ═══════════════════════════════════════
-  function buildTableOfContents(mdBody) {
-    const headings = mdBody.querySelectorAll('h1, h2, h3');
-    if (headings.length === 0) return null;
-
-    const toc = document.createElement('div');
-    toc.className = 'toc';
-    toc.innerHTML = '<div class="toc__title">📑 Table of Contents</div>';
-
-    const list = document.createElement('ul');
-    list.className = 'toc__list';
-
-    headings.forEach(heading => {
-      const li = document.createElement('li');
-      li.style.paddingLeft = (heading.tagName === 'H1' ? 0 : heading.tagName === 'H2' ? 12 : 24) + 'px';
-      const a = document.createElement('a');
-      a.href = `#${heading.id}`;
-      a.textContent = heading.textContent;
-      a.addEventListener('click', (e) => {
-        e.preventDefault();
-        heading.scrollIntoView({ behavior: 'smooth' });
-        history.replaceState(null, null, `#${heading.id}`);
-        showTocReturnButton();
-      });
-      li.appendChild(a);
-      list.appendChild(li);
-    });
-
-    toc.appendChild(list);
-    return toc;
+  function findContentsAnchor(body) {
+    // 1) Prefer a heading explicitly slugged "contents" (e.g. "## Contents").
+    const byId = body.querySelector('#contents');
+    if (byId) return byId;
+    // 2) Otherwise fall back to any heading whose text starts with "contents".
+    const headings = body.querySelectorAll('h1, h2, h3');
+    for (const h of headings) {
+      if (h.textContent.trim().toLowerCase().startsWith('contents')) return h;
+    }
+    return null;
   }
-
-  // ═══════════════════════════════════════
-  // "BACK TO CONTENTS" FLOATING BUTTON
-  // ═══════════════════════════════════════
-  let tocObserver = null;
 
   function ensureTocReturnButton() {
     let btn = document.getElementById('toc-return-btn');
@@ -1096,8 +1044,13 @@
     btn.className = 'toc-return';
     btn.textContent = '↑ Contents';
     btn.addEventListener('click', () => {
-      const toc = document.querySelector('.md-body .toc');
-      if (toc) toc.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const main = document.getElementById('main');
+      const anchor = btn._anchor;
+      if (anchor) {
+        anchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        main.scrollTo({ top: 0, behavior: 'smooth' });
+      }
       hideTocReturnButton();
     });
     document.body.appendChild(btn);
@@ -1105,7 +1058,6 @@
   }
 
   function showTocReturnButton() {
-    if (!document.querySelector('.md-body .toc')) return;
     ensureTocReturnButton().classList.add('visible');
   }
 
@@ -1114,17 +1066,35 @@
     if (btn) btn.classList.remove('visible');
   }
 
-  function watchTocVisibility(toc) {
-    if (tocObserver) tocObserver.disconnect();
-    tocObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) hideTocReturnButton();
-      });
-    }, {
-      root: document.getElementById('main'),
-      threshold: 0.3,
-    });
-    tocObserver.observe(toc);
+  let tocScrollHandler = null;
+  function setupTocReturnButton(body) {
+    const main = document.getElementById('main');
+    const anchor = findContentsAnchor(body);
+    const btn = ensureTocReturnButton();
+    btn._anchor = anchor;
+
+    if (tocScrollHandler) {
+      main.removeEventListener('scroll', tocScrollHandler);
+      tocScrollHandler = null;
+    }
+    hideTocReturnButton();
+
+    tocScrollHandler = () => {
+      let shouldShow;
+      if (anchor) {
+        // Show as soon as the "Contents" heading has scrolled above the
+        // top of the main viewport.
+        const mainTop = main.getBoundingClientRect().top;
+        const anchorBottom = anchor.getBoundingClientRect().bottom;
+        shouldShow = anchorBottom < mainTop;
+      } else {
+        // No explicit Contents heading — fall back to ~one viewport scrolled.
+        shouldShow = main.scrollTop > main.clientHeight * 0.6;
+      }
+      if (shouldShow) showTocReturnButton();
+      else hideTocReturnButton();
+    };
+    main.addEventListener('scroll', tocScrollHandler, { passive: true });
   }
 
   // ═══════════════════════════════════════
@@ -1178,16 +1148,7 @@
       body.className = "md-body";
       body.innerHTML = processedHtml;
 
-      const toc = buildTableOfContents(body);
-      if (toc) {
-        body.prepend(toc);
-      }
-
       content.appendChild(body);
-
-      if (toc) {
-        watchTocVisibility(toc);
-      }
 
       // Делегированные клики по MD-ссылкам и якорным ссылкам
       body.addEventListener("click", (e) => {
@@ -1205,7 +1166,6 @@
           if (target) {
             target.scrollIntoView({ behavior: 'smooth' });
             history.replaceState(null, null, `#${id}`);
-            showTocReturnButton();
           }
         }
       });
@@ -1215,6 +1175,9 @@
 
       // Mermaid
       await renderMermaid(body);
+
+      // Floating "↑ Contents" button
+      setupTocReturnButton(body);
 
       const h1 = body.querySelector("h1");
       document.title = h1
