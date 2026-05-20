@@ -433,7 +433,28 @@
   а наш код запускаем только после window.onload.
 -->
 <script src="https://cdn.jsdelivr.net/npm/marked@9/marked.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/highlight.js@11/highlight.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11/build/highlight.min.js"></script>
+<!-- Extra languages not bundled in the "common" set but used in the docs. -->
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11/build/languages/ada.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11/build/languages/basic.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11/build/languages/bnf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11/build/languages/clojure.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11/build/languages/dockerfile.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11/build/languages/erlang.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11/build/languages/fortran.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11/build/languages/fsharp.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11/build/languages/groovy.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11/build/languages/haskell.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11/build/languages/http.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11/build/languages/julia.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11/build/languages/lisp.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11/build/languages/ocaml.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11/build/languages/powershell.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11/build/languages/prolog.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11/build/languages/properties.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11/build/languages/scala.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11/build/languages/smalltalk.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11/build/languages/sml.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 
 <script>
@@ -974,15 +995,56 @@
   // ═══════════════════════════════════════
   // SYNTAX HIGHLIGHT
   // ═══════════════════════════════════════
+  // Map of language aliases used in our docs to the closest hljs language.
+  // For languages hljs doesn't ship at all we fall back to "plaintext" so
+  // the block still renders inside a styled <pre> instead of raising warnings.
+  const HLJS_LANG_ALIASES = {
+    algol:      "plaintext",
+    clu:        "plaintext",
+    simula:     "plaintext",
+    pseudocode: "plaintext",
+    factor:     "plaintext",
+    fish:       "bash",
+    forth:      "plaintext",
+    hcl:        "ini",
+    toml:       "ini",
+    cmake:      "bash",
+    logo:       "plaintext",
+    ts:         "typescript",
+  };
+
+  function registerHljsAliases() {
+    if (!hljsReady) return;
+    for (const [alias, target] of Object.entries(HLJS_LANG_ALIASES)) {
+      if (hljs.getLanguage(alias)) continue;
+      const lang = hljs.getLanguage(target);
+      if (!lang) continue;
+      try {
+        hljs.registerAliases(alias, { languageName: target });
+      } catch (e) {
+        // older hljs API — ignore
+      }
+    }
+  }
+
   function highlightCode(container) {
     if (!hljsReady) return;
     container.querySelectorAll("pre code").forEach(block => {
-      if (!block.classList.contains("language-mermaid")) {
-        try {
-          hljs.highlightElement(block);
-        } catch(e) {
-          console.warn("hljs error:", e);
+      if (block.classList.contains("language-mermaid")) return;
+      // Normalize unknown languages to plaintext so hljs doesn't bail out
+      // and leave the block unstyled.
+      const langClass = Array.from(block.classList).find(c => c.startsWith("language-"));
+      if (langClass) {
+        const lang = langClass.slice("language-".length);
+        if (lang && !hljs.getLanguage(lang)) {
+          block.classList.remove(langClass);
+          block.classList.add("language-plaintext");
         }
+      }
+      try {
+        hljs.highlightElement(block);
+      } catch(e) {
+        console.warn("hljs error:", e);
       }
     });
   }
@@ -1271,6 +1333,8 @@ python -m http.server 8080 --directory . &amp;&amp; python -c "import http.serve
     if (!markedReady) console.warn("marked.js not loaded — page rendering disabled.");
     if (!hljsReady)   console.warn("highlight.js not loaded — syntax highlighting disabled.");
     if (!mermaidReady) console.warn("mermaid not loaded — diagram rendering disabled.");
+
+    registerHljsAliases();
 
     if (markedReady) {
       const renderer = new marked.Renderer();
