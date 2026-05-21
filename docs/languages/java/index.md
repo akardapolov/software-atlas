@@ -36,6 +36,11 @@
    - [12. Scoped Values and Structured Concurrency](#12-scoped-values-and-structured-concurrency)
    - [13. Working with Dates and Times](#13-working-with-dates-and-times)
    - [14. Collections Framework](#14-collections-framework)
+   - [15. Concurrency Utilities](#15-concurrency-utilities)
+   - [16. Reflection API](#16-reflection-api)
+   - [17. Module System (JPMS)](#17-module-system-jpms)
+   - [18. Networking (HttpClient)](#18-networking-httpclient)
+   - [19. I/O and NIO/NIO.2](#19-io-and-nionio2)
 6. [Other Language Features](#other-language-features)
 7. [Runtime Memory Layout](#runtime-memory-layout)
 8. [Java Memory Model (JMM)](#java-memory-model-jmm)
@@ -490,6 +495,165 @@ Read more: **[Detailed description and examples](./14-collections.md)**
 
 ---
 
+### 15. Concurrency Utilities
+
+| Section | Content |
+| :--- | :--- |
+| **Description** | The `java.util.concurrent` package provides high-level concurrency building blocks — thread pools, non-blocking collections, locks, synchronizers, and atomic variables — eliminating the need for manual `synchronized`/`wait`/`notify` in most scenarios. |
+| **API Purpose** | Managing concurrent execution, shared mutable state, thread coordination, and lock-free algorithms with predictable performance and safety. |
+| **Terminology** | `ExecutorService`, `ThreadPoolExecutor`, `ConcurrentHashMap`, `BlockingQueue`, `CountDownLatch`, `CyclicBarrier`, `Semaphore`, `ReentrantLock`, `ReadWriteLock`, `StampedLock`, `ForkJoinPool`, `AtomicInteger`, `LongAdder`. |
+| **Notes** | Always use `java.util.concurrent` over `Vector`/`Hashtable`/`Collections.synchronized*`. Prefer `ConcurrentHashMap.compute*` for atomic updates. Use `LongAdder` instead of `AtomicLong` under high contention. |
+
+```mermaid
+flowchart LR
+    subgraph JUC["java.util.concurrent"]
+        EXEC["Executors"] --> POOL["Thread Pools"]
+        MAP["ConcurrentHashMap"] --> SAFE["Thread-safe Maps"]
+        LOCK["ReentrantLock"] --> FLEX["Flexible Locking"]
+        ATOM["AtomicInteger"] --> CAS["Lock-free Ops"]
+    end
+    style JUC fill:#e1f5fe,stroke:#0288d1
+    style POOL fill:#e8f5e9,stroke:#388e3c
+    style SAFE fill:#e8f5e9,stroke:#388e3c
+    style FLEX fill:#e8f5e9,stroke:#388e3c
+    style CAS fill:#e8f5e9,stroke:#388e3c
+```
+
+Read more: **[Detailed description and examples](./15-concurrent.md)**
+
+---
+
+### 16. Reflection API
+
+| Section | Content |
+| :--- | :--- |
+| **Description** | The Reflection API enables runtime introspection and manipulation of classes, fields, methods, and constructors. It is the foundation of dependency injection frameworks, serialization libraries, and dynamic proxies. |
+| **API Purpose** | Discovering type metadata at runtime, invoking methods and accessing fields dynamically, creating instances without compile-time type knowledge, and implementing cross-cutting concerns via proxies. |
+| **Terminology** | `Class<T>`, `Field`, `Method`, `Constructor<T>`, `Proxy`, `MethodHandle`, `VarHandle`, `MethodHandles.Lookup`, `ParameterizedType`, `Annotation`. |
+| **Notes** | Reflection is slow for hot paths — cache `Method`/`Field` objects. Prefer `MethodHandle` for repeated invocations and `VarHandle` for atomic field access. In modular Java (JPMS), use `opens` or `--add-opens` for deep reflection across modules. |
+
+```mermaid
+flowchart TD
+    Class["Class<T>"] --> Fields["Field[]"]
+    Class --> Methods["Method[]"]
+    Class --> Ctors["Constructor<T>[]"]
+    Class --> Annots["Annotation[]"]
+    Class --> Record["RecordComponent[] (Java 16+)"]
+    Class --> Sealed["getPermittedSubclasses() (Java 17+)"]
+
+    style Class fill:#e1f5fe,stroke:#0288d1
+    style Fields fill:#e8f5e9,stroke:#388e3c
+    style Methods fill:#e8f5e9,stroke:#388e3c
+    style Ctors fill:#e8f5e9,stroke:#388e3c
+    style Annots fill:#fff3e0,stroke:#f4a261
+    style Record fill:#fce4ec,stroke:#e91e63
+    style Sealed fill:#fce4ec,stroke:#e91e63
+```
+
+Read more: **[Detailed description and examples](./16-reflection.md)**
+
+---
+
+### 17. Module System (JPMS)
+
+| Section | Content |
+| :--- | :--- |
+| **Description** | The Java Platform Module System (Project Jigsaw) adds a module layer on top of packages, providing strong encapsulation, explicit dependencies, and reliable configuration for both application code and the JDK itself. |
+| **API Purpose** | Eliminating classpath hell, enforcing true encapsulation of internal packages, enabling smaller custom runtime images via `jlink`, and supporting service-oriented decoupling with `ServiceLoader`. |
+| **Terminology** | `module-info.java`, `exports`, `requires`, `requires transitive`, `opens`, `provides` / `uses`, named module, automatic module, unnamed module, readability, accessibility. |
+| **Notes** | The unnamed module (classpath) reads all named modules but cannot be read by them. Use `--add-opens` for frameworks requiring reflection. Automatic modules ease migration from plain JARs. |
+
+```mermaid
+flowchart TD
+    subgraph App["com.example.app"]
+        EXP["exports com.example.api"]
+        OPEN["opens com.example.model"]
+        REQ["requires com.example.lib"]
+        USES["uses com.example.spi.Logger"]
+    end
+
+    subgraph Lib["com.example.lib"]
+        EXP2["exports com.example.lib"]
+    end
+
+    subgraph Provider["com.example.logger.file"]
+        PROV["provides Logger with FileLogger"]
+    end
+
+    REQ --> Lib
+    USES -->|ServiceLoader| PROV
+
+    style App fill:#e1f5fe,stroke:#0288d1
+    style Lib fill:#e8f5e9,stroke:#388e3c
+    style Provider fill:#fff3e0,stroke:#f4a261
+```
+
+Read more: **[Detailed description and examples](./17-modules.md)**
+
+---
+
+### 18. Networking (HttpClient)
+
+| Section | Content |
+| :--- | :--- |
+| **Description** | `HttpClient` (Java 11+) is a modern, fluent API for HTTP/1.1 and HTTP/2 communication. It supports synchronous and asynchronous execution, request/response streaming, connection pooling, and WebSocket connections. |
+| **API Purpose** | Sending HTTP requests, handling responses with various body strategies, executing requests asynchronously via `CompletableFuture`, and establishing WebSocket connections without external dependencies. |
+| **Terminology** | `HttpClient`, `HttpRequest`, `HttpResponse`, `BodyHandlers`, `BodyPublishers`, `send`, `sendAsync`, `WebSocket`. |
+| **Notes** | `HttpClient` is immutable and thread-safe — create one instance and reuse it. Use `sendAsync` with `CompletableFuture` chaining for concurrent or non-blocking I/O. Default HTTP version is HTTP/2 with fallback to HTTP/1.1. |
+
+```mermaid
+flowchart LR
+    Client["HttpClient"] -->|send| Request["HttpRequest"]
+    Client -->|sendAsync| CF["CompletableFuture"]
+    Request -->|returns| Response["HttpResponse<T>"]
+    CF -->|completes with| Response
+
+    style Client fill:#e1f5fe,stroke:#0288d1
+    style Request fill:#fff3e0,stroke:#f4a261
+    style Response fill:#e8f5e9,stroke:#388e3c
+    style CF fill:#fce4ec,stroke:#e91e63
+```
+
+Read more: **[Detailed description and examples](./18-http-client.md)**
+
+---
+
+### 19. I/O and NIO/NIO.2
+
+| Section | Content |
+| :--- | :--- |
+| **Description** | Java's I/O evolved through three generations: classic stream-based I/O (`java.io`), NIO with channels and buffers (`java.nio`), and NIO.2 with path-centric file operations (`java.nio.file`). Each layer serves different performance and usability requirements. |
+| **API Purpose** | Reading and writing byte/character data, processing files and directories, high-performance network servers with non-blocking I/O, memory-mapped files, and filesystem monitoring. |
+| **Terminology** | `InputStream`, `OutputStream`, `Reader`, `Writer`, `Channel`, `ByteBuffer`, `Selector`, `Path`, `Files`, `FileVisitor`, `WatchService`, `MappedByteBuffer`. |
+| **Notes** | Prefer `Files.readString()` / `Files.writeString()` (Java 11+) for simple text I/O. Use `FileChannel` + `MappedByteBuffer` for very large files. Use `Selector` for high-concurrency network servers. Avoid `FileReader`/`FileWriter` — they use the platform default encoding. |
+
+```mermaid
+flowchart TD
+    subgraph Classic["java.io"]
+        IS["InputStream / OutputStream"] -->|bytes| FS["File streams"]
+        RW["Reader / Writer"] -->|chars| FR["FileReader / FileWriter"]
+    end
+
+    subgraph NIO["java.nio"]
+        CH["Channel"] -->|read/write| BB["ByteBuffer"]
+        SEL["Selector"] -->|multiplex| SC["SocketChannel"]
+    end
+
+    subgraph NIO2["java.nio.file"]
+        P["Path"] -->|operate| FL["Files"]
+        FL -->|walk| FV["FileVisitor"]
+        FL -->|watch| WS["WatchService"]
+    end
+
+    style Classic fill:#e1f5fe,stroke:#0288d1
+    style NIO fill:#fff3e0,stroke:#f4a261
+    style NIO2 fill:#e8f5e9,stroke:#388e3c
+```
+
+Read more: **[Detailed description and examples](./19-io-nio.md)**
+
+---
+
 ## Other Language Features
 
 | Feature                | Version | Description                                            | Example                                                |
@@ -628,6 +792,7 @@ flowchart LR
 | [02 Streams](../../../examples/java/11-streams-advanced/README.md) | Advanced Stream operations: reduce, mapMulti, takeWhile |
 | [03 Virtual Threads](../../../examples/java/09-concurrency/README.md) | Virtual threads, ExecutorServices and async tasks |
 | [04 Collections](../../../examples/java/05-data-structures/README.md) | Lists, Sets, Maps, Queues, iteration, ordering |
+| [05 Concurrency Utilities](../../../examples/java/09-concurrency/README.md) | Threads, executors, virtual threads |
 
 ---
 
