@@ -41,6 +41,9 @@
    - [17. Module System (JPMS)](#17-module-system-jpms)
    - [18. Networking (HttpClient)](#18-networking-httpclient)
    - [19. I/O and NIO/NIO.2](#19-io-and-nionio2)
+   - [20. String API and Text Processing](#20-string-api-and-text-processing)
+   - [21. Regular Expressions](#21-regular-expressions)
+   - [22. Annotations and Metadata](#22-annotations-and-metadata)
 6. [Other Language Features](#other-language-features)
 7. [Runtime Memory Layout](#runtime-memory-layout)
 8. [Java Memory Model (JMM)](#java-memory-model-jmm)
@@ -651,6 +654,102 @@ flowchart TD
 ```
 
 Read more: **[Detailed description and examples](./19-io-nio.md)**
+
+---
+
+### 20. String API and Text Processing
+
+| Section | Content |
+| :--- | :--- |
+| **Description** | Java provides a comprehensive API for text manipulation, from the immutable `String` class with its pool-based interning, to mutable `StringBuilder`/`StringBuffer`, text blocks, formatting utilities, and parsing tools. |
+| **API Purpose** | Efficient string construction, transformation, formatting, and parsing while avoiding common performance pitfalls like loop concatenation and excessive object creation. |
+| **Terminology** | `String` (immutable, pool), `StringBuilder`, `StringBuffer`, `StringJoiner`, `String.format`, `Formatter`, `MessageFormat`, `Scanner`, text blocks `"""`, `strip()`/`isBlank()`, string templates. |
+| **Notes** | Always prefer `StringBuilder` over `String` concatenation in loops. Use `String.strip()` (Java 11+) instead of `trim()` for Unicode-aware whitespace handling. Pre-compile `Pattern` objects when using regex repeatedly. |
+
+```mermaid
+flowchart TD
+    subgraph Immutable["Immutable"]
+        STR["String<br/>Pool, shareable"]
+    end
+    subgraph Mutable["Mutable"]
+        SB["StringBuilder<br/>Fast, not thread-safe"]
+        SBF["StringBuffer<br/>Synchronized"]
+    end
+    subgraph Formatting["Formatting"]
+        FMT["String.format<br/>MessageFormat"]
+        TB["Text Blocks &quot;&quot;&quot;"]
+    end
+    STR -->|Build in loop| SB
+    style STR fill:#e1f5fe,stroke:#0288d1
+    style SB fill:#e8f5e9,stroke:#388e3c
+    style SBF fill:#fff3e0,stroke:#f4a261
+    style FMT fill:#f5f0e8,stroke:#b0a090
+    style TB fill:#f5f0e8,stroke:#b0a090
+```
+
+Read more: **[Detailed description and examples](./20-string-api.md)**
+
+---
+
+### 21. Regular Expressions
+
+| Section | Content |
+| :--- | :--- |
+| **Description** | The `java.util.regex` package provides pattern matching, search, replace, and split capabilities through compiled `Pattern` objects and `Matcher` engines, supporting groups, lookahead/lookbehind, and flags. |
+| **API Purpose** | Validating input formats, extracting structured data from text, transforming strings via pattern-based replacement, and tokenizing input with custom delimiters. |
+| **Terminology** | `Pattern`, `Matcher`, `group()`, `find()`, `matches()`, `replaceAll()`, `split()`, lookahead `(?=...)`, lookbehind `(?<=...)`, capturing groups, `Pattern.compile()` flags. |
+| **Notes** | `String.matches()` and `String.replaceAll()` compile the regex on every call — always pre-compile `Pattern` for repeated operations. Use non-capturing groups `(?:...)` when backreferences are not needed. |
+
+```mermaid
+flowchart LR
+    subgraph Regex["java.util.regex"]
+        P["Pattern.compile(regex)"]
+        M["Matcher(input)"]
+        OP["find() · matches() · replaceAll()"]
+    end
+    P --> M
+    M --> OP
+    style P fill:#e1f5fe,stroke:#0288d1
+    style M fill:#fff3e0,stroke:#f4a261
+    style OP fill:#e8f5e9,stroke:#388e3c
+```
+
+Read more: **[Detailed description and examples](./21-regex.md)**
+
+---
+
+### 22. Annotations and Metadata
+
+| Section | Content |
+| :--- | :--- |
+| **Description** | Annotations provide declarative metadata on program elements. They drive compiler behavior, runtime reflection, and compile-time code generation through annotation processors, forming the foundation of modern Java frameworks. |
+| **API Purpose** | Enforcing constraints at compile time, configuring frameworks (Spring, JPA), generating boilerplate code, and enabling runtime introspection of program structure and intent. |
+| **Terminology** | `@interface`, `@Retention`, `@Target`, `RetentionPolicy`, `ElementType`, `@Repeatable`, `@Inherited`, `@Documented`, reflection (`getAnnotation`), type annotations, annotation processors. |
+| **Notes** | Use the weakest retention policy that satisfies the use case: `SOURCE` for compiler hints, `CLASS` for processors, `RUNTIME` for reflection. Always specify `@Target` to document intended usage and catch misplaced annotations early. |
+
+```mermaid
+flowchart TD
+    subgraph Decl["Annotation Declaration"]
+        D["@interface"]
+        META["@Retention · @Target · @Repeatable"]
+    end
+    subgraph Use["Usage"]
+        R["Reflection at RUNTIME"]
+        P["Processor at compile time"]
+        C["Compiler checks at SOURCE"]
+    end
+    D --> META
+    META --> R
+    META --> P
+    META --> C
+    style D fill:#e1f5fe,stroke:#0288d1
+    style META fill:#fff3e0,stroke:#f4a261
+    style R fill:#e8f5e9,stroke:#388e3c
+    style P fill:#e8f5e9,stroke:#388e3c
+    style C fill:#e8f5e9,stroke:#388e3c
+```
+
+Read more: **[Detailed description and examples](./22-annotations.md)**
 
 ---
 
