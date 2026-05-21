@@ -312,3 +312,283 @@ flowchart TD
 | I/O-heavy, high concurrency | Virtual threads (Java 21+) |
 | Structured task lifecycle | `StructuredTaskScope` (Java 21+) |
 | Bridging callback APIs | `new CompletableFuture<>()` + `complete()` |
+
+## Visual Diagrams
+
+### Creation
+
+```mermaid
+graph LR
+    A[Create] --> B[supplyAsync]
+    A --> C[runAsync]
+    A --> D[completedFuture]
+    A --> E[new CompletableFuture]
+
+    B --> B1[Returns value via ForkJoinPool]
+    C --> C1[Returns void via ForkJoinPool]
+    D --> D1[Already completed]
+    E --> E1[Manual complete]
+
+    style A fill:#4A90D9,color:#fff
+    style B fill:#27AE60,color:#fff
+    style C fill:#27AE60,color:#fff
+    style D fill:#27AE60,color:#fff
+    style E fill:#27AE60,color:#fff
+    style B1 fill:#D5E8D4
+    style C1 fill:#D5E8D4
+    style D1 fill:#D5E8D4
+    style E1 fill:#D5E8D4
+```
+
+### Chaining Pipeline
+
+```mermaid
+flowchart LR
+    S([START])
+
+    S -->|"thenApply"| A[Transform T to U]
+    S -->|"thenAccept"| B[Consume no return]
+    S -->|"thenRun"| C[Run ignores result]
+    S -->|"thenCompose"| D[FlatMap nested future]
+
+    A --> R([Result])
+    B --> R
+    C --> R
+    D --> R
+
+    style S fill:#2ECC71,color:#fff
+    style R fill:#E74C3C,color:#fff
+    style A fill:#3498DB,color:#fff
+    style B fill:#9B59B6,color:#fff
+    style C fill:#F39C12,color:#fff
+    style D fill:#1ABC9C,color:#fff
+```
+
+### Async vs Sync
+
+```mermaid
+graph TD
+    M[Method Variants]
+
+    M --> S[Sync]
+    M --> AS[Async default]
+    M --> AC[Async custom]
+
+    S  --> S1[thenApply fn]
+    AS --> AS1[thenApplyAsync fn]
+    AC --> AC1[thenApplyAsync fn plus executor]
+
+    S1 --> NOTE[Same pattern for thenAccept thenRun thenCompose thenCombine]
+    AS1 --> NOTE
+    AC1 --> NOTE
+
+    style M fill:#2C3E50,color:#fff
+    style S fill:#27AE60,color:#fff
+    style AS fill:#E67E22,color:#fff
+    style AC fill:#8E44AD,color:#fff
+    style NOTE fill:#ECF0F1,color:#2C3E50
+```
+
+### Combining Futures
+
+```mermaid
+flowchart TB
+    subgraph COMBINE ["thenCombine — need both results"]
+        direction LR
+        C1([CF A]) --> COMB{combine a b to C}
+        C2([CF B]) --> COMB
+        COMB --> C3([CF C])
+    end
+
+    subgraph ACCEPT ["thenAcceptBoth — consume both no return"]
+        direction LR
+        A1([CF A]) --> ACC{acceptBoth void}
+        A2([CF B]) --> ACC
+        ACC --> A3([CF Void])
+    end
+
+    subgraph ALLOF ["allOf — wait for all"]
+        direction LR
+        AL1([CF 1]) --> ALOF{allOf}
+        AL2([CF 2]) --> ALOF
+        AL3([CF 3]) --> ALOF
+        ALOF --> AL4([CF Void])
+    end
+
+    subgraph ANYOF ["anyOf — first one wins"]
+        direction LR
+        AN1([CF 1]) --> ANOF{anyOf}
+        AN2([CF 2]) --> ANOF
+        AN3([CF 3]) --> ANOF
+        ANOF --> AN4([CF Object])
+    end
+
+    style COMBINE fill:#EBF5FB
+    style ACCEPT fill:#EAFAF1
+    style ALLOF fill:#FEF9E7
+    style ANYOF fill:#FDEDEC
+```
+
+### Error Handling
+
+```mermaid
+flowchart LR
+    START([Exception thrown])
+
+    START -->|"exceptionally"| EXC[Recover returns value]
+    START -->|"handle"| HND[Handle result or error]
+    START -->|"whenComplete"| WC[Peek does not change result]
+
+    EXC --> OK([Recovered Value])
+    HND --> OK
+    WC --> PASS([Pass-through original])
+
+    style START fill:#E74C3C,color:#fff
+    style EXC fill:#27AE60,color:#fff
+    style HND fill:#3498DB,color:#fff
+    style WC fill:#F39C12,color:#fff
+    style OK fill:#2ECC71,color:#fff
+    style PASS fill:#95A5A6,color:#fff
+```
+
+### Full Pipeline Flow
+
+```mermaid
+sequenceDiagram
+    participant M as Main Thread
+    participant FJ as ForkJoinPool
+    participant CF as CompletableFuture
+    participant CB as Callback Chain
+
+    M->>CF: supplyAsync(supplier)
+    CF->>FJ: submit task
+    FJ-->>CF: execute in background
+    CF-->>M: returns CF immediately
+
+    Note over M: Main thread is free!
+
+    FJ->>CF: complete(value)
+    CF->>CB: thenApply(fn)
+    CB->>CB: thenAccept(consumer)
+    CB->>CB: exceptionally(handler)
+    CB-->>M: get() or join()
+```
+
+### Quick Reference Map
+
+```mermaid
+mindmap
+  root(("CompletableFuture"))
+    Create
+      supplyAsync
+      runAsync
+      completedFuture
+      failedFuture
+    Transform
+      thenApply
+      thenCompose
+      thenCombine
+    Consume
+      thenAccept
+      thenRun
+      thenAcceptBoth
+    Wait
+      allOf
+      anyOf
+    Errors
+      exceptionally
+      handle
+      whenComplete
+    Complete
+      complete
+      completeExceptionally
+      cancel
+    Get
+      get
+      join
+      getNow
+```
+
+### thenApply vs thenCompose
+
+```mermaid
+flowchart LR
+    AP1[thenApply maps T to U]
+    AP2[thenCompose maps T to CF of U avoids nesting]
+    AP1 -.- AP2
+
+    style AP1 fill:#D5F5E3,stroke:#27AE60
+    style AP2 fill:#D5F5E3,stroke:#27AE60
+```
+
+### exceptionally vs handle vs whenComplete
+
+```mermaid
+flowchart LR
+    EH1[exceptionally handles only errors and recovers]
+    EH2[handle covers both success and error paths]
+    EH3[whenComplete peeks but never changes result]
+    EH1 -.- EH2
+    EH2 -.- EH3
+
+    style EH1 fill:#FDEDEC,stroke:#E74C3C
+    style EH2 fill:#FDEDEC,stroke:#E74C3C
+    style EH3 fill:#FDEDEC,stroke:#E74C3C
+```
+
+### get vs join vs getNow
+
+```mermaid
+flowchart LR
+    GJ1[get throws checked exception]
+    GJ2[join throws unchecked exception]
+    GJ3[getNow returns default if not ready]
+    GJ1 -.- GJ2
+    GJ2 -.- GJ3
+
+    style GJ1 fill:#FEF9E7,stroke:#F39C12
+    style GJ2 fill:#FEF9E7,stroke:#F39C12
+    style GJ3 fill:#FEF9E7,stroke:#F39C12
+```
+
+### allOf vs anyOf
+
+```mermaid
+flowchart LR
+    AO1[allOf returns CF Void waits for all]
+    AO2[anyOf returns CF Object first one wins]
+    AO1 -.- AO2
+
+    style AO1 fill:#EBF5FB,stroke:#3498DB
+    style AO2 fill:#EBF5FB,stroke:#3498DB
+```
+
+### complete vs completeExceptionally vs cancel
+
+```mermaid
+flowchart LR
+    CM1[complete sets result manually]
+    CM2[completeExceptionally sets error manually]
+    CM3[cancel sets CancellationException]
+    CM1 -.- CM2
+    CM2 -.- CM3
+
+    style CM1 fill:#F5EEF8,stroke:#8E44AD
+    style CM2 fill:#F5EEF8,stroke:#8E44AD
+    style CM3 fill:#F5EEF8,stroke:#8E44AD
+```
+
+### thenApply vs thenApplyAsync vs thenApplyAsync with Executor
+
+```mermaid
+flowchart LR
+    TH1[thenApply runs in current thread]
+    TH2[thenApplyAsync runs in ForkJoinPool]
+    TH3[thenApplyAsync with executor runs in custom pool]
+    TH1 -.- TH2
+    TH2 -.- TH3
+
+    style TH1 fill:#F2F3F4,stroke:#717D7E
+    style TH2 fill:#F2F3F4,stroke:#717D7E
+    style TH3 fill:#F2F3F4,stroke:#717D7E
+```
