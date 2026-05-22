@@ -1,287 +1,445 @@
 package org.example;
 
-import java.time.Instant;
 import java.util.concurrent.*;
+import java.util.concurrent.StructuredTaskScope.Subtask;
+import java.util.concurrent.StructuredTaskScope.FailedException;
 
 /**
- * Java Structured Concurrency Examples
+ * Java Concurrency Evolution: Future → CompletableFuture → Structured Concurrency
  *
- * Structured Concurrency (final in Java 24) provides a high-level abstraction
- * for managing concurrent tasks. Related tasks are treated as a single unit
- * of work, improving error handling, cancellation, and observability.
+ * This file demonstrates three concurrency patterns using all three APIs:
  *
- * Key benefits:
- * - Tasks forked in a scope are joined before scope exit
- * - If any subtask fails, remaining tasks can be automatically cancelled
- * - The scope ensures all tasks complete (successfully or not) before proceeding
+ *   PATTERN A — Sequential Pipeline:
+ *     Fetch → Transform → Save (tasks depend on each other, run one after another)
+ *
+ *   PATTERN B — Async Processing:
+ *     Non-blocking chain: supplyAsync → thenApplyAsync → thenRun
+ *
+ *   PATTERN C — Parallel Pipelines:
+ *     Two independent pipelines run in parallel, results are combined at the end:
+ *       Pipeline 1: fetchUser → fetchUserRole
+ *       Pipeline 2: fetchProduct → calculateDiscount
+ *       Combined:   "Role: X, Price: Y"
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * THE CHECKED EXCEPTION CONFLICT: COMPLETABLEFUTURE VS STRUCTURED CONCURRENCY
+ * ─────────────────────────────────────────────────────────────────────────────
+ * - CompletableFuture's supplyAsync/thenApply take Supplier/Function, which DO NOT
+ *   allow checked exceptions. This leads to "Dirty" code with try-catch boilerplate.
+ *   We solve this in production using "Clean Wrapper Helpers" (see examples).
+ *
+ * - Structured Concurrency's scope.fork() accepts Callable, which naturally
+ *   allows checked exceptions (throws Exception). You can call throwing methods
+ *   directly without any wrappers or try-catch boilerplate!
+ * ─────────────────────────────────────────────────────────────────────────────
+ *
+ * Requires Java 26 (StructuredTaskScope is preview in Java 24-26).
+ * Compile with: --enable-preview --release 26
  */
 public class Main {
 
-    public static void main(String[] args) {
-        System.out.println("=== Example 1: Basic Structured Concurrency ===");
-        example1BasicConcurrency();
+    public static void main(String[] args) throws Exception {
 
-        System.out.println("\n=== Example 2: Shutdown on First Failure ===");
-        example2ShutdownOnFailure();
+        // ══════════════════════════════════════════════════════════════════════
+        //  PATTERN A — SEQUENTIAL PIPELINE
+        // ══════════════════════════════════════════════════════════════════════
+        System.out.println("╔══════════════════════════════════════════════════╗");
+        System.out.println("║  PATTERN A — SEQUENTIAL PIPELINE                ║");
+        System.out.println("╚══════════════════════════════════════════════════╝");
 
-        System.out.println("\n=== Example 3: Shutdown on First Success ===");
-        example3ShutdownOnSuccess();
+        System.out.println("\n--- A1: Future (sequential, manual chaining) ---");
+        patternA_Future();
 
-        System.out.println("\n=== Example 4: Handling Timeouts ===");
-        example4HandlingTimeouts();
+        System.out.println("\n--- A2: CompletableFuture (single virtual thread) ---");
+        patternA_CompletableFuture();
 
-        System.out.println("\n=== Example 5: Combining Results ===");
-        example5CombiningResults();
+        System.out.println("\n--- A3: Structured Concurrency (single virtual thread via scope.fork) ---");
+        patternA_StructuredConcurrency();
+
+        // ══════════════════════════════════════════════════════════════════════
+        //  PATTERN B — ASYNC PROCESSING
+        // ══════════════════════════════════════════════════════════════════════
+        System.out.println("\n╔══════════════════════════════════════════════════╗");
+        System.out.println("║  PATTERN B — ASYNC PROCESSING                   ║");
+        System.out.println("╚══════════════════════════════════════════════════╝");
+
+        System.out.println("\n--- B1: Future (blocking main thread between steps) ---");
+        patternB_Future();
+
+        System.out.println("\n--- B2: CompletableFuture (thenApplyAsync chain) ---");
+        patternB_CompletableFuture();
+
+        System.out.println("\n--- B3: Structured Concurrency (sequential inside one fork) ---");
+        patternB_StructuredConcurrency();
+
+        // ══════════════════════════════════════════════════════════════════════
+        //  PATTERN C — PARALLEL PIPELINES (THE EXCEPTION COMPOSABILITY SHOWCASE)
+        // ══════════════════════════════════════════════════════════════════════
+        System.out.println("\n╔══════════════════════════════════════════════════╗");
+        System.out.println("║  PATTERN C — PARALLEL PIPELINES                 ║");
+        System.out.println("╚══════════════════════════════════════════════════╝");
+
+        System.out.println("\n--- C1: Future (parallel submit, blocking join) ---");
+        patternC_Future();
+
+        System.out.println("\n--- C2 (Dirty): CompletableFuture with inline try-catch noise ---");
+        patternC_CompletableFuture_Dirty();
+
+        System.out.println("\n--- C2 (Clean): CompletableFuture utilizing clean helper wrappers ---");
+        patternC_CompletableFuture_Clean();
+
+        System.out.println("\n--- C3 (Native): Structured Concurrency (Forks call throwing methods directly) ---");
+        patternC_StructuredConcurrency();
     }
 
-    /**
-     * Example 1: Basic Structured Concurrency
-     *
-     * Basic pattern using StructuredTaskScope:
-     * 1. Fork multiple tasks in parallel
-     * 2. Join to wait for all tasks to complete
-     * 3. Process results using resultNow()
-     *
-     * The scope ensures all tasks complete before exiting the try-with-resources block.
-     */
-    private static void example1BasicConcurrency() {
-        try (var scope = new StructuredTaskScope<String>()) {
-            Future<String> userFuture = scope.fork(() -> fetchUser());
-            Future<String> orderFuture = scope.fork(() -> fetchOrders());
+    // ══════════════════════════════════════════════════════════════════════════
+    //  PATTERN A — SEQUENTIAL PIPELINE
+    // ══════════════════════════════════════════════════════════════════════════
 
-            scope.join(); // Wait for both tasks to complete
+    private static void patternA_Future() throws Exception {
+        System.out.println("Start: " + Thread.currentThread().getName());
 
-            String user = userFuture.resultNow();
-            String orders = orderFuture.resultNow();
+        try (ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor()) {
+            Future<String> fetchFuture = executor.submit(() -> fetchValue());
+            String rawData = fetchFuture.get(); // blocks current thread
 
-            System.out.println("User: " + user + ", Orders: " + orders);
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
+            Future<String> transformFuture = executor.submit(() -> transform(rawData));
+            String processedData = transformFuture.get(); // blocks again
+
+            Future<?> saveFuture = executor.submit(() -> {
+                save(processedData);
+                return null;
+            });
+            saveFuture.get(); // blocks again
         }
     }
 
-    /**
-     * Example 2: Shutdown on First Failure
-     *
-     * Using ShutdownOnFailure policy:
-     * - Cancels remaining tasks if any subtask fails
-     * - throwIfFailed() propagates the first exception encountered
-     * - Useful when partial success is unacceptable
-     *
-     * This is the "all-or-nothing" pattern.
-     */
-    private static void example2ShutdownOnFailure() {
-        try (var scope = new StructuredTaskScope.ShutdownOnFailure()) {
-            Future<String> future1 = scope.fork(() -> fetchFromServiceA());
-            Future<String> future2 = scope.fork(() -> fetchFromServiceB());
+    private static void patternA_CompletableFuture() throws Exception {
+        System.out.println("Start: " + Thread.currentThread().getName());
+
+        try (ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor()) {
+            CompletableFuture<Void> cf = CompletableFuture.supplyAsync(() -> {
+                try {
+                    String rawData = fetchValue();
+                    String processedData = transform(rawData);
+                    save(processedData);
+                    return (Void) null;
+                } catch (Exception e) {
+                    throw new RuntimeException("Pipeline failed: " + e.getMessage(), e);
+                }
+            }, executor);
+
+            cf.get(); // IN TESTS: block main thread so JVM doesn't exit.
+        }
+    }
+
+    private static void patternA_StructuredConcurrency() {
+        System.out.println("Start: " + Thread.currentThread().getName());
+
+        try (var scope = StructuredTaskScope.<Void>open()) {
+            scope.fork(() -> {
+                String rawData  = fetchValue();
+                String processed = transform(rawData);
+                save(processed);
+                return null;
+            });
+
+            scope.join(); // Correct production pattern when owner is a Virtual Thread
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        } catch (FailedException e) {
+            System.err.println("Pipeline failed: " + e.getCause().getMessage());
+        }
+    }
+
+    // ══════════════════════════════════════════════════════════════════════════
+    //  PATTERN B — ASYNC PROCESSING
+    // ══════════════════════════════════════════════════════════════════════════
+
+    private static void patternB_Future() throws Exception {
+        System.out.println("Start: " + Thread.currentThread().getName());
+
+        try (ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor()) {
+            Future<String> step1 = executor.submit(() -> {
+                System.out.println("  Step 1 on: " + Thread.currentThread().getName());
+                return "New value";
+            });
+            String result1 = step1.get(); // blocks main thread
+
+            Future<String> step2 = executor.submit(() -> {
+                System.out.println("  Step 2 on: " + Thread.currentThread().getName());
+                return result1.toLowerCase();
+            });
+            String result2 = step2.get(); // blocks again
+
+            Future<?> step3 = executor.submit(() -> {
+                System.out.println("  Step 3 (all done) on: " + Thread.currentThread().getName() + " val=" + result2);
+            });
+            step3.get();
+        }
+    }
+
+    private static void patternB_CompletableFuture() throws Exception {
+        System.out.println("Start: " + Thread.currentThread().getName());
+
+        try (ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor()) {
+            CompletableFuture<Void> cf = CompletableFuture
+                .supplyAsync(() -> {
+                    System.out.println("  Step 1 on: " + Thread.currentThread().getName());
+                    return "New value";
+                }, executor)
+                .thenApplyAsync(result -> {
+                    System.out.println("  Step 2 on: " + Thread.currentThread().getName());
+                    return result.toLowerCase();
+                }, executor)
+                .thenRun(() ->
+                             System.out.println("  Step 3 (all done) on: " + Thread.currentThread().getName())
+                );
+
+            cf.join(); // IN TESTS: keeps main thread alive.
+        }
+    }
+
+    private static void patternB_StructuredConcurrency() {
+        System.out.println("Start: " + Thread.currentThread().getName());
+
+        try (var scope = StructuredTaskScope.<Void>open()) {
+            scope.fork(() -> {
+                System.out.println("  Step 1 on: " + Thread.currentThread().getName());
+                String result = "New value";
+                Thread.sleep(50);
+
+                System.out.println("  Step 2 on: " + Thread.currentThread().getName());
+                String processed = result.toLowerCase();
+
+                System.out.println("  Step 3 (all done) on: " + Thread.currentThread().getName() + " val=" + processed);
+                return null;
+            });
 
             scope.join();
-            scope.throwIfFailed(); // Throws if any subtask failed
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
 
-            // Process results only if all succeeded
-            System.out.println(future1.resultNow() + " - " + future2.resultNow());
-        } catch (Exception e) {
-            System.out.println("Operation failed: " + e.getMessage());
+    // ══════════════════════════════════════════════════════════════════════════
+    //  PATTERN C — PARALLEL PIPELINES
+    // ══════════════════════════════════════════════════════════════════════════
+
+    private static void patternC_Future() throws Exception {
+        System.out.println("Start: " + Thread.currentThread().getName());
+
+        try (ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor()) {
+            Future<String> p1step1 = executor.submit(() -> fetchUser());
+            Future<String> p2step1 = executor.submit(() -> fetchProduct());
+
+            // Manual step resolution requires inline try-catches if blocking fails
+            String user    = p1step1.get();
+            Future<String> p1step2 = executor.submit(() -> fetchUserRole(user));
+
+            String product = p2step1.get();
+            Future<Double> p2step2 = executor.submit(() -> calculateDiscount(product));
+
+            String role  = p1step2.get();
+            Double price = p2step2.get();
+
+            System.out.println("  Result: Role=" + role + ", Price=" + price);
         }
     }
 
     /**
-     * Example 3: Shutdown on First Success
+     * C2 (Dirty) — CompletableFuture with messy inline exception wrapping.
      *
-     * Using ShutdownOnSuccess policy:
-     * - Cancels remaining tasks after first successful result
-     * - result() returns the first successful value
-     * - Useful for fallback/redundancy patterns
-     *
-     * Common use cases:
-     * - Querying multiple data sources and using the first to respond
-     * - Trying primary, secondary, and fallback servers
-     * - Race conditions where only one result is needed
+     * Because 'fetchUser' throws a checked InterruptedException, we cannot use
+     * method references directly. Every single stage gets polluted with try-catch.
      */
-    private static void example3ShutdownOnSuccess() {
-        try (var scope = new StructuredTaskScope.ShutdownOnSuccess<String>()) {
-            scope.fork(() -> queryPrimaryDataSource());
-            scope.fork(() -> querySecondaryDataSource());
-            scope.fork(() -> queryFallbackDataSource());
+    private static void patternC_CompletableFuture_Dirty() throws Exception {
+        System.out.println("Start: " + Thread.currentThread().getName());
 
-            scope.join();
+        try (ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor()) {
 
-            String result = scope.result(); // Gets the first successful result
-            System.out.println("Obtained result: " + result);
-        } catch (Exception e) {
-            System.out.println("All attempts failed");
+            CompletableFuture<String> pipeline1 = CompletableFuture.supplyAsync(() -> {
+                try {
+                    return fetchUser(); // checked exception must be caught!
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    throw new CompletionException(e);
+                }
+            }, executor).thenApplyAsync(user -> {
+                try {
+                    return fetchUserRole(user);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    throw new CompletionException(e);
+                }
+            }, executor);
+
+            CompletableFuture<Double> pipeline2 = CompletableFuture.supplyAsync(() -> {
+                try {
+                    return fetchProduct();
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    throw new CompletionException(e);
+                }
+            }, executor).thenApplyAsync(product -> {
+                try {
+                    return calculateDiscount(product);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    throw new CompletionException(e);
+                }
+            }, executor);
+
+            CompletableFuture<String> combined = pipeline1.thenCombine(pipeline2,
+                                                                       (role, price) -> "Role=" + role + ", Price=" + price);
+
+            String result = combined.join();
+            System.out.println("  Result: " + result);
         }
     }
 
     /**
-     * Example 4: Handling Timeouts
+     * C2 (Clean) — CompletableFuture using decoupled utility wrappers.
      *
-     * Using joinUntil() for timeout-based execution:
-     * - Wait for tasks with a deadline
-     * - Check future state after timeout
-     * - Manually shutdown if tasks haven't completed
-     *
-     * Useful for operations with SLA requirements.
+     * By calling the custom `*Clean()` wrapper methods (located at the bottom of the file),
+     * we can restore the expressive method references and functional purity of our pipeline.
      */
-    private static void example4HandlingTimeouts() {
-        try (var scope = new StructuredTaskScope<String>()) {
-            Future<String> future = scope.fork(() -> longRunningOperation());
+    private static void patternC_CompletableFuture_Clean() throws Exception {
+        System.out.println("Start: " + Thread.currentThread().getName());
 
-            scope.joinUntil(Instant.now().plusSeconds(3));
+        try (ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor()) {
 
-            if (future.state() == Future.State.SUCCESS) {
-                System.out.println("Result: " + future.resultNow());
-            } else {
-                System.out.println("Operation timed out");
-                scope.shutdown(); // Interrupt the thread
-            }
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
+            CompletableFuture<String> pipeline1 =
+                CompletableFuture
+                    .supplyAsync(Main::fetchUserClean, executor)
+                    .thenApplyAsync(Main::fetchUserRoleClean, executor);
+
+            CompletableFuture<Double> pipeline2 =
+                CompletableFuture
+                    .supplyAsync(Main::fetchProductClean, executor)
+                    .thenApplyAsync(Main::calculateDiscountClean, executor);
+
+            CompletableFuture<String> combined =
+                pipeline1.thenCombine(pipeline2,
+                                      (role, price) -> "Role=" + role + ", Price=" + price);
+
+            String result = combined.join();
+            System.out.println("  Result: " + result);
         }
     }
 
     /**
-     * Example 5: Combining Results with Exception Handling
+     * C3 (Native) — Structured Concurrency with zero boilerplate.
      *
-     * Combining results from multiple tasks with proper error handling:
-     * - Use ShutdownOnFailure to fail fast
-     * - Parse results after successful fetch
-     * - Handle parsing exceptions separately from fetch exceptions
-     *
-     * This pattern shows how to structure a complex workflow with structured concurrency.
+     * StructuredTaskScope's fork() receives a Callable. This means we can call
+     * methods declaring checked exceptions ('throws InterruptedException') directly
+     * inside the scope without wrappers OR inline try-catch blocks.
      */
-    private static void example5CombiningResults() {
-        try (var scope = new StructuredTaskScope.ShutdownOnFailure()) {
-            Future<String> userFuture = scope.fork(() -> getUserProfile());
-            Future<String> historyFuture = scope.fork(() -> getPurchaseHistory());
+    private static void patternC_StructuredConcurrency() {
+        System.out.println("Start: " + Thread.currentThread().getName());
 
-            scope.join();
-            scope.throwIfFailed();
+        try (var scope = StructuredTaskScope.<Object>open()) {
 
-            try {
-                UserProfile profile = parseProfile(userFuture.resultNow());
-                PurchaseHistory history = parseHistory(historyFuture.resultNow());
-                System.out.println("Combined result: " + new UserData(profile, history));
-            } catch (ParsingException e) {
-                throw new RuntimeException("Failed to parse data", e);
-            }
-        } catch (Exception e) {
-            System.out.println("Failed to fetch user data: " + e.getMessage());
+            // Fork 1: Calls throwing methods directly
+            Subtask<String> pipeline1 = scope.fork(() -> {
+                String user = fetchUser(); // Direct call! No try-catch needed.
+                return fetchUserRole(user);
+            });
+
+            // Fork 2: Calls throwing methods directly
+            Subtask<Double> pipeline2 = scope.fork(() -> {
+                String product = fetchProduct();
+                return calculateDiscount(product);
+            });
+
+            scope.join(); // Block owner thread until both pipelines finish
+
+            String role  = (String) pipeline1.get();
+            Double price = (Double) pipeline2.get();
+
+            System.out.println("  Result: Role=" + role + ", Price=" + price);
+
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        } catch (FailedException e) {
+            System.err.println("Pipeline failed: " + e.getCause().getMessage());
         }
     }
 
-    // ===== Mock Service Methods =====
+    // ══════════════════════════════════════════════════════════════════════════
+    //  RAW THROWING METHODS (checked exception-based business logic)
+    // ══════════════════════════════════════════════════════════════════════════
+
+    private static String fetchValue() throws InterruptedException {
+        Thread.sleep(100);
+        return "New Value";
+    }
+
+    private static String transform(String value) {
+        return value.toLowerCase();
+    }
+
+    private static void save(String value) throws InterruptedException {
+        Thread.sleep(50);
+    }
 
     private static String fetchUser() throws InterruptedException {
-        Thread.sleep(500);
-        return "John Doe";
+        Thread.sleep(50);
+        return "Ivan";
     }
 
-    private static String fetchOrders() throws InterruptedException {
-        Thread.sleep(800);
-        return "[Order1, Order2]";
+    private static String fetchUserRole(String user) throws InterruptedException {
+        Thread.sleep(50);
+        return user + "_ADMIN";
     }
 
-    private static String fetchFromServiceA() throws InterruptedException {
-        Thread.sleep(300);
-        return "ServiceA Data";
+    private static String fetchProduct() throws InterruptedException {
+        Thread.sleep(40);
+        return "Laptop";
     }
 
-    private static String fetchFromServiceB() throws InterruptedException {
-        Thread.sleep(400);
-        return "ServiceB Data";
+    private static double calculateDiscount(String product) throws InterruptedException {
+        Thread.sleep(60);
+        return 999.99;
     }
 
-    private static String queryPrimaryDataSource() throws InterruptedException {
-        Thread.sleep(1000);
-        return "Primary Data";
-    }
+    // ══════════════════════════════════════════════════════════════════════════
+    //  CLEAN HELPER UTILITIES FOR COMPLETABLEFUTURE (WRAP CHECKED EXCEPTIONS)
+    // ══════════════════════════════════════════════════════════════════════════
 
-    private static String querySecondaryDataSource() throws InterruptedException {
-        Thread.sleep(500);
-        return "Secondary Data";
-    }
-
-    private static String queryFallbackDataSource() throws InterruptedException {
-        Thread.sleep(200);
-        return "Fallback Data";
-    }
-
-    private static String longRunningOperation() throws InterruptedException {
-        Thread.sleep(5000); // Will timeout in example 4
-        return "Long operation completed";
-    }
-
-    private static String getUserProfile() throws InterruptedException {
-        Thread.sleep(300);
-        return "{\"name\":\"Alice\",\"age\":30}";
-    }
-
-    private static String getPurchaseHistory() throws InterruptedException {
-        Thread.sleep(400);
-        return "[{\"id\":1,\"item\":\"Book\"}]";
-    }
-
-    // ===== Data Classes =====
-
-    private static class UserProfile {
-        String name;
-        int age;
-
-        UserProfile(String name, int age) {
-            this.name = name;
-            this.age = age;
-        }
-
-        @Override
-        public String toString() {
-            return "UserProfile{name='" + name + "', age=" + age + "}";
+    private static String fetchUserClean() {
+        try {
+            return fetchUser();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new CompletionException(e);
         }
     }
 
-    private static class PurchaseHistory {
-        String items;
-
-        PurchaseHistory(String items) {
-            this.items = items;
-        }
-
-        @Override
-        public String toString() {
-            return "PurchaseHistory{items=" + items + "}";
+    private static String fetchUserRoleClean(String user) {
+        try {
+            return fetchUserRole(user);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new CompletionException(e);
         }
     }
 
-    private static class UserData {
-        UserProfile profile;
-        PurchaseHistory history;
-
-        UserData(UserProfile profile, PurchaseHistory history) {
-            this.profile = profile;
-            this.history = history;
-        }
-
-        @Override
-        public String toString() {
-            return "UserData{" + profile + ", " + history + "}";
+    private static String fetchProductClean() {
+        try {
+            return fetchProduct();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new CompletionException(e);
         }
     }
 
-    // ===== Parsing Methods =====
-
-    private static UserProfile parseProfile(String json) throws ParsingException {
-        // Simplified parsing - in real code, use a JSON library
-        return new UserProfile("Alice", 30);
-    }
-
-    private static PurchaseHistory parseHistory(String json) throws ParsingException {
-        // Simplified parsing
-        return new PurchaseHistory("[Book]");
-    }
-
-    private static class ParsingException extends Exception {
-        ParsingException(String message) {
-            super(message);
+    private static double calculateDiscountClean(String product) {
+        try {
+            return calculateDiscount(product);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new CompletionException(e);
         }
     }
 }

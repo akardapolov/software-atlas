@@ -1,97 +1,137 @@
-# Java Structured Concurrency Examples
+# Java Concurrency Evolution
+## Future → CompletableFuture → Structured Concurrency
 
-This package demonstrates Java's Structured Concurrency API (final in Java 24).
+Demonstrates how the same three concurrency patterns are expressed with each
+generation of the Java concurrency API.
 
-## What is Structured Concurrency?
+---
 
-Structured Concurrency treats related concurrent tasks as a single unit of work. When you fork tasks within a scope, the scope ensures all tasks complete (successfully or not) before proceeding.
+## Patterns
 
-## Key Benefits
+| Pattern                     | Description                                       | Steps                                       |
+|-----------------------------|---------------------------------------------------|---------------------------------------------|
+| **A — Sequential Pipeline** | Tasks depend on each other; run one after another | fetchValue → transform → save               |
+| **B — Async Processing**    | Non-blocking chain of transformations             | supply → apply → run                        |
+| **C — Parallel Pipelines**  | Two independent pipelines combined at the end     | (fetchUser → role) + (fetchProduct → price) |
 
-- **Automatic lifecycle management**: All forked tasks are joined before scope exit
-- **Fail-fast behavior**: Policies like `ShutdownOnFailure` cancel remaining tasks on error
-- **Improved error handling**: Exception propagation is more predictable
-- **Better observability**: Task hierarchy is explicit and traceable
-- **Cancellation propagation**: Cancelled scopes propagate cancellation to subtasks
+---
 
-## Scope Types
+## API Comparison at a Glance
 
-| Scope Type | Behavior | Use Case |
-|------------|----------|----------|
-| `StructuredTaskScope` | Wait for all tasks | General parallel execution |
-| `StructuredTaskScope.ShutdownOnFailure` | Fail fast on first error | All-or-nothing operations |
-| `StructuredTaskScope.ShutdownOnSuccess` | Take first success | Redundancy/fallback patterns |
+| Aspect                  | `Future`                         | `CompletableFuture`             | Structured Concurrency               |
+|-------------------------|----------------------------------|---------------------------------|--------------------------------------|
+| Composition             | Manual `get()` chaining          | Callback chain (`.thenApply`)   | Linear code inside `fork()`          |
+| Blocking between steps  | Always (main thread)             | Optional (callbacks are async)  | Owner thread only (`scope.join`)     |
+| Exception propagation   | `ExecutionException` wrapping    | `.exceptionally()` / `handle()` | `FailedException` at `join()`        |
+| Cancellation            | Manual `future.cancel()`         | Manual on each CF               | Automatic when scope closes          |
+| Parallel result combine | `get()` + `get()` + manual merge | `.thenCombine()`                | `subtask.get()` after `scope.join()` |
+| Readability             | Low (callback-free but verbose)  | Medium (callback nesting)       | High (linear, top-to-bottom)         |
 
-## Examples
+---
 
-### 1. Basic Structured Concurrency
-Simple parallel execution pattern:
-```java
-try (var scope = new StructuredTaskScope<String>()) {
-    Future<String> f1 = scope.fork(() -> task1());
-    Future<String> f2 = scope.fork(() -> task2());
-    scope.join(); // Wait for both
-    process(f1.resultNow(), f2.resultNow());
-}
+## `get()` / `join()` — Tests vs. Production
+
+```text
+┌──────────────────────────────────────────────────────────────────────────┐
+│  IN TESTS / main():                                                       │
+│    future.get() / cf.join() / scope.join()                                │
+│    → blocks the main thread so the JVM does not exit before results are  │
+│      printed. Perfectly fine here.                                        │
+├──────────────────────────────────────────────────────────────────────────┤
+│  IN PRODUCTION:                                                           │
+│                                                                           │
+│  Future          → wrap entire pipeline in ONE virtual-thread task;      │
+│                    call get() only inside that virtual thread.            │
+│                                                                           │
+│  CompletableFuture → never call join()/get() on a platform thread;      │
+│                      attach callbacks: .thenAccept() / .whenComplete().  │
+│                                                                           │
+│  Structured Concurrency → scope.join() IS the production API;            │
+│                           the scope owner must be a virtual thread.      │
+└──────────────────────────────────────────────────────────────────────────┘
 ```
 
-### 2. Shutdown on First Failure
-All-or-nothing pattern where partial success is unacceptable:
-```java
-try (var scope = new StructuredTaskScope.ShutdownOnFailure()) {
-    scope.fork(() -> serviceA());
-    scope.fork(() -> serviceB());
-    scope.join();
-    scope.throwIfFailed(); // Throws if any failed
-}
-```
+---
 
-### 3. Shutdown on First Success
-Race pattern where only the first successful result matters:
-```java
-try (var scope = new StructuredTaskScope.ShutdownOnSuccess<String>()) {
-    scope.fork(() -> primary());
-    scope.fork(() -> secondary());
-    scope.fork(() -> fallback());
-    String result = scope.result(); // First success wins
-}
-```
+## Running
 
-### 4. Handling Timeouts
-Timeout-based execution with manual shutdown:
-```java
-try (var scope = new StructuredTaskScope<String>()) {
-    Future<String> future = scope.fork(() -> longOperation());
-    scope.joinUntil(Instant.now().plusSeconds(3));
-    if (future.state() != SUCCESS) {
-        scope.shutdown(); // Cancel timed-out tasks
-    }
-}
-```
-
-## Running the Examples
-
-Requires Java 21+ (final in Java 24):
+Requires **Java 26** (Structured Concurrency is preview in Java 24–26).
 
 ```bash
-javac Main.java
-java Main
+# Compile with preview features enabled
+javac --enable-preview --release 26 Main.java
+
+# Run
+java --enable-preview Main
 ```
 
-## Comparison: Traditional vs Structured Concurrency
+### Expected output structure
 
-| Aspect | Traditional (ExecutorService) | Structured Concurrency |
-|--------|------------------------------|------------------------|
-| Task lifecycle | Manual management | Automatic via scope |
-| Error handling | Complex | Built-in policies |
-| Cancellation | Manual propagation | Automatic |
-| Readability | Can be unclear | Explicit structure |
-| Resource cleanup | Error-prone | Guaranteed via try-with-resources |
+```
+╔══════════════════════════════════════════════════╗
+║  PATTERN A — SEQUENTIAL PIPELINE                ║
+╚══════════════════════════════════════════════════╝
+
+--- A1: Future (sequential, manual chaining) ---
+  fetchValue on: virtual-...
+  transform on:  virtual-...
+  save on:       virtual-... value=new value
+
+--- A2: CompletableFuture (single virtual thread) ---
+  fetchValue on: virtual-...
+  ...
+
+--- A3: Structured Concurrency (single virtual thread via scope.fork) ---
+  fetchValue on: virtual-...
+  ...
+
+╔══════════════════════════════════════════════════╗
+║  PATTERN B — ASYNC PROCESSING                   ║
+╚══════════════════════════════════════════════════╝
+...
+
+╔══════════════════════════════════════════════════╗
+║  PATTERN C — PARALLEL PIPELINES                 ║
+╚══════════════════════════════════════════════════╝
+...
+  Result: Role=Ivan_ADMIN, Price=999.99   ← all three variants
+```
+
+---
+
+## Key Takeaways
+
+### Use `Future` when …
+- You need fire-and-forget with no result.
+- The calling code is already inside a virtual thread (blocking `get()` is cheap).
+- You do not need non-blocking composition.
+
+### Use `CompletableFuture` when …
+- You need non-blocking callback chains (`.thenApply`, `.thenCombine`).
+- You must remain compatible with Java 8+ APIs.
+- You need fine-grained control over which executor each stage uses.
+- **Always provide an explicit executor** (virtual-thread pool); avoid the
+  default `ForkJoinPool.commonPool()` for blocking I/O stages.
+
+### Use Structured Concurrency when …
+- You want the **clearest, safest** concurrency code.
+- You need automatic cancellation on failure.
+- You run on Java 21+ and can enable preview features.
+- Your owner thread is a virtual thread (natural fit).
+- You want thread hierarchy visible in debuggers/profilers.
+
+---
 
 ## Best Practices
 
-1. **Use try-with-resources** with scopes for guaranteed cleanup
-2. **Choose the right scope policy** for your use case
-3. **Handle InterruptedException** by restoring interrupt status
-4. **Keep forked tasks short** for better responsiveness
-5. **Consider virtual threads** together with structured concurrency for high-throughput I/O
+1. **Virtual threads + blocking I/O** — always prefer virtual threads over
+   platform threads for I/O-bound work. Blocking inside a virtual thread is free.
+2. **Explicit executors for CF** — always pass `executor` to `supplyAsync` /
+   `thenApplyAsync`. Never rely on `ForkJoinPool.commonPool()` for I/O.
+3. **Restore interrupt flag** — catch `InterruptedException` and call
+   `Thread.currentThread().interrupt()` before re-throwing.
+4. **`try-with-resources` for scopes** — `StructuredTaskScope` implements
+   `AutoCloseable`; always open it in a `try` block.
+5. **`scope.join()` owner = virtual thread in production** — opening a scope
+   on a platform thread and calling `join()` defeats the purpose; wrap it in
+   a virtual-thread task.
