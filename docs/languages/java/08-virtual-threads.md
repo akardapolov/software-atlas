@@ -102,3 +102,10 @@ try {
 | CPU-bound computations | ❌ Platform threads or ForkJoinPool |
 | Short-lived tasks | ✅ Virtual threads — cheap creation |
 | Long-running background workers | Either — consider platform threads for stability |
+
+---
+
+## Examples
+
+- [Concurrency example](../../../examples/java/09-concurrency/README.md) — Threads, executors, virtual threads
+- [Structured Concurrency example](../../../examples/java/13-concurrency-structured/README.md) — StructuredTaskScope, ScopedValue

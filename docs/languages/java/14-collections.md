@@ -472,3 +472,9 @@ Map<String, Integer> map2 = Map.ofEntries(
 > - Are **not** modifiable — any mutation attempt throws `UnsupportedOperationException`
 > - May be more memory-efficient than mutable counterparts
 > - For large maps (>10 entries), use `Map.ofEntries()` instead of `Map.of()`
+
+---
+
+## Examples
+
+- [Data Structures example](../../../examples/java/05-data-structures/README.md) — Lists, Sets, Maps, Queues, iteration

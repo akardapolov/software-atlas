@@ -185,3 +185,10 @@ flowchart LR
     style C2 fill:#fff3e0,stroke:#f4a261
     style C3 fill:#e8f5e9,stroke:#388e3c
 ```
+
+---
+
+## Examples
+
+- [Streams Advanced example](../../../examples/java/11-streams-advanced/README.md) — reduce, mapMulti, takeWhile, collectors
+- [FP Features example](../../../examples/java/07-fp-features/README.md) — Lambdas, method references, functional interfaces

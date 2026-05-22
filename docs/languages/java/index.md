@@ -214,7 +214,8 @@ flowchart TD
     CON -->|Write-only| WRITE["list.add(element)"]
 ```
 
-Read more: **[Detailed description and examples](./01-generics.md)**
+Read more: **[Detailed description and examples](./01-generics.md)**  
+Examples: [Variance & Generics](../../../examples/java/14-variance-generics/README.md)
 
 ---
 
@@ -236,7 +237,8 @@ flowchart LR
     style Collect fill:#fce4ec,stroke:#e91e63
 ```
 
-Read more: **[Detailed description and examples](./02-stream-api.md)**
+Read more: **[Detailed description and examples](./02-stream-api.md)**  
+Examples: [Streams Advanced](../../../examples/java/11-streams-advanced/README.md), [FP Features](../../../examples/java/07-fp-features/README.md)
 
 ---
 
@@ -255,7 +257,8 @@ flowchart LR
     style Lambda fill:#fff3e0,stroke:#f4a261
 ```
 
-Read more: **[Detailed description and examples](./03-lambdas.md)**
+Read more: **[Detailed description and examples](./03-lambdas.md)**  
+Examples: [FP Features](../../../examples/java/07-fp-features/README.md)
 
 ---
 
@@ -358,7 +361,8 @@ flowchart LR
     style OS fill:#e8f5e9,stroke:#388e3c
 ```
 
-Read more: **[Detailed description and examples](./08-virtual-threads.md)**
+Read more: **[Detailed description and examples](./08-virtual-threads.md)**  
+Examples: [Concurrency](../../../examples/java/09-concurrency/README.md), [Structured Concurrency](../../../examples/java/13-concurrency-structured/README.md)
 
 ---
 
@@ -380,7 +384,8 @@ flowchart LR
     style Catch fill:#fce4ec,stroke:#e91e63
 ```
 
-Read more: **[Detailed description and examples](./09-completable-future.md)**
+Read more: **[Detailed description and examples](./09-completable-future.md)**  
+Examples: [Concurrency](../../../examples/java/09-concurrency/README.md)
 
 ---
 
@@ -403,7 +408,8 @@ stateDiagram-v2
     RUNNABLE --> TERMINATED: run() ends
 ```
 
-Read more: **[Detailed description and examples](./10-thread-states.md)**
+Read more: **[Detailed description and examples](./10-thread-states.md)**  
+Examples: [Thread States](../../../examples/java/12-concurrency-thread-states/README.md), [Concurrency](../../../examples/java/09-concurrency/README.md)
 
 ---
 
@@ -446,7 +452,8 @@ flowchart TD
     style Scope fill:#f3e5f5,stroke:#6a1b9a
 ```
 
-Read more: **[Detailed description and examples](./12-structured-concurrency.md)**
+Read more: **[Detailed description and examples](./12-structured-concurrency.md)**  
+Examples: [Structured Concurrency](../../../examples/java/13-concurrency-structured/README.md)
 
 ---
 
@@ -494,7 +501,8 @@ flowchart TD
     style HM fill:#e8f5e9,stroke:#388e3c
 ```
 
-Read more: **[Detailed description and examples](./14-collections.md)**
+Read more: **[Detailed description and examples](./14-collections.md)**  
+Examples: [Data Structures](../../../examples/java/05-data-structures/README.md)
 
 ---
 
@@ -522,7 +530,8 @@ flowchart LR
     style CAS fill:#e8f5e9,stroke:#388e3c
 ```
 
-Read more: **[Detailed description and examples](./15-concurrent.md)**
+Read more: **[Detailed description and examples](./15-concurrent.md)**  
+Examples: [Concurrency](../../../examples/java/09-concurrency/README.md), [Thread States](../../../examples/java/12-concurrency-thread-states/README.md)
 
 ---
 
@@ -591,7 +600,8 @@ flowchart TD
     style Provider fill:#fff3e0,stroke:#f4a261
 ```
 
-Read more: **[Detailed description and examples](./17-modules.md)**
+Read more: **[Detailed description and examples](./17-modules.md)**  
+Examples: [OOP and Modules](../../../examples/java/06-oop-modules/README.md)
 
 ---
 
@@ -887,11 +897,20 @@ flowchart LR
 
 | Example | Focus |
 | :--- | :--- |
-| [01 Generics](../../../examples/java/14-variance-generics/README.md) | Invariance, covariance, contravariance, PECS |
-| [02 Streams](../../../examples/java/11-streams-advanced/README.md) | Advanced Stream operations: reduce, mapMulti, takeWhile |
-| [03 Virtual Threads](../../../examples/java/09-concurrency/README.md) | Virtual threads, ExecutorServices and async tasks |
-| [04 Collections](../../../examples/java/05-data-structures/README.md) | Lists, Sets, Maps, Queues, iteration, ordering |
-| [05 Concurrency Utilities](../../../examples/java/09-concurrency/README.md) | Threads, executors, virtual threads |
+| [01 Hello World](../../../examples/java/01-hello-world/README.md) | Basic program structure, compilation, execution |
+| [02 Variables and Types](../../../examples/java/02-variables-and-types/README.md) | Primitive types, wrappers, arrays, var |
+| [03 Functions](../../../examples/java/03-functions/README.md) | Methods, overloading, recursion, varargs |
+| [04 Control Flow](../../../examples/java/04-control-flow/README.md) | Conditionals, loops, switch, break/continue |
+| [05 Data Structures](../../../examples/java/05-data-structures/README.md) | Lists, Sets, Maps, Queues, iteration, ordering |
+| [06 OOP and Modules](../../../examples/java/06-oop-modules/README.md) | Classes, inheritance, encapsulation, packages |
+| [07 FP Features](../../../examples/java/07-fp-features/README.md) | Lambdas, method references, functional interfaces |
+| [08 Error Handling](../../../examples/java/08-error-handling/README.md) | Exceptions, try-catch-finally, custom exceptions |
+| [09 Concurrency](../../../examples/java/09-concurrency/README.md) | Threads, executors, virtual threads, CompletableFuture |
+| [10 Testing](../../../examples/java/10-testing/README.md) | JUnit basics, assertions, test structure |
+| [11 Streams Advanced](../../../examples/java/11-streams-advanced/README.md) | Advanced Stream operations: reduce, mapMulti, takeWhile |
+| [12 Thread States](../../../examples/java/12-concurrency-thread-states/README.md) | Thread lifecycle, synchronization, locks |
+| [13 Structured Concurrency](../../../examples/java/13-concurrency-structured/README.md) | StructuredTaskScope, ScopedValue, shutdown policies |
+| [14 Variance and Generics](../../../examples/java/14-variance-generics/README.md) | Invariance, covariance, contravariance, PECS |
 
 ---
 

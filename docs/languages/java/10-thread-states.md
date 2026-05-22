@@ -194,3 +194,10 @@ Thread t2 = new Thread(() -> {
 });
 // Both threads BLOCKED forever → deadlock
 ```
+
+---
+
+## Examples
+
+- [Thread States example](../../../examples/java/12-concurrency-thread-states/README.md) — Thread lifecycle, synchronization, locks
+- [Concurrency example](../../../examples/java/09-concurrency/README.md) — Threads, executors, synchronization

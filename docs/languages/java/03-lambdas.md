@@ -33,3 +33,9 @@ System.out.println(square.transform(7));         // 49
 - Lambdas can only capture external local variables if they are **final or effectively final**.
 - Method references (`System.out::println`, `String::length`) provide an even more concise syntax when a lambda simply delegates to an existing method.
 - Lambdas compile to invokedynamic bytecode, not anonymous inner classes, avoiding the per-instance class overhead.
+
+---
+
+## Examples
+
+- [FP Features example](../../../examples/java/07-fp-features/README.md) — Lambdas, method references, functional interfaces

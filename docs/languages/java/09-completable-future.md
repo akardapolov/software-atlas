@@ -592,3 +592,9 @@ flowchart LR
     style TH2 fill:#F2F3F4,stroke:#717D7E
     style TH3 fill:#F2F3F4,stroke:#717D7E
 ```
+
+---
+
+## Examples
+
+- [Concurrency example](../../../examples/java/09-concurrency/README.md) — Threads, executors, CompletableFuture

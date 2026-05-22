@@ -211,3 +211,9 @@ Class<?> clazz = List<String>.class; // error: no such class
 ```java
 class MyException<T> extends Exception { } // error: generic class may not extend Throwable
 ```
+
+---
+
+## Examples
+
+- [Variance & Generics example](../../../examples/java/14-variance-generics/README.md) — Invariance, covariance, contravariance, PECS

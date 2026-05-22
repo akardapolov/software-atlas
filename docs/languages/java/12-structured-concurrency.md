@@ -119,3 +119,9 @@ try (var scope = new StructuredTaskScope<String>()) {
 | `CompletableFuture` | Non-blocking pipelines | Callback hell, no structured lifecycle |
 | `StructuredTaskScope` | Related concurrent tasks | Java 21+, requires try-with-resources |
 | Virtual threads | High-concurrency I/O | Inside structured scopes for best results |
+
+---
+
+## Examples
+
+- [Structured Concurrency example](../../../examples/java/13-concurrency-structured/README.md) — StructuredTaskScope, ScopedValue, shutdown policies

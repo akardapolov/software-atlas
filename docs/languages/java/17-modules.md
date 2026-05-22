@@ -449,3 +449,9 @@ ModuleLayer.boot().modules().forEach(m -> System.out.println(m.getName()));
 | **Named** | `module-info.java` on module path | Explicit | Explicit |
 | **Automatic** | Plain JAR on module path | All | All |
 | **Unnamed** | Classpath JARs | All | All named modules |
+
+---
+
+## Examples
+
+- [OOP and Modules example](../../../examples/java/06-oop-modules/README.md) — Classes, inheritance, encapsulation, packages

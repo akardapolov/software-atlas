@@ -710,3 +710,10 @@ updater.incrementAndGet(c);
 | `AtomicStampedReference` | 5 | CAS with version | `compareAndSet` (with stamp) |
 | `LongAdder` | 8 | High-contention counter | `increment`, `add`, `sum` |
 | `LongAccumulator` | 8 | Generalized reduce | `accumulate`, `get` |
+
+---
+
+## Examples
+
+- [Concurrency example](../../../examples/java/09-concurrency/README.md) — Threads, executors, virtual threads, CompletableFuture
+- [Thread States example](../../../examples/java/12-concurrency-thread-states/README.md) — Thread lifecycle, synchronization, locks
