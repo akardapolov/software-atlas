@@ -27,7 +27,16 @@
      - [Compilation Pipeline](#compilation-pipeline)
      - [MIR: Basic Blocks and the Borrow Checker](#mir-basic-blocks-and-the-borrow-checker)
    - [Pattern Matching](#pattern-matching)
-4. [Core Features](#core-features)
+4. [Key Features In Depth](#key-features-in-depth)
+   - [01. Ownership](#01-ownership)
+   - [02. Borrowing](#02-borrowing)
+   - [03. Lifetimes](#03-lifetimes)
+   - [04. Traits](#04-traits)
+   - [05. Pattern Matching](#05-pattern-matching)
+   - [06. Error Handling](#06-error-handling)
+   - [07. Generics](#07-generics)
+   - [08. Concurrency](#08-concurrency)
+5. [Core Features](#core-features)
    - [Structs and Enums](#structs-and-enums)
      - [Niche Optimization](#niche-optimization)
    - [Traits](#traits)
@@ -36,7 +45,7 @@
      - [Monomorphization](#monomorphization)
    - [Iterators and Closures](#iterators-and-closures)
    - [Concurrency](#concurrency)
-5. [Modern Rust Features](#modern-rust-features)
+6. [Modern Rust Features](#modern-rust-features)
    - [Async/Await](#asyncawait-rust-139)
      - [Compiler Lowering: async → state machine](#compiler-lowering-async-state-machine)
    - [Const Generics](#const-generics-rust-151)
@@ -528,6 +537,112 @@ while let Some(i) = iterator.next() {
     println!("{}", i);
 }
 ```
+
+---
+
+## Key Features In Depth
+
+### 01. Ownership
+
+| Section | Content |
+| :--- | :--- |
+| **Description** | Each value has exactly one owner; when the owner goes out of scope, the value is dropped. |
+| **API Purpose** | Memory safety without garbage collection. |
+| **Terminology** | Owner, move, copy, clone, `Drop` trait. |
+
+Read more: **[Detailed description and examples](./01-ownership.md)**  
+Examples: [Variables & Types](../../../examples/rust/02-variables-and-types/README.md)
+
+---
+
+### 02. Borrowing
+
+| Section | Content |
+| :--- | :--- |
+| **Description** | Temporary access to a value without taking ownership. |
+| **API Purpose** | Safe sharing and mutation of data. |
+| **Terminology** | Reference (`&T`), mutable reference (`&mut T`), borrow checker. |
+
+Read more: **[Detailed description and examples](./02-borrowing.md)**  
+Examples: [Variables & Types](../../../examples/rust/02-variables-and-types/README.md)
+
+---
+
+### 03. Lifetimes
+
+| Section | Content |
+| :--- | :--- |
+| **Description** | Compile-time annotations ensuring references never outlive their data. |
+| **API Purpose** | Guaranteeing reference validity across function boundaries. |
+| **Terminology** | Lifetime parameter (`'a`), elision, `'static`. |
+
+Read more: **[Detailed description and examples](./03-lifetimes.md)**  
+Examples: [Variables & Types](../../../examples/rust/02-variables-and-types/README.md)
+
+---
+
+### 04. Traits
+
+| Section | Content |
+| :--- | :--- |
+| **Description** | Shared behavior definitions that types implement implicitly. |
+| **API Purpose** | Polymorphism and code reuse through contracts. |
+| **Terminology** | Trait, `impl`, trait bound, associated type, `dyn Trait`. |
+
+Read more: **[Detailed description and examples](./04-traits.md)**  
+Examples: [OOP/Modules](../../../examples/rust/06-oop-modules/README.md)
+
+---
+
+### 05. Pattern Matching
+
+| Section | Content |
+| :--- | :--- |
+| **Description** | Exhaustive matching on enums, structs, literals, and guards. |
+| **API Purpose** | Destructuring data and handling all cases. |
+| **Terminology** | `match`, arm, guard, `if let`, `while let`. |
+
+Read more: **[Detailed description and examples](./05-pattern-matching.md)**  
+Examples: [Data Structures](../../../examples/rust/05-data-structures/README.md)
+
+---
+
+### 06. Error Handling
+
+| Section | Content |
+| :--- | :--- |
+| **Description** | `Result` and `Option` enums with the `?` operator for propagation. |
+| **API Purpose** | Explicit, composable error handling. |
+| **Terminology** | `Result<T, E>`, `Option<T>`, `?`, `unwrap`, `panic!`. |
+
+Read more: **[Detailed description and examples](./06-error-handling.md)**  
+Examples: [Error Handling](../../../examples/rust/07-error-handling/README.md)
+
+---
+
+### 07. Generics
+
+| Section | Content |
+| :--- | :--- |
+| **Description** | Type-safe code reuse with zero runtime cost via monomorphization. |
+| **API Purpose** | Reusable data structures and algorithms. |
+| **Terminology** | Type parameter, trait bound, const generics, monomorphization. |
+
+Read more: **[Detailed description and examples](./07-generics.md)**  
+Examples: [FP Features](../../../examples/rust/07-fp-features/README.md)
+
+---
+
+### 08. Concurrency
+
+| Section | Content |
+| :--- | :--- |
+| **Description** | Fearless concurrency via ownership — data races prevented at compile time. |
+| **API Purpose** | Safe concurrent programming with `Send` and `Sync` traits. |
+| **Terminology** | `thread`, `move` closure, `mpsc`, `Arc`, `Mutex`, `Send`, `Sync`. |
+
+Read more: **[Detailed description and examples](./08-concurrency.md)**  
+Examples: [Concurrency](../../../examples/rust/08-concurrency/README.md)
 
 ---
 

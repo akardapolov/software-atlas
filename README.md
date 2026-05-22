@@ -307,22 +307,39 @@ timeline
 
 ## Topics
 
-| #  | Topic                                                                  | Key ideas                                                              | Details                            |
-|----|------------------------------------------------------------------------|------------------------------------------------------------------------|------------------------------------|
-| 1  | [**Paradigms**](docs/topics/paradigms/index.md)                        | Imperative↔Declarative, Procedural/OOP/FP/Logic, Sequential/Concurrent | How we think about computation     |
-| 2  | [**Architecture & Modularity**](docs/topics/architecture/index.md)     | Layered, Hexagonal, DDD, Microservices, C4                             | How we structure systems           |
-| 3  | [**OOP & Design**](docs/topics/design/index.md)                        | SOLID, GoF patterns, Refactoring, DbC                                  | How we design components           |
-| 4  | [**Type Systems**](docs/topics/types/index.md)                         | Static/dynamic, nominal/structural, ADTs, generics                     | How types help us reason           |
-| 5  | [**Functional Programming**](docs/topics/functional/index.md)          | Purity, immutability, composition, monads                              | How we avoid accidental complexity |
-| 6  | [**Concurrency**](docs/topics/concurrency/index.md)                    | Threads, CSP, Actors, async/await                                      | How we handle parallelism          |
-| 7  | [**Process**](docs/topics/process/index.md)                            | Agile, XP, CI/CD, DevOps, SRE                                          | How we build and ship              |
-| 8  | [**Testing**](docs/topics/testing/index.md)                            | TDD, Pyramid, PBT, BDD, mutation, fuzzing, contracts                   | How we verify and harden code      |
-| 9  | [**Build Systems**](docs/topics/process/build-systems/index.md)        | Make, Maven, Gradle, Bazel, npm, Cargo                                 | How we turn source into artifacts  |
-| 10 | [**Version Control**](docs/topics/vcs/index.md)                        | RCS → CVS → SVN → Git, branching strategies, monorepos                 | How we manage change over time     |
-| 11 | [**Distributed Systems**](docs/topics/distributed/index.md)            | Clocks, CAP, consensus, consistency, streaming                         | How we scale across machines       |
-| 12 | [**Containers & Orchestration**](docs/topics/containers/index.md)      | Docker, Podman, Kubernetes, OCI, runtimes                              | How we package and run workloads   |
-| 13 | [**Databases**](docs/topics/databases/index.md)                        | Relational model, transactions, NoSQL, OLTP/OLAP, indexing             | How we store and query data        |
-| 14 | [**Developer Tools**](docs/topics/dev-tools/index.md)                  | IDE, HTTP clients, terminal, debuggers                                 | Tools developers use every day     |
+### 🧩 Concepts & Design
+
+| # | Topic                                                         | Key ideas                                                              | Details                            |
+|---|---------------------------------------------------------------|------------------------------------------------------------------------|------------------------------------|
+| 1 | [**Paradigms**](docs/topics/paradigms/index.md)               | Imperative↔Declarative, Procedural/OOP/FP/Logic, Sequential/Concurrent | How we think about computation     |
+| 2 | [**OOP & Design**](docs/topics/design/index.md)               | SOLID, GoF patterns, Refactoring, DbC                                  | How we design components           |
+| 3 | [**Type Systems**](docs/topics/types/index.md)                | Static/dynamic, nominal/structural, ADTs, generics                     | How types help us reason           |
+| 4 | [**Functional Programming**](docs/topics/functional/index.md) | Purity, immutability, composition, monads                              | How we avoid accidental complexity |
+| 5 | [**Concurrency**](docs/topics/concurrency/index.md)           | Threads, CSP, Actors, async/await                                      | How we handle parallelism          |
+
+### 🏗 Architecture & Structure
+
+| # | Topic                                                              | Key ideas                                  | Details                  |
+|---|--------------------------------------------------------------------|--------------------------------------------|--------------------------|
+| 6 | [**Architecture & Modularity**](docs/topics/architecture/index.md) | Layered, Hexagonal, DDD, Microservices, C4 | How we structure systems |
+
+### 🌐 Systems & Data
+
+| # | Topic                                                       | Key ideas                                                  | Details                      |
+|---|-------------------------------------------------------------|------------------------------------------------------------|------------------------------|
+| 7 | [**Distributed Systems**](docs/topics/distributed/index.md) | Clocks, CAP, consensus, consistency, streaming             | How we scale across machines |
+| 8 | [**Databases**](docs/topics/databases/index.md)             | Relational model, transactions, NoSQL, OLTP/OLAP, indexing | How we store and query data  |
+
+### 🧪 Process, Delivery & Tools
+
+| #  | Topic                                                             | Key ideas                                              | Details                           |
+|----|-------------------------------------------------------------------|--------------------------------------------------------|-----------------------------------|
+| 9  | [**Process**](docs/topics/process/index.md)                       | Agile, XP, CI/CD, DevOps, SRE                          | How we build and ship             |
+| 10 | [**Testing**](docs/topics/testing/index.md)                       | TDD, Pyramid, PBT, BDD, mutation, fuzzing, contracts   | How we verify and harden code     |
+| 11 | [**Build Systems**](docs/topics/process/build-systems/index.md)   | Make, Maven, Gradle, Bazel, npm, Cargo                 | How we turn source into artifacts |
+| 12 | [**Version Control**](docs/topics/vcs/index.md)                   | RCS → CVS → SVN → Git, branching strategies, monorepos | How we manage change over time    |
+| 13 | [**Containers & Orchestration**](docs/topics/containers/index.md) | Docker, Podman, Kubernetes, OCI, runtimes              | How we package and run workloads  |
+| 14 | [**Developer Tools**](docs/topics/dev-tools/index.md)             | IDE, HTTP clients, terminal, debuggers                 | Tools developers use every day    |
 
 ---
 

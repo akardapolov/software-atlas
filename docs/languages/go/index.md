@@ -23,17 +23,25 @@
    - [Error Handling](#error-handling)
    - [Interfaces](#interfaces)
    - [Pointers vs Values](#pointers-vs-values)
-4. [Language Features](#language-features)
+4. [Key Features In Depth](#key-features-in-depth)
+   - [01. Goroutines](#01-goroutines)
+   - [02. Channels](#02-channels)
+   - [03. Interfaces](#03-interfaces)
+   - [04. Error Handling](#04-error-handling)
+   - [05. Generics](#05-generics)
+   - [06. Context](#06-context)
+   - [07. Modules](#07-modules)
+5. [Language Features](#language-features)
    - [Defer](#defer)
    - [select](#select)
    - [Built-in Profiling](#built-in-profiling)
-5. [Ecosystem and Tools](#ecosystem-and-tools)
-6. [Influence](#influence)
-7. [Strengths and Weaknesses](#strengths-and-weaknesses)
-8. [Code Examples](#code-examples)
-9. [Related Authors](#related-authors)
-10. [Related Topics](#related-topics)
-11. [Further Reading](#further-reading)
+6. [Ecosystem and Tools](#ecosystem-and-tools)
+7. [Influence](#influence)
+8. [Strengths and Weaknesses](#strengths-and-weaknesses)
+9. [Code Examples](#code-examples)
+10. [Related Authors](#related-authors)
+11. [Related Topics](#related-topics)
+12. [Further Reading](#further-reading)
 
 ---
 
@@ -262,6 +270,128 @@ func increment(p *int) {
 x := new(int)       // Pointer to int
 var y int               // Zero value
 ```
+
+---
+
+## Key Features In Depth
+
+### 01. Goroutines
+
+| Section | Content |
+| :--- | :--- |
+| **Description** | Lightweight threads managed by the Go runtime with minimal memory overhead. |
+| **API Purpose** | Running concurrent tasks efficiently. |
+| **Terminology** | `go` keyword, GMP model, scheduler. |
+
+```mermaid
+flowchart LR
+    G["go func()"] --> R["Go Runtime Scheduler"] --> OS["OS Threads (M)"]
+    style G fill:#e1f5fe,stroke:#0288d1
+    style R fill:#fff3e0,stroke:#f4a261
+    style OS fill:#e8f5e9,stroke:#388e3c
+```
+
+Read more: **[Detailed description and examples](./01-goroutines.md)**  
+Examples: [Concurrency](../../../examples/go/09-concurrency/README.md)
+
+---
+
+### 02. Channels
+
+| Section | Content |
+| :--- | :--- |
+| **Description** | Typed conduits for communication between goroutines implementing Hoare's CSP. |
+| **API Purpose** | Synchronizing goroutines and passing data safely. |
+| **Terminology** | `chan`, buffered/unbuffered, `select`, `close`. |
+
+```mermaid
+flowchart LR
+    S["ch <- value"] --> CH["Channel"] --> R["<-ch"]
+    style S fill:#e1f5fe,stroke:#0288d1
+    style CH fill:#fff3e0,stroke:#f4a261
+    style R fill:#e8f5e9,stroke:#388e3c
+```
+
+Read more: **[Detailed description and examples](./02-channels.md)**  
+Examples: [Concurrency](../../../examples/go/09-concurrency/README.md)
+
+---
+
+### 03. Interfaces
+
+| Section | Content |
+| :--- | :--- |
+| **Description** | Method sets that types implicitly satisfy — no `implements` keyword needed. |
+| **API Purpose** | Decoupling code through structural typing abstraction. |
+| **Terminology** | Method set, empty interface (`any`), type assertion, type switch. |
+
+```mermaid
+flowchart TD
+    I["Writer interface"] --> F["os.File"]
+    I --> B["bytes.Buffer"]
+    I --> C["Custom types"]
+    style I fill:#e1f5fe,stroke:#0288d1
+    style F fill:#e8f5e9,stroke:#388e3c
+    style B fill:#e8f5e9,stroke:#388e3c
+    style C fill:#e8f5e9,stroke:#388e3c
+```
+
+Read more: **[Detailed description and examples](./03-interfaces.md)**  
+Examples: [OOP/Modules](../../../examples/go/06-oop-modules/README.md)
+
+---
+
+### 04. Error Handling
+
+| Section | Content |
+| :--- | :--- |
+| **Description** | Explicit error returns instead of exceptions; errors are values. |
+| **API Purpose** | Visible, explicit error handling in control flow. |
+| **Terminology** | `error` interface, `errors.New`, `fmt.Errorf`, `%w` wrapping, `panic`/`recover`. |
+
+Read more: **[Detailed description and examples](./04-error-handling.md)**  
+Examples: [Error Handling](../../../examples/go/08-error-handling/README.md)
+
+---
+
+### 05. Generics
+
+| Section | Content |
+| :--- | :--- |
+| **Description** | Type parameters (Go 1.18+) for reusable, type-safe code. |
+| **API Purpose** | Writing generic data structures and algorithms. |
+| **Terminology** | Type parameter, type constraint, `any`, `comparable`, `constraints.Ordered`. |
+
+Read more: **[Detailed description and examples](./05-generics.md)**  
+Examples: [FP Features](../../../examples/go/07-fp-features/README.md)
+
+---
+
+### 06. Context
+
+| Section | Content |
+| :--- | :--- |
+| **Description** | Carrying deadlines, cancellation signals, and request-scoped values across API boundaries. |
+| **API Purpose** | Propagating cancellation and timeouts through call chains. |
+| **Terminology** | `context.Context`, `WithCancel`, `WithTimeout`, `WithValue`. |
+
+Read more: **[Detailed description and examples](./06-context.md)**  
+Examples: [Concurrency](../../../examples/go/09-concurrency/README.md)
+
+---
+
+### 07. Modules
+
+| Section | Content |
+| :--- | :--- |
+| **Description** | Dependency management with `go.mod` and semantic versioning. |
+| **API Purpose** | Reproducible builds and versioned dependency management. |
+| **Terminology** | `go.mod`, `go.sum`, module path, `go get`, `go mod tidy`. |
+
+Read more: **[Detailed description and examples](./07-modules.md)**  
+Examples: [OOP/Modules](../../../examples/go/06-oop-modules/README.md)
+
+---
 
 ## Language Features
 

@@ -22,18 +22,25 @@
    - [Preprocessor](#preprocessor)
    - [Structured Programming](#structured-programming)
    - [Standard Library (stdio.h)](#standard-library-stdioh)
-4. [Language Features](#language-features)
+4. [Key Features In Depth](#key-features-in-depth)
+   - [01. Pointers](#01-pointers)
+   - [02. Memory Management](#02-memory-management)
+   - [03. Preprocessor](#03-preprocessor)
+   - [04. Structs and Unions](#04-structs-and-unions)
+   - [05. Function Pointers](#05-function-pointers)
+   - [06. Concurrency](#06-concurrency)
+5. [Language Features](#language-features)
    - [Variables and Types](#variables-and-types)
    - [Functions](#functions)
    - [Control Flow](#control-flow)
    - [Arrays and Strings](#arrays-and-strings)
-5. [Ecosystem and Tools](#ecosystem-and-tools)
-6. [Influence](#influence)
-7. [Strengths and Weaknesses](#strengths-and-weaknesses)
-8. [Code Examples](#code-examples)
-9. [Related Authors](#related-authors)
-10. [Related Topics](#related-topics)
-11. [Further Reading](#further-reading)
+6. [Ecosystem and Tools](#ecosystem-and-tools)
+7. [Influence](#influence)
+8. [Strengths and Weaknesses](#strengths-and-weaknesses)
+9. [Code Examples](#code-examples)
+10. [Related Authors](#related-authors)
+11. [Related Topics](#related-topics)
+12. [Further Reading](#further-reading)
 
 ---
 
@@ -262,6 +269,88 @@ int len = strlen(string);
 int compare = strcmp(s1, s2);
 int copy = strcpy(dest, src);
 ```
+
+---
+
+## Key Features In Depth
+
+### 01. Pointers
+
+| Section | Content |
+| :--- | :--- |
+| **Description** | Variables storing memory addresses, enabling direct memory manipulation and efficient parameter passing. |
+| **API Purpose** | Dynamic data structures, pass-by-reference, hardware access. |
+| **Terminology** | `&`, `*`, pointer arithmetic, null pointer, `void*`. |
+
+Read more: **[Detailed description and examples](./01-pointers.md)**  
+Examples: [Variables & Types](../../../examples/c/02-variables-and-types/README.md)
+
+---
+
+### 02. Memory Management
+
+| Section | Content |
+| :--- | :--- |
+| **Description** | Manual allocation and deallocation with `malloc`, `calloc`, `realloc`, and `free`. |
+| **API Purpose** | Dynamic memory for data structures of unknown compile-time size. |
+| **Terminology** | `malloc`, `calloc`, `realloc`, `free`, heap, memory leak, dangling pointer. |
+
+Read more: **[Detailed description and examples](./02-memory-management.md)**  
+Examples: [Variables & Types](../../../examples/c/02-variables-and-types/README.md)
+
+---
+
+### 03. Preprocessor
+
+| Section | Content |
+| :--- | :--- |
+| **Description** | Textual preprocessing for inclusion, macros, and conditional compilation. |
+| **API Purpose** | Code reuse, platform abstraction, compile-time configuration. |
+| **Terminology** | `#include`, `#define`, `#ifdef`, `#if`, `#pragma`, macro. |
+
+Read more: **[Detailed description and examples](./03-preprocessor.md)**  
+Examples: [Control Flow](../../../examples/c/04-control-flow/README.md)
+
+---
+
+### 04. Structs and Unions
+
+| Section | Content |
+| :--- | :--- |
+| **Description** | Composite types for grouping data; unions for memory-efficient variant storage. |
+| **API Purpose** | Data organization, tagged unions, custom types. |
+| **Terminology** | `struct`, `union`, `typedef`, bit-field, padding, alignment. |
+
+Read more: **[Detailed description and examples](./04-structs-unions.md)**  
+Examples: [Data Structures](../../../examples/c/05-data-structures/README.md)
+
+---
+
+### 05. Function Pointers
+
+| Section | Content |
+| :--- | :--- |
+| **Description** | Pointers storing function addresses, enabling callbacks and runtime polymorphism. |
+| **API Purpose** | Callbacks, custom comparators, plugin systems, state machines. |
+| **Terminology** | Function pointer, callback, `typedef`, `qsort` comparator. |
+
+Read more: **[Detailed description and examples](./05-function-pointers.md)**  
+Examples: [Functions](../../../examples/c/03-functions/README.md)
+
+---
+
+### 06. Concurrency
+
+| Section | Content |
+| :--- | :--- |
+| **Description** | POSIX threads and C11 threads for parallel execution. |
+| **API Purpose** | Multi-core utilization, responsive I/O, parallel processing. |
+| **Terminology** | `pthread_create`, `pthread_join`, mutex, condition variable, `pthread_mutex_lock`. |
+
+Read more: **[Detailed description and examples](./06-concurrency.md)**  
+Examples: [Concurrency](../../../examples/c/08-concurrency/README.md)
+
+---
 
 ## Language Features
 

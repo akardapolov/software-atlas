@@ -31,15 +31,23 @@
    - [Decorators](#decorators)
    - [Generators and Iterators](#generators-and-iterators)
    - [Context Managers](#context-managers)
-6. [Modern Python Features](#modern-python-features)
-7. [Type Hints](#type-hints)
-8. [Ecosystem and Tools](#ecosystem-and-tools)
-9. [Influence](#influence)
-10. [Strengths and Weaknesses](#strengths-and-weaknesses)
-11. [Code Examples](#code-examples)
-12. [Related Authors](#related-authors)
-13. [Related Topics](#related-topics)
-14. [Further Reading](#further-reading)
+6. [Key Features In Depth](#key-features-in-depth)
+   - [01. Decorators](#01-decorators)
+   - [02. Generators](#02-generators)
+   - [03. Context Managers](#03-context-managers)
+   - [04. OOP](#04-oop)
+   - [05. Asyncio](#05-asyncio)
+   - [06. Type Hints](#06-type-hints)
+   - [07. Metaclasses](#07-metaclasses)
+7. [Modern Python Features](#modern-python-features)
+8. [Type Hints](#type-hints)
+9. [Ecosystem and Tools](#ecosystem-and-tools)
+10. [Influence](#influence)
+11. [Strengths and Weaknesses](#strengths-and-weaknesses)
+12. [Code Examples](#code-examples)
+13. [Related Authors](#related-authors)
+14. [Related Topics](#related-topics)
+15. [Further Reading](#further-reading)
 
 ---
 
@@ -453,6 +461,99 @@ with timer():
     time.sleep(0.1)
 # Prints elapsed time
 ```
+
+---
+
+## Key Features In Depth
+
+### 01. Decorators
+
+| Section | Content |
+| :--- | :--- |
+| **Description** | Callables that modify or enhance functions and classes without changing their source code. |
+| **API Purpose** | Cross-cutting concerns: logging, caching, validation, authentication. |
+| **Terminology** | `@` syntax, wrapper, `functools.wraps`, decorator factory. |
+
+Read more: **[Detailed description and examples](./01-decorators.md)**  
+Examples: [Functions](../../../examples/python/03-functions/README.md), [OOP/Modules](../../../examples/python/06-oop-modules/README.md)
+
+---
+
+### 02. Generators
+
+| Section | Content |
+| :--- | :--- |
+| **Description** | Iterators that produce values lazily using `yield`, maintaining state between calls. |
+| **API Purpose** | Memory-efficient processing of large or infinite sequences. |
+| **Terminology** | `yield`, generator expression, `yield from`, `send()`. |
+
+Read more: **[Detailed description and examples](./02-generators.md)**  
+Examples: [Data Structures](../../../examples/python/05-data-structures/README.md)
+
+---
+
+### 03. Context Managers
+
+| Section | Content |
+| :--- | :--- |
+| **Description** | Resource management via `with`, guaranteeing cleanup even on exceptions. |
+| **API Purpose** | Safe acquisition and release of resources. |
+| **Terminology** | `with`, `__enter__`, `__exit__`, `@contextmanager`. |
+
+Read more: **[Detailed description and examples](./03-context-managers.md)**  
+Examples: [Error Handling](../../../examples/python/08-error-handling/README.md)
+
+---
+
+### 04. OOP
+
+| Section | Content |
+| :--- | :--- |
+| **Description** | Classes, inheritance, dunder methods, and multiple inheritance with C3 linearization. |
+| **API Purpose** | Encapsulating data and behavior, creating reusable blueprints. |
+| **Terminology** | `self`, `__init__`, MRO, `super()`, `@property`, `__slots__`. |
+
+Read more: **[Detailed description and examples](./04-oop.md)**  
+Examples: [OOP/Modules](../../../examples/python/06-oop-modules/README.md)
+
+---
+
+### 05. Asyncio
+
+| Section | Content |
+| :--- | :--- |
+| **Description** | Concurrent I/O-bound programming with `async`/`await` and an event loop. |
+| **API Purpose** | High-performance network servers, web clients, database connections. |
+| **Terminology** | `async def`, `await`, coroutine, `asyncio.gather`, `create_task`. |
+
+Read more: **[Detailed description and examples](./05-asyncio.md)**  
+Examples: [Concurrency](../../../examples/python/09-concurrency/README.md)
+
+---
+
+### 06. Type Hints
+
+| Section | Content |
+| :--- | :--- |
+| **Description** | Static type annotations for catching errors before runtime and improving IDE support. |
+| **API Purpose** | Static analysis, documentation, safer refactoring. |
+| **Terminology** | `typing`, `Optional`, `Union`, `Protocol`, `TypeVar`, `Generic`. |
+
+Read more: **[Detailed description and examples](./06-type-hints.md)**  
+Examples: [Variables & Types](../../../examples/python/02-variables-and-types/README.md)
+
+---
+
+### 07. Metaclasses
+
+| Section | Content |
+| :--- | :--- |
+| **Description** | Classes of classes that control class creation, enabling framework-level customization. |
+| **API Purpose** | Auto-registration, validation, DSLs, ORM mapping. |
+| **Terminology** | `type`, `__new__`, `__init_subclass__`, metaclass. |
+
+Read more: **[Detailed description and examples](./07-metaclasses.md)**  
+Examples: [OOP/Modules](../../../examples/python/06-oop-modules/README.md)
 
 ---
 
