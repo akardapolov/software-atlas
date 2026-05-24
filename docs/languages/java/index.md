@@ -44,16 +44,22 @@
    - [20. String API and Text Processing](#20-string-api-and-text-processing)
    - [21. Regular Expressions](#21-regular-expressions)
    - [22. Annotations and Metadata](#22-annotations-and-metadata)
-6. [Other Language Features](#other-language-features)
-7. [Runtime Memory Layout](#runtime-memory-layout)
-8. [Java Memory Model (JMM)](#java-memory-model-jmm)
-9. [Ecosystem and Tools](#ecosystem-and-tools)
-10. [Influence](#influence)
-11. [Strengths and Weaknesses](#strengths-and-weaknesses)
-12. [Code Examples](#code-examples)
-13. [Related Authors](#related-authors)
-14. [Related Topics](#related-topics)
-15. [Further Reading](#further-reading)
+6. [Projects](#projects)
+   - [Project Loom](#project-loom) (Virtual Threads, Structured Concurrency, Scoped Values)
+   - [Project Panama](#project-panama) (FFM API, Vector API)
+   - [Project Amber](#project-amber) (Records, Sealed Classes, Pattern Matching)
+   - [Project Valhalla](#project-valhalla) (Value Types & Primitive Generics)
+   - [Project Jigsaw](#project-jigsaw) (JPMS Modules)
+7. [Other Language Features](#other-language-features)
+8. [Runtime Memory Layout](#runtime-memory-layout)
+9. [Java Memory Model (JMM)](#java-memory-model-jmm)
+10. [Ecosystem and Tools](#ecosystem-and-tools)
+11. [Influence](#influence)
+12. [Strengths and Weaknesses](#strengths-and-weaknesses)
+13. [Code Examples](#code-examples)
+14. [Related Authors](#related-authors)
+15. [Related Topics](#related-topics)
+16. [Further Reading](#further-reading)
 
 ---
 
@@ -140,7 +146,7 @@ flowchart TD
 | **11 LTS** | 2018 | `var` in lambda parameters, HTTP client, new `String` methods                                                                                                |
 | **17 LTS** | 2021 | **Sealed classes**, Records, pattern matching for `switch` (preview)                                                                                         |
 | **21 LTS** | 2023 | **Virtual threads** (Project Loom), pattern matching for `switch` (final), record patterns                                                                   |
-| **25 LTS** | 2025 | Consolidates recent additions such as FFM API, Scoped Values, Structured Concurrency, and the Class‑File API                                                 |
+| **25 LTS** | 2025 | Scoped Values (final), FFM API (final since 22), Structured Concurrency (5th preview), Class‑File API                                                        |
 
 ---
 
@@ -362,6 +368,7 @@ flowchart LR
 ```
 
 Read more: **[Detailed description and examples](./08-virtual-threads.md)**  
+→ Delivered by: [Project Loom](./projects/loom/index.md)  
 Examples: [Concurrency](../../../examples/java/09-concurrency/README.md), [Structured Concurrency](../../../examples/java/13-concurrency-structured/README.md)
 
 ---
@@ -429,7 +436,8 @@ flowchart LR
     style Native fill:#ffebee,stroke:#c62828
 ```
 
-Read more: **[Detailed description and examples](./11-ffm-api.md)**
+Read more: **[Detailed description and examples](./11-ffm-api.md)**  
+→ Delivered by: [Project Panama](./projects/panama/index.md)
 
 ---
 
@@ -440,7 +448,7 @@ Read more: **[Detailed description and examples](./11-ffm-api.md)**
 | **Description** | Structured Concurrency and Scoped Values organize concurrent tasks into cohesive lifecycle blocks and allow safe, lightweight propagation of immutable context across threads. |
 | **API Purpose** | Simplifying thread lifecycle management, propagating cancellation automatically if child threads fail, and avoiding memory leak vulnerabilities of `ThreadLocal`. |
 | **Terminology** | `StructuredTaskScope`, `ShutdownOnFailure`, `ShutdownOnSuccess`, `ScopedValue`. |
-| **Notes** | `ScopedValue` offers strictly unidirectional inheritance of immutable variables down the call hierarchy, which is significantly more secure and performs better than standard `ThreadLocal`. |
+| **Notes** | `ScopedValue` — finalized in Java 25 (JEP 506). `StructuredTaskScope` — 5th preview in Java 25 (JEP 505), not yet a final feature. |
 
 ```mermaid
 flowchart TD
@@ -453,6 +461,7 @@ flowchart TD
 ```
 
 Read more: **[Detailed description and examples](./12-structured-concurrency.md)**  
+→ Delivered by: [Project Loom](./projects/loom/index.md)  
 Examples: [Structured Concurrency](../../../examples/java/13-concurrency-structured/README.md)
 
 ---
@@ -602,6 +611,8 @@ flowchart TD
 
 Read more: **[Detailed description and examples](./17-modules.md)**  
 Examples: [OOP and Modules](../../../examples/java/06-oop-modules/README.md)
+
+→ Delivered by: [Project Jigsaw](./projects/jigsaw/index.md)
 
 ---
 
@@ -763,6 +774,108 @@ Read more: **[Detailed description and examples](./22-annotations.md)**
 
 ---
 
+## Projects
+
+OpenJDK umbrella projects that drive major Java platform evolution.
+Each project lives in its own subfolder with locally numbered technology pages.
+
+| Project | Status | Folder | Delivered features (in this doc) |
+|---|---|---|---|
+| **Loom** | ✅ Partially finalized (Virtual Threads — Java 21 final; Scoped Values — Java 25 final; Structured Concurrency — Java 25 **5th preview**) | [projects/loom/](./projects/loom/index.md) | Virtual Threads · Structured Concurrency · Scoped Values |
+| **Panama** | ✅ FFM API finalized (Java 22); Vector API — Java 25 **10th incubator** (waiting for Valhalla) | [projects/panama/index.md](./projects/panama/index.md) | Foreign Function & Memory API · Vector API |
+| **Amber** | 🔄 Ongoing — actively evolving | [projects/amber/](./projects/amber/index.md) | Records · Sealed Classes · Pattern Matching · Text Blocks · `var` |
+| **Valhalla** | 🔬 In progress — JEP 401 (Value Classes) in early-access preview for JDK 26 | [projects/valhalla/](./projects/valhalla/index.md) | Value types · Primitive generics (upcoming) |
+| **Jigsaw** | ✅ Released (Java 9) | [projects/jigsaw/](./projects/jigsaw/index.md) | Module System (JPMS) |
+
+---
+
+### Project Loom
+
+> **Status:** ⚠️ Partially finalized.
+> - **Virtual Threads** — ✅ Final feature, Java 21 (JEP 444)
+> - **Scoped Values** — ✅ Final feature, Java 25 (JEP 506)
+> - **Structured Concurrency** — 🔬 5th preview, Java 25 (JEP 505); finalization expected in one of the upcoming releases
+>
+> **Goal:** Scalable concurrency with the simple thread-per-request model, without reactive plumbing.
+
+| #  | Technology             | Java version     | Status     | Page                                                                         |
+|----|------------------------|------------------|------------|------------------------------------------------------------------------------|
+| 01 | Virtual Threads        | 21 (final)       | ✅ Released | [01-virtual-threads.md](./projects/loom/01-virtual-threads.md)               |
+| 02 | Structured Concurrency | 25 (5th preview) | 🔬 Preview | [02-structured-concurrency.md](./projects/loom/02-structured-concurrency.md) |
+| 03 | Scoped Values          | 25 (final)       | ✅ Released | [03-scoped-values.md](./projects/loom/03-scoped-values.md)                   |
+
+Full overview → **[projects/loom/index.md](./projects/loom/index.md)**
+
+---
+
+### Project Panama
+
+> **Status:** ⚠️ Partially finalized.
+> - **FFM API** — ✅ Final feature, Java 22 (JEP 454)
+> - **Vector API** — 🔬 10th incubator, Java 25 (JEP 508); finalization blocked until Value Types preview from Project Valhalla becomes available
+>
+> **Goal:** Efficient, safe interop between Java and native code / off-heap memory, replacing JNI.
+
+| #  | Technology                    | Java version        | Status       | Page                                                   |
+|----|-------------------------------|---------------------|--------------|--------------------------------------------------------|
+| 01 | Foreign Function & Memory API | 22 (final)          | ✅ Released   | [01-ffm-api.md](./projects/panama/01-ffm-api.md)       |
+| 02 | Vector API                    | 25 (10th incubator) | 🔬 Incubator | [02-vector-api.md](./projects/panama/02-vector-api.md) |
+
+Full overview → **[projects/panama/index.md](./projects/panama/index.md)**
+
+---
+
+### Project Amber
+
+> **Status:** 🔄 Ongoing — delivers incremental language productivity improvements across releases.  
+> **Goal:** Reduce Java verbosity and boilerplate through expressive language features.
+
+| #  | Technology                      | Java version           | Status      | Page                                                                                    |
+|----|---------------------------------|------------------------|-------------|-----------------------------------------------------------------------------------------|
+| 01 | Records                         | 16 (final)             | ✅ Released  | [01-records.md](./projects/amber/01-records.md)                                         |
+| 02 | Sealed Classes                  | 17 (final)             | ✅ Released  | [02-sealed-classes.md](./projects/amber/02-sealed-classes.md)                           |
+| 03 | Pattern Matching (`instanceof`) | 16 (final)             | ✅ Released  | [03-pattern-matching-instanceof.md](./projects/amber/03-pattern-matching-instanceof.md) |
+| 04 | Pattern Matching (`switch`)     | 21 (final)             | ✅ Released  | [04-pattern-matching-switch.md](./projects/amber/04-pattern-matching-switch.md)         |
+| 05 | Text Blocks                     | 15 (final)             | ✅ Released  | [05-text-blocks.md](./projects/amber/05-text-blocks.md)                                 |
+| 06 | `var` (local type inference)    | 10 (final)             | ✅ Released  | [06-var.md](./projects/amber/06-var.md)                                                 |
+| 07 | String Templates                | — (withdrawn/reworked) | 🔄 Reworked | [07-string-templates.md](./projects/amber/07-string-templates.md)                       |
+| 08 | Unnamed Variables & Patterns    | 22 (final)             | ✅ Released  | [08-unnamed-variables.md](./projects/amber/08-unnamed-variables.md)                     |
+
+Full overview → **[projects/amber/index.md](./projects/amber/index.md)**
+
+---
+
+### Project Valhalla
+
+> **Status:** 🔬 In progress.
+> - **JEP 401 (Value Classes and Objects)** — returned to candidate status; early-access build available for JDK 26.
+> - **Primitive / Specialized Generics** — in development, depends on finalization of Value Classes.
+> - Full delivery (value types + primitive generics) will span several upcoming releases.
+>
+> **Goal:** Bring value types and specialized generics to the JVM for better performance and memory layout.
+
+| # | Technology | Java version | Status | Page |
+|---|---|---|---|---|
+| 01 | Value Classes | JDK 26 (early-access preview, JEP 401) | 🔬 In progress | [01-value-classes.md](./projects/valhalla/01-value-classes.md) |
+| 02 | Primitive / Specialized Generics | TBD | 🔬 In progress | [02-primitive-generics.md](./projects/valhalla/02-primitive-generics.md) |
+
+Full overview → **[projects/valhalla/index.md](./projects/valhalla/index.md)**
+
+---
+
+### Project Jigsaw
+
+> **Status:** ✅ Released — finalized in Java 9 (2017), stable since.  
+> **Goal:** Modularize the JDK itself and provide a module system for application code — strong encapsulation, explicit dependencies, smaller runtime images.
+
+| #  | Technology           | Java version | Status     | Page                                       |
+|----|----------------------|--------------|------------|--------------------------------------------|
+| 01 | Module System (JPMS) | 9 (final)    | ✅ Released | [01-jpms.md](./projects/jigsaw/01-jpms.md) |
+
+Full overview → **[projects/jigsaw/index.md](./projects/jigsaw/index.md)**
+
+---
+
 ## Other Language Features
 
 | Feature                | Version | Description                                            | Example                                                |
@@ -867,6 +980,9 @@ flowchart LR
 ### Major Frameworks
 - **Spring Boot**: Industry-standard web and microservices framework.
 - **Quarkus / Micronaut**: Cloud-native, high-performance frameworks with AOT compiler support.
+
+### Testing
+- **[Spring Boot Testing](spring-testing.md)** — Test slices (`@SpringBootTest`, `@WebMvcTest`, `@DataJpaTest`), MockMvc, Testcontainers, context caching.
 
 ---
 
