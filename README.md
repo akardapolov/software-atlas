@@ -22,8 +22,6 @@ It is **not** a textbook. It is a **navigable map**:
 - **Maps** — visual diagrams showing how everything connects
 - **Reading paths** — guided sequences for deep dives
 
-📖 **Documentation site:** [software-atlas.github.io](https://software-atlas.github.io) _(work in progress)_
-
 ---
 
 ### The Atlas Approach

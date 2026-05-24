@@ -43,3 +43,5 @@ In an event-driven system, components do not call each other directly. Instead, 
 - [Event Sourcing](../data/event-sourcing.md)
 - [CQRS](../data/cqrs.md)
 - [Saga Pattern](../resilience/saga-pattern.md)
+- [Transactional Outbox](../../distributed/transactional-outbox.md) — reliable event publishing from a database
+- [Transactional Inbox](../../distributed/transactional-inbox.md) — safe handling of duplicate events

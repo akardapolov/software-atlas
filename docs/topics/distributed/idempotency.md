@@ -423,3 +423,5 @@ All of these answer the same question in different ways:
 - [Functional Programming](../functional/index.md) — purity, referential transparency
 - [Concurrency](../concurrency/index.md) — race conditions and safe retries
 - [Databases](../databases/index.md) — ACID, transactions, consistency models
+- [Transactional Outbox](transactional-outbox.md) — reliable event publishing
+- [Transactional Inbox](transactional-inbox.md) — deduplication for message consumers

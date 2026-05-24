@@ -452,6 +452,8 @@ Saga: Book Flight + Book Hotel
 | **Eventual consistency + reconciliation** | Accept temporary inconsistency, fix later |
 | **CRDTs** | Conflict-free merge for specific data types |
 | **[Idempotent operations](../distributed/idempotency.md)** | Retry-safe operations — applying an operation twice has the same effect as once |
+| **[Transactional Outbox](../distributed/transactional-outbox.md)** | Guarantee events are never lost by writing them to an outbox table in the same DB transaction as business data |
+| **[Transactional Inbox](../distributed/transactional-inbox.md)** | Guarantee duplicate messages are handled safely via deduplication in the consumer's database |
 
 ## Consensus in Practice
 

@@ -36,11 +36,15 @@ Maps are not strict taxonomies. They are navigational tools that show likely con
 
 ## Topics
 
-Topic pages collect related ideas into one domain. They are meant for focused study without losing the wider context of the atlas.
+Topic pages collect related ideas into one domain. They are meant for focused study without losing the wider context of the atlas. Topics are organized into four groups that reflect how knowledge clusters in practice.
+
+---
+
+### Concepts & Design
+
+How we think, design, and reason about code.
 
 **Paradigms** covers the fundamental models of computation: imperative versus declarative, procedural, object-oriented, functional, logic, and concurrent. It explains what distinguishes each paradigm conceptually and historically, and how they overlap in modern languages.
-
-**Architecture and Modularity** traces how engineers learned to structure systems at scale — from Dijkstra's structured programming and Parnas's information hiding, through layered architectures and domain-driven design, to microservices and team topology thinking. The central theme is the management of complexity through boundaries and separation of concerns.
 
 **OOP and Design** covers object-oriented programming as a set of ideas rather than a language feature: encapsulation, message passing, responsibility assignment, the SOLID principles, design patterns, and refactoring. It spans from Simula and Smalltalk through the GoF book to modern interpretations.
 
@@ -50,19 +54,45 @@ Topic pages collect related ideas into one domain. They are meant for focused st
 
 **Concurrency** covers different models for handling parallelism and asynchrony: shared memory and threads, communicating sequential processes (CSP), the actor model, and async/await. It shows how design choices in this area reflect deeper trade-offs between safety, performance, and expressiveness.
 
+---
+
+### Architecture & Structure
+
+How we organize systems and modules.
+
+**Architecture and Modularity** traces how engineers learned to structure systems at scale — from Dijkstra's structured programming and Parnas's information hiding, through layered architectures and domain-driven design, to microservices and team topology thinking. The central theme is the management of complexity through boundaries and separation of concerns.
+
+---
+
+### Systems & Data
+
+How we scale, distribute, and persist state.
+
+**Distributed Systems** covers the fundamental challenges of systems that span multiple machines: logical time and causality, ACID transactions, the CAP theorem, consensus algorithms, consistency models, and event streaming. It traces the lineage from Lamport's early papers through modern cloud-era practice.
+
+**Databases** covers how we store, structure, and query data — from Codd's relational model through SQL, NoSQL data models (document, graph, key-value), storage engines (B-trees, LSM-trees), transactions and isolation levels, indexing strategies, and the distributed database era (Dynamo, Spanner, NewSQL). It connects to distributed systems through replication and consensus, and to architecture through data patterns like CQRS and Event Sourcing.
+
+---
+
+### Process, Delivery & Tools
+
+How teams organize, ship, and operate software.
+
 **Process** covers how teams organize work and ship software: agile methods, extreme programming, continuous integration and delivery, DevOps, SRE, and the DORA metrics for measuring delivery performance. It connects practices to the ideas and people behind them.
 
 **Testing** covers how we gain confidence that software does what it should: TDD, the testing pyramid, test doubles, property-based testing, BDD, mutation testing, fuzzing, contract testing, and snapshot/approval testing. It also traces the deeper theoretical thread from Hoare's axiomatic basis and Dijkstra's critique of testing to modern property-based approaches.
 
 **Build Systems** covers the tools that turn source code and declarations into runnable, testable, distributable artifacts — Make, CMake, Maven, Gradle, sbt, npm, Cargo, and Bazel. The chapter traces how build tools evolved from Make's timestamp-based dependency graph (1976) through convention-driven Maven (2004) and incremental Gradle (2007) to hermetic, polyglot, remote-cached Bazel (2015), and gives per-tool guides covering project structure, lifecycles, dependency models, and common patterns.
 
-**Distributed Systems** covers the fundamental challenges of systems that span multiple machines: logical time and causality, ACID transactions, the CAP theorem, consensus algorithms, consistency models, and event streaming. It traces the lineage from Lamport's early papers through modern cloud-era practice.
+**Version Control** traces the evolution of how teams manage change over time — from early file-locking systems (SCCS, RCS) through centralized models (CVS, Subversion) to distributed workflows (Git, Mercurial). It covers the Git object model, branching strategies (Git Flow, GitHub Flow, trunk-based development), modern practices like commit hygiene and pull requests, and trade-offs between monorepo and polyrepo approaches.
 
 **Containers and Orchestration** covers how applications are packaged, distributed, and run at scale on shared infrastructure — from early Linux primitives like cgroups and namespaces, through Docker's portable images in 2013 and Kubernetes in 2014, to OCI standards and modern runtimes such as containerd, Podman, and CRI-O. It is the operational substrate that ties together CI/CD pipelines, microservice architectures, and the DevOps and SRE practices built around them.
 
-**Databases** covers how we store, structure, and query data — from Codd's relational model through SQL, NoSQL data models (document, graph, key-value), storage engines (B-trees, LSM-trees), transactions and isolation levels, indexing strategies, and the distributed database era (Dynamo, Spanner, NewSQL). It connects to distributed systems through replication and consensus, and to architecture through data patterns like CQRS and Event Sourcing.
-
 **Developer Tools** covers the software developers use every day to write, test, and interact with code — from text editors and IDEs through HTTP clients and API testing tools, terminal multiplexers and shells, to debuggers and profilers. These tools shape developer productivity and workflow ergonomics as much as language choice or architecture decisions.
+
+---
+
+Many ideas appear across multiple topics. **Modularity** touches architecture, design, and functional programming. **Types** connect to design, FP, and languages. **Testing** relates to process, design, and architecture. **Data** connects databases, distributed systems, and architecture. And **simplicity** is a recurring theme from Dijkstra to Hickey.
 
 ---
 
