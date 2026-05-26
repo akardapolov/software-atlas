@@ -541,6 +541,33 @@ Temporal guarantees:
 | **Event sourcing + CQRS** | Manual | High | Audit-heavy domains |
 | **2PC / Saga (manual)** | Manual | High | Short, tightly-coupled transactions |
 
+### Temporal vs Other Orchestrators
+
+The tooling landscape for workflow orchestration is diverse. Here is how Temporal compares to other popular options.
+
+| Feature | Temporal | Apache Airflow | Inngest |
+|---------|----------|----------------|---------|
+| **Core Focus** | Long-running, stateful workflows needing high reliability | Scheduled, batch-oriented DAGs for data pipelines | Serverless, event-driven functions with built-in state |
+| **Architecture** | Dedicated Temporal server cluster + workers | Central scheduler + metadata database (PostgreSQL/MySQL) | Serverless-first, managed by the Inngest platform |
+| **Fault Tolerance** | Durable execution: full state replay for exact recovery | Stateless tasks; recovers by restarting the DAG from the beginning | Built-in durable steps that persist individual units of work |
+| **Best For** | Transactional processes (payments, order management), multi-step AI agents, long-running business flows | ETL/ELT pipelines, ML training jobs, scheduled reports | Simple event processing, automating API integrations, webhook handling |
+
+#### Apache Airflow
+
+Apache Airflow is an open-source platform for authoring, scheduling, and monitoring **batch-oriented workflows** expressed as directed acyclic graphs (DAGs). Tasks are defined as Python callables or operators, and the scheduler executes them according to dependencies.
+
+- **Strengths:** Rich ecosystem of operators (SQL, cloud services, Spark), cron-like scheduling, backfilling, and observability via the web UI.
+- **Limitations:** Tasks are stateless — if the scheduler fails, the DAG restarts from the beginning. Not designed for long-running, event-driven, or transactional workflows.
+- **Best for:** Data pipelines, ML training orchestration, scheduled ETL jobs.
+
+#### Inngest
+
+Inngest is a **serverless event-driven workflow platform** that runs functions in response to events. It provides durable execution without requiring a dedicated cluster — the platform manages state persistence and retries automatically.
+
+- **Strengths:** Zero-infrastructure setup, event-driven by design, built-in retries and delays, easy integration with serverless frameworks (Vercel, Netlify).
+- **Limitations:** Less control over infrastructure compared to self-hosted Temporal; simpler state model (step-based, not full history replay).
+- **Best for:** Webhook processing, API automation, simple multi-step event handlers, serverless applications.
+
 ## Consensus in Practice
 
 ### etcd
