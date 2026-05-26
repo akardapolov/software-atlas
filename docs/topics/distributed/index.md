@@ -455,6 +455,92 @@ Saga: Book Flight + Book Hotel
 | **[Transactional Outbox](../distributed/transactional-outbox.md)** | Guarantee events are never lost by writing them to an outbox table in the same DB transaction as business data |
 | **[Transactional Inbox](../distributed/transactional-inbox.md)** | Guarantee duplicate messages are handled safely via deduplication in the consumer's database |
 
+## Durable Workflow Orchestration (Temporal)
+
+**Temporal** is a platform for building durable, reliable distributed workflows. It guarantees that a sequence of steps (a "workflow") will complete exactly as written, even in the face of crashes, network failures, or long waits. It is often described as "microservice orchestration with durability built-in."
+
+### Core Concepts
+
+| Concept | Description |
+|---------|-------------|
+| **Workflow** | A sequence of activities written in code (Java, Go, TypeScript, etc.) that defines the business process |
+| **Activity** | An individual unit of work — typically a call to an external service or database |
+| **Durable execution** | Workflow state is automatically persisted after every step; if a worker crashes, execution resumes from the last completed step |
+| **Persistent timers** | Timers survive process restarts — a `sleep(30 days)` is stored in the database and resumed exactly after 30 days |
+| **Exactly-once activity execution** | Activities are retried automatically on failure, with deduplication guarantees |
+
+### How Temporal Works
+
+```mermaid
+flowchart TD
+    Client["Client"] -->|"Start workflow"| Server["Temporal Server"]
+    Server -->|"Poll tasks"| Worker1["Worker 1"]
+    Server -->|"Poll tasks"| Worker2["Worker 2"]
+    Worker1 -->|"Execute activity"| ServiceA["Service A"]
+    Worker1 -->|"Execute activity"| ServiceB["Service B"]
+    Worker1 -->|"Record completion"| DB[(History DB)]
+    Worker2 -->|"Resume on crash"| DB
+
+    style Server fill:#e1f5fe
+    style DB fill:#fff3e0
+    style Worker1 fill:#c8e6c9
+    style Worker2 fill:#c8e6c9
+```
+
+**Key components:**
+- **Temporal Server** — manages workflow state, task queues, and scheduling
+- **History DB** — stores the event history of every workflow (strongly consistent: Cassandra or MySQL)
+- **Workers** — long-running processes that poll for tasks and execute workflow code
+
+### Saga Pattern with Temporal
+
+Temporal makes the **saga pattern** practical at scale:
+
+```
+Workflow: Book Trip
+  1. Book Flight (activity)
+     → On failure: no compensation yet
+  2. Book Hotel (activity)
+     → On failure: compensate Cancel Flight
+  3. Book Car (activity)
+     → On failure: compensate Cancel Hotel, Cancel Flight
+
+Temporal guarantees:
+  - Each activity is executed at least once (with exactly-once semantics via deduplication)
+  - If the worker crashes mid-saga, a new worker resumes from the last completed step
+  - Compensation logic runs automatically on activity failure
+```
+
+### Relationship to Distributed Systems Fundamentals
+
+| Fundamental | How Temporal Applies It |
+|-------------|------------------------|
+| **Event sourcing** | Workflow history is an append-only log of events (commands, completions, timers) |
+| **Saga pattern** | Built-in compensation and retry for long-running transactions |
+| **Exactly-once execution** | Activity results are cached by ID; duplicate executions return the same result |
+| **Fault tolerance** | Worker crashes are transparent — state is recovered from the history DB |
+| **CAP** | The history DB provides CA guarantees (strong consistency + availability within the cluster) |
+
+### When to Use Temporal
+
+| Use case | Why Temporal fits |
+|----------|-------------------|
+| Microservice orchestration | Coordinate 10+ services in a single durable workflow |
+| Long-running processes | Steps that take hours, days, or weeks (approvals, onboarding) |
+| Reliable background jobs | Ensure critical jobs complete even through deploys and crashes |
+| CI/CD pipelines | Durable pipeline execution with automatic retry and rollback |
+| Financial transactions | Multi-step transfers with compensation on failure |
+
+### Comparison with Alternatives
+
+| Approach | Durability | Complexity | Best for |
+|----------|-----------|------------|----------|
+| **Temporal** | Automatic | Low (write normal code) | Complex, long-running workflows |
+| **Message queue + consumer** | Manual | Medium | Simple fire-and-forget tasks |
+| **Stateful actor (Akka, Orleans)** | Manual | High | High-throughput, low-latency systems |
+| **Event sourcing + CQRS** | Manual | High | Audit-heavy domains |
+| **2PC / Saga (manual)** | Manual | High | Short, tightly-coupled transactions |
+
 ## Consensus in Practice
 
 ### etcd
