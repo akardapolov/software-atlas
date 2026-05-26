@@ -50,6 +50,9 @@
    - [Project Amber](#project-amber) (Records, Sealed Classes, Pattern Matching)
    - [Project Valhalla](#project-valhalla) (Value Types & Primitive Generics)
    - [Project Jigsaw](#project-jigsaw) (JPMS Modules)
+   - [Project Leyden](#project-leyden) (Startup & AOT Optimizations)
+   - [Project Detroit](#project-detroit) (Desktop Application Packaging)
+   - [Project Lilliput](#project-lilliput) (Compact Object Headers)
 7. [Other Language Features](#other-language-features)
 8. [Runtime Memory Layout](#runtime-memory-layout)
 9. [Java Memory Model (JMM)](#java-memory-model-jmm)
@@ -786,6 +789,9 @@ Each project lives in its own subfolder with locally numbered technology pages.
 | **Amber** | 🔄 Ongoing — actively evolving | [projects/amber/](./projects/amber/index.md) | Records · Sealed Classes · Pattern Matching · Text Blocks · `var` |
 | **Valhalla** | 🔬 In progress — JEP 401 (Value Classes) in early-access preview for JDK 26 | [projects/valhalla/](./projects/valhalla/index.md) | Value types · Primitive generics (upcoming) |
 | **Jigsaw** | ✅ Released (Java 9) | [projects/jigsaw/](./projects/jigsaw/index.md) | Module System (JPMS) |
+| **Leyden** | 🔄 Actively evolving — officially part of the JDK. JEP 483 (JDK 24), JEP 514/515 (JDK 25) released. | [projects/leyden/](./projects/leyden/index.md) | AOT class loading · AOT CLI ergonomics · AOT profiling |
+| **Detroit** | 🔴 Early proposal — no implemented features in JDK as of March 2026. Polyglot interop research. | [projects/detroit/](./projects/detroit/index.md) | Java ↔ JS interop · Java ↔ Python interop · FFM bridge |
+| **Lilliput** | 🟢 Actively developing — JEP 519 product feature (JDK 25); JEP 450 experimental (JDK 24). | [projects/lilliput/](./projects/lilliput/index.md) | Compact headers · Ultra-compact headers · Memory reduction |
 
 ---
 
@@ -873,6 +879,58 @@ Full overview → **[projects/valhalla/index.md](./projects/valhalla/index.md)**
 | 01 | Module System (JPMS) | 9 (final)    | ✅ Released | [01-jpms.md](./projects/jigsaw/01-jpms.md) |
 
 Full overview → **[projects/jigsaw/index.md](./projects/jigsaw/index.md)**
+
+---
+
+### Project Leyden
+
+> **Status:** 🔄 Actively evolving — officially part of the JDK. JEP 483 (JDK 24), JEP 514 (JDK 25), and JEP 515 (JDK 25) are released. Prototypes continue for AOT method compilation and dynamic proxy generation.
+>
+> **Goal:** "Shift-left" optimizations: move work from runtime to build/training time to dramatically improve startup, time-to-peak performance, and footprint.
+
+| #  | Technology                                 | Java version | Status    | Page                                                                                     |
+|----|--------------------------------------------|--------------|-----------|------------------------------------------------------------------------------------------|
+| 01 | AOT Class Loading & Linking (JEP 483)      | JDK 24       | Released  | [01-aot-class-loading.md](./projects/leyden/01-aot-class-loading.md)                     |
+| 02 | AOT Command-Line Ergonomics (JEP 514)      | JDK 25       | Released  | [02-aot-cli-ergonomics.md](./projects/leyden/02-aot-cli-ergonomics.md)                   |
+| 03 | AOT Method Profiling (JEP 515)             | JDK 25       | Released  | [03-aot-method-profiling.md](./projects/leyden/03-aot-method-profiling.md)               |
+| 04 | AOT Method Compilation                     | N/A          | Prototype | [04-aot-method-compilation.md](./projects/leyden/04-aot-method-compilation.md)           |
+| 05 | Dynamic Proxy & Reflection Data Generation | N/A          | Prototype | [05-proxy-reflection-generation.md](./projects/leyden/05-proxy-reflection-generation.md) |
+| 06 | AOT Class Lookup Optimization              | N/A          | Prototype | [06-aot-class-lookup.md](./projects/leyden/06-aot-class-lookup.md)                       |
+
+Full overview → **[projects/leyden/index.md](./projects/leyden/index.md)**
+
+---
+
+### Project Detroit
+
+> **Status:** 🔴 Early proposal — no implemented features in JDK as of March 2026 (JavaOne 2026).
+>
+> **Goal:** Fast interoperability between Java, JavaScript, and Python via the `javax.script` API and embedded language runtimes (V8 / CPython) using the FFM API.
+
+| #  | Technology                | Java version | Status   | Page                                                                  |
+|----|---------------------------|--------------|----------|-----------------------------------------------------------------------|
+| 01 | Java ↔ JavaScript Interop | N/A          | Proposal | [01-js-interop.md](./projects/detroit/01-js-interop.md)               |
+| 02 | Java ↔ Python Interop     | N/A          | Proposal | [02-python-interop.md](./projects/detroit/02-python-interop.md)       |
+| 03 | `javax.script` API Bridge | N/A          | Proposal | [03-script-api-bridge.md](./projects/detroit/03-script-api-bridge.md) |
+
+Full overview → **[projects/detroit/index.md](./projects/detroit/index.md)**
+
+---
+
+### Project Lilliput
+
+> **Status:** 🟢 Actively developing — JEP 519 promoted compact headers to a product feature in JDK 25. JEP Draft for default headers is in progress.
+>
+> **Goal:** Reduce Java object header size from 128 bits to 64 bits (or even 32 bits), dramatically lowering memory footprint for applications with many small objects.
+
+| #  | Technology                               | Java version | Status       | Page                                                                               |
+|----|------------------------------------------|--------------|--------------|------------------------------------------------------------------------------------|
+| 01 | Compact Object Headers (JEP 450)         | JDK 24       | Experimental | [01-compact-headers-jep450.md](./projects/lilliput/01-compact-headers-jep450.md)   |
+| 02 | Compact Object Headers Product (JEP 519) | JDK 25       | Released     | [02-compact-headers-jep519.md](./projects/lilliput/02-compact-headers-jep519.md)   |
+| 03 | Compact Object Headers by Default        | TBD          | JEP Draft    | [03-compact-headers-default.md](./projects/lilliput/03-compact-headers-default.md) |
+| 04 | Ultra-Compact Headers (Lilliput 2)       | N/A          | Research     | [04-ultra-compact-headers.md](./projects/lilliput/04-ultra-compact-headers.md)     |
+
+Full overview → **[projects/lilliput/index.md](./projects/lilliput/index.md)**
 
 ---
 
