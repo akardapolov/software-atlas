@@ -237,6 +237,7 @@ This architecture does not try to avoid duplicates. It makes their occurrence **
 ## See Also
 
 - [Transactional Outbox](transactional-outbox.md) — the sender-side counterpart
+- [Leased Outbox](leased-outbox.md) — high-throughput, non-transactional variant for NoSQL
 - [Idempotency](idempotency.md) — the correctness property that makes the inbox pattern work
 - [Event-Driven Architecture](../architecture/communication/event-driven-architecture.md) — where inbox is most commonly applied
 - [Saga Pattern](../architecture/resilience/saga-pattern.md) — long-running transactions across services

@@ -234,6 +234,7 @@ Instead, the pragmatic approach:
 
 ## See Also
 
+- [Leased Outbox](leased-outbox.md) — high-throughput, non-transactional variant for NoSQL
 - [Transactional Inbox](transactional-inbox.md) — the receiver-side counterpart
 - [Idempotency](idempotency.md) — the property that makes duplicate events safe
 - [Event-Driven Architecture](../architecture/communication/event-driven-architecture.md) — where outbox is most commonly applied

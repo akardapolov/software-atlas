@@ -453,6 +453,7 @@ Saga: Book Flight + Book Hotel
 | **CRDTs** | Conflict-free merge for specific data types |
 | **[Idempotent operations](../distributed/idempotency.md)** | Retry-safe operations — applying an operation twice has the same effect as once |
 | **[Transactional Outbox](../distributed/transactional-outbox.md)** | Guarantee events are never lost by writing them to an outbox table in the same DB transaction as business data |
+| **[Leased Outbox](../distributed/leased-outbox.md)** | A high-throughput, non-transactional outbox variant for NoSQL databases using LWTs for consumer partition leasing |
 | **[Transactional Inbox](../distributed/transactional-inbox.md)** | Guarantee duplicate messages are handled safely via deduplication in the consumer's database |
 
 ## Durable Workflow Orchestration (Temporal)
@@ -667,6 +668,7 @@ Google's globally distributed database:
 - [Databases](../databases/index.md) — storage engines, data models, query languages (the foundation distributed systems build on)
 - [Concurrency](../concurrency/index.md) — shared-memory vs distributed
 - [Idempotency](../distributed/idempotency.md) — retry-safe operations in distributed systems
+- [Leased Outbox](../distributed/leased-outbox.md) — high-throughput outbox for NoSQL
 - [Architecture & Modularity](../architecture/index.md) — microservices, system design
 - [Process](../process/index.md) — how teams build distributed systems
 - [Containers & Orchestration](../containers/index.md) — runtime substrate for distributed systems (Kubernetes uses etcd / Raft)
