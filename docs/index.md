@@ -92,7 +92,15 @@ How teams organize, ship, and operate software.
 
 ---
 
-Many ideas appear across multiple topics. **Modularity** touches architecture, design, and functional programming. **Types** connect to design, FP, and languages. **Testing** relates to process, design, and architecture. **Data** connects databases, distributed systems, and architecture. And **simplicity** is a recurring theme from Dijkstra to Hickey.
+### Machine Learning & LLMs
+
+How learned models are built, understood, and integrated into software systems.
+
+**Large Language Models** covers transformer architecture, tokenization, pretraining, and scaling laws — the engineering foundations that explain how LLMs work. It then moves to the practitioner layer: prompting strategies, retrieval-augmented generation (RAG), agents and tool use, integration patterns, evaluation, and the safety and alignment challenges that shape how these systems are built and deployed. The angle throughout is that of a software engineer building with or alongside LLMs, not an ML researcher training them from scratch.
+
+---
+
+Many ideas appear across multiple topics. **Modularity** touches architecture, design, and functional programming. **Types** connect to design, FP, and languages. **Testing** relates to process, design, and architecture. **Data** connects databases, distributed systems, and architecture. **LLMs** connect to architecture through RAG and agent patterns, to developer tools through AI-assisted coding, and to distributed systems through the infrastructure needed to serve models at scale. And **simplicity** is a recurring theme from Dijkstra to Hickey.
 
 ---
 
@@ -120,7 +128,7 @@ The author index includes biography cards for over sixty contributors, spanning 
 
 Works pages cover the primary sources behind the ideas in the atlas: papers, books, and talks that introduced or formalized important concepts.
 
-**Papers** include foundational texts such as Dijkstra's Go To Considered Harmful, Parnas's modules paper, Hoare's CSP, Lamport's logical clocks, and Liskov and Wing's behavioral subtyping. These are the original arguments behind ideas that are now treated as common knowledge.
+**Papers** include foundational texts such as Dijkstra's Go To Considered Harmful, Parnas's modules paper, Hoare's CSP, Lamport's logical clocks, Liskov and Wing's behavioral subtyping, Vaswani et al.'s Attention Is All You Need, and the GPT-3 and chain-of-thought prompting papers. These are the original arguments behind ideas that are now treated as common knowledge.
 
 **Books** range from The Mythical Man-Month and Design Patterns through Domain-Driven Design and Continuous Delivery to Designing Data-Intensive Applications. Each book page situates the work in its historical moment, summarizes its core contribution, and connects it to related ideas in the atlas.
 
@@ -145,6 +153,8 @@ Reading paths provide guided sequences through the atlas for those who prefer a 
 **Distributed Systems path** starts with Lamport's logical clocks, moves through ACID, the CAP theorem, Paxos, Raft, and consistency models, and ends with the synthesis in Designing Data-Intensive Applications. It is a path through the most mathematically demanding part of the atlas, but also one of the most practically relevant for modern systems work.
 
 **Databases path** starts with Codd's relational model, moves through storage engines, transactions, and indexing, and ends with distributed databases and the synthesis in Designing Data-Intensive Applications.
+
+**Large Language Models path** starts with the transformer paper and the attention mechanism, moves through pretraining, scaling laws, and instruction tuning, then covers prompting strategies, retrieval-augmented generation, and agent patterns, and ends with evaluation, safety, and practical integration patterns for software engineers. It is a path from understanding how LLMs work to knowing how to build with them responsibly.
 
 ---
 

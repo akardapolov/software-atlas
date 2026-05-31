@@ -87,6 +87,24 @@ How teams organize, ship, and operate software.
 
 ---
 
+## 🤖 Machine Learning & LLMs
+
+How learned models are built, understood, and integrated into software systems.
+
+| #  | Topic                                            | Key ideas                                                           | Details                                  |
+|----|--------------------------------------------------|---------------------------------------------------------------------|------------------------------------------|
+| 15 | [**Large Language Models**](llm/index.md)        | Transformers, prompting, RAG, agents, evaluation, safety            | How we build and integrate LLM systems   |
+
+### Deep dives
+- [Transformer Architecture](llm/transformer.md) — attention, tokens, and how LLMs process text
+- [Prompting Strategies](llm/prompting.md) — zero-shot, few-shot, chain-of-thought, structured output
+- [RAG](llm/rag.md) — retrieval-augmented generation patterns
+- [Agents & Tool Use](llm/agents.md) — LLMs that plan, call tools, and act
+- [Evaluation](llm/evaluation.md) — benchmarks, human feedback, and LLM-as-judge
+- [Safety & Alignment](llm/safety.md) — hallucination, bias, RLHF, and responsible deployment
+
+---
+
 ## Cross-cutting Themes
 
 Many ideas appear across multiple topics:
@@ -95,4 +113,5 @@ Many ideas appear across multiple topics:
 - **Types** connect to design, FP, and languages
 - **[Testing](testing/index.md)** relates to process, design, and architecture
 - **Data** connects databases (models, transactions), distributed systems (replication, sharding), and architecture (CQRS, Event Sourcing)
+- **LLMs** connect to architecture through RAG and agent patterns, to developer tools through AI-assisted coding, and to distributed systems through the infrastructure needed to serve models at scale
 - **Simplicity** is a recurring theme from Dijkstra to Hickey

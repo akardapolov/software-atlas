@@ -92,9 +92,22 @@ biography, key contributions, works, and influence connections.
 | Richard Helm | 1960–1999 | GoF, Pattern Hatching | [→](richard-helm.md) ✅ |
 | John Vlissides | 1961–2005 | GoF, Pattern Hatching | [→](john-vlissides.md) ✅ |
 
+## Machine Learning & LLMs
+
+| Author | Years | Known for | Page |
+|--------|-------|-----------|------|
+| Ashish Vaswani | — | Transformer architecture | [→](ashish-vaswani.md) ✅ |
+| Ilya Sutskever | — | GPT series, scaling insight | [→](ilya-sutskever.md) ✅ |
+| Jared Kaplan | — | Scaling Laws | [→](jared-kaplan.md) ✅ |
+| Tom Brown | — | GPT-3 | [→](tom-brown.md) ✅ |
+| Jason Wei | — | Chain-of-thought prompting | [→](jason-wei.md) ✅ |
+| Long Ouyang | — | InstructGPT / RLHF | [→](long-ouyang.md) ✅ |
+| Andrej Karpathy | — | nanoGPT, LLM education | [→](andrej-karpathy.md) ✅ |
+| Lilian Weng | — | Agents, prompting, alignment blog | [→](lilian-weng.md) ✅ |
+
 ## Summary
 
-**All 52 author cards complete.** ✅
+**All 60 author cards complete.** ✅
 
 ## Influence Web
 
@@ -136,6 +149,12 @@ Papert → Kay → Education
 Constantine → Zhidkov
 Evans → Zhidkov
 Hickey → Zhidkov
+Vaswani → Brown → Wei
+Kaplan → Brown → GPT series
+Wei → Yao → ReAct / Agents
+Ouyang → Rafailov → DPO
+Karpathy → Weng → LLM education
+McCarthy → Hinton → Vaswani
 ```
 
 See [Ideas Evolution Map](../maps/ideas-evolution.md) for the full visual diagram.

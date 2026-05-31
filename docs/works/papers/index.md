@@ -40,4 +40,12 @@ Key academic papers that shaped software development.
 | 2002 | Fowler | Patterns of Enterprise Application Architecture | Enterprise patterns |
 | 2003 | Kay | Email: The Meaning of OOP | OOP philosophy |
 | 2007 | Helland | Life beyond Distributed Transactions | Distributed |
+| 2017 | Vaswani et al. | Attention Is All You Need | LLM / Transformers |
+| 2020 | Kaplan et al. | Scaling Laws for Neural Language Models | LLM / Scaling |
+| 2020 | Brown et al. | Language Models are Few-Shot Learners (GPT-3) | LLM / In-context learning |
+| 2022 | Ouyang et al. | Training language models to follow instructions (InstructGPT) | LLM / Alignment |
+| 2022 | Wei et al. | Chain-of-Thought Prompting Elicits Reasoning | LLM / Prompting |
+| 2022 | Yao et al. | ReAct: Synergizing Reasoning and Acting | LLM / Agents |
+| 2023 | Liu et al. | Lost in the Middle | LLM / Context |
+| 2023 | Rafailov et al. | Direct Preference Optimization | LLM / Alignment |
 
