@@ -29,41 +29,39 @@ evaluate, and how to reason about failure modes.
 
 ## Map of Concepts
 
-```
-Transformer Architecture
-│
-├── Tokenization & Embeddings
-├── Attention Mechanism (self-attention, multi-head)
-└── Pretraining objective (next-token prediction)
-│
-├── Scaling Laws ──────────────────────────────┐
-│                                              │
-└── Instruction Tuning & RLHF                 │
-│                             Model size,
-▼                           data, compute
-Prompting Strategies
-│
-┌───────────┼───────────┐
-│           │           │
-Zero-shot    Few-shot   Chain-of-Thought
-│           │           │
-└───────────┴───────────┘
-│
-┌───────┴────────┐
-│                │
-RAG            Agents
-│                │
-Vector stores    Tool use / function calling
-Chunking         Planning loops (ReAct, CoT+Act)
-Reranking        Memory patterns
-│                │
-└───────┬────────┘
-│
-Integration Patterns
-│
-┌───────┴────────┐
-│                │
-Evaluation        Safety & Alignment
+```mermaid
+flowchart TD
+    T["Transformer Architecture"]
+
+    T --> TOK["Tokenization & Embeddings"]
+    T --> ATT["Attention Mechanism<br/>(self-attention, multi-head)"]
+    T --> PRE["Pretraining<br/>(next-token prediction)"]
+
+    PRE --> SCA["Scaling Laws<br/>(model size, data, compute)"]
+    PRE --> INST["Instruction Tuning & RLHF"]
+
+    INST --> PROM["Prompting Strategies"]
+
+    PROM --> ZS["Zero-shot"]
+    PROM --> FS["Few-shot"]
+    PROM --> COT["Chain-of-Thought"]
+
+    ZS & FS & COT --> APP["Applied Patterns"]
+
+    APP --> RAG["RAG<br/>―<br/>Vector stores<br/>Chunking<br/>Reranking"]
+    APP --> AGT["Agents<br/>―<br/>Tool use<br/>ReAct loop<br/>Memory"]
+
+    RAG & AGT --> INT["Integration Patterns"]
+
+    INT --> EVA["Evaluation"]
+    INT --> SAF["Safety & Alignment"]
+
+    style T fill:#e1f5fe,color:#333333,stroke:#90caf9
+    style PROM fill:#e8f5e9,color:#333333,stroke:#90caf9
+    style APP fill:#e8f5e9,color:#333333,stroke:#90caf9
+    style INT fill:#e8f5e9,color:#333333,stroke:#90caf9
+    style EVA fill:#fff3e0,color:#333333,stroke:#90caf9
+    style SAF fill:#fff3e0,color:#333333,stroke:#90caf9
 ```
 
 ---
@@ -101,6 +99,26 @@ at inference time. Everything the model "knows" about the current
 interaction must fit in that window — system prompt, conversation history,
 retrieved documents, and the current user input. Managing the context
 window is one of the core engineering challenges in LLM systems.
+
+### Transformer internals at a glance
+
+```mermaid
+flowchart LR
+    IN["Input text"] --> TOK["Tokenizer<br/>(BPE)"]
+    TOK --> EMB["Token<br/>Embeddings"]
+    EMB --> POS["+ Positional<br/>Encoding"]
+    POS --> ATT["Self-Attention<br/>× N layers"]
+    ATT --> FFN["Feed-Forward<br/>Network"]
+    FFN --> OUT["Next-token<br/>Probabilities"]
+
+    style IN  fill:#e1f5fe,color:#333333,stroke:#90caf9
+    style TOK fill:#e8f5e9,color:#333333,stroke:#90caf9
+    style EMB fill:#e8f5e9,color:#333333,stroke:#90caf9
+    style POS fill:#e8f5e9,color:#333333,stroke:#90caf9
+    style ATT fill:#fff3e0,color:#333333,stroke:#90caf9
+    style FFN fill:#fff3e0,color:#333333,stroke:#90caf9
+    style OUT fill:#e1f5fe,color:#333333,stroke:#90caf9
+```
 
 ---
 
@@ -142,6 +160,26 @@ to RLHF that achieves similar alignment results without a separate
 reward model, by framing the preference learning problem directly as
 a classification objective over the language model.
 
+```mermaid
+flowchart LR
+    PT["Pretrained<br/>Base Model"]
+
+    PT --> SFT["Supervised Fine-Tuning<br/>(instruction examples)"]
+    SFT --> RM["Reward Model<br/>training<br/>(human preferences)"]
+    RM --> RLHF["RL Fine-Tuning<br/>(PPO vs reward model)"]
+    RLHF --> CHAT["Instruction-following<br/>Model"]
+
+    PT --> DPO["Direct Preference<br/>Optimization"]
+    DPO --> CHAT
+
+    style PT   fill:#e1f5fe,color:#333333,stroke:#90caf9
+    style SFT  fill:#e8f5e9,color:#333333,stroke:#90caf9
+    style RM   fill:#e8f5e9,color:#333333,stroke:#90caf9
+    style RLHF fill:#fff3e0,color:#333333,stroke:#90caf9
+    style DPO  fill:#fff3e0,color:#333333,stroke:#90caf9
+    style CHAT fill:#e1f5fe,color:#333333,stroke:#90caf9
+```
+
 ---
 
 ## Prompting
@@ -149,6 +187,33 @@ a classification objective over the language model.
 Prompting is the primary interface between software engineers and LLMs.
 A prompt is the text (or structured input) sent to the model at inference
 time. How that prompt is constructed dramatically affects output quality.
+
+### Prompting strategies compared
+
+```mermaid
+flowchart TD
+    P["Prompting<br/>Strategies"]
+
+    P --> ZS["Zero-shot<br/>―<br/>No examples<br/>Task description only"]
+    P --> FS["Few-shot<br/>―<br/>Input→output examples<br/>before the real query"]
+    P --> COT["Chain-of-Thought<br/>―<br/>Step-by-step reasoning<br/>before the answer"]
+    P --> SO["Structured Output<br/>―<br/>JSON mode /<br/>function calling"]
+
+    ZS --> WHEN_ZS["Works when:<br/>task is well-known<br/>format is obvious"]
+    FS --> WHEN_FS["Works when:<br/>format or tone<br/>must be demonstrated"]
+    COT --> WHEN_COT["Works when:<br/>multi-step reasoning,<br/>arithmetic, logic"]
+    SO --> WHEN_SO["Works when:<br/>downstream code<br/>consumes the output"]
+
+    style P        fill:#e1f5fe,color:#333333,stroke:#90caf9
+    style ZS       fill:#e8f5e9,color:#333333,stroke:#90caf9
+    style FS       fill:#e8f5e9,color:#333333,stroke:#90caf9
+    style COT      fill:#e8f5e9,color:#333333,stroke:#90caf9
+    style SO       fill:#e8f5e9,color:#333333,stroke:#90caf9
+    style WHEN_ZS  fill:#fff3e0,color:#555555,stroke:#90caf9
+    style WHEN_FS  fill:#fff3e0,color:#555555,stroke:#90caf9
+    style WHEN_COT fill:#fff3e0,color:#555555,stroke:#90caf9
+    style WHEN_SO  fill:#fff3e0,color:#555555,stroke:#90caf9
+```
 
 ### Zero-shot prompting
 
@@ -182,13 +247,13 @@ multi-step reasoning tasks (arithmetic, symbolic reasoning, commonsense).
 
 ```
 Q: Roger has 5 tennis balls. He buys 2 more cans of 3 balls each.
-How many tennis balls does he have now?
+   How many tennis balls does he have now?
 
 A: Roger starts with 5 balls. He buys 2 cans × 3 balls = 6 balls.
-5 + 6 = 11. The answer is 11.
+   5 + 6 = 11. The answer is 11.
 
 Q: The cafeteria had 23 apples. They used 20 to make lunch and bought
-6 more. How many apples do they have?
+   6 more. How many apples do they have?
 ```
 
 The key insight: chain-of-thought works because the intermediate
@@ -221,16 +286,28 @@ In chat-format APIs, the **system prompt** sets the model's persona,
 constraints, and task context before the conversation begins. Production
 systems commonly structure their prompt as:
 
-```
-[System prompt]        — persona, constraints, output format
-[Retrieved context]    — documents from RAG, if applicable
-[Conversation history] — prior turns, compressed if needed
-[Current user input]   — the actual request
-```
+```mermaid
+flowchart TD
+    CTX["Context Window"]
 
-This structure is a design decision with real trade-offs: system prompts
-consume context tokens, retrieved context must be ranked and truncated,
-and conversation history grows unboundedly without compression.
+    CTX --> SYS["System prompt<br/>―<br/>persona · constraints · output format"]
+    CTX --> RET["Retrieved context<br/>―<br/>documents from RAG<br/>ranked by relevance"]
+    CTX --> HIS["Conversation history<br/>―<br/>prior turns<br/>compressed if needed"]
+    CTX --> USR["Current user input<br/>―<br/>the actual request"]
+
+    SYS --> NOTE_SYS["Consumes tokens<br/>even before the user speaks"]
+    RET --> NOTE_RET["Must be ranked<br/>and truncated to fit"]
+    HIS --> NOTE_HIS["Grows unboundedly<br/>without compression"]
+
+    style CTX      fill:#e1f5fe,color:#333333,stroke:#90caf9
+    style SYS      fill:#e8f5e9,color:#333333,stroke:#90caf9
+    style RET      fill:#e8f5e9,color:#333333,stroke:#90caf9
+    style HIS      fill:#e8f5e9,color:#333333,stroke:#90caf9
+    style USR      fill:#e8f5e9,color:#333333,stroke:#90caf9
+    style NOTE_SYS fill:#fff3e0,color:#555555,stroke:#90caf9
+    style NOTE_RET fill:#fff3e0,color:#555555,stroke:#90caf9
+    style NOTE_HIS fill:#fff3e0,color:#555555,stroke:#90caf9
+```
 
 ---
 
@@ -244,20 +321,27 @@ It solves two problems simultaneously: the model's knowledge cutoff
 
 ### Basic RAG pipeline
 
-```
-User query
-    │
-    ▼
-Embed query ──► Vector search ──► Retrieve top-k chunks
-                                          │
-                                          ▼
-                              Rank / filter / rerank
-                                          │
-                                          ▼
-                              Insert into prompt context
-                                          │
-                                          ▼
-                                   LLM generates answer
+```mermaid
+flowchart TD
+    Q["User query"]
+    Q --> EMB["Embed query<br/>(embedding model)"]
+    EMB --> VS["Vector search<br/>(ANN over document store)"]
+    VS --> RET["Retrieve top-k chunks"]
+    RET --> RNK["Rank / filter / rerank<br/>(cross-encoder)"]
+    RNK --> CTX["Insert into prompt context"]
+    CTX --> LLM["LLM generates answer"]
+
+    DOCS["Document corpus"] --> CHUNK["Chunking"]
+    CHUNK --> DEMB["Embed chunks<br/>(same embedding model)"]
+    DEMB --> STORE["Vector store<br/>(pgvector · Pinecone · Qdrant)"]
+    STORE --> VS
+
+    style Q     fill:#e1f5fe,color:#333333,stroke:#90caf9
+    style LLM   fill:#e1f5fe,color:#333333,stroke:#90caf9
+    style DOCS  fill:#e1f5fe,color:#333333,stroke:#90caf9
+    style STORE fill:#fff3e0,color:#333333,stroke:#90caf9
+    style RNK   fill:#fff3e0,color:#333333,stroke:#90caf9
+    style CTX   fill:#fff3e0,color:#333333,stroke:#90caf9
 ```
 
 ### Key design decisions
@@ -293,15 +377,26 @@ at the beginning or end of the context window improves performance.
 
 ### When RAG fits — and when it does not
 
-RAG is appropriate when:
-- The knowledge base changes frequently (pricing, documentation, policies)
-- The required knowledge exceeds what can be fine-tuned into the model
-- Answers must be traceable to source documents
+```mermaid
+flowchart LR
+    DEC{"Does RAG fit?"}
 
-RAG is not the right tool when:
-- The task requires reasoning over the entire knowledge base, not retrieval
-- Latency constraints make multi-step retrieval unacceptable
-- The knowledge is stable and compact enough to include in a fine-tuned model
+    DEC -->|"Knowledge changes<br/>frequently"| YES1["✓ Use RAG"]
+    DEC -->|"Answers must be<br/>traceable to sources"| YES2["✓ Use RAG"]
+    DEC -->|"Knowledge exceeds<br/>fine-tune budget"| YES3["✓ Use RAG"]
+
+    DEC -->|"Must reason over<br/>entire corpus at once"| NO1["✗ RAG won't help"]
+    DEC -->|"Latency budget is<br/>very tight"| NO2["✗ RAG won't help"]
+    DEC -->|"Knowledge is stable<br/>and small"| NO3["✗ Fine-tune instead"]
+
+    style DEC  fill:#e1f5fe,color:#333333,stroke:#90caf9
+    style YES1 fill:#c8e6c9,color:#333333,stroke:#81c784
+    style YES2 fill:#c8e6c9,color:#333333,stroke:#81c784
+    style YES3 fill:#c8e6c9,color:#333333,stroke:#81c784
+    style NO1  fill:#ffcdd2,color:#333333,stroke:#e57373
+    style NO2  fill:#ffcdd2,color:#333333,stroke:#e57373
+    style NO3  fill:#ffcdd2,color:#333333,stroke:#e57373
+```
 
 ---
 
@@ -313,21 +408,22 @@ code interpreters) that it can call to gather information or take actions.
 The model generates a plan, calls tools, observes results, and continues
 reasoning until it produces a final response.
 
-### The ReAct pattern
+### The ReAct loop
 
-ReAct (Yao et al., 2022) interleaves reasoning (Thought) and action
-(Act) steps, with observations fed back into the context:
+```mermaid
+sequenceDiagram
+    participant U  as User
+    participant LM as LLM
+    participant T  as Tool
 
+    U  ->> LM: Question / task
+    loop Until answer is ready
+        LM ->> LM: Thought — reason about next step
+        LM ->> T:  Action — call tool with arguments
+        T  ->> LM: Observation — tool result
+    end
+    LM ->> U: Final answer
 ```
-Thought: I need to find the current price of AAPL.
-Action: search("AAPL stock price today")
-Observation: AAPL is trading at $213.42 as of market close.
-Thought: I have the price. I can now answer the question.
-Answer: Apple's stock closed at $213.42 today.
-```
-
-Each thought-action-observation cycle is appended to the context,
-so the model can condition its next step on everything that has happened.
 
 ### Tool use and function calling
 
@@ -362,34 +458,76 @@ beyond the context window:
 
 ### Agent reliability challenges
 
-Agents are powerful but brittle in ways that differ from standard
-software:
+```mermaid
+flowchart TD
+    AGT["Agent system"]
 
-- **Cascading errors** — a wrong tool call in step 2 corrupts all
-  subsequent reasoning
-- **Prompt injection** — malicious content in retrieved or tool-returned
-  text can hijack the agent's plan
-- **Infinite loops** — without explicit termination conditions, agents
-  can cycle
-- **Unpredictable latency** — multi-step tool calls make response time
-  non-deterministic
+    AGT --> CE["Cascading errors<br/>―<br/>wrong step 2 corrupts<br/>all subsequent reasoning"]
+    AGT --> PI["Prompt injection<br/>―<br/>malicious content in<br/>tool output hijacks plan"]
+    AGT --> IL["Infinite loops<br/>―<br/>no explicit termination<br/>condition"]
+    AGT --> UL["Unpredictable latency<br/>―<br/>multi-step tool calls<br/>non-deterministic time"]
 
-Design agents with explicit error handling, maximum step budgets, and
-human-in-the-loop checkpoints for high-stakes actions.
+    CE --> MG["Mitigations"]
+    PI --> MG
+    IL --> MG
+    UL --> MG
+
+    MG --> M1["Explicit error handling<br/>per tool call"]
+    MG --> M2["Maximum step budget"]
+    MG --> M3["Human-in-the-loop<br/>for high-stakes actions"]
+    MG --> M4["Input / output<br/>sanitization"]
+
+    style AGT fill:#e1f5fe,color:#333333,stroke:#90caf9
+    style MG  fill:#e8f5e9,color:#333333,stroke:#90caf9
+    style CE  fill:#ffcdd2,color:#333333,stroke:#e57373
+    style PI  fill:#ffcdd2,color:#333333,stroke:#e57373
+    style IL  fill:#ffcdd2,color:#333333,stroke:#e57373
+    style UL  fill:#ffcdd2,color:#333333,stroke:#e57373
+    style M1  fill:#c8e6c9,color:#333333,stroke:#81c784
+    style M2  fill:#c8e6c9,color:#333333,stroke:#81c784
+    style M3  fill:#c8e6c9,color:#333333,stroke:#81c784
+    style M4  fill:#c8e6c9,color:#333333,stroke:#81c784
+```
 
 ---
 
 ## Integration Patterns
+
+### Patterns overview
+
+```mermaid
+flowchart TD
+    INT["LLM Integration<br/>Patterns"]
+
+    INT --> DIR["Direct API call<br/>―<br/>Prompt in, text out<br/>Simplest form"]
+    INT --> PIPE["LLM as pipeline step<br/>―<br/>One deterministic stage<br/>replaced by LLM"]
+    INT --> ORCH["LLM as orchestrator<br/>―<br/>LLM decides routing<br/>and tool calls"]
+
+    DIR  --> GOOD_DIR["Best for:<br/>well-defined tasks<br/>stable prompt<br/>predictable output"]
+    PIPE --> GOOD_PIPE["Best for:<br/>classification · extraction<br/>summarization · translation"]
+    ORCH --> GOOD_ORCH["Best for:<br/>open-ended workflows<br/>multi-step reasoning"]
+
+    DIR  --> BAD_DIR["Risk:<br/>no fallback if<br/>output is malformed"]
+    PIPE --> BAD_PIPE["Risk:<br/>LLM errors isolated<br/>but not always caught"]
+    ORCH --> BAD_ORCH["Risk:<br/>cascading failures<br/>unpredictable latency"]
+
+    style INT       fill:#e1f5fe,color:#333333,stroke:#90caf9
+    style DIR       fill:#e8f5e9,color:#333333,stroke:#90caf9
+    style PIPE      fill:#e8f5e9,color:#333333,stroke:#90caf9
+    style ORCH      fill:#e8f5e9,color:#333333,stroke:#90caf9
+    style GOOD_DIR  fill:#c8e6c9,color:#333333,stroke:#81c784
+    style GOOD_PIPE fill:#c8e6c9,color:#333333,stroke:#81c784
+    style GOOD_ORCH fill:#c8e6c9,color:#333333,stroke:#81c784
+    style BAD_DIR   fill:#ffcdd2,color:#333333,stroke:#e57373
+    style BAD_PIPE  fill:#ffcdd2,color:#333333,stroke:#e57373
+    style BAD_ORCH  fill:#ffcdd2,color:#333333,stroke:#e57373
+```
 
 ### Direct API integration
 
 The simplest integration: call an LLM API, pass a prompt, receive text.
 Appropriate for well-defined, low-complexity tasks where the prompt
 is stable and the output format is predictable.
-
-```
-Application → LLM API → parse response → use result
-```
 
 Design considerations:
 - Retry logic with exponential backoff (rate limits, transient errors)
@@ -404,8 +542,14 @@ classification, extraction, summarization, translation. Surrounding
 steps are deterministic code. This is the most reliable integration
 pattern because failures are isolated and the system degrades gracefully.
 
-```
-Input → preprocess → LLM (classify/extract) → validate → downstream logic
+```mermaid
+flowchart LR
+    IN["Input"] --> PP["Pre-process<br/>(deterministic)"]
+    PP --> LLM["LLM<br/>classify · extract<br/>summarise · translate"]
+    LLM --> VAL["Validate output<br/>(schema · confidence)"]
+    VAL --> DN["Downstream logic<br/>(deterministic)"]
+
+    style LLM fill:#fff3e0,color:#333333,stroke:#90caf9
 ```
 
 ### LLM as orchestrator
@@ -419,8 +563,8 @@ described in the agents section.
 
 LLM API calls are expensive and slow. Caching is viable when:
 - The same prompt (or semantically equivalent prompt) is sent repeatedly
-- Exact-match caching: hash the prompt, cache the response
-- Semantic caching: embed the prompt, retrieve cached responses for
+- **Exact-match caching** — hash the prompt, cache the response
+- **Semantic caching** — embed the prompt, retrieve cached responses for
   similar queries (higher hit rate, lower precision)
 
 ### Observability
@@ -446,7 +590,23 @@ LLM-specific tracing and eval infrastructure.
 Evaluating LLM systems is harder than evaluating deterministic software.
 There is no ground-truth output for most open-ended tasks.
 
-### Approaches
+### Evaluation approaches compared
+
+```mermaid
+quadrantChart
+    title Evaluation approaches — cost vs. reliability
+    x-axis Low cost --> High cost
+    y-axis Low reliability --> High reliability
+    quadrant-1 Ideal
+    quadrant-2 Expensive but trustworthy
+    quadrant-3 Avoid
+    quadrant-4 Fast iteration
+    Task-specific evals: [0.45, 0.80]
+    Human evaluation: [0.85, 0.90]
+    LLM-as-judge: [0.35, 0.65]
+    Benchmark eval: [0.20, 0.50]
+    Reference metrics (BLEU/ROUGE): [0.15, 0.30]
+```
 
 **Benchmark evaluation.** Run the model on a standardized dataset with
 known answers (MMLU, HumanEval, MATH, HellaSwag). Useful for tracking
@@ -474,10 +634,17 @@ domain knowledge.
 
 ### The eval loop
 
-```
-Define task → collect examples → run model → score outputs
-      ▲                                            │
-      └────────── iterate on prompt/model ◄────────┘
+```mermaid
+flowchart LR
+    DEF["Define task<br/>& success criteria"] --> COL["Collect<br/>examples"]
+    COL --> RUN["Run model"]
+    RUN --> SCO["Score outputs"]
+    SCO --> ITR["Iterate on<br/>prompt / model"]
+    ITR --> RUN
+
+    style DEF fill:#e1f5fe,color:#333333,stroke:#90caf9
+    style SCO fill:#fff3e0,color:#333333,stroke:#90caf9
+    style ITR fill:#fff3e0,color:#333333,stroke:#90caf9
 ```
 
 Treat evals like tests: automate them, run them on every prompt change,
@@ -487,6 +654,31 @@ regression in software behavior.
 ---
 
 ## Safety and Alignment
+
+```mermaid
+flowchart TD
+    SAF["Safety & Alignment<br/>Challenges"]
+
+    SAF --> HAL["Hallucination<br/>―<br/>plausible but false output<br/>structural, not a bug"]
+    SAF --> INJ["Prompt Injection<br/>―<br/>untrusted input overrides<br/>system instructions"]
+    SAF --> BIA["Bias & Fairness<br/>―<br/>training data patterns<br/>reflected in outputs"]
+    SAF --> RLH["RLHF limits<br/>―<br/>Goodhart's Law:<br/>optimising the proxy<br/>not the goal"]
+
+    HAL --> M_HAL["Mitigate with:<br/>RAG · citation requirements<br/>verification step<br/>Uncertainty in UI"]
+    INJ --> M_INJ["Mitigate with:<br/>Input sanitisation<br/>Instruction / data separation<br/>Agent action limits"]
+    BIA --> M_BIA["Mitigate with:<br/>Fairness audit<br/>proportional to deployment risk"]
+    RLH --> M_RLH["Accept with:<br/>Diversity of annotators<br/>Red-teaming<br/>Ongoing monitoring"]
+
+    style SAF   fill:#e1f5fe,color:#333333,stroke:#90caf9
+    style HAL   fill:#ffcdd2,color:#333333,stroke:#e57373
+    style INJ   fill:#ffcdd2,color:#333333,stroke:#e57373
+    style BIA   fill:#ffcdd2,color:#333333,stroke:#e57373
+    style RLH   fill:#ffcdd2,color:#333333,stroke:#e57373
+    style M_HAL fill:#c8e6c9,color:#333333,stroke:#81c784
+    style M_INJ fill:#c8e6c9,color:#333333,stroke:#81c784
+    style M_BIA fill:#c8e6c9,color:#333333,stroke:#81c784
+    style M_RLH fill:#c8e6c9,color:#333333,stroke:#81c784
+```
 
 ### Hallucination
 
@@ -540,36 +732,37 @@ or safe — a form of Goodhart's Law applied to alignment.
 LLMs have changed the daily workflow of software engineers.
 The most widely used tools:
 
-| Tool            | Primary use                                          |
-|-----------------|------------------------------------------------------|
-| GitHub Copilot  | Inline code completion in the editor                 |
-| Cursor          | AI-native editor with chat, edit, and agent modes    |
-| Codeium         | Free alternative to Copilot                          |
-| Aider           | LLM pair programmer in the terminal                  |
-| ChatGPT / Claude | General-purpose chat for design, debugging, writing |
+| Tool             | Primary use                                          |
+|------------------|------------------------------------------------------|
+| GitHub Copilot   | Inline code completion in the editor                 |
+| Cursor           | AI-native editor with chat, edit, and agent modes    |
+| Codeium          | Free alternative to Copilot                          |
+| Aider            | LLM pair programmer in the terminal                  |
+| ChatGPT / Claude | General-purpose chat for design, debugging, writing  |
 
-### Patterns that work well
+### What works — and what needs care
 
-- **Generating boilerplate** — test scaffolding, DTO classes, CLI argument
-  parsers, migration files
-- **Explaining unfamiliar code** — asking the model to explain a function
-  or trace through execution
-- **First draft of documentation** — generating docstrings, README sections,
-  API descriptions from code
-- **Debugging with context** — pasting error messages and stack traces and
-  asking for hypothesis
-- **Translation between languages** — converting a working implementation
-  in one language to another
+```mermaid
+flowchart LR
+    subgraph GOOD["Works well ✓"]
+        G1["Generating boilerplate<br/>test scaffolding · DTOs · CLIs"]
+        G2["Explaining unfamiliar code<br/>trace through execution"]
+        G3["First-draft documentation<br/>docstrings · README · API docs"]
+        G4["Debugging with context<br/>error messages · stack traces"]
+        G5["Cross-language translation<br/>working impl → another language"]
+    end
 
-### Patterns that need care
+    subgraph CARE["Needs care ⚠"]
+        C1["Trusting output unread<br/>may be subtly wrong<br/>or use deprecated APIs"]
+        C2["Security-sensitive code<br/>crypto · auth · input sanitization"]
+        C3["Novel architecture<br/>LLMs optimize common patterns<br/>poor on genuinely new problems"]
+    end
 
-- **Trusting output without reading it** — LLMs produce plausible-looking
-  code that may be subtly wrong, use deprecated APIs, or silently change
-  behavior
-- **Security-sensitive code** — cryptography, authentication, input
-  sanitization — LLMs make mistakes here that are hard to spot
-- **Novel architecture decisions** — LLMs optimize for common patterns;
-  they are poor advisors on genuinely new problems
+    GOOD ~~~ CARE
+
+    style GOOD fill:#c8e6c9,color:#333333,stroke:#81c784
+    style CARE fill:#ffe0b2,color:#333333,stroke:#ffb74d
+```
 
 The sustainable workflow treats the LLM as a fast but fallible
 collaborator: its output always passes through the engineer's judgment,
@@ -594,40 +787,43 @@ tests, and review.
 
 ## Key Works
 
-| Work                                        | Authors                  | Year | Significance                                          |
-|---------------------------------------------|--------------------------|------|-------------------------------------------------------|
-| Attention Is All You Need                   | Vaswani et al.           | 2017 | Introduced the transformer architecture               |
-| Language Models are Few-Shot Learners       | Brown et al.             | 2020 | GPT-3; demonstrated in-context learning at scale      |
-| Scaling Laws for Neural Language Models     | Kaplan et al.            | 2020 | Power-law relationships between compute, data, size   |
-| Training language models to follow instructions | Ouyang et al.        | 2022 | InstructGPT; RLHF pipeline for alignment              |
-| Chain-of-Thought Prompting Elicits Reasoning | Wei et al.             | 2022 | Step-by-step reasoning improves complex task accuracy |
-| ReAct: Synergizing Reasoning and Acting     | Yao et al.               | 2022 | Interleaved reasoning and tool use in agents          |
-| Lost in the Middle                          | Liu et al.               | 2023 | LLMs underuse context placed in the middle of prompts |
-| Direct Preference Optimization              | Rafailov et al.          | 2023 | Alignment without a separate reward model             |
+| Work                                            | Authors           | Year | Significance                                          |
+|-------------------------------------------------|-------------------|------|-------------------------------------------------------|
+| Attention Is All You Need                       | Vaswani et al.    | 2017 | Introduced the transformer architecture               |
+| Language Models are Few-Shot Learners           | Brown et al.      | 2020 | GPT-3; demonstrated in-context learning at scale      |
+| Scaling Laws for Neural Language Models         | Kaplan et al.     | 2020 | Power-law relationships between compute, data, size   |
+| Training language models to follow instructions | Ouyang et al.     | 2022 | InstructGPT; RLHF pipeline for alignment              |
+| Chain-of-Thought Prompting Elicits Reasoning    | Wei et al.        | 2022 | Step-by-step reasoning improves complex task accuracy |
+| ReAct: Synergizing Reasoning and Acting         | Yao et al.        | 2022 | Interleaved reasoning and tool use in agents          |
+| Lost in the Middle                              | Liu et al.        | 2023 | LLMs underuse context placed in the middle of prompts |
+| Direct Preference Optimization                  | Rafailov et al.   | 2023 | Alignment without a separate reward model             |
 
 ---
 
 ## Reading Path
 
-A suggested sequence for engineers new to this topic:
+```mermaid
+flowchart LR
+    S1["1 · Start here<br/>Karpathy — Let's build GPT<br/>~2h video, builds transformer<br/>from scratch"]
+    S2["2 · Architecture<br/>Transformer deep dive<br/>attention · tokens · context"]
+    S3["3 · Scale<br/>Scaling Laws — Kaplan 2020<br/>why bigger works"]
+    S4["4 · Alignment<br/>InstructGPT — Ouyang 2022<br/>RLHF pipeline"]
+    S5["5 · Prompting<br/>zero-shot · few-shot<br/>chain-of-thought · structured"]
+    S6["6 · Retrieval<br/>RAG patterns<br/>external knowledge"]
+    S7["7 · Agents<br/>ReAct · function calling<br/>memory · reliability"]
+    S8["8 · Production<br/>Evaluation + Safety<br/>quality & failure modes"]
 
-1. **Start here** — Karpathy's [Let's build GPT](https://www.youtube.com/watch?v=kCc8FmEb1nY)
-   video: builds a transformer from scratch in ~2 hours; gives intuition
-   that no paper alone provides
-2. **Architecture** — [Transformer](transformer.md): attention mechanism,
-   tokenization, context window
-3. **Scale** — Scaling Laws paper (Kaplan et al., 2020): why bigger works
-   and how to think about compute budgets
-4. **Alignment** — InstructGPT paper (Ouyang et al., 2022): how RLHF
-   turns a text predictor into an assistant
-5. **Prompting** — [Prompting Strategies](prompting.md): zero-shot,
-   few-shot, chain-of-thought, structured output
-6. **Retrieval** — [RAG](rag.md): when and how to ground LLMs in external
-   knowledge
-7. **Agents** — [Agents & Tool Use](agents.md): ReAct, function calling,
-   memory, reliability
-8. **Production** — [Evaluation](evaluation.md) and [Safety](safety.md):
-   how to measure quality and reason about failure modes
+    S1 --> S2 --> S3 --> S4 --> S5 --> S6 --> S7 --> S8
+
+    style S1 fill:#e1f5fe,color:#333333,stroke:#90caf9
+    style S2 fill:#e8f5e9,color:#333333,stroke:#90caf9
+    style S3 fill:#e8f5e9,color:#333333,stroke:#90caf9
+    style S4 fill:#e8f5e9,color:#333333,stroke:#90caf9
+    style S5 fill:#fff3e0,color:#333333,stroke:#90caf9
+    style S6 fill:#fff3e0,color:#333333,stroke:#90caf9
+    style S7 fill:#fff3e0,color:#333333,stroke:#90caf9
+    style S8 fill:#fff3e0,color:#333333,stroke:#90caf9
+```
 
 ---
 

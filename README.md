@@ -17,7 +17,7 @@ It is **not** a textbook. It is a **navigable map**:
 - **Authors** — who shaped the field, with biography cards
 - **Works** — papers, books, and talks that became canon
 - **Languages** — programming languages as embodiments of ideas
-- **Topics** — paradigms, architecture, design, types, FP, testing, delivery, distributed systems, developer tools
+- **Topics** — paradigms, architecture, design, types, FP, testing, delivery, distributed systems, developer tools, large language models
 - **Examples** — runnable, comparable code in multiple languages
 - **Maps** — visual diagrams showing how everything connects
 - **Reading paths** — guided sequences for deep dives
@@ -207,6 +207,19 @@ flowchart LR
     Helland --> Kleppmann
   end
 
+  subgraph E["🤖 Large Language Models"]
+    Vaswani["Vaswani · 2017<br/>Attention Is All You Need"]
+    Kaplan["Kaplan · 2020<br/>Scaling Laws"]
+    GPT3["Brown · 2020<br/>GPT-3"]
+    Instruct["Ouyang · 2022<br/>InstructGPT"]
+    CoT["Wei · 2022<br/>Chain-of-Thought"]
+    ReAct["Yao · 2022<br/>ReAct"]
+
+    Vaswani --> Kaplan --> GPT3 --> Instruct
+    GPT3 --> CoT --> ReAct
+    Instruct -.-> ReAct
+  end
+
   Parnas -. "modularity" .-> Martin
   Parnas -. "modularity" .-> Evans
   Evans -. "DDD + FP" .-> Wlaschin
@@ -216,16 +229,19 @@ flowchart LR
   style B fill:#fef9c3,stroke:#eab308,stroke-width:2px
   style C fill:#dcfce7,stroke:#22c55e,stroke-width:2px
   style D fill:#f3e8ff,stroke:#a855f7,stroke-width:2px
+  style E fill:#fecaca,stroke:#ef4444,stroke-width:2px
 
   classDef arch fill:#93c5fd,stroke:#2563eb,color:#1e3a5f,font-weight:bold
   classDef design fill:#fde68a,stroke:#ca8a04,color:#713f12,font-weight:bold
   classDef process fill:#86efac,stroke:#16a34a,color:#14532d,font-weight:bold
   classDef dist fill:#d8b4fe,stroke:#9333ea,color:#581c87,font-weight:bold
+  classDef llm fill:#fca5a5,stroke:#dc2626,color:#7f1d1d,font-weight:bold
 
   class Conway,Dijkstra,Parnas,Brooks,Shaw,Bass,Evans,Cockburn,Newman,Brown,Skelton arch
   class Church,McCarthy,Simula,Kay,Colmerauer,Liskov,Hewitt,Hoare,Milner,Backus,Meyer,Hughes,GoF,Fowler,Martin,Armstrong,Hickey,Bernhardt,Wlaschin design
   class NATO68,Deming,Beck,Agile,Feathers,CD,Forsgren process
   class Lamport,Gray,Brewer,Helland,Kleppmann dist
+  class Vaswani,Kaplan,GPT3,Instruct,CoT,ReAct llm
 ```
 
 ### Overview timeline: Major lineages × era
@@ -339,6 +355,12 @@ timeline
 | 13 | [**Containers & Orchestration**](docs/topics/containers/index.md) | Docker, Podman, Kubernetes, OCI, runtimes              | How we package and run workloads  |
 | 14 | [**Developer Tools**](docs/topics/dev-tools/index.md)             | IDE, HTTP clients, terminal, debuggers                 | Tools developers use every day    |
 
+### 🤖 Machine Learning & LLMs
+
+| #  | Topic                                                 | Key ideas                                                | Details                                |
+|----|-------------------------------------------------------|----------------------------------------------------------|----------------------------------------|
+| 15 | [**Large Language Models**](docs/topics/llm/index.md) | Transformers, prompting, RAG, agents, evaluation, safety | How we build and integrate LLM systems |
+
 ---
 
 ## Languages
@@ -438,6 +460,14 @@ timeline
 | Nicole Forsgren       | —         | Accelerate, DORA                    | Process, delivery        | [→](docs/authors/nicole-forsgren.md)       |
 | Gene Kim              | —         | Accelerate, DORA                    | Process, delivery        | [→](docs/authors/gene-kim.md)              |
 | Steve Smith           | —         | DORA metrics, DevOps                | Process, SRE             | [→](docs/authors/steve-smith.md)           |
+| Ashish Vaswani        | —         | Transformer architecture            | LLM                      | [→](docs/authors/ashish-vaswani.md)        |
+| Ilya Sutskever        | 1986–     | GPT series, scaling                 | LLM                      | [→](docs/authors/ilya-sutskever.md)        |
+| Jared Kaplan          | —         | Scaling Laws                        | LLM                      | [→](docs/authors/jared-kaplan.md)          |
+| Tom Brown             | —         | GPT-3                               | LLM                      | [→](docs/authors/tom-brown.md)             |
+| Jason Wei             | —         | Chain-of-thought prompting          | LLM                      | [→](docs/authors/jason-wei.md)             |
+| Long Ouyang           | —         | InstructGPT / RLHF                  | LLM                      | [→](docs/authors/long-ouyang.md)           |
+| Andrej Karpathy       | 1986–     | nanoGPT, LLM education              | LLM                      | [→](docs/authors/andrej-karpathy.md)       |
+| Lilian Weng           | —         | Agents, prompting, alignment blog   | LLM                      | [→](docs/authors/lilian-weng.md)           |
 
 > 📊 **Full list with influence graph:** [Authors index](docs/authors/)
 
@@ -447,20 +477,26 @@ timeline
 
 ### 📄 Papers
 
-| Year | Author(s)               | Title                                                          | Topic                  | Local                                                                 | Page                                             |
-|------|-------------------------|----------------------------------------------------------------|------------------------|-----------------------------------------------------------------------|--------------------------------------------------|
-| 1936 | Church                  | Lambda calculus                                                | FP foundations         | —                                                                     | [→](docs/works/papers/church-1936-lambda.md)     |
-| 1968 | Dijkstra                | Go To Considered Harmful                                       | Structured programming | [pdf](https://dl.acm.org/doi/10.1145/362929.362947)                   | [→](docs/works/papers/dijkstra-1968-goto.md)     |
-| 1972 | Parnas                  | On the Criteria To Be Used in Decomposing Systems into Modules | Modularity             | [pdf](https://dl.acm.org/doi/10.1145/361598.361623)                   | [→](docs/works/papers/parnas-1972-modules.md)    |
-| 1973 | Hewitt, Bishop, Steiger | A Universal Modular ACTOR Formalism                            | Concurrency            | —                                                                     | [→](docs/works/papers/hewitt-1973-actors.md)     |
-| 1978 | Backus                  | Can Programming Be Liberated…?                                 | FP                     | [pdf](https://dl.acm.org/doi/10.1145/359576.359579)                   | [→](docs/works/papers/backus-1978-liberated.md)  |
-| 1978 | Hoare                   | CSP                                                            | Concurrency            | [pdf](https://dl.acm.org/doi/10.1145/359576.359585)                   | [→](docs/works/papers/hoare-1978-csp.md)         |
-| 1978 | Lamport                 | Time, Clocks, and the Ordering of Events…                      | Distributed            | [pdf](https://lamport.azurewebsites.net/pubs/time-clocks.pdf)         | [→](docs/works/papers/lamport-1978-clocks.md)    |
-| 1989 | Hughes                  | Why Functional Programming Matters                             | FP                     | [pdf](https://www.cs.kent.ac.uk/people/staff/dat/miranda/whyfp90.pdf) | [→](docs/works/papers/hughes-1989-why-fp.md)     |
-| 1994 | Liskov & Wing           | A Behavioral Notion of Subtyping                               | Types, OOP             | [pdf](https://www.cs.cmu.edu/~wing/publications/LiskovWing94.pdf)     | [→](docs/works/papers/liskov-1994-subtyping.md)  |
-| 2000 | Brewer                  | CAP conjecture (keynote)                                       | Distributed            | —                                                                     | [→](docs/works/papers/brewer-2000-cap.md)        |
-| 2002 | Amazon                  | Dynamo: Amazon's Highly Available Key-value Store              | Distributed            | —                                                                     | [→](docs/works/papers/dynamo-2007-paper.md)      |
-| 2007 | Helland                 | Life Beyond Distributed Transactions                           | Distributed            | —                                                                     | [→](docs/works/papers/helland-2007-beyond-dt.md) |
+| Year | Author(s)               | Title                                                          | Topic                  | Local                                                                 | Page                                                |
+|------|-------------------------|----------------------------------------------------------------|------------------------|-----------------------------------------------------------------------|-----------------------------------------------------|
+| 1936 | Church                  | Lambda calculus                                                | FP foundations         | —                                                                     | [→](docs/works/papers/church-1936-lambda.md)        |
+| 1968 | Dijkstra                | Go To Considered Harmful                                       | Structured programming | [pdf](https://dl.acm.org/doi/10.1145/362929.362947)                   | [→](docs/works/papers/dijkstra-1968-goto.md)        |
+| 1972 | Parnas                  | On the Criteria To Be Used in Decomposing Systems into Modules | Modularity             | [pdf](https://dl.acm.org/doi/10.1145/361598.361623)                   | [→](docs/works/papers/parnas-1972-modules.md)       |
+| 1973 | Hewitt, Bishop, Steiger | A Universal Modular ACTOR Formalism                            | Concurrency            | —                                                                     | [→](docs/works/papers/hewitt-1973-actors.md)        |
+| 1978 | Backus                  | Can Programming Be Liberated…?                                 | FP                     | [pdf](https://dl.acm.org/doi/10.1145/359576.359579)                   | [→](docs/works/papers/backus-1978-liberated.md)     |
+| 1978 | Hoare                   | CSP                                                            | Concurrency            | [pdf](https://dl.acm.org/doi/10.1145/359576.359585)                   | [→](docs/works/papers/hoare-1978-csp.md)            |
+| 1978 | Lamport                 | Time, Clocks, and the Ordering of Events…                      | Distributed            | [pdf](https://lamport.azurewebsites.net/pubs/time-clocks.pdf)         | [→](docs/works/papers/lamport-1978-clocks.md)       |
+| 1989 | Hughes                  | Why Functional Programming Matters                             | FP                     | [pdf](https://www.cs.kent.ac.uk/people/staff/dat/miranda/whyfp90.pdf) | [→](docs/works/papers/hughes-1989-why-fp.md)        |
+| 1994 | Liskov & Wing           | A Behavioral Notion of Subtyping                               | Types, OOP             | [pdf](https://www.cs.cmu.edu/~wing/publications/LiskovWing94.pdf)     | [→](docs/works/papers/liskov-1994-subtyping.md)     |
+| 2000 | Brewer                  | CAP conjecture (keynote)                                       | Distributed            | —                                                                     | [→](docs/works/papers/brewer-2000-cap.md)           |
+| 2002 | Amazon                  | Dynamo: Amazon's Highly Available Key-value Store              | Distributed            | —                                                                     | [→](docs/works/papers/dynamo-2007-paper.md)         |
+| 2007 | Helland                 | Life Beyond Distributed Transactions                           | Distributed            | —                                                                     | [→](docs/works/papers/helland-2007-beyond-dt.md)    |
+| 2017 | Vaswani                 | Attention Is All You Need                                      | LLM / Transformers     | —                                                                     | [→](docs/works/papers/vaswani-2017-attention.md)    |
+| 2020 | Kaplan                  | Scaling Laws for Neural Language Models                        | LLM / Scaling          | —                                                                     | [→](docs/works/papers/kaplan-2020-scaling-laws.md)  |
+| 2020 | Brown                   | Language Models are Few-Shot Learners (GPT-3)                  | LLM / In-context       | —                                                                     | [→](docs/works/papers/brown-2020-gpt3.md)           |
+| 2022 | Ouyang                  | InstructGPT / Training language models to follow instructions  | LLM / Alignment        | —                                                                     | [→](docs/works/papers/ouyang-2022-instructgpt.md)   |
+| 2022 | Wei                     | Chain-of-Thought Prompting Elicits Reasoning                   | LLM / Prompting        | —                                                                     | [→](docs/works/papers/wei-2022-chain-of-thought.md) |
+| 2022 | Yao                     | ReAct: Synergizing Reasoning and Acting                        | LLM / Agents           | —                                                                     | [→](docs/works/papers/yao-2022-react.md)            |
 
 ### 📚 Books
 
@@ -553,6 +589,7 @@ Guided sequences for focused study.
 | λ **Functional Programming** | Lambda calculus → ML → Haskell → Clojure | Church 1936   | Wlaschin 2018  | [→](docs/reading-paths/fp-path.md)                   |
 | 🧪 **Testing & Delivery**    | XP → TDD → CI/CD → DORA                  | Beck 1999     | Forsgren 2018  | [→](docs/reading-paths/testing-and-delivery-path.md) |
 | 🌐 **Distributed Systems**   | Clocks → ACID → CAP → Streaming          | Lamport 1978  | Kleppmann 2017 | [→](docs/reading-paths/distributed-systems-path.md)  |
+| 🤖 **Large Language Models** | Transformers → RAG → Agents              | Vaswani 2017  | Rafailov 2023  | [→](docs/reading-paths/llm-path.md)                  |
 
 ---
 
@@ -616,7 +653,14 @@ timeline
     2017 : Kleppmann — DDIA
     2018 : Forsgren — Accelerate / DORA
          : Wlaschin — Domain Modeling Made Functional
+    2017 : Vaswani et al. — Attention Is All You Need (Transformer)
     2019 : Skelton & Pais — Team Topologies
+    2020 : Kaplan et al. — Scaling Laws
+         : Brown et al. — GPT-3 / Few-Shot Learning
+    2022 : Ouyang et al. — InstructGPT / RLHF
+         : Wei et al. — Chain-of-Thought Prompting
+         : Yao et al. — ReAct
+    2023 : Rafailov et al. — Direct Preference Optimization
 ```
 
 > 📊 **Full interactive timeline:** [Master timeline](docs/maps/master-timeline.md)
@@ -657,6 +701,9 @@ Unified list of abbreviations and terms used in the maps and text above.
 | **SOLID** | Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, Dependency Inversion | Five OOP design principles (R.C. Martin; acronym crystallized early 2000s).                                                    |
 | **SRE**   | Site Reliability Engineering                                                                         | Engineering discipline applying software practices to operations (Google; public book 2016).                                   |
 | **TDD**   | Test-Driven Development                                                                              | Write a failing test first, make it pass, refactor. Practiced in XP from late 1990s; book by Beck 2002.                        |
+| **LLM**   | Large Language Model                                                                                 | Neural network trained on text to predict the next token; powers modern AI assistants and coding tools.                        |
+| **RAG**   | Retrieval-Augmented Generation                                                                       | Architecture that grounds LLM outputs in retrieved external documents to reduce hallucination.                                 |
+| **RLHF**  | Reinforcement Learning from Human Feedback                                                           | Alignment technique training LLMs on human preference rankings (InstructGPT, ChatGPT).                                         |
 | **XP**    | Extreme Programming                                                                                  | Agile methodology emphasizing feedback, simplicity, and technical practices (Beck 1999).                                       |
 
 ---
