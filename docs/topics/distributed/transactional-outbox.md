@@ -181,16 +181,53 @@ The outbox pattern guarantees **at-least-once** delivery, not exactly-once. Dupl
 
 ## Producer Configuration
 
-When using Kafka as the broker, the producer (relay) should be configured for durability:
+### Kafka Producer Settings
 
-| Setting | Value | Why |
-|---------|-------|-----|
-| `acks` | `all` (or `-1`) | Wait for all in-sync replicas to acknowledge |
-| `enable.idempotence` | `true` | Prevents duplicates caused by producer retries (network-level only) |
-| `retries` | `> 0` | Retry on transient failures |
-| `max.in.flight.requests` | `5` (default with idempotence) | Allow pipelining without reordering |
+| Setting | Value | Purpose |
+|---------|-------|---------|
+| `acks` | `all` (or `-1`) | The broker acknowledges only after **all in-sync replicas (ISR)** have written the message. `acks=1` risks data loss if the leader crashes before replication; `acks=0` offers no durability guarantee. |
+| `enable.idempotence` | `true` | Assigns each message a producer ID and sequence number. The broker deduplicates retries **at the network level** — prevents the relay from publishing duplicates due to a transient network error on the same `send()` call. Does not prevent duplicates from reading the same outbox row twice. |
+| `retries` | `Integer.MAX_VALUE` | Number of retry attempts on transient failure. With `enable.idempotence=true`, unlimited retries are safe because the broker deduplicates them. Without idempotence, high retry counts increase duplicate risk. |
+| `retry.backoff.ms` | `100`–`1000` | Wait time between retries. Prevents hammering a broker that is temporarily overloaded or recovering. |
+| `max.in.flight.requests.per.connection` | `5` (with idempotence) or `1` (without) | Maximum concurrent unacknowledged requests per broker connection. With `enable.idempotence=true`, up to 5 are safe. Without idempotence, must be `1` to prevent message reordering on retry. |
+| `delivery.timeout.ms` | `120000` ms | Total time budget for a message to be acknowledged, including retries. If exceeded, the send fails. Should exceed `request.timeout.ms` × `retries`. |
+| `linger.ms` | `0`–`5` | How long the producer waits to batch messages before sending. `0` sends immediately; small values (1–5 ms) improve throughput at the cost of slight latency. For the relay, `0` is often preferred for predictable latency. |
+| `batch.size` | `16384` bytes | Maximum batch size per partition. Larger batches improve throughput but increase memory usage and latency. Tune in conjunction with `linger.ms`. |
+| `compression.type` | `snappy` / `lz4` | Compresses batches before sending. Reduces network and storage costs significantly for JSON payloads. `snappy` is a good default; `lz4` offers faster decompression. |
+| `transactional.id` | stable unique ID | Required for Kafka transactions (EOS). Allows the relay to use `beginTransaction()` / `commitTransaction()` for atomic multi-topic writes. The ID must be stable across relay restarts. |
 
-`enable.idempotence=true` prevents the *producer* from creating duplicates due to its own retries, but it does not prevent duplicates caused by the relay reading the same outbox row twice. That is why the **Inbox** pattern on the consumer side is essential.
+> **`enable.idempotence` scope:** prevents duplicates caused by the *producer retrying the same send call* over the network.
+> It does **not** prevent the relay from reading the same `PENDING` outbox row twice and calling `send()` twice.
+> That class of duplicates is handled by the [Transactional Inbox](transactional-inbox.md) pattern on the consumer side.
+
+### RabbitMQ Producer Settings
+
+| Setting | Value | Purpose |
+|---------|-------|---------|
+| `publisher_confirms` (Publisher Confirms) | `true` | The broker sends an `ack` or `nack` back to the producer after the message is persisted. Without confirms, the relay cannot know whether the publish succeeded and risks data loss on broker crash. |
+| `delivery_mode` (message property) | `2` (persistent) | Message is written to disk, not just held in memory. Survives RabbitMQ restart. Must be combined with a durable exchange and durable queue. |
+| `durable` (exchange) | `true` | Exchange configuration survives broker restart. |
+| `durable` (queue) | `true` | Queue and its messages survive broker restart. |
+| `mandatory` flag | `true` | If the broker cannot route the message to any queue (e.g., misconfigured binding), it returns the message to the producer via `basic.return`. Without this, unroutable messages are silently dropped. |
+| `alternate_exchange` | AE name | Fallback exchange for messages that could not be routed from the primary exchange. Safer alternative to `mandatory` for production: unroutable messages go here instead of being returned to the producer. |
+| `connection.heartbeat` | `60` s | Frequency of TCP-level heartbeats. Detects dead connections faster than OS TCP timeouts (which can take minutes). Important for long-running relay processes. |
+| `channel_max` | depends on load | Maximum number of channels per connection. Each relay goroutine/thread can use its own channel; one connection can multiplex many channels efficiently. |
+| `prefetch_count` (relay consumer, if using pull model) | `1` | If the relay consumes from a staging queue before publishing externally, prefetch limits how many messages it holds at once, reducing re-delivery scope on crash. |
+
+> **Publisher Confirms vs. Transactions in RabbitMQ:**
+> RabbitMQ supports AMQP transactions (`tx.select` / `tx.commit`), but they are roughly 250× slower than Publisher Confirms.
+> For a high-throughput outbox relay, always prefer **Publisher Confirms** in async mode:
+> send a batch, then wait for confirms before marking outbox rows as `SENT`.
+
+### Delivery Guarantee Comparison
+
+| Guarantee | Kafka setting | RabbitMQ setting | What it protects |
+|-----------|--------------|-----------------|-----------------|
+| Message reaches broker | `acks=all` | Publisher Confirms | Relay crash after send but before ack |
+| Message survives broker restart | `log.flush` policy / replication | `delivery_mode=2` + durable queue | Broker process restart or crash |
+| No producer-side network duplicates | `enable.idempotence=true` | — (not available natively) | Network retry of the same send call |
+| No consumer-side duplicates | Manual offset commit after DB commit | `ack_mode=manual` after DB commit | Consumer crash before ack |
+| Application-level deduplication | — | — | Same outbox row published twice (both brokers) — requires Inbox pattern |
 
 ---
 

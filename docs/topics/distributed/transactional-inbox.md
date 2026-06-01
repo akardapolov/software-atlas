@@ -140,13 +140,46 @@ The database and Kafka are independent systems with no distributed transaction c
 
 ## Consumer Configuration
 
-### Kafka-Specific Settings
+### Kafka Consumer Settings
 
-| Setting | Value | Why |
-|---------|-------|-----|
-| `enable.auto.commit` | `false` | Disable automatic offset commits |
-| Offset commit timing | After DB `COMMIT` | Only acknowledge to Kafka once the database transaction is durable |
-| `isolation.level` | `read_committed` | Skip messages from aborted producer transactions |
+| Setting | Value | Purpose |
+|---------|-------|---------|
+| `enable.auto.commit` | `false` | Disables automatic offset commits. Without this, Kafka may acknowledge a message before the database transaction completes, making safe deduplication impossible. |
+| `isolation.level` | `read_committed` | Consumer sees only messages from committed producer transactions. Messages from aborted transactions (e.g., due to producer crash mid-batch) are invisible. |
+| `max.poll.records` | `1`–`50` | Limits records per `poll()` call. Smaller batches reduce the window of re-delivery if the consumer crashes mid-batch. |
+| `max.poll.interval.ms` | `> processing time` | Maximum time between two `poll()` calls before Kafka considers the consumer dead and reassigns the partition. Must exceed worst-case DB transaction duration. |
+| `auto.offset.reset` | `earliest` | If no committed offset exists (new consumer group, reset), start from the oldest available message rather than skipping to the latest. Safer for inbox deduplication. |
+| `session.timeout.ms` | `10000`–`30000` | If the broker receives no heartbeat within this window, the consumer is declared dead and partition rebalancing begins. |
+| `heartbeat.interval.ms` | `session.timeout.ms / 3` | How often the consumer sends heartbeats. Must be significantly lower than `session.timeout.ms` to avoid false-positive failures. |
+| `fetch.min.bytes` | `1` | Minimum data the broker returns per fetch. Value `1` means respond immediately when any data is available — preferred for low-latency inbox processing. |
+
+> **Critical ordering rule:** commit the offset to Kafka **only after** the database transaction has committed.
+> Committing early risks losing the message if the process crashes between the Kafka ack and the DB write.
+> Committing late (after DB commit) may re-deliver the message, but the inbox's `UNIQUE(message_id)` handles that safely.
+
+### RabbitMQ Consumer Settings
+
+| Setting | Value | Purpose |
+|---------|-------|---------|
+| `ack_mode` | `manual` | The consumer explicitly calls `basic.ack` or `basic.nack` after processing. Auto-ack removes the message immediately on delivery, before any DB write — dangerous for inbox. |
+| `prefetch_count` (`basic.qos`) | `1`–`10` | Maximum number of unacknowledged messages the broker sends to the consumer at once. Lower values reduce re-delivery scope on crash; `1` gives strictest ordering. |
+| `requeue_on_nack` | `false` (for DLQ routing) | On `basic.nack`, whether to put the message back into the same queue. Set to `false` to route failures to a Dead Letter Exchange instead of looping. |
+| `dead_letter_exchange` | DLX name | Exchange where messages are routed after exhausting retries or explicit `nack` with `requeue=false`. Essential for inbox failure handling. |
+| `message_ttl` | e.g. `86400000` ms | Maximum time a message can sit in the queue unprocessed. After expiry the message is either dropped or routed to the DLX. |
+| `durable` (queue) | `true` | Queue survives broker restart. Without this, all pending messages are lost when RabbitMQ restarts. |
+| `persistent` (message delivery mode) | `2` | Messages are written to disk, not just memory. Survives broker restart. Must be combined with a durable queue. |
+| `consumer_timeout` | e.g. `1800000` ms | RabbitMQ (≥ 3.8) disconnects consumers that hold an unacknowledged message longer than this threshold. Set above worst-case DB transaction time. |
+
+> **Correct RabbitMQ inbox flow:**
+> 1. Receive message (`basic.deliver`).
+> 2. `BEGIN` database transaction.
+> 3. `INSERT INTO inbox ... ON CONFLICT DO NOTHING`.
+> 4. Run business logic if insert succeeded.
+> 5. `COMMIT` database transaction.
+> 6. `basic.ack` — only now remove the message from the queue.
+>
+> If the process crashes between step 5 and 6, RabbitMQ re-delivers the message.
+> The inbox `UNIQUE` constraint silently rejects the duplicate at step 3.
 
 **Correct offset management:**
 
