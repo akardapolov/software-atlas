@@ -1037,10 +1037,9 @@ flowchart LR
 
 ### Major Frameworks
 - **Spring Boot**: Industry-standard web and microservices framework.
+  - [Transactions](./frameworks/spring-transactions.md) — `@Transactional`, `TransactionTemplate`, reactive transactions, JTA, event listeners.
+  - [Testing](./frameworks/spring-testing.md) — test slices, MockMvc, Testcontainers, context caching.
 - **Quarkus / Micronaut**: Cloud-native, high-performance frameworks with AOT compiler support.
-
-### Testing
-- **[Spring Boot Testing](spring-testing.md)** — Test slices (`@SpringBootTest`, `@WebMvcTest`, `@DataJpaTest`), MockMvc, Testcontainers, context caching.
 
 ---
 

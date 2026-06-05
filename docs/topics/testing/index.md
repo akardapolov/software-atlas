@@ -988,7 +988,7 @@ Runnable testing samples live under [`examples/`](../../../examples/):
 
 Language-specific pages with deeper coverage:
 
-- [Spring Boot Testing](../../languages/java/spring-testing.md) — test
+- [Spring Boot Testing](../../languages/java/frameworks/spring-testing.md) — test
   slices, MockMvc, Testcontainers, context caching on the JVM.
 
 ## Reading Path
