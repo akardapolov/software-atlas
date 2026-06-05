@@ -99,7 +99,7 @@ language research.
 ## Related Pages
 
 - [Lisp](../languages/lisp/index.md)
-- [Functional Programming](../topics/functional/index.md)
-- [Paradigms](../topics/paradigms/index.md)
+- [Functional Programming](../topics/concepts/functional/index.md)
+- [Paradigms](../topics/concepts/paradigms/index.md)
 - [Alonzo Church](alonzo-church.md)
 - [Clojure](../languages/clojure/index.md)

@@ -69,7 +69,7 @@ Two major variants:
 
 Go made CSP mainstream via goroutines + channels.
 
-→ [Hoare — CSP (1978)](../../works/papers/hoare-1978-csp.md)
+→ [Hoare — CSP (1978)](../../../works/papers/hoare-1978-csp.md)
 
 #### Actors (Hewitt 1973 / Erlang 1986): Mailboxes
 - Each actor/process has private state
@@ -78,7 +78,7 @@ Go made CSP mainstream via goroutines + channels.
 
 Erlang embodies this model: "let it crash", supervisors, isolation.
 
-→ [Joe Armstrong](../../authors/joe-armstrong.md)
+→ [Joe Armstrong](../../../authors/joe-armstrong.md)
 
 ## Async/Await (Structured Concurrency-ish)
 
@@ -152,11 +152,11 @@ A useful rule of thumb: *the lower the scheduler sits, the more preemptive it te
 | Switch cost | Higher (full context save) | Lower (continuation only) |
 | Typical use | OS threads, fault-isolated runtimes | I/O-bound concurrency, lightweight tasks |
 
-→ [Simula coroutines](../../languages/simula/index.md) ·
-  [Erlang processes](../../languages/erlang/index.md) ·
-  [Go goroutines](../../languages/go/index.md) ·
-  [Java virtual threads](../../languages/java/index.md) ·
-  [Kotlin coroutines](../../languages/kotlin/index.md)
+→ [Simula coroutines](../../../languages/simula/index.md) ·
+  [Erlang processes](../../../languages/erlang/index.md) ·
+  [Go goroutines](../../../languages/go/index.md) ·
+  [Java virtual threads](../../../languages/java/index.md) ·
+  [Kotlin coroutines](../../../languages/kotlin/index.md)
 
 ## A Practical Rule: Prefer Immutability + Explicit Boundaries
 
@@ -189,19 +189,19 @@ This is compatible with:
 
 ## Further Reading
 
-- [Hoare — CSP (1978)](../../works/papers/hoare-1978-csp.md)
-- [Lamport — Time, Clocks... (1978)](../../works/papers/lamport-1978-clocks.md)
+- [Hoare — CSP (1978)](../../../works/papers/hoare-1978-csp.md)
+- [Lamport — Time, Clocks... (1978)](../../../works/papers/lamport-1978-clocks.md)
 - *The Little Book of Semaphores* (Allen B. Downey)
 - *Java Concurrency in Practice* (Goetz et al.)
 
 ## Related Topics
 
 - [Synchronous vs Asynchronous: Four Axes](./sync-async-axes.md) — the four axes of execution models
-- [Distributed Systems](../distributed/index.md) — reliability, consensus, CAP
+- [Distributed Systems](../../distributed/index.md) — reliability, consensus, CAP
 - [Functional Programming](../functional/index.md) — immutability prevents data races
 - [Paradigms](../paradigms/index.md) — concurrency models in broader context
-- [Architecture & Modularity](../architecture/index.md) — system decomposition
+- [Architecture & Modularity](../../architecture/index.md) — system decomposition
 
 ## Maps
 
-- [Concurrency Map](../../maps/concurrency-map.md) — visual overview of how concurrency models evolved
+- [Concurrency Map](../../../maps/concurrency-map.md) — visual overview of how concurrency models evolved

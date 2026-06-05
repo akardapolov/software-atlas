@@ -134,7 +134,7 @@ flowchart TD
 | 2012 | **Cargo** | Rust | First-class package manager bundled with the toolchain |
 | 2015 | **Bazel** | Polyglot | Hermetic builds + remote cache + remote execution |
 
-→ See [Build Systems chapter](../topics/process/build-systems/index.md)
+→ See [Build Systems chapter](../topics/tools/build-systems/index.md)
 for detailed per-tool guides.
 
 ## Key Methodologies
@@ -290,6 +290,6 @@ _While there is value in the items on the right, we value the items on the left 
 
 - [Team Topologies Authors](../authors/matthew-skelton.md)
 - [Brooks — Mythical Man-Month](../works/books/brooks-1975-mmm.md)
-- [Build Systems](../topics/process/build-systems/index.md)
-- [Containers & Orchestration](../topics/containers/index.md)
+- [Build Systems](../topics/tools/build-systems/index.md)
+- [Containers & Orchestration](../topics/tools/containers/index.md)
 - [Architecture Map](./architecture-map.md)

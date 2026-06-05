@@ -4,21 +4,20 @@ Knowledge organized by domain. Each topic traces how ideas evolved from foundati
 
 ---
 
-## 🧩 Concepts & Design
+## 🧠 Concepts
 
-How we think, design, and reason about code.
+Fundamental ideas and abstractions that shape how we think about software.
 
 | # | Topic                                                         | Key ideas                                                              | Details                            |
 |---|---------------------------------------------------------------|------------------------------------------------------------------------|------------------------------------|
-| 1 | [**Paradigms**](paradigms/index.md)                           | Imperative↔Declarative, Procedural/OOP/FP/Logic, Sequential/Concurrent | How we think about computation     |
-| 2 | [**OOP & Design**](design/index.md)                           | SOLID, GoF patterns, Refactoring, DbC                                  | How we design components           |
-| 3 | [**Type Systems**](types/index.md)                            | Static/dynamic, nominal/structural, ADTs, generics                     | How types help us reason           |
-| 4 | [**Functional Programming**](functional/index.md)             | Purity, immutability, composition, monads                              | How we avoid accidental complexity |
-| 5 | [**Concurrency**](concurrency/index.md)                       | Threads, CSP, Actors, async/await                                      | How we handle parallelism          |
+| 1 | [**Paradigms**](concepts/paradigms/index.md)                  | Imperative↔Declarative, Procedural/OOP/FP/Logic, Sequential/Concurrent | How we think about computation     |
+| 2 | [**Concurrency**](concepts/concurrency/index.md)              | Threads, CSP, Actors, async/await                                      | How we handle parallelism          |
+| 3 | [**Type Systems**](concepts/types/index.md)                   | Static/dynamic, nominal/structural, ADTs, generics                     | How types help us reason           |
+| 4 | [**Functional Programming**](concepts/functional/index.md)    | Purity, immutability, composition, monads                              | How we avoid accidental complexity |
 
 ### Deep dives
-- [Sync vs Async](concurrency/sync-async-axes.md) — axes of concurrent execution
-- [Memoization](functional/memoization.md) — caching function results
+- [Sync vs Async](concepts/concurrency/sync-async-axes.md) — axes of concurrent execution
+- [Memoization](concepts/functional/memoization.md) — caching function results
 
 ---
 
@@ -28,7 +27,7 @@ How we organize systems and modules.
 
 | # | Topic                                                              | Key ideas                                  | Details                  |
 |---|--------------------------------------------------------------------|--------------------------------------------|--------------------------|
-| 6 | [**Architecture & Modularity**](architecture/index.md)             | Layered, Hexagonal, DDD, Microservices, C4 | How we structure systems |
+| 5 | [**Architecture & Modularity**](architecture/index.md)             | Layered, Hexagonal, DDD, Microservices, C4 | How we structure systems |
 
 ### Communication patterns
 - [Event-Driven Architecture](architecture/communication/event-driven-architecture.md)
@@ -38,43 +37,48 @@ How we organize systems and modules.
 
 ---
 
+## 🎨 Design
+
+How we design components and write code.
+
+| # | Topic                                              | Key ideas                        | Details                  |
+|---|----------------------------------------------------|----------------------------------|--------------------------|
+| 6 | [**OOP & Design**](design/index.md)                | SOLID, GoF patterns, Refactoring | How we design components |
+
+---
+
+## ⚙️ Engineering
+
+Verifiable principles for building and operating software systems.
+
+| # | Topic                                                                   | Key ideas                                                | Details                         |
+|---|-------------------------------------------------------------------------|----------------------------------------------------------|---------------------------------|
+| 7 | [**Testing**](testing/index.md)                                         | TDD, Pyramid, PBT, BDD, mutation, fuzzing, contracts     | How we verify code behavior     |
+| 8 | [**Verifiable Engineering**](engineering/verifiable-engineering.md)     | Three questions, falsifiability, system vs event         | How we know what we claim       |
+
+---
+
 ## 🌐 Systems & Data
 
 How we scale, distribute, and persist state.
 
 | # | Topic                                                       | Key ideas                                                  | Details                      |
 |---|-------------------------------------------------------------|------------------------------------------------------------|------------------------------|
-| 7 | [**Distributed Systems**](distributed/index.md)             | Clocks, CAP, consensus, consistency, streaming             | How we scale across machines |
-| 8 | [**Databases**](databases/index.md)                         | Relational model, transactions, NoSQL, OLTP/OLAP, indexing | How we store and query data  |
+| 9 | [**Distributed Systems**](distributed/index.md)             | Clocks, CAP, consensus, consistency, streaming             | How we scale across machines |
+| 10 | [**Databases**](databases/index.md)                         | Relational model, transactions, NoSQL, OLTP/OLAP, indexing | How we store and query data  |
 
 ### Deep dives
 - [Idempotency](distributed/idempotency.md) — safe retries in distributed systems
 
 ---
 
-## 🧪 Process, Delivery & Tools
+## 🧪 Process & Methodologies
 
-How teams organize, ship, and operate software.
+How teams organize to build software.
 
-| #  | Topic                                                             | Key ideas                                              | Details                           |
-|----|-------------------------------------------------------------------|--------------------------------------------------------|-----------------------------------|
-| 9  | [**Process**](process/index.md)                                   | Agile, XP, CI/CD, DevOps, SRE                          | How we build and ship             |
-| 10 | [**Testing**](testing/index.md)                                   | TDD, Pyramid, PBT, BDD, mutation, fuzzing, contracts   | How we verify and harden code     |
-| 11 | [**Build Systems**](process/build-systems/index.md)               | Make, Maven, Gradle, Bazel, npm, Cargo                 | How we turn source into artifacts |
-| 12 | [**Version Control**](vcs/index.md)                               | RCS → CVS → SVN → Git, branching strategies, monorepos | How we manage change over time    |
-| 13 | [**Containers & Orchestration**](containers/index.md)             | Docker, Podman, Kubernetes, OCI, runtimes              | How we package and run workloads  |
-| 14 | [**Developer Tools**](dev-tools/index.md)                         | IDE, HTTP clients, terminal, debuggers                 | Tools developers use every day    |
-
-### Build Systems deep dives
-- [Overview](process/build-systems/index.md)
-- [Make](process/build-systems/make.md)
-- [Maven](process/build-systems/maven.md)
-- [Gradle](process/build-systems/gradle.md)
-- [npm](process/build-systems/npm.md)
-- [Cargo](process/build-systems/cargo.md)
-- [CMake](process/build-systems/cmake.md)
-- [Bazel](process/build-systems/bazel.md)
-- [sbt](process/build-systems/sbt.md)
+| #  | Topic                                                       | Key ideas                                            | Details               |
+|----|-------------------------------------------------------------|------------------------------------------------------|-----------------------|
+| 11 | [**Process**](process/index.md)                             | Agile, XP, Scrum, Kanban, DevOps, SRE                | How we organize work  |
 
 ### CI/CD pipelines
 - [Overview](process/ci-cd/index.md)
@@ -87,13 +91,37 @@ How teams organize, ship, and operate software.
 
 ---
 
+## 🛠 Tools
+
+The instruments we use to build, deploy, and operate software.
+
+| #  | Topic                                                             | Key ideas                                              | Details                           |
+|----|-------------------------------------------------------------------|--------------------------------------------------------|-----------------------------------|
+| 12 | [**Build Systems**](tools/build-systems/index.md)                 | Make, Maven, Gradle, Bazel, npm, Cargo                 | How we turn source into artifacts |
+| 13 | [**Containers & Orchestration**](tools/containers/index.md)       | Docker, Podman, Kubernetes, OCI, runtimes              | How we package and run workloads  |
+| 14 | [**Developer Tools**](tools/dev-tools/index.md)                   | IDE, HTTP clients, terminal, debuggers                 | Tools developers use every day    |
+| 15 | [**Version Control**](vcs/index.md)                               | RCS → CVS → SVN → Git, branching strategies, monorepos | How we manage change over time    |
+
+### Build Systems deep dives
+- [Overview](tools/build-systems/index.md)
+- [Make](tools/build-systems/make.md)
+- [Maven](tools/build-systems/maven.md)
+- [Gradle](tools/build-systems/gradle.md)
+- [npm](tools/build-systems/npm.md)
+- [Cargo](tools/build-systems/cargo.md)
+- [CMake](tools/build-systems/cmake.md)
+- [Bazel](tools/build-systems/bazel.md)
+- [sbt](tools/build-systems/sbt.md)
+
+---
+
 ## 🤖 Machine Learning & LLMs
 
 How learned models are built, understood, and integrated into software systems.
 
 | #  | Topic                                            | Key ideas                                                           | Details                                  |
 |----|--------------------------------------------------|---------------------------------------------------------------------|------------------------------------------|
-| 15 | [**Large Language Models**](llm/index.md)        | Transformers, prompting, RAG, agents, evaluation, safety            | How we build and integrate LLM systems   |
+| 16 | [**Large Language Models**](llm/index.md)        | Transformers, prompting, RAG, agents, evaluation, safety            | How we build and integrate LLM systems   |
 
 ### Deep dives
 - [Transformer Architecture](llm/transformer.md) — attention, tokens, and how LLMs process text
@@ -111,7 +139,7 @@ Many ideas appear across multiple topics:
 
 - **Modularity** touches architecture, design, and FP
 - **Types** connect to design, FP, and languages
-- **[Testing](testing/index.md)** relates to process, design, and architecture
+- **[Testing](testing/index.md)** relates to process, design, and engineering
 - **Data** connects databases (models, transactions), distributed systems (replication, sharding), and architecture (CQRS, Event Sourcing)
 - **LLMs** connect to architecture through RAG and agent patterns, to developer tools through AI-assisted coding, and to distributed systems through the infrastructure needed to serve models at scale
 - **Simplicity** is a recurring theme from Dijkstra to Hickey

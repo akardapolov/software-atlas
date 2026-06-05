@@ -125,7 +125,7 @@ She helped make software design more rigorous without making it less practical.
 
 ## Related Pages
 
-- [Type Systems](../topics/types/index.md)
+- [Type Systems](../topics/concepts/types/index.md)
 - [OOP & Design](../topics/design/index.md)
 - [John McCarthy](john-mccarthy.md)
 - [Robert C. Martin](robert-c-martin.md)

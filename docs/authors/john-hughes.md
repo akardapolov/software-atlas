@@ -127,7 +127,7 @@ principled, pure functional programming.
 ## Related Pages
 
 - [Why FP Matters](../works/papers/hughes-1989-why-fp.md)
-- [Functional Programming](../topics/functional/index.md)
+- [Functional Programming](../topics/concepts/functional/index.md)
 - [Haskell](../languages/haskell/index.md)
 - [John Backus](john-backus.md)
 - [Robin Milner](robin-milner.md)

@@ -36,27 +36,25 @@ Maps are not strict taxonomies. They are navigational tools that show likely con
 
 ## Topics
 
-Topic pages collect related ideas into one domain. They are meant for focused study without losing the wider context of the atlas. Topics are organized into four groups that reflect how knowledge clusters in practice.
+Topic pages collect related ideas into one domain. They are meant for focused study without losing the wider context of the atlas. Topics are organized into groups that reflect how knowledge clusters in practice.
 
 ---
 
-### Concepts & Design
+### 🧠 Concepts
 
-How we think, design, and reason about code.
+Fundamental ideas and abstractions that shape how we think about software.
 
 **Paradigms** covers the fundamental models of computation: imperative versus declarative, procedural, object-oriented, functional, logic, and concurrent. It explains what distinguishes each paradigm conceptually and historically, and how they overlap in modern languages.
 
-**OOP and Design** covers object-oriented programming as a set of ideas rather than a language feature: encapsulation, message passing, responsibility assignment, the SOLID principles, design patterns, and refactoring. It spans from Simula and Smalltalk through the GoF book to modern interpretations.
+**Concurrency** covers different models for handling parallelism and asynchrony: shared memory and threads, communicating sequential processes (CSP), the actor model, and async/await. It shows how design choices in this area reflect deeper trade-offs between safety, performance, and expressiveness.
 
 **Type Systems** examines how types help us reason about programs — static vs. dynamic typing, nominal vs. structural systems, abstract data types, generics, type inference, and ownership types. It connects formal theory (Hindley–Milner, LSP) to practical language design.
 
 **Functional Programming** covers the core ideas of pure functions, immutability, composition, higher-order functions, and algebraic data types. It traces the lineage from lambda calculus through ML and Haskell to modern functional idioms in languages like Clojure and F#.
 
-**Concurrency** covers different models for handling parallelism and asynchrony: shared memory and threads, communicating sequential processes (CSP), the actor model, and async/await. It shows how design choices in this area reflect deeper trade-offs between safety, performance, and expressiveness.
-
 ---
 
-### Architecture & Structure
+### 🏗 Architecture & Structure
 
 How we organize systems and modules.
 
@@ -64,7 +62,25 @@ How we organize systems and modules.
 
 ---
 
-### Systems & Data
+### 🎨 Design
+
+How we design components and write code.
+
+**OOP and Design** covers object-oriented programming as a set of ideas rather than a language feature: encapsulation, message passing, responsibility assignment, the SOLID principles, design patterns, and refactoring. It spans from Simula and Smalltalk through the GoF book to modern interpretations.
+
+---
+
+### ⚙️ Engineering
+
+Verifiable principles for building and operating software systems.
+
+**Testing** covers how we gain confidence that software does what it should: TDD, the testing pyramid, test doubles, property-based testing, BDD, mutation testing, fuzzing, contract testing, and snapshot/approval testing. It also traces the deeper theoretical thread from Hoare's axiomatic basis and Dijkstra's critique of testing to modern property-based approaches.
+
+**Verifiable Engineering** examines what it means to make claims about a system that can be independently verified — not just measured. It introduces an epistemic framework (the Three Questions), traces the operationalist tradition from Bridgman to Shewhart and Deming, and shows how ideas from statistical quality control apply to software through examples like fsync-gate, backup restoration testing, and chaos engineering.
+
+---
+
+### 🌐 Systems & Data
 
 How we scale, distribute, and persist state.
 
@@ -74,13 +90,17 @@ How we scale, distribute, and persist state.
 
 ---
 
-### Process, Delivery & Tools
+### 🧪 Process & Methodologies
 
-How teams organize, ship, and operate software.
+How teams organize to build software.
 
 **Process** covers how teams organize work and ship software: agile methods, extreme programming, continuous integration and delivery, DevOps, SRE, and the DORA metrics for measuring delivery performance. It connects practices to the ideas and people behind them.
 
-**Testing** covers how we gain confidence that software does what it should: TDD, the testing pyramid, test doubles, property-based testing, BDD, mutation testing, fuzzing, contract testing, and snapshot/approval testing. It also traces the deeper theoretical thread from Hoare's axiomatic basis and Dijkstra's critique of testing to modern property-based approaches.
+---
+
+### 🛠 Tools
+
+The instruments we use to build, deploy, and operate software.
 
 **Build Systems** covers the tools that turn source code and declarations into runnable, testable, distributable artifacts — Make, CMake, Maven, Gradle, sbt, npm, Cargo, and Bazel. The chapter traces how build tools evolved from Make's timestamp-based dependency graph (1976) through convention-driven Maven (2004) and incremental Gradle (2007) to hermetic, polyglot, remote-cached Bazel (2015), and gives per-tool guides covering project structure, lifecycles, dependency models, and common patterns.
 
@@ -92,7 +112,7 @@ How teams organize, ship, and operate software.
 
 ---
 
-### Machine Learning & LLMs
+### 🤖 Machine Learning & LLMs
 
 How learned models are built, understood, and integrated into software systems.
 
@@ -100,7 +120,7 @@ How learned models are built, understood, and integrated into software systems.
 
 ---
 
-Many ideas appear across multiple topics. **Modularity** touches architecture, design, and functional programming. **Types** connect to design, FP, and languages. **Testing** relates to process, design, and architecture. **Data** connects databases, distributed systems, and architecture. **LLMs** connect to architecture through RAG and agent patterns, to developer tools through AI-assisted coding, and to distributed systems through the infrastructure needed to serve models at scale. And **simplicity** is a recurring theme from Dijkstra to Hickey.
+Many ideas appear across multiple topics. **Modularity** touches architecture, design, and functional programming. **Types** connect to design, FP, and languages. **Testing** relates to process, design, and engineering. **Data** connects databases, distributed systems, and architecture. **LLMs** connect to architecture through RAG and agent patterns, to developer tools through AI-assisted coding, and to distributed systems through the infrastructure needed to serve models at scale. And **simplicity** is a recurring theme from Dijkstra to Hickey.
 
 ---
 

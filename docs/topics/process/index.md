@@ -651,7 +651,7 @@ flowchart TD
 
 Package applications into immutable, portable artifacts that execute the same way regardless of host environment.
 
-→ [Containers & Orchestration](../containers/index.md) — full chapter on Docker, Podman, and Kubernetes.
+→ [Containers & Orchestration](../tools/containers/index.md) — full chapter on Docker, Podman, and Kubernetes.
 
 ---
 
@@ -744,7 +744,7 @@ Peer review of code changes before merging into the main branch.
 
 ## Build Systems
 
-> Detailed guides for each build tool: [docs/topics/process/build-systems/](build-systems/index.md)
+> Detailed guides for each build tool: [Build Systems](../tools/build-systems/index.md)
 
 ### Overview of Build Systems
 
@@ -885,7 +885,8 @@ No single process is correct for all contexts. Choose based on:
 ## Related Topics
 
 - [Testing](../testing/index.md) — TDD, Pyramid, Test Doubles, Property-Based, BDD, mutation, fuzzing
+- [Engineering](../engineering/index.md) — verifiable practices, observability, reliability
 - [Architecture & Modularity](../architecture/index.md) — how process interacts with architecture
 - [OOP & Design](../design/index.md) — refactoring, code quality
-- [Functional Programming](../functional/index.md) — testability, refactoring in FP
+- [Tools](../tools/index.md) — build systems, CI/CD, containers, developer tools
 - [Version Control & Git](../vcs/index.md) — branching, commit practices, code review workflows

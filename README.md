@@ -321,45 +321,69 @@ timeline
 
 ## Topics
 
-### 🧩 Concepts & Design
+### 🧠 Concepts
 
-| # | Topic                                                         | Key ideas                                                              | Details                            |
-|---|---------------------------------------------------------------|------------------------------------------------------------------------|------------------------------------|
-| 1 | [**Paradigms**](docs/topics/paradigms/index.md)               | Imperative↔Declarative, Procedural/OOP/FP/Logic, Sequential/Concurrent | How we think about computation     |
-| 2 | [**OOP & Design**](docs/topics/design/index.md)               | SOLID, GoF patterns, Refactoring, DbC                                  | How we design components           |
-| 3 | [**Type Systems**](docs/topics/types/index.md)                | Static/dynamic, nominal/structural, ADTs, generics                     | How types help us reason           |
-| 4 | [**Functional Programming**](docs/topics/functional/index.md) | Purity, immutability, composition, monads                              | How we avoid accidental complexity |
-| 5 | [**Concurrency**](docs/topics/concurrency/index.md)           | Threads, CSP, Actors, async/await                                      | How we handle parallelism          |
+Fundamental ideas and abstractions that shape how we think about software.
+
+| # | Topic                                                                    | Key ideas                                                              | Details                            |
+|---|--------------------------------------------------------------------------|------------------------------------------------------------------------|------------------------------------|
+| 1 | [**Paradigms**](docs/topics/concepts/paradigms/index.md)                 | Imperative↔Declarative, Procedural/OOP/FP/Logic, Sequential/Concurrent | How we think about computation     |
+| 2 | [**Concurrency**](docs/topics/concepts/concurrency/index.md)             | Threads, CSP, Actors, async/await                                      | How we handle parallelism          |
+| 3 | [**Type Systems**](docs/topics/concepts/types/index.md)                  | Static/dynamic, nominal/structural, ADTs, generics                     | How types help us reason           |
+| 4 | [**Functional Programming**](docs/topics/concepts/functional/index.md)   | Purity, immutability, composition, monads                              | How we avoid accidental complexity |
 
 ### 🏗 Architecture & Structure
 
 | # | Topic                                                              | Key ideas                                  | Details                  |
 |---|--------------------------------------------------------------------|--------------------------------------------|--------------------------|
-| 6 | [**Architecture & Modularity**](docs/topics/architecture/index.md) | Layered, Hexagonal, DDD, Microservices, C4 | How we structure systems |
+| 5 | [**Architecture & Modularity**](docs/topics/architecture/index.md) | Layered, Hexagonal, DDD, Microservices, C4 | How we structure systems |
+
+### 🎨 Design
+
+| # | Topic                                              | Key ideas                        | Details                  |
+|---|----------------------------------------------------|----------------------------------|--------------------------|
+| 6 | [**OOP & Design**](docs/topics/design/index.md)    | SOLID, GoF patterns, Refactoring | How we design components |
+
+### ⚙️ Engineering
+
+Verifiable principles for building and operating software systems.
+
+| # | Topic                                                                           | Key ideas                                            | Details                     |
+|---|---------------------------------------------------------------------------------|------------------------------------------------------|-----------------------------|
+| 7 | [**Testing**](docs/topics/testing/index.md)                                     | TDD, Pyramid, PBT, BDD, mutation, fuzzing, contracts | How we verify code behavior |
+| 8 | [**Verifiable Engineering**](docs/topics/engineering/verifiable-engineering.md) | Three questions, falsifiability, system vs event     | How we know what we claim   |
 
 ### 🌐 Systems & Data
 
-| # | Topic                                                       | Key ideas                                                  | Details                      |
-|---|-------------------------------------------------------------|------------------------------------------------------------|------------------------------|
-| 7 | [**Distributed Systems**](docs/topics/distributed/index.md) | Clocks, CAP, consensus, consistency, streaming             | How we scale across machines |
-| 8 | [**Databases**](docs/topics/databases/index.md)             | Relational model, transactions, NoSQL, OLTP/OLAP, indexing | How we store and query data  |
+| #  | Topic                                                       | Key ideas                                                  | Details                      |
+|----|-------------------------------------------------------------|------------------------------------------------------------|------------------------------|
+| 9  | [**Distributed Systems**](docs/topics/distributed/index.md) | Clocks, CAP, consensus, consistency, streaming             | How we scale across machines |
+| 10 | [**Databases**](docs/topics/databases/index.md)             | Relational model, transactions, NoSQL, OLTP/OLAP, indexing | How we store and query data  |
 
-### 🧪 Process, Delivery & Tools
+### 🧪 Process & Methodologies
 
-| #  | Topic                                                             | Key ideas                                              | Details                           |
-|----|-------------------------------------------------------------------|--------------------------------------------------------|-----------------------------------|
-| 9  | [**Process**](docs/topics/process/index.md)                       | Agile, XP, CI/CD, DevOps, SRE                          | How we build and ship             |
-| 10 | [**Testing**](docs/topics/testing/index.md)                       | TDD, Pyramid, PBT, BDD, mutation, fuzzing, contracts   | How we verify and harden code     |
-| 11 | [**Build Systems**](docs/topics/process/build-systems/index.md)   | Make, Maven, Gradle, Bazel, npm, Cargo                 | How we turn source into artifacts |
-| 12 | [**Version Control**](docs/topics/vcs/index.md)                   | RCS → CVS → SVN → Git, branching strategies, monorepos | How we manage change over time    |
-| 13 | [**Containers & Orchestration**](docs/topics/containers/index.md) | Docker, Podman, Kubernetes, OCI, runtimes              | How we package and run workloads  |
-| 14 | [**Developer Tools**](docs/topics/dev-tools/index.md)             | IDE, HTTP clients, terminal, debuggers                 | Tools developers use every day    |
+How teams organize to build software.
+
+| #  | Topic                                                       | Key ideas                                            | Details               |
+|----|-------------------------------------------------------------|------------------------------------------------------|-----------------------|
+| 11 | [**Process**](docs/topics/process/index.md)                 | Agile, XP, Scrum, Kanban, DevOps, SRE                | How we organize work  |
+
+### 🛠 Tools
+
+The instruments we use to build, deploy, and operate software.
+
+| #  | Topic                                                                   | Key ideas                                              | Details                           |
+|----|-------------------------------------------------------------------------|--------------------------------------------------------|-----------------------------------|
+| 12 | [**Build Systems**](docs/topics/tools/build-systems/index.md)           | Make, Maven, Gradle, Bazel, npm, Cargo                 | How we turn source into artifacts |
+| 13 | [**Containers & Orchestration**](docs/topics/tools/containers/index.md) | Docker, Podman, Kubernetes, OCI, runtimes              | How we package and run workloads  |
+| 14 | [**Developer Tools**](docs/topics/tools/dev-tools/index.md)             | IDE, HTTP clients, terminal, debuggers                 | Tools developers use every day    |
+| 15 | [**Version Control**](docs/topics/vcs/index.md)                         | RCS → CVS → SVN → Git, branching strategies, monorepos | How we manage change over time    |
 
 ### 🤖 Machine Learning & LLMs
 
 | #  | Topic                                                 | Key ideas                                                | Details                                |
 |----|-------------------------------------------------------|----------------------------------------------------------|----------------------------------------|
-| 15 | [**Large Language Models**](docs/topics/llm/index.md) | Transformers, prompting, RAG, agents, evaluation, safety | How we build and integrate LLM systems |
+| 16 | [**Large Language Models**](docs/topics/llm/index.md) | Transformers, prompting, RAG, agents, evaluation, safety | How we build and integrate LLM systems |
 
 ---
 
@@ -409,6 +433,7 @@ timeline
 | Barbara Liskov        | 1939–     | CLU, ADT, LSP                       | Types, OOP               | [→](docs/authors/barbara-liskov.md)        |
 | Bjarne Stroustrup     | 1950–     | C++, language design                | C++, OOP                 | [→](docs/authors/bjarne-stroustrup.md)     |
 | Brad Cox              | 1961–     | Objective-C                         | Objective-C, OOP         | [→](docs/authors/brad-cox.md)              |
+| Percy Bridgman        | 1882–1961 | Operationalism                      | Metrics, verification    | [→](docs/authors/percy-bridgman.md)        |
 | Carl Hewitt           | 1940–2022 | Actor Model                         | Concurrency, distributed | [→](docs/authors/carl-hewitt.md)           |
 | Seymour Papert        | 1928–2016 | Logo, constructionism, Mindstorms   | Education, AI            | [→](docs/authors/seymour-papert.md)        |
 | Tony Hoare            | 1934–     | CSP, null reference, quicksort      | Concurrency, types       | [→](docs/authors/tony-hoare.md)            |
@@ -452,6 +477,7 @@ timeline
 | Eric Brewer           | —         | CAP conjecture, CAP theorem         | Distributed              | [→](docs/authors/eric-brewer.md)           |
 | Diego Ongaro          | —         | Raft consensus algorithm            | Distributed              | [→](docs/authors/diego-ongaro.md)          |
 | Sam Newman            | —         | Microservices                       | Architecture             | [→](docs/authors/sam-newman.md)            |
+| Walter Shewhart       | 1891–1967 | Control charts, SQC                 | Quality, verification    | [→](docs/authors/walter-shewhart.md)       |
 | Simon Brown           | —         | C4 Model, software architecture     | Architecture             | [→](docs/authors/simon-brown.md)           |
 | Matthew Skelton       | —         | Team Topologies                     | Process, architecture    | [→](docs/authors/matthew-skelton.md)       |
 | Manuel Pais           | —         | Team Topologies                     | Process, architecture    | [→](docs/authors/manuel-pais.md)           |
@@ -746,6 +772,17 @@ software-atlas/
 │   │   ├── paradigms-map.md
 │   │   └── process-map.md
 │   ├── topics/            ← knowledge organized by topic
+│   │   ├── concepts/      ← fundamental ideas: paradigms, concurrency, types, FP
+│   │   ├── architecture/  ← system structure and modularity
+│   │   ├── design/        ← OOP, patterns, SOLID, refactoring
+│   │   ├── engineering/   ← verifiable practices, testing, observability
+│   │   ├── process/       ← methodologies: agile, XP, DevOps, SRE
+│   │   ├── tools/         ← build systems, containers, dev-tools, version control
+│   │   ├── distributed/   ← distributed systems
+│   │   ├── databases/     ← data storage and models
+│   │   ├── testing/       ← verification techniques
+│   │   ├── vcs/           ← version control and Git
+│   │   └── llm/           ← large language models
 │   ├── languages/         ← language pages
 │   ├── authors/           ← author biography cards
 │   ├── works/             ← papers, books, talks

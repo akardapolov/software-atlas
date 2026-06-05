@@ -425,17 +425,17 @@ application level. See [Scheduling: Preemptive vs Cooperative](./index.md#schedu
 
 ## Further Reading
 
-- [Hoare — CSP (1978)](../../works/papers/hoare-1978-csp.md)
-- [Java Virtual Threads](../../languages/java/index.md)
-- [Kotlin Coroutines](../../languages/kotlin/index.md)
-- [Go Goroutines](../../languages/go/index.md)
+- [Hoare — CSP (1978)](../../../works/papers/hoare-1978-csp.md)
+- [Java Virtual Threads](../../../languages/java/index.md)
+- [Kotlin Coroutines](../../../languages/kotlin/index.md)
+- [Go Goroutines](../../../languages/go/index.md)
 - *Java Concurrency in Practice* (Goetz et al.)
 - Nystrom, Bob — "What Color is Your Function?" (2015)
 
 ## Related Topics
 
 - [Concurrency](./index.md) — shared-memory vs message-passing models
-- [Concurrency Map](../../maps/concurrency-map.md) — visual overview of how models evolved
-- [Distributed Systems](../distributed/index.md) — async across machines
+- [Concurrency Map](../../../maps/concurrency-map.md) — visual overview of how models evolved
+- [Distributed Systems](../../distributed/index.md) — async across machines
 - [Functional Programming](../functional/index.md) — purity eliminates shared-state races
-- [Languages](../../languages/index.md) — how different languages approach concurrency
+- [Languages](../../../languages/index.md) — how different languages approach concurrency

@@ -472,27 +472,27 @@ The approach argues that functional style reduces development cost by:
 - Reducing bugs (no mutable state = no data races)
 - Enabling parallelism (pure functions can run in any order)
 
-→ [Alexander Zhidkov](../../authors/alexander-zhidkov.md) ·
-[Functional Programming and Cost article](../../works/talks/zhidkov-2024-fp-stoimost.md)
+→ [Alexander Zhidkov](../../../authors/alexander-zhidkov.md) ·
+[Functional Programming and Cost article](../../../works/talks/zhidkov-2024-fp-stoimost.md)
 
 ## Further Reading
 
-- Church — [Lambda Calculus (1936)](../../works/papers/church-1936-lambda.md)
-- Backus — ["Can Programming Be Liberated?"](../../works/papers/backus-1978-liberated.md) (1978)
-- Hughes — ["Why Functional Programming Matters"](../../works/papers/hughes-1989-why-fp.md) (1989)
-- Hickey — ["Simple Made Easy"](../../works/talks/hickey-2011-simple-made-easy.md) (2011)
-- Bernhardt — ["Boundaries"](../../works/talks/bernhardt-2012-boundaries.md) (2012)
-- Wlaschin — [*Domain Modeling Made Functional*](../../works/books/wlaschin-2018-dmf.md) (2018)
+- Church — [Lambda Calculus (1936)](../../../works/papers/church-1936-lambda.md)
+- Backus — ["Can Programming Be Liberated?"](../../../works/papers/backus-1978-liberated.md) (1978)
+- Hughes — ["Why Functional Programming Matters"](../../../works/papers/hughes-1989-why-fp.md) (1989)
+- Hickey — ["Simple Made Easy"](../../../works/talks/hickey-2011-simple-made-easy.md) (2011)
+- Bernhardt — ["Boundaries"](../../../works/talks/bernhardt-2012-boundaries.md) (2012)
+- Wlaschin — [*Domain Modeling Made Functional*](../../../works/books/wlaschin-2018-dmf.md) (2018)
 
 ## Related Topics
 
 - [Memoization](./memoization.md) — caching results of pure functions
 - [Paradigms](../paradigms/index.md) — FP in the context of all paradigms
 - [Type Systems](../types/index.md) — how types support FP
-- [OOP & Design](../design/index.md) — contrast with OOP
+- [OOP & Design](../../design/index.md) — contrast with OOP
 - [Concurrency](../concurrency/index.md) — FP's advantage for parallel code
-- [Idempotency](../distributed/idempotency.md) — purity vs idempotency
+- [Idempotency](../../distributed/idempotency.md) — purity vs idempotency
 
 ## Related Authors
 
-- [Alonzo Church](../../authors/alonzo-church.md) · [John McCarthy](../../authors/john-mccarthy.md) · [John Backus](../../authors/john-backus.md) · [John Hughes](../../authors/john-hughes.md) · [Joe Armstrong](../../authors/joe-armstrong.md) · [Rich Hickey](../../authors/rich-hickey.md) · [Gary Bernhardt](../../authors/gary-bernhardt.md) · [Scott Wlaschin](../../authors/scott-wlaschin.md) · [Alexander Zhidkov](../../authors/alexander-zhidkov.md)
+- [Alonzo Church](../../../authors/alonzo-church.md) · [John McCarthy](../../../authors/john-mccarthy.md) · [John Backus](../../../authors/john-backus.md) · [John Hughes](../../../authors/john-hughes.md) · [Joe Armstrong](../../../authors/joe-armstrong.md) · [Rich Hickey](../../../authors/rich-hickey.md) · [Gary Bernhardt](../../../authors/gary-bernhardt.md) · [Scott Wlaschin](../../../authors/scott-wlaschin.md) · [Alexander Zhidkov](../../../authors/alexander-zhidkov.md)

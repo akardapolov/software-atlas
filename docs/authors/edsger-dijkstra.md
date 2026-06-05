@@ -116,7 +116,7 @@ Dijkstra's handwritten manuscripts are archived at the University of Texas:
 
 - [Go To Considered Harmful](../works/papers/dijkstra-1968-goto.md)
 - [Architecture & Modularity](../topics/architecture/index.md)
-- [Paradigms](../topics/paradigms/index.md)
+- [Paradigms](../topics/concepts/paradigms/index.md)
 - [David Parnas](david-parnas.md)
 - [Tony Hoare](tony-hoare.md)
 - [Fred Brooks](fred-brooks.md)

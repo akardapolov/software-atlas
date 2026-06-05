@@ -83,7 +83,7 @@ Humble advocated for treating infrastructure programmatically:
 ## Related Pages
 
 - [Process topic](../topics/process/index.md) — DevOps, CI/CD, and deployment
-- [Containers & Orchestration](../topics/containers/index.md) — runtime substrate that CD assumes
+- [Containers & Orchestration](../topics/tools/containers/index.md) — runtime substrate that CD assumes
 - [Kent Beck](kent-beck.md) — XP and continuous integration
 - [David Farley](david-farley.md) — Continuous Delivery
 - [Nicole Forsgren](nicole-forsgren.md) — Accelerate and DORA

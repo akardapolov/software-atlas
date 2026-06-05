@@ -19,6 +19,7 @@ biography, key contributions, works, and influence connections.
 | Ivan Sutherland | 1938– | Sketchpad, master/instance | [→](ivan-sutherland.md) ✅ |
 | Edsger Dijkstra | 1930–2002 | Structured programming | [→](edsger-dijkstra.md) ✅ |
 | Seymour Papert | 1928–2016 | Logo, constructionism | [→](seymour-papert.md) ✅ |
+| Percy Bridgman | 1882–1961 | Operationalism | [→](percy-bridgman.md) ✅ |
 | Christopher Alexander | 1936–2022 | Pattern language | [→](christopher-alexander.md) ✅ |
 | Ole-Johan Dahl | 1931–2002 | Simula, OOP | [→](ole-johan-dahl.md) ✅ |
 
@@ -39,6 +40,7 @@ biography, key contributions, works, and influence connections.
 | Michael Stonebraker | 1943– | PostgreSQL, Ingres, NewSQL | [→](michael-stonebraker.md) ✅ |
 | Bertrand Meyer | 1950– | Eiffel, DbC, CQS | [→](bertrand-meyer.md) ✅ |
 | John Hughes | 1958– | Why FP Matters, QuickCheck | [→](john-hughes.md) ✅ |
+| Walter Shewhart | 1891–1967 | Control charts, SQC | [→](walter-shewhart.md) ✅ |
 
 ### Modern Practice (1990s–present)
 

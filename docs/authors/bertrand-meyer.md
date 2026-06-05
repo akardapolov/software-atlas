@@ -155,7 +155,7 @@ inheritance.
 ## Related Pages
 
 - [OOP & Design](../topics/design/index.md)
-- [Type Systems](../topics/types/index.md)
+- [Type Systems](../topics/concepts/types/index.md)
 - [Tony Hoare](tony-hoare.md)
 - [Barbara Liskov](barbara-liskov.md)
 - [Robert C. Martin](robert-c-martin.md)

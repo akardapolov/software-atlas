@@ -33,5 +33,5 @@ Colmerauer developed Prolog as a programming language based on formal logic. Pro
 
 ## Related Pages
 
-- [Paradigms](../topics/paradigms/index.md)
-- [Functional Programming](../topics/functional/index.md)
+- [Paradigms](../topics/concepts/paradigms/index.md)
+- [Functional Programming](../topics/concepts/functional/index.md)

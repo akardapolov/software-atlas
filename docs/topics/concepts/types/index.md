@@ -106,7 +106,7 @@ class Dog implements Animal { speak(){ console.log("woof") } }
 
 "Subtype" should mean "safe replacement", not "is-a by intuition".
 
-→ [Liskov & Wing (1994)](../../works/papers/liskov-1994-subtyping.md)
+→ [Liskov & Wing (1994)](../../../works/papers/liskov-1994-subtyping.md)
 
 **Rule of thumb:**
 - A subtype may accept *more* inputs (weaker preconditions)
@@ -214,7 +214,7 @@ Types help most when you use them to encode **invariants**:
 
 ## Further Reading
 
-- [Liskov & Wing (1994)](../../works/papers/liskov-1994-subtyping.md)
+- [Liskov & Wing (1994)](../../../works/papers/liskov-1994-subtyping.md)
 - Milner — *A Theory of Type Polymorphism in Programming* (1978) *(planned page)*
 - Pierce — *Types and Programming Languages* (2002)
 - Wadler — *Theorems for Free!* (1989)
@@ -223,5 +223,5 @@ Types help most when you use them to encode **invariants**:
 
 - [Paradigms](../paradigms/index.md) — OOP in context of all paradigms
 - [Functional Programming](../functional/index.md) — alternative to OOP
-- [OOP & Design](../design/index.md) — SOLID, patterns, refactoring
+- [OOP & Design](../../design/index.md) — SOLID, patterns, refactoring
 - [Concurrency](../concurrency/index.md) — shared state vs message passing

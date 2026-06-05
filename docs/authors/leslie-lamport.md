@@ -151,7 +151,7 @@ and computer science.
 
 - [Time, Clocks paper](../works/papers/lamport-1978-clocks.md)
 - [Distributed Systems](../topics/distributed/index.md)
-- [Concurrency](../topics/concurrency/index.md)
+- [Concurrency](../topics/concepts/concurrency/index.md)
 - [Jim Gray](jim-gray.md)
 - [Martin Kleppmann](martin-kleppmann.md)
 - [Edsger Dijkstra](edsger-dijkstra.md)

@@ -79,9 +79,9 @@ After leaving Docker, Hykes co-founded Dagger to apply the container model to CI
 
 ## Related Pages
 
-- [Containers & Orchestration](../topics/containers/index.md)
-- [Docker](../topics/containers/docker.md)
-- [Kubernetes](../topics/containers/kubernetes.md)
+- [Containers & Orchestration](../topics/tools/containers/index.md)
+- [Docker](../topics/tools/containers/docker.md)
+- [Kubernetes](../topics/tools/containers/kubernetes.md)
 - [DevOps](../topics/process/index.md#devops-2009)
 - [Continuous Delivery](../topics/process/index.md#continuous-delivery-2010)
 - [Microservices](../topics/architecture/structural/microservices.md)

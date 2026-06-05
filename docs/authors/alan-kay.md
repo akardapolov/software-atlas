@@ -121,7 +121,7 @@ and Macintosh.
 
 - [Smalltalk](../languages/smalltalk/index.md)
 - [OOP & Design](../topics/design/index.md)
-- [Paradigms](../topics/paradigms/index.md)
+- [Paradigms](../topics/concepts/paradigms/index.md)
 - [Design Patterns (GoF)](../works/books/gof-1994-design-patterns.md)
 - [Joe Armstrong](joe-armstrong.md)
 - [Ole-Johan Dahl](ole-johan-dahl.md)

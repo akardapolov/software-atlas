@@ -126,7 +126,7 @@ topics in short, dense episodes. Notable entries include:
 ## Related Pages
 
 - [Boundaries talk](../works/talks/bernhardt-2012-boundaries.md)
-- [Functional Programming](../topics/functional/index.md)
+- [Functional Programming](../topics/concepts/functional/index.md)
 - [Architecture & Modularity](../topics/architecture/index.md)
 - [OOP & Design](../topics/design/index.md)
 - [Rich Hickey](rich-hickey.md)

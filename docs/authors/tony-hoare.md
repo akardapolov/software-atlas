@@ -124,10 +124,10 @@ Co-authored with Ole-Johan Dahl and Edsger W. Dijkstra, Hoare published the semi
 - [Edsger Dijkstra](edsger-dijkstra.md) — structured programming
 - [Joe Armstrong](joe-armstrong.md) — monitor model
 - [Go](../languages/go/index.md) — channels
-- [Concurrency](../topics/concurrency/index.md) — semaphores
-- [Type Systems](../topics/types/index.md) — formal verification
-- [CSP](../topics/concurrency/index.md) — communication model
+- [Concurrency](../topics/concepts/concurrency/index.md) — semaphores
+- [Type Systems](../topics/concepts/types/index.md) — formal verification
+- [CSP](../topics/concepts/concurrency/index.md) — communication model
 - [Formal methods](../topics/design/index.md) — program correctness
-- [Structured Programming](../topics/paradigms/index.md) — structured programming
+- [Structured Programming](../topics/concepts/paradigms/index.md) — structured programming
 - [Edsger W. Dijkstra](edsger-dijkstra.md)
 - [Edsger W. Dijkstra](edsger-w-dijkstra.md)

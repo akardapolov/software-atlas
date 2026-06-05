@@ -304,12 +304,12 @@ getTags(42).add("new-tag");  // Corrupts the cache for all future calls!
 
 - [Pure Functions](./index.md#1-pure-functions) — the prerequisite for safe memoization
 - [Lazy Evaluation](./index.md#advanced) — Haskell's implicit memoization
-- [Idempotency](../distributed/idempotency.md) — the difference between memoization (performance) and idempotency (correctness)
-- Hughes — ["Why Functional Programming Matters"](../../works/papers/hughes-1989-why-fp.md) (1989)
+- [Idempotency](../../distributed/idempotency.md) — the difference between memoization (performance) and idempotency (correctness)
+- Hughes — ["Why Functional Programming Matters"](../../../works/papers/hughes-1989-why-fp.md) (1989)
 
 ## Related Topics
 
 - [Functional Programming](./index.md) — purity, immutability, composition
 - [Concurrency](../concurrency/index.md) — memoization is safe across threads only with immutable values
-- [Distributed Systems](../distributed/index.md) — caching vs memoization at scale
+- [Distributed Systems](../../distributed/index.md) — caching vs memoization at scale
 - [Type Systems](../types/index.md) — types that enforce purity

@@ -287,8 +287,8 @@ making procedural code tractable.
 
 **Languages:** C, Pascal, Fortran, BASIC
 
-→ [Edsger Dijkstra](../../authors/edsger-dijkstra.md) ·
-[Go To Considered Harmful](../../works/papers/dijkstra-1968-goto.md)
+→ [Edsger Dijkstra](../../../authors/edsger-dijkstra.md) ·
+[Go To Considered Harmful](../../../works/papers/dijkstra-1968-goto.md)
 
 ---
 
@@ -297,7 +297,7 @@ making procedural code tractable.
 **Core idea:** A program is a collection of **objects** — bundles of data
 (state) and behaviour (methods) — that interact by sending **messages**.
 
-> 🔍 **Deep Dive:** This section focuses on OOP as a structural paradigm. For a detailed breakdown of OOP mechanics (encapsulation, inheritance, polymorphism) and the evolution of design principles (DbC, GoF, SOLID), see the **[OOP & Design](../design/index.md)** topic.
+> 🔍 **Deep Dive:** This section focuses on OOP as a structural paradigm. For a detailed breakdown of OOP mechanics (encapsulation, inheritance, polymorphism) and the evolution of design principles (DbC, GoF, SOLID), see the **[OOP & Design](../../design/index.md)** topic.
 
 #### Two Visions of OOP
 
@@ -360,7 +360,7 @@ public class Dog extends Animal {
 
 > 🔬 **Polymorphism taxonomy:** OOP polymorphism (inclusion/subtype)
 > is one of four forms of polymorphism. For the full Cardelli–Wegner
-> taxonomy with diagrams, see **[OOP Deep Dive: Polymorphism](../design/oop-deep-dive.md)**.
+> taxonomy with diagrams, see **[OOP Deep Dive: Polymorphism](../../design/oop-deep-dive.md)**.
 
 #### OOP Is Not Inherently Imperative
 
@@ -411,10 +411,10 @@ languages (Java, C#) and **dynamically typed** ones (Python, Ruby).
 
 **Languages:** Simula, Smalltalk, C++, Java, C#, Python, Ruby, Kotlin
 
-→ [Alan Kay](../../authors/alan-kay.md) ·
-[Ole-Johan Dahl](../../authors/ole-johan-dahl.md) ·
-[Smalltalk](../../languages/smalltalk/index.md) ·
-[Simula](../../languages/simula/index.md)
+→ [Alan Kay](../../../authors/alan-kay.md) ·
+[Ole-Johan Dahl](../../../authors/ole-johan-dahl.md) ·
+[Smalltalk](../../../languages/smalltalk/index.md) ·
+[Simula](../../../languages/simula/index.md)
 
 ---
 
@@ -514,9 +514,9 @@ flowchart LR
 
 **Languages:** Lisp, Scheme, ML, Haskell, Erlang, Clojure, F#, Scala, Elixir
 
-→ [Alonzo Church](../../authors/alonzo-church.md) ·
-[John McCarthy](../../authors/john-mccarthy.md) ·
-[John Backus](../../authors/john-backus.md) ·
+→ [Alonzo Church](../../../authors/alonzo-church.md) ·
+[John McCarthy](../../../authors/john-mccarthy.md) ·
+[John Backus](../../../authors/john-backus.md) ·
 [Functional Programming topic](../functional/index.md)
 
 ---
@@ -840,8 +840,8 @@ func main() {
 | Languages     | Erlang, Elixir, Akka   | Go, occam, core.async |
 | Theory        | Hewitt 1973            | Hoare 1978            |
 
-→ [Tony Hoare](../../authors/tony-hoare.md) ·
-[Joe Armstrong](../../authors/joe-armstrong.md) ·
+→ [Tony Hoare](../../../authors/tony-hoare.md) ·
+[Joe Armstrong](../../../authors/joe-armstrong.md) ·
 [Concurrency topic](../concurrency/index.md)
 
 ---
@@ -870,7 +870,7 @@ SELECT name, age FROM users WHERE age > 18 ORDER BY name;
 | SQL                    | Data querying                | `SELECT name FROM users WHERE age > 18`                                       |
 | HTML / CSS             | Document structure and style | `<h1>Hello</h1>`                                                              |
 | Regular expressions    | Text pattern matching        | `\d{3}-\d{4}`                                                                 |
-| Build DSLs             | Build configuration          | Makefile, Gradle DSL — see [Build Systems](../process/build-systems/index.md) |
+| Build DSLs             | Build configuration          | Makefile, Gradle DSL — see [Build Systems](../../tools/build-systems/index.md) |
 | Infrastructure as Code | Provisioning and deployment  | Terraform, Kubernetes YAML                                                    |
 | Annotations / Metadata | Framework configuration      | Spring `@Transactional`                                                       |
 
@@ -951,8 +951,8 @@ All produce the same result. The difference is in the **cognitive model**
 and the **properties** of the resulting code (testability,
 parallelisability, readability, analyzability).
 
-→ [Gary Bernhardt — Boundaries](../../authors/gary-bernhardt.md) ·
-[Rich Hickey — Simple Made Easy](../../authors/rich-hickey.md)
+→ [Gary Bernhardt — Boundaries](../../../authors/gary-bernhardt.md) ·
+[Rich Hickey — Simple Made Easy](../../../authors/rich-hickey.md)
 
 ---
 
@@ -1090,9 +1090,9 @@ flowchart LR
 
 ## Further Reading
 
-- Backus — ["Can Programming Be Liberated from the von Neumann Style?"](../../works/papers/backus-1978-liberated.md) (1978)
-- Hughes — ["Why Functional Programming Matters"](../../works/papers/hughes-1989-why-fp.md) (1989)
-- Hickey — ["Simple Made Easy"](../../works/talks/hickey-2011-simple-made-easy.md) (2011)
+- Backus — ["Can Programming Be Liberated from the von Neumann Style?"](../../../works/papers/backus-1978-liberated.md) (1978)
+- Hughes — ["Why Functional Programming Matters"](../../../works/papers/hughes-1989-why-fp.md) (1989)
+- Hickey — ["Simple Made Easy"](../../../works/talks/hickey-2011-simple-made-easy.md) (2011)
 - Pierce — *Types and Programming Languages* (2002)
 - Van Roy & Haridi — *Concepts, Techniques, and Models of Computer Programming* (2004)
 - Pike — ["Concurrency Is Not Parallelism"](https://go.dev/blog/waza-talk) (2012)
@@ -1104,4 +1104,4 @@ flowchart LR
 - [OOP & Design](../design/index.md) — design principles for OOP
 - [Concurrency](../concurrency/index.md) — concurrent programming models
 - [Type Systems](../types/index.md) — how types interact with paradigms
-- [Languages](../../languages/index.md) — how each language embodies paradigms
+- [Languages](../../../languages/index.md) — how each language embodies paradigms

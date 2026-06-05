@@ -169,7 +169,7 @@ Hickey's talks form a coherent body of design thinking:
 
 - [Clojure](../languages/clojure/index.md)
 - [Simple Made Easy](../works/talks/hickey-2011-simple-made-easy.md)
-- [Functional Programming](../topics/functional/index.md)
+- [Functional Programming](../topics/concepts/functional/index.md)
 - [OOP & Design](../topics/design/index.md)
 - [John McCarthy](john-mccarthy.md)
 - [John Hughes](john-hughes.md)

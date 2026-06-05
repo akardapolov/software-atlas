@@ -130,7 +130,7 @@ go increment()
 | **Priority inversion** | Low-priority thread holds lock needed by high-priority thread |
 | **Lock contention** | Threads spend more time waiting than working |
 
-→ [Concurrency topic](../topics/concurrency/index.md)
+→ [Concurrency topic](../topics/concepts/concurrency/index.md)
 
 ---
 
@@ -358,7 +358,7 @@ fn main() {
 - [Lamport — Time, Clocks... (1978)](../works/papers/lamport-1978-clocks.md)
 - [Go language page](../../languages/go/index.md)
 - [Erlang language page](../../languages/erlang/index.md)
-- [Concurrency topic](../topics/concurrency/index.md)
+- [Concurrency topic](../topics/concepts/concurrency/index.md)
 
 ---
 

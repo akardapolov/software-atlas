@@ -36,7 +36,7 @@ Hewitt introduced the Actor Model as a fundamental model of concurrent computati
 
 ## Related Pages
 
-- [Concurrency](../topics/concurrency/index.md)
+- [Concurrency](../topics/concepts/concurrency/index.md)
 - [Distributed Systems](../topics/distributed/index.md)
 - [Joe Armstrong](joe-armstrong.md)
 - [Erlang](../languages/erlang/index.md)

@@ -115,9 +115,9 @@ but protection against entire classes of errors.
 
 ## Related Pages
 
-- [Type Systems](../topics/types/index.md)
-- [Functional Programming](../topics/functional/index.md)
-- [Concurrency](../topics/concurrency/index.md)
+- [Type Systems](../topics/concepts/types/index.md)
+- [Functional Programming](../topics/concepts/functional/index.md)
+- [Concurrency](../topics/concepts/concurrency/index.md)
 - [Alonzo Church](alonzo-church.md)
 - [Tony Hoare](tony-hoare.md)
 - [ML](../languages/ml/index.md)

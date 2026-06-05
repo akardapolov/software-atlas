@@ -89,8 +89,8 @@ sufficient to represent any data.
 ## Related Pages
 
 - [Lambda Calculus paper](../works/papers/church-1936-lambda.md)
-- [Functional Programming](../topics/functional/index.md)
-- [Type Systems](../topics/types/index.md)
+- [Functional Programming](../topics/concepts/functional/index.md)
+- [Type Systems](../topics/concepts/types/index.md)
 - [Lisp](../languages/lisp/index.md)
 - [Haskell](../languages/haskell/index.md)
 - [John McCarthy](john-mccarthy.md)

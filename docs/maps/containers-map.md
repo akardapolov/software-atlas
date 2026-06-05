@@ -201,7 +201,7 @@ flowchart TD
 | **Buildah** | No | Yes | OCI image | Podman's build tool; scriptable beyond Dockerfile |
 | **Kaniko** | No | Yes | OCI image | Runs inside K8s pods; popular in CI |
 | **ko** | No | Yes | OCI image | Go-specific; no Dockerfile needed |
-| **Jib** | No | Yes | OCI image | [Maven](../topics/process/build-systems/maven.md) / [Gradle](../topics/process/build-systems/gradle.md) plugin for Java |
+| **Jib** | No | Yes | OCI image | [Maven](../topics/tools/build-systems/maven.md) / [Gradle](../topics/tools/build-systems/gradle.md) plugin for Java |
 
 ---
 
@@ -247,9 +247,9 @@ When kernel sharing is unacceptable (multi-tenant clouds, untrusted workloads), 
 
 ## See Also
 
-- [Containers & Orchestration topic](../topics/containers/index.md)
-- [Docker](../topics/containers/docker.md) · [Podman](../topics/containers/podman.md) · [containerd](../topics/containers/containerd.md)
-- [Kubernetes](../topics/containers/kubernetes.md) · [Helm](../topics/containers/helm.md)
+- [Containers & Orchestration topic](../topics/tools/containers/index.md)
+- [Docker](../topics/tools/containers/docker.md) · [Podman](../topics/tools/containers/podman.md) · [containerd](../topics/tools/containers/containerd.md)
+- [Kubernetes](../topics/tools/containers/kubernetes.md) · [Helm](../topics/tools/containers/helm.md)
 - [Solomon Hykes](../../authors/solomon-hykes.md) — Docker creator
 - [Diego Ongaro](../../authors/diego-ongaro.md) — Raft consensus, used by etcd in Kubernetes
 
