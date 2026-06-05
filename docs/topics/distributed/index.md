@@ -14,21 +14,25 @@ networks, and partial failures.
 flowchart TD
     Foundation["<b>Lamport 1978</b><br/>Logical Clocks<br/><i>no global time,<br/>causal ordering</i>"]
 
+    TwoPC["<b>Two-Phase Commit</b><br/>Gray 1970s<br/><i>atomic across nodes</i>"]
+
     Foundation --> CAP["<b>CAP 2000</b><br/>Brewer<br/><i>C vs A vs P<br/>pick two</i>"]
 
-    Foundation --> Paxos["<b>Paxos 1989</b><br/>Lamport<br/><i>consensus<br/>solved</i>"]
+    Foundation --> Paxos["<b>Paxos 1989</b><br/>Lamport<br/><i>consensus<br/>algorithm</i>"]
 
-    CAP --> TwoPC["<b>Two-Phase Commit</b><br/>Gray 1970s<br/><i>atomic across nodes</i>"]
+    CAP --> Eventual["<b>Eventual Consistency</b><br/>Dynamo Paper 2007<br/><i>AP systems</i>"]
 
-    CAP --> Eventual["<b>Eventual Consistency</b><br/>Dynamo 2007<br/><i>AP systems</i>"]
+    Paxos --> ZAB["<b>ZAB 2008</b><br/>ZooKeeper<br/><i>atomic broadcast</i>"]
 
-    Paxos --> Raft["<b>Raft 2014</b><br/>Ongaro<br/><i>understandable<br/>Paxos</i>"]
+    Paxos --> Raft["<b>Raft 2014</b><br/>Ongaro<br/><i>understandable<br/>consensus</i>"]
 
-    Raft --> etcd["<b>etcd / ZooKeeper</b><br/>coordination<br/>services"]
+    Raft --> etcd["<b>etcd / Consul</b><br/>coordination<br/>services"]
+
+    TwoPC --> Spanner["<b>Spanner 2012</b><br/>Google<br/><i>TrueTime<br/>GPS + atomic clocks</i>"]
+    Paxos --> Spanner
+    etcd --> Spanner
 
     Eventual --> Dynamo["<b>Dynamo-style</b><br/>Cassandra, Riak<br/><i>leaderless KV</i>"]
-
-    etcd --> Spanner["<b>Spanner 2012</b><br/>Google<br/><i>TrueTime<br/>external clocks</i>"]
 
     Dynamo --> CRDT["<b>CRDTs</b><br/>2010s<br/><i>conflict-free<br/>replicated types</i>"]
 
@@ -105,11 +109,11 @@ Lamport clocks cannot detect concurrency. Vector clocks (Mattern, Fidge)
 extend the idea:
 
 - Each node maintains a vector `[t₁, t₂, ..., tₙ]`
-- `C(a) ≤ C(b)` if all timestamps in `C(a)` are ≤ corresponding in `C(b)`, and at least one is `<`
-- If `C(a)` and `C(b)` are incomparable (neither ≤ the other), events are concurrent
+- For two vectors $V_a$ and $V_b$, $V_a < V_b$ if and only if $\forall i: V_a[i] \le V_b[i]$ AND $\exists i: V_a[i] < V_b[i]$
+- If neither $V_a < V_b$ nor $V_b < V_a$, then the events are **concurrent** ($V_a \parallel V_b$)
 
 This enables **causal consistency**: if event `a` causally precedes `b`,
-all nodes will eventually see `a` before `b`.
+any node that observes `b` is guaranteed to have already observed `a`.
 
 → [Leslie Lamport](../../authors/leslie-lamport.md) ·
 [Time, Clocks paper](../../works/papers/lamport-1978-clocks.md)
@@ -118,35 +122,32 @@ all nodes will eventually see `a` before `b`.
 
 ### The Theorem
 
-Eric Brewer's **CAP theorem** states that a distributed data store
+Eric Brewer's **CAP theorem** (proven by Gilbert and Lynch in 2002) states that a distributed data store
 cannot simultaneously provide more than two of:
 
-| Property | Meaning |
-|----------|----------|
-| **Consistency (C)** | All nodes see the same data at the same time |
-| **Availability (A)** | Every request receives a response (success or error) |
-| **Partition Tolerance (P)** | System continues operating when network between nodes is lost |
+| Property | Meaning | Formal Definition |
+|----------|---------|-------------------|
+| **Consistency (C)** | Equivalent to **Linearizability** | Every read receives the most recent successful write or an error |
+| **Availability (A)** | High availability of non-failing nodes | Every non-failing node returns a non-error response (no guarantee it contains the latest write) |
+| **Partition Tolerance (P)** | System continues operating despite arbitrary message loss | The system continues to operate despite arbitrary partitioning of the network |
 
 **During a partition**, you must choose:
-- **CP systems** (e.g., ZooKeeper, etcd) — reject writes to stay consistent
-- **AP systems** (e.g., Cassandra, Dynamo) — accept writes, risk inconsistency
+- **CP systems** (e.g., ZooKeeper, etcd) — reject writes or fail reads to preserve strict consistency
+- **AP systems** (e.g., Cassandra, Riak) — accept writes on partition halves, risking temporary inconsistency
 
 ### CAP is About Partitions
 
-CAP only applies **during a network partition**. When the network
-is healthy, you can have all three: consistency, availability,
-and partition tolerance.
-
-The theorem was proven formally by Gilbert and Lynch (2002).
+CAP only forces a hard trade-off **during an active network partition**. When the network
+is healthy, a system can provide both consistency and availability.
 
 ### The Reality
 
 Network partitions are inevitable. So the practical choice is:
-- Design for CP and accept unavailable periods
-- Design for AP and accept inconsistent states
+- Design for CP and accept unavailable periods during partition events
+- Design for AP and accept inconsistent states that must be reconciled later
 
-**PACELC extension** (Abadi 2010): Even without partitions,
-you must choose between latency and consistency.
+**PACELC extension** (Abadi 2012): Even when the network is running normally (**E**lse),
+you must choose between Latency (**L**) and Consistency (**C**).
 
 → [Eric Brewer](../../authors/eric-brewer.md) ·
 [CAP Conjecture](../../works/papers/brewer-2000-cap.md)
@@ -158,8 +159,8 @@ Different systems provide different guarantees:
 | Model | Description | Trade-off |
 |--------|-------------|------------|
 | **Strong (Linearizable)** | Operations appear to execute instantaneously at a single point in time | High latency, coordination overhead |
-| **Sequential** | All nodes see operations in the same order | Weaker than linearizable |
-| **Causal** | Causally-related operations are ordered by all nodes | Concurrent operations may appear in different orders |
+| **Sequential** | All nodes see operations in the same order | Weaker than linearizable; no real-time guarantees |
+| **Causal** | Causally-related operations are ordered; concurrent ones can be seen in different orders | If node sees `b` (caused by `a`), it must see `a` first |
 | **Eventual** | If no updates, all nodes eventually converge | Strongest latency guarantees, weakest consistency |
 
 ### When to use which?
@@ -176,21 +177,21 @@ Different systems provide different guarantees:
 ### The Problem
 
 How can a group of distributed nodes agree on a single value when
-nodes can fail and messages can be lost?
+nodes can fail (fail-stop) and messages can be lost?
 
 ### Paxos (1989 / 1998)
 
-Leslie Lamport's **Paxos** solved the consensus problem:
+Leslie Lamport's **Paxos** solved the fault-tolerant consensus problem:
 - A **proposer** proposes a value
 - **Acceptors** accept or reject proposals
 - **Learners** learn the agreed value
 
 Paxos guarantees:
 - **Safety** — only one value is ever chosen
-- **Liveness** — if a majority is reachable, a value will eventually be chosen
+- **Liveness** — if a majority of nodes is reachable, a value will eventually be chosen
 
 Paxos is notoriously difficult to understand. Lamport described it
-using an allegory set on Greek island of Paxos — which confused
+using an allegory set on the Greek island of Paxos — which confused
 reviewers so much the paper wasn't published until 1998.
 
 ### Raft (2014)
@@ -198,7 +199,7 @@ reviewers so much the paper wasn't published until 1998.
 **Raft** (Diego Ongaro) was designed to be "an understandable
 consensus algorithm":
 
-**Key idea:** Consensus is about agreeing on a sequence of values (a log).
+**Key idea:** Consensus is about agreeing on a sequence of values (a replicated log).
 
 | Phase | What happens |
 |-------|--------------|
@@ -213,7 +214,7 @@ Raft's clarity made consensus accessible. It's used in:
 
 ### Two-Phase Commit (2PC)
 
-For transactions across multiple nodes, **2PC** ensures atomicity:
+For atomic transactions across multiple database nodes, **2PC** ensures atomicity:
 
 **Phase 1 — Prepare:**
 - Coordinator asks all participants: "Can you commit?"
@@ -223,9 +224,7 @@ For transactions across multiple nodes, **2PC** ensures atomicity:
 - If all voted YES: coordinator sends "COMMIT" to all
 - If any voted NO: coordinator sends "ABORT" to all
 
-**Problem:** If coordinator fails after phase 1, participants are
-blocked (cannot release locks). This is why **3PC** and
-**saga patterns** exist.
+**Problem:** 2PC is a blocking protocol. If the coordinator fails permanently after phase 1, participants are blocked and cannot release database locks. This is why **3PC** (non-blocking but complex) and **saga patterns** are used in practice.
 
 → [Jim Gray](../../authors/jim-gray.md) — transactions
 
@@ -276,16 +275,18 @@ flowchart TD
 ```
 
 **Quorum reads and writes:**
-- Write to `W` nodes where `W > N/2`
-- Read from `R` nodes where `R > N/2`
-- Choose `R + W > N` to ensure at least one node has latest value
+- Write to `W` nodes
+- Read from `R` nodes
+- Choose `R + W > N` (where `N` is total replicas) to ensure at least one node has latest value
 
-**Used by:** Cassandra, Riak, DynamoDB.
+**Used by:** Cassandra, Riak.
 
 **Conflict resolution:** Last-write-wins (by timestamp), merge functions,
 or CRDTs.
 
 ## Event Sourcing and CQRS
+
+*Note: While these patterns are applicable in monolithic applications, they are foundational in distributed architectures for reliable state representation across network boundaries.*
 
 ### Event Sourcing
 
@@ -329,7 +330,7 @@ Read Model (Optimised for queries):
 
 **CRDTs** enable concurrent updates to be merged automatically without conflicts:
 
-**Example — Last-Write-Wins Register:**
+**Example — State-based LWW-Element-Set Register:**
 
 ```json
 // Node A: {value: "hello", timestamp: 100}
@@ -362,32 +363,33 @@ real-time collaboration tools.
 
 | Failure type | Description |
 |-------------|-------------|
-| **Crash failure** | Node stops and doesn't restart |
-| **Omission failure** | Node doesn't respond to messages |
-| **Byzantine failure** | Node behaves arbitrarily (lying, malicious) |
+| **Crash-stop** | Node stops executing permanently |
+| **Crash-recovery** | Node stops, but can restart and resume execution |
+| **Omission failure** | Node fails to send or receive messages |
+| **Byzantine failure** | Node behaves arbitrarily (lying, corruption, malicious actions) |
 | **Network partition** | Communication lost between subsets of nodes |
 
 ### Replication as Fault Tolerance
 
-Replication tolerates failures:
+Replication tolerates failures. In quorum-based consensus systems (Raft, Paxos), majority is required:
 
-| Replication factor | Faults tolerated |
-|-------------------|-------------------|
-| 2 | 0 (no benefit) |
-| 3 | 1 |
-| 5 | 2 |
-| 7 | 3 |
-
-With 3 replicas, you can lose 1 node and still have a quorum.
+| Replication factor ($N$) | Quorum ($Q = \lfloor N/2 \rfloor + 1$) | Faults tolerated ($N - Q$) |
+|-------------------------|----------------------------------------|---------------------------|
+| 1 | 1 | 0 |
+| 2 | 2 | 0 |
+| 3 | 2 | 1 |
+| 5 | 3 | 2 |
+| 7 | 4 | 3 |
 
 ### Leader Election
 
-How to select a new leader when current one fails:
+How to select a new leader when the current one fails:
 
-**Bully algorithm:**
+**Bully algorithm (Classic):**
 - Highest ID node becomes leader
 - Nodes send "are you alive?" messages
 - If higher ID responds, step down
+- *Note: Rarely used in modern production systems due to high message overhead during failure.*
 
 **Raft election:**
 - Node increments term, requests votes
@@ -395,9 +397,57 @@ How to select a new leader when current one fails:
 - Majority wins
 
 **ZAB (ZooKeeper Atomic Broadcast):**
-- Similar to Raft
-- Guarantees total order of messages
-- Used by ZooKeeper
+- Primary election based on transaction ID (zxid) to ensure node with most complete log wins
+- ZK nodes execute recovery phase before service starts
+
+## Tail Latency and Percentiles
+
+In distributed systems, the **mean** latency is almost never what matters.
+What matters is the **tail** — the slowest requests.
+
+### The Tail-at-Scale Problem
+
+When a request fans out to many services (e.g., 100 backend calls
+to build a search result page), the overall latency is determined by
+the **slowest dependency**, not the average:
+
+```text
+If each backend has p99 ≈ 10 ms:
+  - 1 backend call:  p99 ≈ 10 ms
+  - 10 calls:        p99 ≈ 10 ms  (still okay)
+  - 100 calls:       p99 ≈ 10 ms  (tail compounds)
+
+With enough fan-out, the 99th-percentile of the aggregate
+becomes the median of the individual services.
+```
+
+This is the **tail-at-scale** problem: at large scale, rare events
+become common.
+
+### Why Percentiles Beat the Mean
+
+| Metric | What it tells you | Why it falls short |
+|--------|-------------------|-------------------|
+| **Mean** | Average experience | Hides outliers; users don't feel average |
+| **p50 (median)** | Typical experience | Ignores the worst half |
+| **p95** | Threshold for "almost everyone" | Good for capacity planning |
+| **p99** | Worst-case baseline | Captures the tail that hurts users |
+| **p99.9** | Extreme outliers | Reveals saturation, GC pauses, retries |
+
+**Rule of thumb:** measure what your users actually feel.
+If 1% of users time out, the mean won't tell you — p99 will.
+
+### Mitigating Tail Latency
+
+| Technique | How it helps |
+|-----------|-------------|
+| **Hedged requests** | Send the same request to two replicas, use the faster response |
+| **Tied cancellation** | Cancel slow requests after a deadline |
+| **Backup requests** | Retry if the first request exceeds a threshold (e.g., p95 + margin) |
+| **Load balancing** | Avoid hot spots; prefer least-loaded over round-robin |
+| **Request coalescing** | Deduplicate identical in-flight requests |
+
+→ [Jeff Dean — *The Tail at Scale* (2013)](https://research.google/pubs/pub40801/)
 
 ## The Log as a Unifying Abstraction
 
@@ -420,35 +470,12 @@ Many distributed systems use an **append-only log**:
 
 ## Distributed Transactions
 
-### The Problem
-
-How to maintain ACID properties across multiple nodes?
-
-### Two-Phase Commit (2PC)
-
-See earlier section. Problem: coordinator failure blocks participants.
-
-### Sagas
-
-Break transaction into sequence of local transactions with compensating actions:
-
-```
-Saga: Book Flight + Book Hotel
-  1. Book Flight → SUCCESS
-  2. Book Hotel → FAIL
-  3. Compensate: Cancel Flight → SUCCESS
-```
-
-**Benefits:**
-- Each step is independent
-- Can continue after failure
-- Works across multiple services
-
 ### Distributed Transaction Patterns
 
 | Pattern | Description |
 |---------|-------------|
-| **Saga** | Sequence of compensating transactions |
+| **Two-Phase Commit (2PC)** | Standard atomic commit protocol. Problem: coordinator failure blocks participants. |
+| **Sagas** | Break transaction into sequence of local transactions with compensating actions |
 | **Eventual consistency + reconciliation** | Accept temporary inconsistency, fix later |
 | **CRDTs** | Conflict-free merge for specific data types |
 | **[Idempotent operations](../distributed/idempotency.md)** | Retry-safe operations — applying an operation twice has the same effect as once |
@@ -456,9 +483,16 @@ Saga: Book Flight + Book Hotel
 | **[Leased Outbox](../distributed/leased-outbox.md)** | A high-throughput, non-transactional outbox variant for NoSQL databases using LWTs for consumer partition leasing |
 | **[Transactional Inbox](../distributed/transactional-inbox.md)** | Guarantee duplicate messages are handled safely via deduplication in the consumer's database |
 
+```
+Saga Example: Book Flight + Book Hotel
+  1. Book Flight → SUCCESS
+  2. Book Hotel → FAIL
+  3. Compensate: Cancel Flight → SUCCESS
+```
+
 ## Durable Workflow Orchestration (Temporal)
 
-**Temporal** is a platform for building durable, reliable distributed workflows. It guarantees that a sequence of steps (a "workflow") will complete exactly as written, even in the face of crashes, network failures, or long waits. It is often described as "microservice orchestration with durability built-in."
+**Temporal** is a platform for building durable, reliable distributed workflows. It guarantees that a sequence of steps (a "workflow") will complete exactly as written, even in the face of crashes, network failures, or long waits.
 
 ### Core Concepts
 
@@ -468,7 +502,7 @@ Saga: Book Flight + Book Hotel
 | **Activity** | An individual unit of work — typically a call to an external service or database |
 | **Durable execution** | Workflow state is automatically persisted after every step; if a worker crashes, execution resumes from the last completed step |
 | **Persistent timers** | Timers survive process restarts — a `sleep(30 days)` is stored in the database and resumed exactly after 30 days |
-| **Exactly-once activity execution** | Activities are retried automatically on failure, with deduplication guarantees |
+| **Activity deduplication** | Activities are retried automatically on failure; Temporal guarantees *at-least-once* execution of the activity code with *exactly-once* result semantics via built-in deduplication (idempotency tokens) |
 
 ### How Temporal Works
 
@@ -490,27 +524,8 @@ flowchart TD
 
 **Key components:**
 - **Temporal Server** — manages workflow state, task queues, and scheduling
-- **History DB** — stores the event history of every workflow (strongly consistent: Cassandra or MySQL)
+- **History DB** — stores the event history of every workflow (strongly consistent: Cassandra, PostgreSQL or MySQL)
 - **Workers** — long-running processes that poll for tasks and execute workflow code
-
-### Saga Pattern with Temporal
-
-Temporal makes the **saga pattern** practical at scale:
-
-```
-Workflow: Book Trip
-  1. Book Flight (activity)
-     → On failure: no compensation yet
-  2. Book Hotel (activity)
-     → On failure: compensate Cancel Flight
-  3. Book Car (activity)
-     → On failure: compensate Cancel Hotel, Cancel Flight
-
-Temporal guarantees:
-  - Each activity is executed at least once (with exactly-once semantics via deduplication)
-  - If the worker crashes mid-saga, a new worker resumes from the last completed step
-  - Compensation logic runs automatically on activity failure
-```
 
 ### Relationship to Distributed Systems Fundamentals
 
@@ -520,54 +535,7 @@ Temporal guarantees:
 | **Saga pattern** | Built-in compensation and retry for long-running transactions |
 | **Exactly-once execution** | Activity results are cached by ID; duplicate executions return the same result |
 | **Fault tolerance** | Worker crashes are transparent — state is recovered from the history DB |
-| **CAP** | The history DB provides CA guarantees (strong consistency + availability within the cluster) |
-
-### When to Use Temporal
-
-| Use case | Why Temporal fits |
-|----------|-------------------|
-| Microservice orchestration | Coordinate 10+ services in a single durable workflow |
-| Long-running processes | Steps that take hours, days, or weeks (approvals, onboarding) |
-| Reliable background jobs | Ensure critical jobs complete even through deploys and crashes |
-| CI/CD pipelines | Durable pipeline execution with automatic retry and rollback |
-| Financial transactions | Multi-step transfers with compensation on failure |
-
-### Comparison with Alternatives
-
-| Approach | Durability | Complexity | Best for |
-|----------|-----------|------------|----------|
-| **Temporal** | Automatic | Low (write normal code) | Complex, long-running workflows |
-| **Message queue + consumer** | Manual | Medium | Simple fire-and-forget tasks |
-| **Stateful actor (Akka, Orleans)** | Manual | High | High-throughput, low-latency systems |
-| **Event sourcing + CQRS** | Manual | High | Audit-heavy domains |
-| **2PC / Saga (manual)** | Manual | High | Short, tightly-coupled transactions |
-
-### Temporal vs Other Orchestrators
-
-The tooling landscape for workflow orchestration is diverse. Here is how Temporal compares to other popular options.
-
-| Feature | Temporal | Apache Airflow | Inngest |
-|---------|----------|----------------|---------|
-| **Core Focus** | Long-running, stateful workflows needing high reliability | Scheduled, batch-oriented DAGs for data pipelines | Serverless, event-driven functions with built-in state |
-| **Architecture** | Dedicated Temporal server cluster + workers | Central scheduler + metadata database (PostgreSQL/MySQL) | Serverless-first, managed by the Inngest platform |
-| **Fault Tolerance** | Durable execution: full state replay for exact recovery | Stateless tasks; recovers by restarting the DAG from the beginning | Built-in durable steps that persist individual units of work |
-| **Best For** | Transactional processes (payments, order management), multi-step AI agents, long-running business flows | ETL/ELT pipelines, ML training jobs, scheduled reports | Simple event processing, automating API integrations, webhook handling |
-
-#### Apache Airflow
-
-Apache Airflow is an open-source platform for authoring, scheduling, and monitoring **batch-oriented workflows** expressed as directed acyclic graphs (DAGs). Tasks are defined as Python callables or operators, and the scheduler executes them according to dependencies.
-
-- **Strengths:** Rich ecosystem of operators (SQL, cloud services, Spark), cron-like scheduling, backfilling, and observability via the web UI.
-- **Limitations:** Tasks are stateless — if the scheduler fails, the DAG restarts from the beginning. Not designed for long-running, event-driven, or transactional workflows.
-- **Best for:** Data pipelines, ML training orchestration, scheduled ETL jobs.
-
-#### Inngest
-
-Inngest is a **serverless event-driven workflow platform** that runs functions in response to events. It provides durable execution without requiring a dedicated cluster — the platform manages state persistence and retries automatically.
-
-- **Strengths:** Zero-infrastructure setup, event-driven by design, built-in retries and delays, easy integration with serverless frameworks (Vercel, Netlify).
-- **Limitations:** Less control over infrastructure compared to self-hosted Temporal; simpler state model (step-based, not full history replay).
-- **Best for:** Webhook processing, API automation, simple multi-step event handlers, serverless applications.
+| **CAP** | The history DB is configured for strong consistency (typically CP or strongly consistent write paths) to guarantee execution history integrity |
 
 ## Consensus in Practice
 
@@ -581,7 +549,7 @@ Key-value store for Kubernetes configuration:
 ### ZooKeeper
 
 Configuration and coordination service:
-- Uses ZAB protocol
+- Uses ZAB protocol (ZooKeeper Atomic Broadcast)
 - ZNode hierarchy (like filesystem)
 - Leader election, service discovery
 
@@ -595,24 +563,25 @@ Service discovery and configuration:
 ### Spanner
 
 Google's globally distributed database:
-- Uses **TrueTime** — synchronises clocks with GPS + atomic clocks
-- Achieves **external consistency** — consistent across datacenters
-- Supports **global transactions**
+- Uses **TrueTime** — synchronises clocks with GPS + atomic clocks to obtain tight bounds on clock uncertainty ($\epsilon$)
+- Achieves **external consistency** (strict serialisability) — globally consistent across datacenters
+- Supports **global transactions** using 2PC on top of Paxos groups
 
 ## Timeline
 
 | Year | Event | Impact |
 |------|-------|--------|
 | 1978 | Lamport — Logical Clocks | Foundation of distributed ordering |
-| 1981 | Gray — Transactions | ACID properties for distributed systems |
-| 1989 | Lamport — Paxos | Consensus algorithm |
-| 1998 | Paxos published | Understanding consensus becomes accessible |
-| 2000 | Brewer — CAP Theorem | Consistency vs availability trade-off |
-| 2002 | Gilbert & Lynch — CAP proof | Formal foundation |
-| 2004 | Dynamo paper (Amazon) | Leaderless replication, eventual consistency |
-| 2007 | DynamoDB launch | First major AP system |
-| 2012 | Google Spanner | External consistency across datacenters |
-| 2014 | Ongaro — Raft | Understandable consensus |
+| 1981 | Gray — "The Transaction Concept" | ACID properties for distributed systems formalised |
+| 1989 | Lamport — Paxos | Classic consensus algorithm designed |
+| 1998 | Paxos published | Consensus becomes accessible after original paper delay |
+| 2000 | Brewer — CAP Theorem | Consistency vs availability trade-off introduced |
+| 2002 | Gilbert & Lynch — CAP proof | Formal linearizability proof of CAP |
+| 2007 | Amazon Dynamo Paper | AP-system model publicized (vector clocks, leaderless) |
+| 2008 | ZooKeeper / ZAB | Highly available atomic broadcast system open-sourced |
+| 2012 | Google Spanner | External consistency across datacenters using Paxos and TrueTime |
+| 2012 | AWS DynamoDB launch | Managed DB service launched (using Paxos, distinct from 2007 AP Dynamo model) |
+| 2014 | Ongaro — Raft | Understandable consensus algorithm published |
 | 2017 | Kleppmann — DDIA | Comprehensive guide to distributed systems |
 
 ## The Pragmatic View

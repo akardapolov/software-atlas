@@ -27,9 +27,11 @@ embracing uncertainty through continuous feedback.
   - [Code Quality](#code-quality)
   - [Static Analysis](#static-analysis)
   - [Observability](#observability)
+  - [Technical Debt](#technical-debt)
 - [Operations](#operations)
   - [DevOps (2009)](#devops-2009)
   - [Continuous Delivery (2010)](#continuous-delivery-2010)
+  - [Containerization (2013)](#containerization-2013)
   - [Site Reliability Engineering — SRE (2016)](#site-reliability-engineering--sre-2016)
   - [Team Topologies (2019)](#team-topologies-2019)
   - [Code Review](#code-review)
@@ -52,7 +54,6 @@ embracing uncertainty through continuous feedback.
   - [Azure DevOps Pipelines](#azure-devops-pipelines)
   - [Bitbucket Pipelines](#bitbucket-pipelines)
   - [TeamCity](#teamcity)
-  - [Technical Debt](#technical-debt)
 - [System Evolution](#system-evolution)
   - [Software Evolution & Lehman's Laws](#software-evolution--lehmans-laws)
   - [The Strangler Fig Pattern](#the-strangler-fig-pattern)
@@ -129,80 +130,56 @@ flowchart LR
     style Maintenance fill:#81c784
 ```
 
-**Origin:** Winston Royce (1970) described this as a *problematic*
-model, but it became standard anyway.
+**Origin:** Winston Royce (1970) described this sequential model as a baseline architecture, noting that without multiple feedback loops, it is highly prone to failure. Unfortunately, the simplified sequential variant became the industry standard anyway.
 
 **Strengths:**
-
 - Clear documentation
-- Predictable for well-understood problems
-- Works in regulated industries (medical, aerospace)
+- Predictable for well-understood, static problems
+- Works in highly regulated industries (medical, aerospace)
 
 **Weaknesses:**
-
 - Late feedback (testing happens after all code is written)
-- Expensive to change (a design change requires redoing multiple phases)
-- Assumes requirements won't change (rarely true)
+- High cost of late-stage design modifications
+- Assumes requirements can be locked down upfront
 
-**Brooks's Law** (1975) is a classic project management insight
-from the Waterfall era:
+**Brooks's Law** (1975) is a classic project management insight from the Waterfall era:
 
 > "Adding manpower to a late software project makes it later."
 
-New team members need onboarding, communication paths multiply, and tasks
-aren't always parallelisable.
+New team members require onboarding, communication overhead grows exponentially, and software tasks are rarely perfectly partitionable.
 
 → [Fred Brooks](../../authors/fred-brooks.md) ·
 [The Mythical Man-Month](../../works/books/brooks-1975-mmm.md)
 
 ### The Bridge: Spiral and RUP
 
-Before Agile, some methods tried to keep the structure of plan-driven development while adding iteration and feedback. The two most important examples are the **Spiral Model** and **Rational Unified Process (RUP)**.
+Before Agile, alternative methodologies tried to keep the structure of plan-driven development while introducing iteration and feedback:
 
 #### Spiral Model (1988)
 
 **Core idea:** Iterate while explicitly managing risk.
 
-Barry Boehm's Spiral Model treats risk analysis as the center of the process. Each cycle usually includes:
+Barry Boehm's Spiral Model treats risk analysis as the core driver of the process. Each loop usually includes:
 
 1. Define objectives and constraints
-2. Identify and analyse risks
-3. Develop a prototype or increment
-4. Evaluate with stakeholders
-5. Plan the next loop
+2. Identify and resolve risks (via prototyping/simulation)
+3. Develop and verify the next-level product
+4. Plan the next iteration
 
 **Why it matters:**
-- Risk becomes a first-class input to planning
-- Early prototypes reduce uncertainty
-- It bridges the gap between Waterfall and later iterative methods
-
-**Trade-offs:**
-- More complex than Waterfall
-- Requires disciplined risk assessment
-- Can be heavy for small teams
+- Risk management is treated as a first-class citizen
+- Early prototyping reduces major architectural unknowns
 
 #### Rational Unified Process — RUP (1998)
 
 **Core idea:** An iterative, use-case driven, architecture-centric process.
 
-RUP formalised iterative development for larger teams and enterprise projects. It is organised into four phases:
+RUP formalised iterative development for larger enterprise projects. It is organised into four phases:
 
 - **Inception** — define scope and business case
 - **Elaboration** — stabilise architecture and address major risks
 - **Construction** — build the system incrementally
 - **Transition** — deliver to users and refine in production
-
-**Why it matters:**
-- Brought iteration into mainstream enterprise process
-- Made architecture explicit early
-- Connected process to use cases and stakeholder goals
-
-**Trade-offs:**
-- Can become documentation-heavy
-- More prescriptive than Agile methods
-- Better suited to larger organisations than to small teams
-
-**In the big picture:** Spiral emphasised **risk**. RUP emphasised **use cases and architecture**. Both moved software process away from pure Waterfall and prepared the ground for Agile.
 
 ### The Agile Manifesto (2001)
 
@@ -217,14 +194,7 @@ They signed the **Agile Manifesto**:
 >
 > **Responding to change** over following a plan
 
-*"While there is value in the items on the right,
-we value the items on the left more."*
-
-The manifesto didn't prescribe a single methodology. It articulated a
-set of values that XP, Scrum, Kanban, and other approaches share.
-
-**Signatories included:** Kent Beck, Martin Fowler, Ward Cunningham,
-Robert C. Martin, Alistair Cockburn, Ron Jeffries, and others.
+The manifesto articulated a set of values that XP, Scrum, Kanban, and other agile approaches share.
 
 → [Martin Fowler](../../authors/martin-fowler.md)
 
@@ -234,10 +204,8 @@ Robert C. Martin, Alistair Cockburn, Ron Jeffries, and others.
 |------|-------|--------|
 | 1970 | Waterfall formalised (Royce) | Sequential phases became standard |
 | 1975 | *The Mythical Man-Month* (Brooks) | Understanding of project complexity |
-| 1980 | *Lehman's Laws of Software Evolution* | Understanding how software changes over time |
-| 1986 | Spiral Model proposed (Boehm) | Risk-driven iterations; full paper 1988 |
+| 1980 | Lehman's Laws of Software Evolution | Understanding software changes over time |
 | 1988 | Spiral Model paper published (Boehm) | Formal risk-driven iterative model |
-| 1992 | *Object-Oriented Software Engineering* (Jacobson) | Use case methodology |
 | 1992 | Technical debt metaphor (Cunningham) | Framework for discussing shortcuts |
 | 1995 | Scrum formalised (Sutherland, Schwaber) | Iterative delivery |
 | 1996 | Extreme Programming (Beck) | First comprehensive agile methodology |
@@ -248,11 +216,10 @@ Robert C. Martin, Alistair Cockburn, Ron Jeffries, and others.
 | 2001 | Agile Manifesto signed | Shared values across methodologies |
 | 2002 | *TDD by Example* (Beck) | TDD as design technique |
 | 2004 | *Working Effectively with Legacy Code* (Feathers) | Legacy code, characterization tests |
-| 2004 | *User Stories Applied* (Cohn) | User stories, INVEST, story mapping |
 | 2004 | Kanban for software (Anderson) | Flow-based process at Microsoft |
+| 2007 | Amazon Dynamo Paper | AP-system model publicized (vector clocks, leaderless) |
 | 2009 | DevOps movement begins | Dev + Ops collaboration |
 | 2010 | *Continuous Delivery* (Humble, Farley) | Automated deployment pipelines |
-| 2010 | *Kanban* book (Anderson) | Definitive Kanban for software |
 | 2016 | *Site Reliability Engineering* (Google) | SRE discipline, error budgets |
 | 2018 | *Accelerate* (Forsgren, Humble, Kim) | Evidence for DevOps practices |
 | 2019 | *Team Topologies* (Skelton, Pais) | Team structure for flow |
@@ -268,41 +235,34 @@ and the practices that govern what gets built and when.
 
 **Core idea:** Embrace change through intense technical practices.
 
-Kent Beck developed XP on the Chrysler Comprehensive Compensation (C3) project.
-XP was the **first comprehensive agile methodology**.
+XP was the **first comprehensive agile methodology**, bringing engineering practices to the forefront of the process.
 
 #### XP Values
-
 - **Communication** — face-to-face conversation over documentation
 - **Simplicity** — do the simplest thing that works (YAGNI)
 - **Feedback** — short iterations, continuous testing, frequent releases
-- **Courage** — refactor aggressively, throw away code that doesn't work
+- **Courage** — refactor aggressively, throw away bad code
 - **Respect** — sustainable pace, no overtime
 
 #### XP Practices
 
 | Practice | What it is |
 |----------|-------------|
-| **Pair Programming** | Two developers, one keyboard |
-| **TDD** | Write tests before code — see [Technical Practices](#technical-practices) |
+| **Pair Programming** | Two developers, one keyboard (driver & navigator) |
+| **TDD** | Write tests before code |
 | **Continuous Integration** | Integrate and test multiple times per day |
-| **Refactoring** | Continuously improve design — see [Refactoring](#refactoring-1999) |
+| **Refactoring** | Continuously improve design |
 | **Small Releases** | Deliver working software frequently |
 | **Collective Ownership** | Anyone can change any code |
-| **Sustainable Pace** | Fresh developers write better code |
-
-**Key insight:** Process isn't just meetings and documents.
-Technical practices *are* process. Pair programming, TDD, and CI
-are how XP embraces change.
+| **Sustainable Pace** | Maintain 40-hour work weeks to preserve quality |
 
 → [Kent Beck](../../authors/kent-beck.md)
 
 ### Scrum (1995)
 
-**Core idea:** Work in fixed-length iterations called sprints.
+**Core idea:** Work in fixed-length iterations called Sprints.
 
-Scrum was formalised by Jeff Sutherland and Ken Schwaber (independently)
-and draws on "The New New Product Development Game" (Takeuchi & Nonaka, 1986).
+Scrum was formalised by Jeff Sutherland and Ken Schwaber, drawing on "The New New Product Development Game" (Takeuchi & Nonaka, 1986).
 
 #### Scrum Framework
 
@@ -321,38 +281,29 @@ flowchart LR
     style Retro fill:#fff59d
 ```
 
-#### Scrum Roles
+#### Scrum Roles (2020 Update)
+
+Under the Scrum Guide 2020 update, the concept of a separate "Development Team" within the Scrum Team was abolished. Now, there is a single **Scrum Team** containing three specific roles:
 
 | Role | Responsibility |
 |------|----------------|
-| **Product Owner** | What to build, prioritisation, ROI |
-| **Scrum Master** | Process facilitation, removing impediments |
-| **Development Team** | Self-organising, cross-functional delivery |
+| **Product Owner** | Maximising product value, managing the Product Backlog, ROI |
+| **Scrum Master** | Establishing Scrum, removing impediments, team effectiveness |
+| **Developers** | Creating the usable increment, tracking progress, quality |
 
 #### Scrum Ceremonies
+- **Sprint Planning** — What can be delivered in this Sprint, and how?
+- **Daily Scrum** — 15-minute daily sync for Developers to plan the next 24 hours
+- **Sprint Review** — Inspect the Sprint outcome and determine future adaptations
+- **Sprint Retrospective** — Plan ways to increase quality and effectiveness
 
-- **Sprint Planning** — What will we accomplish this sprint?
-- **Daily Standup** — What did you do? What will you do? Any blockers?
-- **Sprint Review** — Demo working software to stakeholders
-- **Sprint Retrospective** — Reflect and improve the process
-
-#### Scrum Artifacts
-
-- **Product Backlog** — Prioritised list of everything needed
-- **Sprint Backlog** — Items selected for this sprint
-- **Increment** — Working software produced by the sprint
-
-**Key insight:** Scrum optimises for **predictability** through
-regular delivery and continuous feedback.
+---
 
 ### Kanban (2004)
 
 **Core idea:** Visualize work, limit work in progress, and manage flow.
 
-David Anderson adapted Kanban (a Toyota manufacturing technique) for
-software development in 2004 at Microsoft. Unlike Scrum's fixed
-iterations, Kanban is continuous. The definitive book (*Kanban:
-Successful Evolutionary Change*) followed in 2010.
+David Anderson adapted Kanban (derived from the Toyota production system) for software development. Unlike Scrum, Kanban is continuous and does not use fixed-length iterations.
 
 #### The Kanban Board
 
@@ -379,50 +330,32 @@ flowchart LR
 | **Make policies explicit** | Clear definition of "done" for each column |
 | **Improve collaboratively** | Evolve based on feedback and metrics |
 
-**Key insight:** "Stop starting, start finishing." Limit WIP to
-reduce context switching and improve flow.
-
 #### Scrum vs Kanban
 
 | Aspect | Scrum | Kanban |
 |--------|--------|---------|
 | **Cadence** | Fixed sprints (1-4 weeks) | Continuous flow |
-| **Roles** | Defined (PO, SM, Team) | Optional (often just "Team") |
+| **Roles** | Defined (PO, SM, Developers) | Optional |
 | **WIP limits** | Implicit (sprint capacity) | Explicit per column |
 | **Estimates** | Required (story points) | Optional (often cycle time metrics) |
 | **Change** | Mid-sprint changes discouraged | Changes can happen anytime |
-| **Best for** | Predictable delivery, team learning | Continuous delivery, support work |
+
+---
 
 ### Requirements & Planning
-
-**Core idea:** Elicit, document, and manage what to build.
-
-Requirements and planning bridge the gap between "what users need"
-and "what we build." Poor requirements and planning are leading causes
-of project failure.
 
 #### Traditional vs Agile Requirements
 
 | Aspect | Traditional (Waterfall) | Agile |
 |---------|----------------------|-------|
 | **Timing** | All upfront | Continuous discovery |
-| **Format** | Large documents | User stories, backlogs |
-| **Changes** | Expensive | Welcome, expected |
-| **Focus** | Features (all) | Value (most valuable first) |
-| **Owner** | Business analyst | Product owner + team |
+| **Format** | Large SRS documents | User stories, backlogs |
+| **Changes** | Expensive | Welcomed |
+| **Focus** | Feature list | Value delivery |
 
 #### Use Cases
 
-**Use case** — description of how a user interacts with a system to achieve a goal.
-
-Introduced by Ivar Jacobson (1992), use cases document:
-
-- **Actor** — external entity (user, system) interacting
-- **Goal** — what the actor wants to accomplish
-- **Main flow** — primary path to achieve goal
-- **Alternative flows** — edge cases, error conditions
-
-**Example:**
+**Use case** — description of how a user interacts with a system to achieve a goal. Introduced by Ivar Jacobson (1992):
 
 ```
 Use Case: Withdraw Cash
@@ -436,371 +369,121 @@ Main flow:
 4. ATM checks balance
 5. ATM dispenses cash
 6. Customer takes card and cash
-
-Alternative flows:
-- Insufficient funds → Display error, cancel transaction
-- Invalid card → Reject card, return to start
 ```
 
-→ [Ivar Jacobson — OOSE](../../authors/ivar-jacobson.md) ·
-[Object-Oriented Software Engineering](../../works/books/jacobson-1992-oose.md)
+→ [Ivar Jacobson — OOSE](../../authors/ivar-jacobson.md)
 
-#### User Stories
+#### User Stories & INVEST
 
-**User story** — short, simple description of a feature from user's perspective.
+**User story** — short description of a feature from a user's perspective.
 
-Evolved from use cases, popularized by XP and Scrum.
+**INVEST Criteria:**
+- **I**ndependent — Can be developed separately
+- **N**egotiable — Details can be discussed
+- **V**aluable — Delivers value to users
+- **E**stimable — Team can estimate effort
+- **S**mall — Can be completed in one iteration
+- **T**estable — Success can be verified
 
-**Format:**
-```
-As a <type of user>,
-I want <some goal>,
-So that <some benefit>.
-```
+#### Story Points & Planning Poker
 
-**Example:**
-```
-As a customer,
-I want to save my payment methods,
-So that I don't have to enter them every time.
-```
+Story points are a **relative measure** of complexity, risk, and effort. They are not hours.
 
-**INVEST Criteria**
-
-Good user stories are:
-
-| Criterion | Meaning |
-|-----------|----------|
-| **Independent** | Can be implemented separately |
-| **Negotiable** | Details can be discussed |
-| **Valuable** | Delivers value to users |
-| **Estimable** | Team can estimate effort |
-| **Small** | Can be completed in one iteration |
-| **Testable** | Success can be verified |
-
-#### Story Points
-
-**Story points** — relative measure of effort for a user story.
-
-Story points are **not hours**. They measure complexity, risk, and
-effort relative to other stories.
-
-**Planning estimation:**
-
-```
-Team estimates:
-- Login page: 1 point (small, well-understood)
-- User profile: 3 points (medium, some unknowns)
-- Payment integration: 8 points (large, external dependency)
-
-Sprint capacity: 30 points
-```
-
-**Common scales:**
-- **Fibonacci** (1, 2, 3, 5, 8, 13, 21...) — forces differentiation
-- **T-shirt sizes** (XS, S, M, L, XL) — intuitive
-- **Linear** (1, 2, 3, 4...) — rarely used
-
-#### Planning Poker
-
-**Planning poker** — consensus-based estimation technique.
-
-Process:
-1. Product owner describes user story
-2. Team discusses questions (no estimation yet)
-3. Each member selects a card secretly
-4. Cards revealed simultaneously
-5. Members discuss differences (highest and lowest explain)
-6. Repeat until consensus
-
-**Benefits:**
-- Avoids anchoring bias (no one person leads)
-- Encourages discussion about complexity
-- Reveals different understandings
-- Builds team ownership of estimates
-
-#### Velocity
-
-**Velocity** — number of story points completed per iteration.
-
-```
-Velocity calculation:
-- Sprint 1: 28 points completed
-- Sprint 2: 24 points completed
-- Sprint 3: 26 points completed
-
-Average velocity: 26 points/sprint
-```
-
-**Velocity uses:**
-- Predict future capacity
-- Plan iterations based on historical data
-- Detect process problems (sudden drop)
-
-**Note:** Velocity is a **metric for planning**, not a target to increase.
+**Planning Poker** is a consensus-based estimation technique used to avoid anchoring bias. Team members select estimation cards simultaneously, ensuring silent individual estimation before discussion.
 
 #### The Cone of Uncertainty
 
-**Cone of uncertainty** — estimation accuracy improves as the project progresses.
-
-Early estimates carry a wide margin of error in both directions.
-Boehm's original model expressed this as a multiplier range:
-
-| Phase | Typical estimation range |
-|-------|--------------------------|
-| **Feasibility** | 0.25x – 4x actual |
-| **Requirements** | 0.5x – 2x actual |
-| **Design** | 0.67x – 1.5x actual |
-| **Coding** | 0.8x – 1.25x actual |
-
-**Implications:**
-- Don't commit to fixed deadlines far in advance
-- Re-estimate as project progresses and unknowns resolve
-- Buffer time for uncertainty — not padding, but honest range
-
-#### Requirements Elicitation
-
-Getting requirements from users is challenging. Techniques:
-
-| Technique | Description | When to use |
-|-----------|-------------|--------------|
-| **User interviews** | One-on-one conversations | Deep understanding |
-| **Focus groups** | Group discussions | Broad feedback, ideas |
-| **Observation** | Watch users work | Understand pain points |
-| **Prototyping** | Build quick versions | Validate assumptions |
-| **Surveys** | Collect data from many users | Statistical feedback |
-
-#### Requirements Types
-
-| Type | Description | Example |
-|-------|-------------|---------|
-| **Functional** | What system must do | "User can log in with email" |
-| **Non-functional** | Quality attributes | "Response time < 200ms" |
-| **Business rules** | Constraints and policies | "User must be 18+ to register" |
-| **Regulatory** | Legal requirements | "GDPR compliance for data" |
-| **Technical** | Technical constraints | "Must use PostgreSQL" |
-
-#### Requirements Management
-
-**Product backlog** — prioritised list of work.
-
-**Backlog refinement (grooming):**
-- Review upcoming items
-- Add details to ready stories
-- Estimate unestimated stories
-- Remove outdated items
-
-**Prioritisation techniques:**
-- **MoSCoW method** — Must, Should, Could, Won't
-- **RICE score** — Reach × Impact × Confidence / Effort
-- **Kano model** — Must-be, performance, delighter features
+```
+Estimation Range Multiplier:
+Feasibility:  0.25x <-----> 4.0x
+Requirements: 0.50x <---> 2.0x
+Design:       0.67x <-> 1.5x
+Coding:       0.80x <-> 1.25x
+```
+*Implication:* Do not commit to fixed-price, fixed-scope deadlines far in advance. Re-estimate as project unknowns resolve.
 
 ---
 
 ## Technical Practices
 
 How individual developers and teams write, test, and improve code.
-These practices apply regardless of which methodology the team uses.
 
 ### Testing Practices
 
-Testing has its own topic — see [Testing](../testing/index.md) for TDD,
-the Testing Pyramid, Test Doubles, Property-Based Testing, BDD, Mutation
-Testing, Fuzzing, Contract & Approval testing.
+Testing has its own topic — see [Testing](../testing/index.md) for TDD, the Testing Pyramid, Test Doubles, Property-Based Testing, BDD, Mutation Testing, Fuzzing, and Contract Testing.
 
-Process-level highlights:
-
-- TDD pairs with [Refactoring](#refactoring-1999) and XP practices
-- Pyramid placement is a CI/CD decision (fast feedback loop)
-- Continuous testing is a precondition for [Continuous Delivery](#continuous-delivery-2010)
+---
 
 ### Refactoring (1999)
 
-**Core idea:** Improve code structure *without* changing behaviour.
+**Core idea:** Improve code structure *without* changing its external behaviour.
 
-Martin Fowler's book *Refactoring* systematised this practice:
-design degrades under pressure of change, and it must be **constantly restored**
-in small steps.
+Martin Fowler's book *Refactoring* systematised this practice as a continuous activity rather than a separate phase:
 
-#### What is Refactoring?
+- **Extract Method** — pull a block of code into a named function
+- **Move Method** — relocate a method to the class where it is used most
+- **Replace Conditional with Polymorphism** — use object-oriented interfaces instead of switch/case blocks
+- **Introduce Parameter Object** — group related parameters into a single object
 
-Refactoring is **not** rewriting from scratch. It's a sequence of
-tiny, behaviour-preserving transformations:
-
-- **Extract Method** — pull a block into a named function
-- **Move Method** — move method to class where it belongs
-- **Replace Conditional with Polymorphism** — use OOP instead of switch
-- **Introduce Parameter Object** — group related parameters
-
-Each step is small, reversible, and preserves behaviour.
-Tests are the safety net.
-
-#### Code Smells
-
-"Smells" are not errors but signals that design can be improved:
-
-| Smell | What it often means | Typical refactorings |
-|--------|---------------------|---------------------|
-| Long Method | too much responsibility | Extract Method |
-| Large Class | SRP violated | Extract Class |
-| Duplicated Code | low modularity | Extract Method / Pull Up |
-| Feature Envy | method lives in wrong place | Move Method |
-| Divergent Change | class changes for different reasons | Split responsibility |
-
-**Key insight:** Refactoring is not a separate "phase" but constant
-activity. Made a feature → cleaned up a bit nearby.
-Tests green → safely improved structure.
-
-→ [Martin Fowler](../../authors/martin-fowler.md) ·
-[Refactoring](../../works/books/fowler-1999-refactoring.md)
+---
 
 ### Code Quality
 
-**Core idea:** Measure and improve code quality through automated analysis
-and manual practices.
+#### Code Smells
 
-Code quality affects maintainability, reliability, and developer
-productivity. High-quality code is easier to understand, modify, and
-extend.
-
-#### Code Smells (Extended)
-
-See [Refactoring](#refactoring-1999) for the core catalogue.
-The table below extends it with additional smells common at larger scale:
+"Smells" are structural patterns that suggest a potential need for refactoring:
 
 | Smell | What it indicates | Typical fix |
 |-------|----------------|-------------|
-| **Long Method** | Method does too much | Extract Method |
-| **Long Parameter List** | Too many parameters | Introduce Parameter Object |
+| **Long Method** | Method does too much (violates SRP) | Extract Method |
+| **Long Parameter List** | Too many arguments passed | Introduce Parameter Object |
 | **Duplicated Code** | Same logic in multiple places | Extract Method / Pull Up |
 | **Large Class** | Class has too many responsibilities | Extract Class |
-| **Feature Envy** | Method uses more of another class than its own | Move Method |
-| **Inappropriate Intimacy** | Class knows too much about another class | Hide Delegate |
+| **Feature Envy** | Method uses more data from another class | Move Method |
 | **God Object** | Class that controls too much | Deconstruct into smaller classes |
-| **Shotgun Surgery** | Changes touch many classes | Restructure to minimise impact |
-| **Data Clumps** | Groups of variables passed together | Introduce Parameter Object |
-| **Primitive Obsession** | Excessive use of primitives | Introduce Value Objects |
-| **Switch Statements** | Large switch on type | Replace with polymorphism |
-
-#### Example: Long Method
-
-```java
-// SMELL: Long, hard to understand
-public void processOrder(Order order, Customer customer, Inventory inventory,
-                          Shipping shipping, Billing billing, EmailService email) {
-    // 50 lines of logic...
-}
-
-// FIX: Extract Method
-public void processOrder(Order order) {
-    OrderProcessor processor = new OrderProcessor(order);
-    processor.validate();
-    processor.reserveInventory();
-    processor.charge();
-    processor.ship();
-    processor.confirm();
-}
-```
-
-#### Example: Duplicated Code
-
-```javascript
-// SMELL: Same logic repeated
-function calculateTaxUS(income) { return income * 0.30; }
-function calculateTaxUK(income) { return income * 0.20; }
-function calculateTaxDE(income) { return income * 0.42; }
-
-// FIX: Extract to common function
-const taxRates = { US: 0.30, UK: 0.20, DE: 0.42 };
-
-function calculateTax(income, country) {
-    return income * taxRates[country];
-}
-```
 
 #### Cyclomatic Complexity
 
-**Cyclomatic complexity** — measures number of independent paths through code.
-
-Each decision point (`if`, `case`, loop) adds 1 to the score.
+**Cyclomatic complexity** measures the number of linearly independent paths through a program's source code (McCabe, 1976).
 
 ```python
 def complexity_example(a, b, c):
-    if a > b:              # +1
-        if b > c:          # +2
-            if c > a:      # +3
+    # Base complexity starts at 1
+    if a > b:              # Path choice 1 (+1)
+        if b > c:          # Path choice 2 (+1)
+            if c > a:      # Path choice 3 (+1)
                 return True
         else:
             return False
     else:
         return True
-# Total: 3
-
-def simple_example(a, b, c):
-    return max(a, b, c)
-# Total: 1
+# Total Cyclomatic Complexity: 4
 ```
 
 | Range | Meaning | Action |
 |-------|----------|--------|
-| **1-10** | Simple | None needed |
-| **11-20** | Moderate | Consider refactoring |
-| **21-50** | Complex | Refactor recommended |
-| **50+** | Too complex | Refactor urgent |
+| **1-10** | Simple, low risk | None |
+| **11-20** | Moderate complexity | Consider refactoring |
+| **21-50** | High complexity | Refactor recommended |
+| **50+** | Untestable, very high risk | Urgent refactoring required |
 
 #### Coupling and Cohesion
 
-**Coupling** — how much components depend on each other.
-**Cohesion** — how much a component's elements belong together.
-
-```
-GOAL: Low coupling, high cohesion
-```
-
-| Type | Description | Example |
-|------|-------------|---------|
-| **Tight coupling** | Direct dependencies on concrete classes | `class A { B b = new B(); }` |
-| **Loose coupling** | Dependencies on abstractions | `class A { Interface i; }` |
-| **High cohesion** | Related functionality grouped together | `UserService` handles all user operations |
-| **Low cohesion** | Unrelated functionality mixed | `Utils` class with random methods |
+*   **Coupling** — how much components depend on each other. Goal: **Low coupling** (depend on abstractions, not concretions).
+*   **Cohesion** — how much a component's internal elements belong together. Goal: **High cohesion** (keep related functionality grouped).
 
 #### Maintainability Index
 
-**Maintainability Index (MI)** — composite measure of code maintainability,
-originally defined by Coleman et al. (1994).
-
-The original formula combines Halstead Volume (V), Cyclomatic Complexity (G),
-and Lines of Code (L):
+Originally defined by Coleman et al. (1994) as a composite metric:
 
 ```text
-MI = 171 - 5.2 × ln(V) - 0.23 × G - 16.2 × ln(L)
+MI = 171 - 5.2 * ln(V) - 0.23 * G - 16.2 * ln(L)
 ```
-
-Tools like Visual Studio rescale this to 0–100, where **higher is better**.
-
-| Range (rescaled) | Meaning |
-|------------------|---------|
-| **80–100** | Highly maintainable |
-| **60–79** | Moderate |
-| **0–59** | Difficult to maintain |
-
-Here's the expanded section:
-
----
+Where $V$ is Halstead Volume, $G$ is Cyclomatic Complexity, and $L$ is Lines of Code. Rescaled to 0-100 in modern tools (like Visual Studio), where higher is better.
 
 #### Code Coverage
 
-**Code coverage** — percentage of code executed by tests.
-
-| Type | What it measures | Typical threshold |
-|------|-----------------|-----------------|
-| **Line coverage** | Lines of code executed | 80%+ |
-| **Branch coverage** | Decision paths tested | 80%+ |
-| **Function coverage** | Functions called by tests | 100% |
-| **Condition coverage** | Boolean conditions tested | 100% |
-
-**Remember:** High coverage doesn't guarantee quality.
-Tests must verify correct behaviour, not just execute code.
+Percentage of code executed by tests:
 
 ```mermaid
 graph TD
@@ -815,106 +498,51 @@ graph TD
     end
 
     subgraph "High Strictness"
-    FC[<b>Function Coverage</b><br/>Functions called<br/><i>Threshold: 100%</i>]
+    FC[<b>Function Coverage</b><br/>Functions called<br/><i>Threshold: Aim for 100% on critical paths</i>]
     CondC[<b>Condition Coverage</b><br/>Boolean conditions<br/><i>Threshold: 100%</i>]
     end
 
-    %% Warning Note
     Warning{{⚠️ High coverage != Quality<br/>Tests must verify behavior}}
     Warning -.-> CC
-
-    %% Styling
-    style CC fill:#f9f,stroke:#333,stroke-width:2px
-    style Warning fill:#fff4dd,stroke:#d4a017,stroke-dasharray: 5 5
-    style FC fill:#e1f5fe,stroke:#01579b
-    style CondC fill:#e1f5fe,stroke:#01579b
 ```
----
 
-#### Coverage Criteria (Completeness Theory)
-
-Coverage metrics form a **hierarchy of strictness** — each level subsumes the previous:
+##### Coverage Criteria Hierarchy (Strictness)
 
 ```
 Input Coverage
       ↑
-   Path Coverage          ← rarely achievable in practice
+   Path Coverage          ← generally infeasible for programs with loops
       ↑
 MC/DC Coverage            ← required in aviation (DO-178C)
       ↑
 Condition Coverage
       ↑
-Branch Coverage           ← most practical strong guarantee
+Branch Coverage           ← practical strong guarantee
       ↑
 Line Coverage             ← minimum baseline
 ```
 
-| Criterion | What it requires | Feasibility |
-|-----------|-----------------|-------------|
-| **Line** | Every line executed | Easy |
-| **Branch** | Every if/else path taken | Moderate |
-| **Condition** | Every boolean sub-expression true and false | Moderate |
-| **Branch+Condition** | Both above combined | Harder |
-| **MC/DC** | Each condition independently affects outcome | Hard, but tractable |
-| **Path** | Every unique execution path | Often infinite |
-| **Input** | Every possible input combination | Rarely feasible |
+##### Coverage ≈ Decidability in Disguise (The Theoretical View)
 
-**MC/DC** (Modified Condition/Decision Coverage) is a notable sweet spot —
-it catches most logical errors without requiring exponential test cases.
+*Strictly speaking, this holds for bounded, loop-free code (equivalent to a DAG of decisions). While theoretically decidable, complex data-flow can still lead to state-space explosion:*
 
----
+- A program with **bounded inputs and no loops** is essentially a **boolean formula**.
+- Achieving 100% path coverage on it is equivalent to **checking all rows of a truth table**.
+- This is why such programs are decidable. The moment loops or recursion are introduced, path states become infinite, making full coverage impossible.
 
-#### The Interesting Observation: Coverage ≈ Decidability in Disguise
-
-This connects back to the logic theory above:
-
-```
-Finite inputs + finite branches
-        ↓
-   Full path coverage = truth table
-        ↓
-   Program behaves like boolean logic
-        ↓
-   Fully verifiable (decidable)
-```
-
-- A program with **bounded inputs and no loops** is essentially a **boolean formula**
-- Achieving 100% path coverage on it is equivalent to **checking all rows of a truth table**
-- This is exactly why such programs are decidable — finite state space
-
-The moment you introduce **loops or recursion**, paths become potentially infinite —
-coverage can never reach 100%, and you're back in undecidable territory.
-
----
-
-#### Why 100% Coverage Is Not Enough
+##### Why 100% Coverage Is Not Enough
 
 ```python
 def divide(x, y):
-    return x / y      # line covered ✅
-                      # but y=0 is never tested ❌
+    return x / y      # Line covered ✅, but y=0 is never tested ❌
 ```
+Coverage answers: *"was this code reached?"* It does **not** answer: *"was the result correct?"*
 
-Coverage answers: *"was this code reached?"*
-It does **not** answer: *"was the result correct?"*
-
-| What coverage catches | What coverage misses |
-|----------------------|---------------------|
-| Dead code | Wrong logic |
-| Untested branches | Missing edge cases |
-| Unreachable paths | Incorrect assertions |
-| | Concurrency bugs |
-| | Performance issues |
-
-**The gap** between coverage and correctness is exactly where formal verification,
-property-based testing, and mutation testing step in.
+---
 
 ### Static Analysis
 
-**Core idea:** Automatically detect code issues before running it.
-
-Static analysis tools analyse source code without executing it, finding
-potential bugs, security issues, and style violations.
+Automatically detect code issues (bugs, style, vulnerabilities) without executing the code.
 
 #### Static Analysis Tools
 
@@ -923,96 +551,12 @@ potential bugs, security issues, and style violations.
 | **ESLint** | JavaScript | Linter | Style violations, potential errors |
 | **Pylint** | Python | Linter | PEP 8 violations, unused variables |
 | **Rust Clippy** | Rust | Linter | Common mistakes, performance issues |
-| **SonarQube** | Multi-language | Quality platform | Bugs, code smells, coverage |
-| **SpotBugs** | Java | Bug finder | Bugs, security vulnerabilities |
-| **Checkstyle** | Java | Style checker | Style violations |
-| **MyPy** | Python | Type checker | Type errors |
+| **SonarQube** | Multi-language | Quality platform | Bugs, code smells, test coverage |
+| **Snyk** | Multi-language | Security SAST | Vulnerabilities in open-source dependencies |
 
-#### Linters
-
-**Linter** — tool that checks for style violations and potential issues.
-
-```javascript
-// BAD: unused variable — ESLint catches this
-function calculateTotal(items) {
-    const total = 0;
-    let subtotal = 0;  // Unused
-    for (const item of items) {
-        total += item.price;
-    }
-    return total;
-}
-// ESLint error: 'subtotal' is assigned a value but never used.
-```
-
-#### Type Checkers
-
-| Language | Tool | Benefits |
-|----------|------|----------|
-| **Python** | mypy, pyright | Catch type errors before runtime |
-| **TypeScript** | tsc | Static typing for JavaScript |
-| **Haskell** | GHC | Compile-time type checking |
-| **Rust** | rustc | Memory safety guarantees |
-
-```python
-# With mypy — type error caught at analysis time, not runtime
-def greet(name: str) -> str:
-    return f"Hello, {name}!"
-
-greet(42)
-# error: Argument 1 has incompatible type "int"; expected "str"
-```
-
-#### Formatters
-
-| Tool | Language | Style |
-|-------|----------|-------|
-| **Prettier** | JavaScript, TypeScript, others | Opinionated, consistent |
-| **Black** | Python | PEP 8 compliant |
-| **Rustfmt** | Rust | Rust standard style |
-| **go fmt** | Go | Go standard style |
-
-#### Security Static Analysis
-
-| Tool | What it finds |
-|-------|----------------|
-| **Snyk** | Known vulnerabilities in dependencies |
-| **Dependabot** | Dependency updates, security alerts |
-| **Bandit** | Python security issues |
-| **ESLint Security** | JavaScript security issues |
-| **Semgrep** | Custom security rules |
-
-**Common vulnerabilities found:** SQL injection, XSS, command injection,
-path traversal, insecure dependencies.
-
-#### Pre-commit Hooks
-
-```yaml
-# .pre-commit-config.yaml
-repos:
-  - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0
-    hooks:
-      - id: trailing-whitespace
-      - id: end-of-file-fixer
-      - id: check-yaml
-      - id: check-added-large-files
-  - repo: local
-    hooks:
-      - id: run-tests
-        name: Run tests
-        entry: pytest
-        language: system
-        pass_filenames: ".*\\.py$"
-```
+---
 
 ### Observability
-
-**Core idea:** Understanding what's happening in your system through logs,
-metrics, and traces.
-
-Observability is about **asking questions** about your system and getting
-answers — even for questions you didn't anticipate.
 
 #### The Three Pillars of Observability
 
@@ -1033,166 +577,61 @@ flowchart LR
     style Traces fill:#ce93d8
 ```
 
-#### Logs
+#### Metrics & Percentiles
 
-Logs are discrete events that describe what happened in your system.
-
-**Log levels:**
-- **DEBUG** — detailed diagnostic information
-- **INFO** — informational messages (normal operation)
-- **WARN** — unexpected but non-critical conditions
-- **ERROR** — error conditions that should be investigated
-- **FATAL** — critical errors that require immediate attention
-
-**Structured logging:**
-```json
-// Unstructured (bad)
-"User logged in at 2024-03-29T10:30:00Z"
-
-// Structured (good)
-{
-  "event": "user_login",
-  "timestamp": "2024-03-29T10:30:00Z",
-  "user_id": "12345",
-  "ip": "192.168.1.1",
-  "success": true
-}
-```
-
-**Best practices:**
-- Use structured logging (JSON)
-- Include correlation IDs for tracing
-- Log at appropriate levels
-- Avoid logging sensitive data
-- Centralise logs for aggregation
-
-#### Metrics
-
-**Metric types:**
-
-| Type | Description | Example |
-|------|-------------|---------|
-| **Counter** | Only increases | `http_requests_total` |
-| **Gauge** | Can go up or down | `memory_usage_bytes` |
-| **Histogram** | Distribution of values | `http_request_duration_seconds` |
-| **Summary** | Aggregated statistics | `http_request_duration_summary` |
-
-**Key frameworks:**
-- **RED Method** — Rate, Errors, Duration (for services)
-- **USE Method** — Utilization, Saturation, Errors (for resources)
-
-#### Traces
-
-Traces track the path of a request through distributed systems.
+A few slow requests can inflate the mean (average), hiding critical tail latency problems:
 
 ```text
-Request → API Gateway → Service A → Service B → Database
-   ↓          ↓            ↓           ↓          ↓
- Trace ID  Span 1      Span 2     Span 3    Span 4
+Example request latencies (ms):
+  50, 52, 48, 55, 51, 49, 53, 2000, 50, 52
+
+  Mean  = 240 ms   ← looks bad because of one outlier
+  p50   = 51 ms    ← typical user experience is fast
+  p99   = 2000 ms  ← reveals the slow tail latency experienced by some users
 ```
 
-**Key concepts:**
-- **Trace ID** — unique identifier for the entire request
-- **Span ID** — unique identifier for each unit of work
-- **Parent ID** — links spans to their parent
-- **Tags/Annotations** — metadata about the span
+---
 
-#### Logs vs Metrics vs Traces
+### Technical Debt
 
-| Aspect | Logs | Metrics | Traces |
-|--------|-------|---------|--------|
-| **What** | Discrete events | Quantitative data | Request path |
-| **When** | When events occur | Over time | During request |
-| **Why** | Debugging, audit | Trending, alerting | Performance analysis |
-| **Cost** | High (volume) | Low (aggregated) | Medium (sampling) |
-| **Use case** | "What happened?" | "How is it going?" | "Where did time go?" |
+**Core idea:** Metaphor for architectural shortcuts that must be "repaid" with interest later.
 
-#### Alerting
+Ward Cunningham (1992):
+> "Shipping first-time code is like going into debt. A little debt speeds development so long as it is paid back promptly... but interest compounds."
 
-**Alerting principles:**
-1. **Alert on symptoms, not causes**
-   - ✅ "Response time > 500ms" (symptom)
-   - ❌ "CPU usage > 80%" (cause)
-
-2. **Alerts must be actionable**
-3. **Reduce alert fatigue** — too many alerts → engineers ignore them
-4. **Use severity levels** (P0 critical → P3 informational)
-
-| Strategy | Description | When to use |
-|----------|-------------|-------------|
-| **Static threshold** | Alert when metric exceeds fixed value | Simple, well-understood metrics |
-| **Dynamic threshold** | Alert when metric deviates from normal | Metrics with seasonal patterns |
-| **Anomaly detection** | ML-based outlier detection | Complex systems, unknown patterns |
-| **Composite alerts** | Alert only when multiple conditions true | Reduce false positives |
+| Type | Description | Pay it back when |
+|-------|-------------|-----------------|
+| **Deliberate** | Intentional shortcut to ship faster | Before it compounds |
+| **Inadvertent** | Poor design due to lack of understanding | As soon as discovered |
+| **Bit rot** | Code degrades as the environment changes | When editing nearby files |
+| **Knowledge debt** | Documentation gaps, tribal knowledge | Before key people leave the team |
 
 ---
 
 ## Operations
 
-How software runs in production — delivery pipelines, reliability,
-team structure, and the practices that keep systems healthy.
+How software runs in production.
 
 ### DevOps (2009)
 
-**Core idea:** Development and Operations working together through automation.
-
-DevOps emerged from the realisation that traditional silos between
-Development (who write code) and Operations (who run it) create
-painful handoffs and slow feedback.
-
-#### The DevOps Loop
-
-```mermaid
-flowchart LR
-    Plan["Plan"] --> Code["Code"]
-    Code --> Build["Build"]
-    Build --> Test["Test"]
-    Test --> Release["Release"]
-    Release --> Deploy["Deploy"]
-    Deploy --> Operate["Operate"]
-    Operate --> Monitor["Monitor"]
-    Monitor --> Plan
-
-    style Deploy fill:#c8e6c9
-    style Monitor fill:#fff59d
-    style Plan fill:#bbdefb
-```
-
-#### DevOps Pillars
-
-| Pillar | Description |
-|--------|-------------|
-| **Culture** | Collaboration, shared responsibility, breaking down silos |
-| **Automation** | CI/CD pipelines, infrastructure as code |
-| **Measurement** | Metrics, monitoring, DORA metrics |
-| **Sharing** | Knowledge transfer, blameless postmortems |
+**Core idea:** Development and Operations collaborating through automated pipelines, shared responsibility, and blameless culture.
 
 #### DORA Metrics
 
-The DevOps Research and Assessment (DORA) team identified four
-key metrics that distinguish high-performing teams:
+DevOps Research and Assessment (DORA) identifies four key metrics:
 
-| Metric | What it measures | High performer |
-|--------|-----------------|----------------|
-| **Deployment frequency** | How often you ship | Multiple times per day |
-| **Lead time for changes** | Time from commit to deploy | Less than 1 hour |
-| **Change failure rate** | Percentage of deploys that fail | Less than 15% |
-| **Time to restore service** | Mean time to recover (MTTR) | Less than 1 hour |
+| Metric | What it measures | High Performer | Elite Performer |
+|--------|-----------------|----------------|-----------------|
+| **Deployment frequency** | How often you ship code | Once per day to once per week | Multiple times per day |
+| **Lead time for changes** | Time from commit to production | Less than 1 week | Less than 1 hour |
+| **Change failure rate** | % of deploys that require rollback | 16% - 30% | 0% - 15% |
+| **Time to restore service** | Mean time to recover (MTTR) | Less than 1 day | Less than 1 hour |
 
-→ [Continuous Delivery](../../works/books/humble-2010-cd.md)
+---
 
 ### Continuous Delivery (2010)
 
-**Core idea:** Build, test, and deploy software so it can be released
-at any time.
-
-Jez Humble and David Farley's book defined **Continuous Delivery** (CD)
-as an extension of Continuous Integration:
-
-- **CI** — integrate and test on every commit
-- **CD** — ensure every commit can be deployed
-
-#### The CD Pipeline
+Jez Humble and David Farley formalised CD: ensure that every commit to the main branch is deployable to production on demand.
 
 ```mermaid
 flowchart TD
@@ -1206,143 +645,39 @@ flowchart TD
     style Production fill:#81c784
 ```
 
-#### CD Principles
-
-| Principle | Meaning |
-|-----------|---------|
-| **Build quality in** | Automated testing at every stage |
-| **Work in small batches** | Small changes are safer and faster |
-| **Automate everything** | Manual steps are error-prone and slow |
-| **Keep it deployable** | Every commit can go to production |
-| **Decouple deployment from release** | Deploy when ready, release when users need it |
-
-**Key insight:** If deploying is scary, you do it rarely.
-If deploying is routine and automated, you can ship continuously.
-
-→ [Continuous Delivery](../../works/books/humble-2010-cd.md)
+---
 
 ### Containerization (2013)
 
-**Core idea:** Package an application and its dependencies into an
-immutable, portable artifact that runs the same way everywhere.
+Package applications into immutable, portable artifacts that execute the same way regardless of host environment.
 
-Docker (Solomon Hykes, 2013) made Linux primitives — namespaces,
-cgroups, union filesystems — accessible to ordinary developers through
-a single CLI, a `Dockerfile`, and a shared registry. Kubernetes
-(Google, 2014) followed with a declarative orchestrator for running
-those containers across a cluster. Together they made fine-grained
-microservices and continuous delivery operationally affordable.
+→ [Containers & Orchestration](../containers/index.md) — full chapter on Docker, Podman, and Kubernetes.
 
-→ [Containers & Orchestration](../containers/index.md) — full chapter
-on Docker, Podman, Kubernetes, and alternatives.
+---
 
 ### Site Reliability Engineering — SRE (2016)
 
-**Core idea:** Apply software engineering practices to operations.
-
-SRE emerged from Google's experience running large-scale services.
-The core insight: **operations should be automated like software.**
-
-#### SRE vs Traditional Ops
-
-| Traditional Ops | SRE |
-|----------------|-----|
-| Manual operations | Automate everything |
-| Firefighting mode | Proactive engineering |
-| Ops is separate from dev | Ops is software engineering |
-| "Keep the lights on" | "Reduce toil, improve reliability" |
-| Pager rotation for everyone | Limited pager load, error budgets |
+SRE is what happens when you ask a software engineer to design an operations team.
 
 #### SLIs, SLOs, and SLAs
 
-```mermaid
-flowchart TD
-    SLI["<b>SLI</b><br/>Service Level Indicator<br/>Metric that measures<br/>service level"]
-    SLO["<b>SLO</b><br/>Service Level Objective<br/>Target value for SLI<br/>(internal)"]
-    SLA["<b>SLA</b><br/>Service Level Agreement<br/>Contract with customers<br/>(external)"]
-
-    SLI -->|sets target for| SLO
-    SLO -->|basis for| SLA
-
-    style SLI fill:#a5d6a7
-    style SLO fill:#fff59d
-    style SLA fill:#ce93d8
-```
-
-- **SLI** — a metric that measures some aspect of service level (availability, latency, error rate)
-- **SLO** — internal target for an SLI: "99.9% of requests succeed"
-- **SLA** — contract with customers, often with financial penalties for failure
+- **SLI (Service Level Indicator):** Quantitative metric (e.g., Error Rate).
+- **SLO (Service Level Objective):** Internal target for the SLI (e.g., Error Rate < 0.1%).
+- **SLA (Service Level Agreement):** External contract with customers, usually tied to financial penalties (e.g., SLA Uptime > 99.9%).
 
 #### Error Budgets
 
 ```text
-Error budget = 100% - SLO
-
-Example:
-- SLO = 99.9% uptime
-- Error budget = 0.1% downtime per period
-- Monthly budget = 43.2 minutes of downtime
+Error budget = 100% - SLO (e.g., 99.9% SLO leaves 0.1% Error Budget)
 ```
+- **Budget remaining:** Team can move fast and take risks on new releases.
+- **Budget exhausted:** Deployments freeze; team focuses entirely on stability and reliability.
 
-- **Budget spent** — stop feature releases, focus on reliability
-- **Budget remaining** — can take more risks, ship features faster
-
-**Key insight:** Error budgets make the reliability/speed trade-off explicit.
-
-#### Reducing Toil
-
-**Toil** — operational work that is manual, repetitive, automatable,
-and provides no enduring value.
-
-Examples: manual deployments, responding to routine alerts,
-manual certificate rotation, manually scaling resources.
-
-**SRE approach:** identify toil → automate it → if you can't automate,
-question whether the work should exist.
-
-#### Blameless Postmortems
-
-Focus on *what* happened, not *who* did it:
-
-```text
-NOT blameless:
-"John forgot to restart the server after deployment."
-
-Blameless:
-"The deployment process didn't include a restart step.
-We should automate restarts after all deployments."
-```
-
-#### Incident Management
-
-**Incident response workflow:**
-1. **Detect** — alert fires
-2. **Acknowledge** — someone takes ownership
-3. **Diagnose** — gather information, understand scope
-4. **Mitigate** — reduce impact (rollback, scale up, failover)
-5. **Resolve** — restore normal service
-6. **Postmortem** — document, learn, improve
-
-#### SRE Tools
-
-| Category | Examples |
-|----------|-----------|
-| **Monitoring** | Prometheus, Grafana, Datadog, New Relic |
-| **Logging** | ELK Stack, Splunk, CloudWatch |
-| **Tracing** | Jaeger, Zipkin, OpenTelemetry |
-| **Alerting** | PagerDuty, Opsgenie, VictorOps |
-
-→ [Site Reliability Engineering](../../works/books/google-2016-sre.md)
+---
 
 ### Team Topologies (2019)
 
-**Core idea:** Design team structures to enable fast flow of value.
-
-Matthew Skelton and Manuel Pais's *Team Topologies* addresses a
-problem: Agile practices work within a team, but how should *teams*
-interact?
-
-# Team Topologies — Four Team Types
+#### Four Team Types
 
 ```mermaid
 flowchart TD
@@ -1367,20 +702,14 @@ flowchart TD
     style Complicated fill:#ce93d8
 ```
 
----
+| Team Type | Purpose | Primary Interaction | Duration |
+|-----------|---------|---------------------|----------|
+| **Stream-aligned** | Deliver business value continuously | Consuming Platform/Subsystem services | Permanent |
+| **Enabling** | Build capabilities and remove obstacles | Facilitating (teaching/coaching) | Temporary (1-3 months) |
+| **Complicated Subsystem** | Own and manage complex technical components | X-as-a-Service | Long-term |
+| **Platform** | Provide internal self-service tools | X-as-a-Service | Long-term |
 
-## Four Team Types
-
-| Team Type | Purpose | Primary Interaction | Duration | Example |
-|-----------|---------|---------------------|----------|---------|
-| **Stream-aligned** | Deliver business value continuously | X-as-a-Service (consuming), Collaboration (between streams) | Permanent | Feature team, product team |
-| **Enabling** | Build capabilities in stream teams, remove obstacles | Facilitating | Time-boxed (1–3 months) | DevOps coaching, security guild |
-| **Complicated Subsystem** | Own and manage complex technical components | X-as-a-Service | Long-term | Video processing, ML models, physics engine |
-| **Platform** | Provide internal self-service tools and infrastructure | X-as-a-Service | Long-term | Cloud platform, CI/CD, observability |
-
----
-
-## Three Interaction Modes
+#### Three Interaction Modes
 
 ```mermaid
 flowchart LR
@@ -1396,197 +725,76 @@ flowchart LR
     style Facil fill:#fff59d
 ```
 
-| Interaction Mode | Description | When to Use | Duration | Cost |
-|-----------------|-------------|-------------|----------|------|
-| **Collaboration** | Teams work closely, high communication overhead | Discovery phase, high uncertainty, rapid learning | Temporary (weeks–months) | High |
-| **X-as-a-Service** | Clear API or interface, minimal collaboration needed | Stable, well-defined dependencies | Long-term | Low |
-| **Facilitating** | One team accelerates another's capability growth | Enabling teams helping stream/platform/subsystem teams | Time-boxed (1–3 months) | Medium |
+- **Collaboration:** High-bandwidth interaction between two teams to explore or define an interface.
+- **X-as-a-Service:** Clean boundary where one team consumes a stable component from another without active collaboration.
+- **Facilitating:** One team acts as a consultant or coach to help another team learn new skills or technologies.
+
+> **Key insight:** **Reverse Conway's Law** — design your **teams** to match the system architecture you **want** to achieve, rather than letting team silos dictate the codebase layout.
 
 ---
-
-## Who Interacts How
-
-```mermaid
-flowchart TD
-    En["🎓 Enabling"]
-    Pl["🛠 Platform"]
-    CS["🧠 Complicated<br/>Subsystem"]
-    SA["🎯 Stream-aligned"]
-
-    En -->|"Facilitating"| SA
-    En -.->|"Facilitating"| Pl
-    En -.->|"Facilitating"| CS
-
-    Pl -->|"X-as-a-Service"| SA
-    CS -->|"X-as-a-Service"| SA
-
-    SA <-->|"Collaboration<br/>(temporary)"| SA
-
-    style SA fill:#a5d6a7
-    style Pl fill:#90caf9
-    style En fill:#fff59d
-    style CS fill:#ce93d8
-```
-
-| From → To | Mode | Notes |
-|-----------|------|-------|
-| **Enabling → Stream-aligned** | Facilitating | Primary enabling flow |
-| **Enabling → Platform** | Facilitating | Help platform team grow capabilities |
-| **Enabling → Complicated Subsystem** | Facilitating | Help subsystem team adopt practices |
-| **Platform → Stream-aligned** | X-as-a-Service | Self-service infrastructure |
-| **Complicated Subsystem → Stream-aligned** | X-as-a-Service | Specialised component as service |
-| **Stream-aligned ↔ Stream-aligned** | Collaboration | Temporary, discovery phase only |
-
----
-
-## Key Principles
-
-```mermaid
-flowchart LR
-    Conway["📐 Reverse Conway's Law<br/>Design teams for the<br/>architecture you <b>want</b>"]
-    Cognitive["🧠 Cognitive Load<br/>Keep team scope<br/>within limits"]
-    Evolution["🔄 Evolution<br/>Interaction modes<br/>change over time"]
-
-    Conway --> Cognitive --> Evolution
-
-    style Conway fill:#e1f5fe
-    style Cognitive fill:#f3e5f5
-    style Evolution fill:#e8f5e9
-```
-
-| Principle | Description |
-|-----------|-------------|
-| **Reverse Conway's Law** | Design your team structure to match the system architecture you want to achieve, not the one you already have |
-| **Cognitive Load Management** | Each team must own only what fits within their cognitive capacity — avoid overloading stream teams |
-| **Interaction Mode Evolution** | Collaboration → X-as-a-Service over time as interfaces stabilise; Enabling teams fade out when capability is built |
-| **Team-first thinking** | Team boundaries and APIs are as important as software APIs |
-
----
-
-## Lifecycle of Interaction Modes
-
-```mermaid
-flowchart LR
-    A["🔬 Discovery\n**Collaboration**\nHigh uncertainty"]
-    B["📦 Delivery\n**X-as-a-Service**\nClear boundaries"]
-    C["⚠️ Capability gap\ndetected"]
-    D["🎓 **Facilitating**\nSkill transfer"]
-    E["✅ Enabling team\nsteps out"]
-
-    A -->|"Interface stabilises"| B
-    C -->|"Enabling team steps in"| D
-    D -->|"Capability built"| E
-
-    style A fill:#ffccbc
-    style B fill:#90caf9
-    style C fill:#ffccbc
-    style D fill:#fff59d
-    style E fill:#a5d6a7
-```
-
----
-
-> **Key insight:** Conway's Law in reverse — design your **teams** for the system architecture you **want**, not the one you have. Interaction modes are not permanent — they evolve as teams mature and interfaces stabilise.
 
 ### Code Review
 
-**Core idea:** Peer review of code changes before merge.
+Peer review of code changes before merging into the main branch.
 
-| Practice | Why it matters |
-|-----------|-----------------|
-| **Small changes** | Easier to review, faster feedback |
-| **Clear description** | Context helps reviewer understand intent |
-| **Constructive tone** | Learning, not policing |
-| **Automated checks** | Linters, tests, formatting reviewed automatically |
-| **Timely review** | Fast feedback prevents accumulation |
+- **Review** is a social, asynchronous practice to verify quality and spread domain knowledge.
+- **Refactoring** is a developer's technical practice to restore code design.
 
-- **Review** — someone else looks at your code (social)
-- **Refactor** — you improve your own code structure (technical)
+---
 
-Both are important. Review catches issues you miss. Refactor keeps
-design clean over time.
+## Build Systems
 
-### Technical Debt
+> Detailed guides for each build tool: [docs/topics/process/build-systems/](build-systems/index.md)
 
-**Core idea:** Metaphor for shortcuts that must be "repaid" later.
+### Overview of Build Systems
 
-Ward Cunningham coined "technical debt" in 1992:
+| Tool | Year | Ecosystem | Config file | Best for |
+|------|------|-----------|-------------|----------|
+| **Make** | 1976 | Native (C/C++) | `Makefile` | Small native projects, ad-hoc task runners |
+| **CMake** | 2000 | Native (C/C++) | `CMakeLists.txt` | Cross-platform native projects |
+| **Maven** | 2004 | JVM | `pom.xml` | Conventional Java/JVM projects |
+| **Gradle** | 2007 | JVM, polyglot | `build.gradle(.kts)` | Large JVM / Android, incremental builds |
+| **sbt** | 2008 | Scala | `build.sbt` | Scala / Akka / Play projects |
+| **npm** | 2010 | JavaScript / TypeScript | `package.json` | Node apps and libraries |
+| **Cargo** | 2012 | Rust | `Cargo.toml` | Anything Rust |
+| **Bazel** | 2015 | Polyglot | `BUILD.bazel` | Monorepos, polyglot, large scale |
 
-> "Shipping first-time code is like going into debt. A little debt
-> speeds development so long as it is paid back promptly... but
-> interest compounds."
+---
 
-| Type | Description | Pay it back when |
-|-------|-------------|-----------------|
-| **Deliberate** | Intentional shortcut to ship faster | Before it compounds |
-| **Inadvertent** | Poor design, lack of understanding | As soon as discovered |
-| **Bit rot** | Code works but is hard to modify | When touching that code |
-| **Knowledge debt** | Documentation gaps, tribal knowledge | Before people leave |
+## CI/CD Providers
 
-**Key insight:** Some debt is rational (time-to-market). The problem
-is not *having* debt, but *ignoring* it.
+> Detailed guides for each provider: [docs/topics/process/ci-cd/](ci-cd/index.md)
 
-→ [Ward Cunningham](../../authors/ward-cunningham.md)
+### Overview
+
+| Provider | Hosting | Config file | Native VCS | Best for |
+|----------|---------|-------------|-----------|----------|
+| **GitHub Actions** | Cloud (SaaS) | `.github/workflows/*.yml` | GitHub | GitHub-first teams |
+| **GitLab CI/CD** | Cloud + Self-hosted | `.gitlab-ci.yml` | GitLab | GitLab-first / on-prem |
+| **Jenkins** | Self-hosted | `Jenkinsfile` | Any | Full control, enterprise |
+| **CircleCI** | Cloud + Self-hosted | `.circleci/config.yml` | GitHub, Bitbucket, GitLab | Speed, parallelism |
+| **Azure DevOps** | Cloud (SaaS) | `azure-pipelines.yml` | Azure Repos, GitHub | Microsoft / .NET stack |
+| **Bitbucket Pipelines** | Cloud (SaaS) | `bitbucket-pipelines.yml` | Bitbucket | Atlassian stack |
+| **TeamCity** | Self-hosted + Cloud | Kotlin DSL / UI | Any | JetBrains / enterprise |
 
 ---
 
 ## System Evolution
 
-How software systems change over time — the forces that drive complexity,
-and the patterns that manage it.
+How software systems change over time.
 
 ### Software Evolution & Lehman's Laws
 
-**Core idea:** Software systems naturally evolve over time, becoming more
-complex and harder to maintain unless actively managed.
+Meir Lehman (1980/1996) formulated laws showing that software naturally degrades in quality unless actively maintained:
 
-Meir Lehman's 1980 work established fundamental principles about how
-software changes.
+1. **Continuing Change:** An evolutionary system must adapt or become progressively less useful.
+2. **Increasing Complexity:** As an evolutionary system evolves, its complexity increases unless work is done to reduce it (Software Entropy).
 
-#### Lehman's Eight Laws
-
-| Law | Description | Implication |
-|------|-------------|-------------|
-| **I. Continuing Change** | Software must adapt or become obsolete | "Done" is a myth |
-| **II. Increasing Complexity** | Complexity grows without work to reduce it | Refactoring is essential |
-| **III. Self-Regulation** | The evolution process is self-regulating — metrics change within statistically invariant bounds | Drastic interventions rarely stick |
-| **IV. Organizational Stability** | Software reflects org structure | Conway's Law in action |
-| **V. Conservation of Familiarity** | Developers preserve what they know | Architectural inertia |
-| **VI. Continuing Growth** | Systems grow with requirements | Growth continues until too complex |
-| **VII. Declining Quality** | Quality degrades over time | Entropy increases without effort |
-| **VIII. Feedback System** | Evolution is feedback-driven | Without feedback, system fails |
-
-#### Software Entropy
-
-As the second law of thermodynamics states, entropy increases unless
-energy is applied. The same holds for software: without active effort,
-complexity and disorder accumulate.
-
-Active countermeasures:
-- **Refactoring** — counters Law II
-- **Architecture reviews** — prevent structural decay
-- **Technical debt management** — reduces entropy (Law VII)
-- **Incremental delivery** — supports Law I
-- **Strangler Fig** — gradual replacement when system too complex (Law VI)
-
-#### The Rewrite Question
-
-| Maintain | Rewrite |
-|---------|--------|
-| System provides value | System can't be maintained profitably |
-| Incremental improvement possible | Architecture is fundamentally wrong |
-| Complexity manageable | Quality has declined beyond recovery |
-| Familiar with codebase | Team knows different approaches better |
-
-→ [Meir Lehman](../../authors/meir-lehman.md) ·
-[Lehman's Laws](../../works/papers/lehman-1980-laws.md)
+---
 
 ### The Strangler Fig Pattern
 
-**Core idea:** Gradually replace a legacy system by strangling it
-piece by piece, avoiding "Big Bang" rewrites.
-
-#### How It Works
+Gradually replace a legacy monolithic system by routing traffic to modern microservices piece by piece.
 
 ```mermaid
 flowchart TD
@@ -1617,580 +825,40 @@ flowchart TD
     style Gateway fill:#ce93d8
 ```
 
-#### The Process
-
-1. **Identify functionality to migrate** — start with non-critical features
-2. **Implement in new system** — use modern architecture
-3. **Deploy alongside legacy** — both systems running
-4. **Route via gateway** — feature flag determines which system handles request
-5. **Monitor and validate** — ensure new system works correctly
-6. **Migrate data** — copy/sync data as needed
-7. **Switch traffic** — route more users to new system
-8. **Retire old feature** — remove from legacy when unused
-
-#### Strangler vs Big Bang Rewrite
-
-| Aspect | Strangler Fig | Big Bang |
-|---------|---------------|-----------|
-| **Deployment** | Gradual, incremental | One-time, cutover |
-| **Risk** | Low — can rollback | High — hard to rollback |
-| **User impact** | Minimal | High — all users switch at once |
-| **Feedback** | Continuous | Delayed until after cutover |
-| **Data migration** | Ongoing, in small batches | One-time, massive effort |
+---
 
 ### API Versioning
 
-**Core idea:** Manage breaking changes to APIs while maintaining
-backward compatibility.
+Manage breaking changes to APIs without breaking downstream users.
 
-#### Why Version APIs?
+- **Semantic Versioning (SemVer):** `MAJOR.MINOR.PATCH`
+- **Strategies:** URI versioning (`/v1/users`), Header versioning (`Accept-Version: v2`), or Content Negotiation.
 
-```text
-Option 1: Never break API → Can't improve, stagnates
-Option 2: Change anytime → Breaks existing clients
-Option 3: Version APIs → Can improve without breaking everyone
-```
-
-#### Versioning Strategies
-
-| Strategy | How | Pros | Cons |
-|----------|-----|------|------|
-| **URI versioning** | `/v1/users` | Clear boundary, easy routing | URL changes are permanent |
-| **Header versioning** | `API-Version: v2` | URL stays clean | Can't route by infrastructure |
-| **Query parameter** | `?version=v2` | Simple to test | Can be ignored by caching |
-| **Content negotiation** | `Accept: application/vnd.api.v2+json` | RESTful | Verbose, complex clients |
-
-#### Semantic Versioning
-
-| Component | When to increment | Example |
-|-----------|------------------|---------|
-| **MAJOR** | Incompatible API changes | 1.0.0 → 2.0.0 |
-| **MINOR** | Backward-compatible additions | 2.0.0 → 2.1.0 |
-| **PATCH** | Backward-compatible bug fixes | 2.1.0 → 2.1.1 |
-
-#### Breaking Changes vs Non-Breaking
-
-| Change type | Breaking? | Example |
-|-------------|-----------|---------|
-| **New field** | No | Add `email` to user response |
-| **Remove field** | Yes | Remove `phone` from user response |
-| **Field rename** | Yes | Rename `user_name` to `username` |
-| **Field type change** | Yes | Change `age` from int to string |
-| **Add new endpoint** | No | Add `/v2/users` while `/v1/users` exists |
-
-#### Deprecation Strategy
-
-```mermaid
-flowchart LR
-    Release["Release v2"] --> Announcement["Announce deprecation<br/>6-12 months notice"]
-    Announcement --> Sunset["Sunset date"]
-    Sunset --> Disable["Disable new signups for v1"]
-    Disable --> Error["Return 410 Gone"]
-    Error --> Complete["Complete removal"]
-
-    style Release fill:#a5d6a7
-    style Announcement fill:#fff59d
-    style Sunset fill:#e57373
-    style Complete fill:#9e9e9e
-```
+---
 
 ### Migration Strategies
 
-**Core idea:** Move data and functionality from old system to new.
-
-#### Data Migration
-
-| Type | Description | When to use |
-|------|-------------|-------------|
-| **Big Bang** | All data copied at once, cutover | Small datasets, short downtime window |
-| **Incremental** | Copy over time, sync changes | Large datasets, must avoid downtime |
-| **Parallel write** | Write to both systems, read from new | High availability requirements |
-
-**Migration challenges:** data transformation, consistency,
-validation, rollback planning.
-
 #### Schema Migration
 
-```sql
--- Version 1: original
-CREATE TABLE users (id INT PRIMARY KEY, name VARCHAR(100), email VARCHAR(100));
-
--- Version 2: non-breaking (add column)
-ALTER TABLE users ADD COLUMN created_at TIMESTAMP;
-
--- Version 3: breaking (rename requires application update)
-ALTER TABLE users RENAME COLUMN name TO username;
-
--- Version 4: expand/contract
--- Keep old column during migration window, remove after all clients updated
-```
-
-**Migration strategies:**
-- **Expand** — add new columns/tables, keep old (non-breaking phase)
-- **Contract** — remove deprecated columns after migration window closes
-- **Migration scripts** — automated data transformation
-
-#### Backward Compatibility
-
-| Strategy | Description | Trade-off |
-|----------|-------------|-----------|
-| **Expand/Contract** | Add optional fields, keep existing; remove later | Clean API evolution, two-phase work |
-| **Versioned endpoints** | Separate endpoints for each version | Clear separation, more maintenance |
-| **Adapter layer** | Translation layer for legacy clients | Central logic, performance overhead |
-| **Feature flags** | Enable new features selectively | Gradual rollout, added complexity |
-
----
-
-## Build Systems
-
-> Detailed guides for each build tool: [docs/topics/process/build-systems/](build-systems/index.md)
-
-**Core idea:** Build systems take source code and a set of declarations
-and produce a runnable, testable, distributable artifact. They resolve
-dependencies, execute task graphs, cache intermediate results, and
-produce reproducible artifacts. Choice of build tool is usually
-dictated by language ecosystem.
-
-### Overview of Build Systems
-
-| Tool | Year | Ecosystem | Config file | Best for |
-|------|------|-----------|-------------|----------|
-| **Make** | 1976 | Native (C/C++) | `Makefile` | Small native projects, ad-hoc task runners |
-| **CMake** | 2000 | Native (C/C++) | `CMakeLists.txt` | Cross-platform native projects |
-| **Maven** | 2004 | JVM | `pom.xml` | Conventional Java/JVM projects |
-| **Gradle** | 2007 | JVM, polyglot | `build.gradle(.kts)` | Large JVM / Android, incremental builds |
-| **sbt** | 2008 | Scala | `build.sbt` | Scala / Akka / Play projects |
-| **npm** | 2010 | JavaScript / TypeScript | `package.json` | Node apps and libraries |
-| **Cargo** | 2012 | Rust | `Cargo.toml` | Anything Rust |
-| **Bazel** | 2015 | Polyglot | `BUILD.bazel` | Monorepos, polyglot, large scale |
-
-### Make
-
-Configuration: `Makefile` in repository root.
-
-```makefile
-CC      := gcc
-CFLAGS  := -Wall -O2 -std=c11
-
-SOURCES := $(wildcard src/*.c)
-OBJECTS := $(patsubst src/%.c,build/%.o,$(SOURCES))
-
-all: build/my-app
-
-build/my-app: $(OBJECTS)
-	$(CC) -o $@ $^
-
-build/%.o: src/%.c
-	@mkdir -p $(@D)
-	$(CC) $(CFLAGS) -c $< -o $@
-
-clean:
-	rm -rf build
-.PHONY: all clean
-```
-
-→ [Make — detailed guide](build-systems/make.md)
-
-### CMake
-
-Configuration: `CMakeLists.txt`. Two-step: `cmake -S . -B build` then `cmake --build build`.
-
-```cmake
-cmake_minimum_required(VERSION 3.20)
-project(my-app VERSION 1.0.0 LANGUAGES CXX)
-
-set(CMAKE_CXX_STANDARD 20)
-
-add_executable(my-app src/main.cpp)
-target_compile_options(my-app PRIVATE -Wall -Wextra)
-```
-
-→ [CMake — detailed guide](build-systems/cmake.md)
-
-### Maven
-
-Configuration: `pom.xml` in repository root (and per module).
-
-```xml
-<project>
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>com.example</groupId>
-    <artifactId>my-app</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
-    <properties>
-        <maven.compiler.release>21</maven.compiler.release>
-    </properties>
-    <dependencies>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>5.10.0</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
-</project>
-```
-
-Run: `mvn clean install`.
-
-→ [Maven — detailed guide](build-systems/maven.md)
-
-### Gradle
-
-Configuration: `build.gradle.kts` (Kotlin DSL preferred) + `settings.gradle.kts`.
-
-```kotlin
-plugins {
-    java
-    application
-}
-
-repositories { mavenCentral() }
-
-dependencies {
-    implementation("org.slf4j:slf4j-simple:2.0.9")
-    testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
-}
-
-application { mainClass.set("com.example.App") }
-
-tasks.test { useJUnitPlatform() }
-```
-
-Run: `./gradlew build` (use the wrapper).
-
-→ [Gradle — detailed guide](build-systems/gradle.md)
-
-### sbt
-
-Configuration: `build.sbt` + `project/build.properties`.
-
-```scala
-ThisBuild / scalaVersion := "3.4.0"
-
-lazy val root = (project in file("."))
-    .settings(
-        name := "my-app",
-        libraryDependencies ++= Seq(
-            "org.typelevel" %% "cats-core" % "2.10.0",
-            "org.scalatest" %% "scalatest" % "3.2.18" % Test
-        )
-    )
-```
-
-Interactive shell: `sbt`, then `compile`, `test`, `~test`.
-
-→ [sbt — detailed guide](build-systems/sbt.md)
-
-### npm
-
-Configuration: `package.json` with scripts as build steps.
-
-```json
-{
-  "name": "my-app",
-  "version": "0.1.0",
-  "type": "module",
-  "scripts": {
-    "build": "vite build",
-    "test": "vitest",
-    "lint": "eslint ."
-  },
-  "dependencies": {
-    "react": "^18.2.0"
-  },
-  "devDependencies": {
-    "vite": "^5.2.0",
-    "vitest": "^1.4.0"
-  }
-}
-```
-
-Run: `npm ci && npm run build`.
-
-→ [npm — detailed guide](build-systems/npm.md)
-
-### Cargo
-
-Configuration: `Cargo.toml` per crate; `Cargo.lock` per workspace.
-
-```toml
-[package]
-name = "my-app"
-version = "0.1.0"
-edition = "2021"
-
-[dependencies]
-anyhow = "1.0"
-clap = { version = "4.5", features = ["derive"] }
-tokio = { version = "1.36", features = ["full"] }
-```
-
-Run: `cargo build --release` or `cargo test`.
-
-→ [Cargo — detailed guide](build-systems/cargo.md)
-
-### Bazel
-
-Configuration: `MODULE.bazel` (workspace) + `BUILD.bazel` per package.
-
-```python
-# BUILD.bazel
-load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library")
-
-cc_library(
-    name = "math",
-    srcs = ["math.cc"],
-    hdrs = ["math.h"],
-)
-
-cc_binary(
-    name = "app",
-    srcs = ["main.cc"],
-    deps = [":math"],
-)
-```
-
-Run: `bazel build //...` or `bazel test //app:test`.
-
-→ [Bazel — detailed guide](build-systems/bazel.md)
-
----
-
-## CI/CD Providers
-
-> Detailed guides for each provider: [docs/topics/process/ci-cd/](ci-cd/index.md)
-
-**Core idea:** CI/CD providers automate the build → test → deploy pipeline.
-They differ in hosting model, pricing, ecosystem integration, and configuration approach.
-
-### Overview
-
-| Provider | Hosting | Config file | Native VCS | Best for |
-|----------|---------|-------------|-----------|----------|
-| **GitHub Actions** | Cloud (SaaS) | `.github/workflows/*.yml` | GitHub | GitHub-first teams |
-| **GitLab CI/CD** | Cloud + Self-hosted | `.gitlab-ci.yml` | GitLab | GitLab-first / on-prem |
-| **Jenkins** | Self-hosted | `Jenkinsfile` | Any | Full control, enterprise |
-| **CircleCI** | Cloud + Self-hosted | `.circleci/config.yml` | GitHub, Bitbucket, GitLab | Speed, parallelism |
-| **Azure DevOps** | Cloud (SaaS) | `azure-pipelines.yml` | Azure Repos, GitHub | Microsoft / .NET stack |
-| **Bitbucket Pipelines** | Cloud (SaaS) | `bitbucket-pipelines.yml` | Bitbucket | Atlassian stack |
-| **TeamCity** | Self-hosted + Cloud | Kotlin DSL / UI | Any | JetBrains / enterprise |
-
-### GitHub Actions
-
-Configuration: `.github/workflows/<name>.yml` in repository root.
-
-UI path: `Repository → Actions → Workflows → <workflow name> → <run>`.
-
-```yaml
-# .github/workflows/ci.yml
-name: CI
-
-on:
-  push:
-    branches: [main]
-  pull_request:
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-      - run: npm ci
-      - run: npm test
-```
-
-→ [GitHub Actions — detailed guide](ci-cd/github-actions.md)
-
-### GitLab CI/CD
-
-Configuration: `.gitlab-ci.yml` in repository root.
-
-UI path: `Project → Build → Pipelines → <pipeline> → <job>`.
-
-```yaml
-# .gitlab-ci.yml
-stages:
-  - build
-  - test
-  - deploy
-
-build:
-  stage: build
-  script:
-    - npm ci
-
-test:
-  stage: test
-  script:
-    - npm test
-
-deploy:
-  stage: deploy
-  script:
-    - ./deploy.sh
-  only:
-    - main
-```
-
-→ [GitLab CI/CD — detailed guide](ci-cd/gitlab-ci.md)
-
-### Jenkins
-
-Configuration: `Jenkinsfile` in repository root (declarative or scripted pipeline).
-
-UI path: `Jenkins Dashboard → <Job> → Build History → <Build #> → Console Output`.
-
-```groovy
-// Jenkinsfile (Declarative)
-pipeline {
-    agent any
-    stages {
-        stage('Build') {
-            steps { sh 'npm ci' }
-        }
-        stage('Test') {
-            steps { sh 'npm test' }
-        }
-        stage('Deploy') {
-            when { branch 'main' }
-            steps { sh './deploy.sh' }
-        }
-    }
-}
-```
-
-→ [Jenkins — detailed guide](ci-cd/jenkins.md)
-
-### CircleCI
-
-Configuration: `.circleci/config.yml` in repository root.
-
-UI path: `CircleCI Dashboard → Projects → <project> → Pipelines → <workflow> → <job>`.
-
-```yaml
-# .circleci/config.yml
-version: 2.1
-jobs:
-  build-and-test:
-    docker:
-      - image: cimg/node:20.0
-    steps:
-      - checkout
-      - run: npm ci
-      - run: npm test
-
-workflows:
-  ci:
-    jobs:
-      - build-and-test
-```
-
-→ [CircleCI — detailed guide](ci-cd/circleci.md)
-
-### Azure DevOps Pipelines
-
-Configuration: `azure-pipelines.yml` in repository root.
-
-UI path: `Azure DevOps → Project → Pipelines → <pipeline> → <run> → Jobs → <job> → Steps`.
-
-```yaml
-# azure-pipelines.yml
-trigger:
-  - main
-
-pool:
-  vmImage: ubuntu-latest
-
-steps:
-  - task: NodeTool@0
-    inputs:
-      versionSpec: '20.x'
-  - script: npm ci
-  - script: npm test
-```
-
-→ [Azure DevOps Pipelines — detailed guide](ci-cd/azure-devops.md)
-
-### Bitbucket Pipelines
-
-Configuration: `bitbucket-pipelines.yml` in repository root.
-
-UI path: `Bitbucket Repository → Pipelines → <pipeline run> → <step>`.
-
-```yaml
-# bitbucket-pipelines.yml
-image: node:20
-
-pipelines:
-  default:
-    - step:
-        name: Build and Test
-        script:
-          - npm ci
-          - npm test
-  branches:
-    main:
-      - step:
-          name: Deploy
-          script:
-            - ./deploy.sh
-```
-
-→ [Bitbucket Pipelines — detailed guide](ci-cd/bitbucket-pipelines.md)
-
-### TeamCity
-
-Configuration: Kotlin DSL in `.teamcity/settings.kts` **or** via UI.
-
-UI path: `TeamCity → Projects → <project> → Build Configurations → <config> → Edit → Build Steps`.
-
-```kotlin
-// .teamcity/settings.kts
-project {
-    buildType(Build)
-}
-
-object Build : BuildType({
-    name = "Build and Test"
-    vcs { root(DslContext.settingsRoot) }
-    steps {
-        script {
-            scriptContent = """
-                npm ci
-                npm test
-            """.trimIndent()
-        }
-    }
-    triggers {
-        vcs { branchFilter = "+:*" }
-    }
-})
-```
-
-→ [TeamCity — detailed guide](ci-cd/teamcity.md)
+Ensure database schemas evolve safely alongside application servers using **Expand/Contract** patterns:
+
+1. **Expand:** Write migration to add a new column. Keep the old database field intact.
+2. **Deploy:** Deploy application version that writes data to *both* old and new columns.
+3. **Backfill:** Run script to populate historical rows in the new column.
+4. **Contract:** Remove the old column and update application code to read from the new column only.
 
 ---
 
 ## The Pragmatic View
 
-No single process is right for all contexts. Choose based on:
+No single process is correct for all contexts. Choose based on:
 
 | Context | Recommended process | Why |
 |---------|-------------------|------|
-| **Startup, uncertain requirements** | Kanban + XP practices | Flexibility, speed to change |
-| **Established product team** | Scrum | Rhythm, predictability |
-| **Regulated industry** | Waterfall elements + Agile | Documentation + adaptability |
-| **Platform team** | DevOps + SRE | Automation, reliability |
-| **Large organisation** | Team Topologies | Optimising inter-team flow |
-| **Research/exploratory** | XP + loose process | Small steps, adaptability |
-
-The core evolution: from **plan everything** to **learn everything**.
-Modern process embraces uncertainty through small batches, fast feedback,
-continuous delivery, and safe refactoring.
+| **Startup, high uncertainty** | Kanban + XP practices | Speed to pivot, minimal process overhead |
+| **Established product team** | Scrum | Predictable rhythm, regular stakeholder sync |
+| **Regulated industry** | RUP / Sequential elements | Strict audit requirements |
+| **Platform team** | DevOps + SRE | Focus on availability, automation, and toil reduction |
 
 ---
 
@@ -2199,31 +867,20 @@ continuous delivery, and safe refactoring.
 - Beck — *Extreme Programming Explained* (1999)
 - Beck — *Test-Driven Development: By Example* (2002)
 - Boehm — *A Spiral Model of Software Development and Enhancement* (1988)
-- Cockburn — *Writing Effective Use Cases* (2000)
-- Cohn — *User Stories Applied* (2004)
-- Feathers — *Working Effectively with Legacy Code* (2004)
 - Fowler — *Refactoring* (1999)
 - Forsgren, Humble, Kim — *Accelerate* (2018)
 - Google SRE Team — *Site Reliability Engineering* (2016)
-- Hughes & Claessen — *QuickCheck: A Lightweight Tool for Random Testing* (2000)
+- Hughes, Claessen — *QuickCheck: A Lightweight Tool for Random Testing* (2000)
 - Humble & Farley — *Continuous Delivery* (2010)
-- Jacobson — *Object-Oriented Software Engineering* (1992)
-- Kruchten — *The Rational Unified Process: An Introduction* (1998)
-- Lehman — *Programs, Life Cycles, and Laws of Software Evolution* (1980)
 - Skelton & Pais — *Team Topologies* (2019)
 
 ## Key Authors
 
 - [Fred Brooks](../../authors/fred-brooks.md) — *The Mythical Man-Month*
 - [Kent Beck](../../authors/kent-beck.md) — XP, TDD
-- [Alistair Cockburn](../../authors/alistair-cockburn.md) — Use cases, Crystal methods
-- [Mike Cohn](../../authors/mike-cohn.md) — User stories, INVEST, story mapping
-- [Michael Feathers](../../authors/michael-feathers.md) — Legacy code, characterization tests
-- [John Hughes](../../authors/john-hughes.md) — Property-based testing, QuickCheck
-- [Ivar Jacobson](../../authors/ivar-jacobson.md) — OOSE, use cases
-- [Meir Lehman](../../authors/meir-lehman.md) — Software evolution laws
-- [Martin Fowler](../../authors/martin-fowler.md) — Refactoring, CI
-- [Ward Cunningham](../../authors/ward-cunningham.md) — Technical debt
+- [John Hughes](../../authors/john-hughes.md) & Koen Claessen — Property-based testing, QuickCheck
+- [Martin Fowler](../../authors/martin-fowler.md) — Refactoring, Continuous Integration
+- [Ward Cunningham](../../authors/ward-cunningham.md) — Technical debt metaphor creator
 
 ## Related Topics
 
@@ -2232,6 +889,3 @@ continuous delivery, and safe refactoring.
 - [OOP & Design](../design/index.md) — refactoring, code quality
 - [Functional Programming](../functional/index.md) — testability, refactoring in FP
 - [Version Control & Git](../vcs/index.md) — branching, commit practices, code review workflows
-- [Build Systems](build-systems/index.md) — Maven, Gradle, Bazel, Cargo, npm, and friends
-- [Containers & Orchestration](../containers/index.md) — runtime substrate for CI/CD, DevOps, microservices
-- [Languages](../../languages/index.md) — language-specific processes (Rust cargo, Go conventions)
