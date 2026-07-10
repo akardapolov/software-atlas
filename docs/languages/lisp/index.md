@@ -67,6 +67,9 @@ flowchart TD
     end
 
     subgraph Origins
+        Dartmouth["Dartmouth AI Seminar<br/>1955"]
+        Project["AI Research Project<br/>1956"]
+        IBM704["IBM 704<br/>36-bit word"]
         McCarthy["McCarthy<br/>Lisp<br/>1958"]
         Lisp1["Lisp 1.5<br/>1960<br/>MIT"]
     end
@@ -80,6 +83,9 @@ flowchart TD
 
     Church --> McCarthy
     Turing -->|"influence"| McCarthy
+    Dartmouth --> Project
+    Project --> McCarthy
+    IBM704 --> McCarthy
     McCarthy --> Lisp1
     Lisp1 --> Scheme
     Lisp1 --> CommonLisp
@@ -92,6 +98,9 @@ flowchart TD
     style Dialects fill:#fff3e0,stroke:#f4a261
     style Church fill:#e8f5e9,stroke:#388e3c
     style Turing fill:#e8f5e9,stroke:#388e3c
+    style Dartmouth fill:#e1f5fe,stroke:#0288d1
+    style Project fill:#e1f5fe,stroke:#0288d1
+    style IBM704 fill:#e1f5fe,stroke:#0288d1
     style McCarthy fill:#e1f5fe,stroke:#0288d1
     style Lisp1 fill:#e1f5fe,stroke:#0288d1
     style Scheme fill:#fff3e0,stroke:#f4a261
@@ -99,6 +108,73 @@ flowchart TD
     style Racket fill:#fff3e0,stroke:#f4a261
     style Clojure fill:#fff3e0,stroke:#f4a261
 ```
+
+Lisp's origins lie in the 1955 Dartmouth seminar on artificial intelligence
+organized by John McCarthy. The seminar produced a research proposal, funded in
+1956, whose working group included McCarthy, Claude Shannon, Marvin Minsky, and
+Nathaniel Rochester, plus several students. One of the project's goals was to
+represent human speech as structured data; the participants concluded that
+**lists** were the natural representation, with each element containing data and
+a pointer to the next.
+
+This idea was not entirely new — list processing had already appeared in the
+Logic Theorist program for the JOHNNIAC computer, written in IPL 2. But
+McCarthy's team needed a more flexible tool than Fortran, whose future direction
+was unclear and whose list-processing support was poor. They also wanted a
+language that could express mathematical, often recursive, definitions directly.
+
+### The IBM 704 Connection
+
+The IBM 704's 36-bit word was divided into four fields:
+
+| Field | Bits | Role |
+|-------|------|------|
+| Address | 15 | Pointer / address |
+| Prefix | 3 | Instruction code |
+| Decrement | 15 | Secondary pointer |
+| Tag | 3 | Branch tag |
+
+This structure directly inspired Lisp's primitive list operations:
+- `car` — contents of the address part of a register;
+- `cdr` — contents of the decrement part;
+- `cpr` — contents of the prefix part;
+- `ctr` — contents of the tag part.
+
+The `cons` function assembled these fields into a single machine word, creating
+a list cell from two pointers. Because memory was extremely scarce, the prefix
+form of list notation (S-expressions) was much cheaper to store and parse than
+alternatives.
+
+### From FLPL to Lisp
+
+Before Lisp, there was **FLPL** (Fortran-Compiled List Processing Language).
+FLPL had three critical limitations:
+1. **No recursion** — yet many mathematical definitions are recursive.
+2. **No conditional expression** — branching was awkward.
+3. **Manual memory management** — programmers had to free lists explicitly.
+
+McCarthy addressed all three. He introduced recursive function definitions, a
+conditional expression that evaluated only the selected branch, and automatic
+**garbage collection** so that elegant recursive definitions would not be
+polluted by explicit memory reclamation. The term "garbage collection" itself
+appeared almost as a joke in a footnote of McCarthy's 1960 paper, where he noted
+that the ladies in the editorial office would not have let him use it in the
+main text.
+
+### M-Expressions and S-Expressions
+
+McCarthy originally intended programmers to write **M-expressions** — a more
+readable, Fortran-like notation — while the runtime manipulated **S-expressions**
+(symbolic expressions) internally. M-expressions were printed by the runtime and
+then retyped by hand to run them.
+
+Steve Russell, after reading McCarthy's paper, suggested a radical idea: why not
+use S-expressions for code too? If code had the same form as data, a single
+`eval` function could interpret it. This decision produced **homoiconicity** —
+the property that code and data share the same representation — and made macros
+and metaprogramming natural.
+
+### Why Lisp Matters
 
 Lisp emerged from McCarthy's work on symbolic computation and artificial
 intelligence at MIT. While Fortran (1957) was designed for numerical
@@ -112,6 +188,7 @@ fundamental data structure, the linked list.
 
 | Era | Dialect | Key contribution |
 |------|----------|-----------------|
+| 1958 | Lisp (McCarthy) | Recursion, conditional expressions, GC, S-expressions |
 | 1960 | Lisp 1.5 | First practical implementation on IBM 704 |
 | 1975 | Scheme | Lexical scoping, proper tail recursion |
 | 1984 | Common Lisp | Unification of major Lisp dialects |

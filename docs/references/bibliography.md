@@ -72,6 +72,11 @@ Complete reference list for all works cited in Software Engineering Atlas.
 
 - Forsgren, N., Humble, J., & Kim, G. (2018). *Accelerate.* IT Revolution.
 
+- Redmon, J., Divvala, S., Girshick, R., & Farhadi, A. (2016).
+  "You Only Look Once: Unified, Real-Time Object Detection."
+  *Proceedings of the IEEE Conference on Computer Vision and Pattern
+  Recognition (CVPR)*, 779–788.
+
 - Skelton, M. & Pais, M. (2019). *Team Topologies.* IT Revolution.
 
 ## Talks

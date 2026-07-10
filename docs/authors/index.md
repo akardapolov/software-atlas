@@ -28,9 +28,11 @@ biography, key contributions, works, and influence connections.
 | Author | Years | Known for | Page |
 |--------|-------|-----------|------|
 | John Backus | 1924–2007 | Fortran, FP manifesto | [→](john-backus.md) ✅ |
+| Niklaus Wirth | 1934–2024 | Pascal, Modula, Oberon | [→](niklaus-wirth.md) ✅ |
 | Fred Brooks | 1931–2022 | MMM, No Silver Bullet | [→](fred-brooks.md) ✅ |
 | Robin Milner | 1934–2010 | ML, type inference | [→](robin-milner.md) ✅ |
 | Tony Hoare | 1934– | CSP, null ref, quicksort | [→](tony-hoare.md) ✅ |
+| Charles H. Moore | 1938– | Forth, concatenative programming | [→](charles-moore.md) ✅ |
 | Barbara Liskov | 1939– | CLU, ADT, LSP | [→](barbara-liskov.md) ✅ |
 | Alan Kay | 1940– | Smalltalk, OOP, messaging | [→](alan-kay.md) ✅ |
 | David Parnas | 1941– | Information hiding | [→](david-parnas.md) ✅ |
@@ -71,9 +73,11 @@ biography, key contributions, works, and influence connections.
 |--------|-------|-----------|------|
 | Bjarne Stroustrup | 1950– | C++ | [→](bjarne-stroustrup.md) ✅ |
 | Brad Cox | 1944–2021 | Objective-C | [→](brad-cox.md) ✅ |
+| Charles H. Moore | 1938– | Forth | [→](charles-moore.md) ✅ |
 | James Gosling | 1955– | Java | [→](james-gosling.md) ✅ |
 | Anders Hejlsberg | 1960– | C#, TypeScript, Delphi | [→](anders-hejlsberg.md) ✅ |
 | Guido van Rossum | 1956– | Python | [→](guido-van-rossum.md) ✅ |
+| Niklaus Wirth | 1934–2024 | Pascal, Modula, Oberon | [→](niklaus-wirth.md) ✅ |
 | Yukihiro Matsumoto | 1965– | Ruby | [→](yukihiro-matsumoto.md) ✅ |
 
 ## Methodologists & UML
@@ -106,10 +110,11 @@ biography, key contributions, works, and influence connections.
 | Long Ouyang | — | InstructGPT / RLHF | [→](long-ouyang.md) ✅ |
 | Andrej Karpathy | — | nanoGPT, LLM education | [→](andrej-karpathy.md) ✅ |
 | Lilian Weng | — | Agents, prompting, alignment blog | [→](lilian-weng.md) ✅ |
+| Joseph Redmon | 1984– | YOLO, one-stage object detection | [→](joseph-redmon.md) ✅ |
 
 ## Summary
 
-**All 60 author cards complete.** ✅
+**All 62 author cards complete.** ✅
 
 ## Influence Web
 
@@ -157,6 +162,8 @@ Wei → Yao → ReAct / Agents
 Ouyang → Rafailov → DPO
 Karpathy → Weng → LLM education
 McCarthy → Hinton → Vaswani
+Wirth → Oberon → Java/Go
+Moore → Forth → PostScript/Factor
 ```
 
 See [Ideas Evolution Map](../maps/ideas-evolution.md) for the full visual diagram.

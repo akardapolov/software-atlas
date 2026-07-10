@@ -19,6 +19,7 @@ flowchart TD
 
     subgraph Structured["🏗 Structured Era: 1960s-70s"]
         Simula["Simula<br/>Dahl & Nygaard, 1967"]
+        Forth["Forth<br/>Moore, 1970"]
         C["C<br/>Ritchie, 1972"]
         Smalltalk["Smalltalk<br/>Kay, 1972"]
         ML["ML<br/>Milner, 1978"]
@@ -26,6 +27,7 @@ flowchart TD
     end
 
     subgraph OOPEra["📦 OOP Era: 1980s"]
+        Oberon["Oberon<br/>Wirth, 1987"]
         Cpp["C++<br/>Stroustrup, 1983"]
         Erlang["Erlang<br/>Armstrong, 1986"]
         Perl["Perl<br/>Wall, 1987"]
@@ -60,6 +62,7 @@ flowchart TD
     Lisp --> Scheme
     Lisp --> ML
     Simula --> Smalltalk
+    Turing --> Forth
 
     %% Structured → OOP Era
     C --> Cpp
@@ -67,6 +70,8 @@ flowchart TD
     Lisp --> Erlang
     C --> Perl
     ML --> Haskell
+    Algol --> Oberon
+    Oberon --> Go
 
     %% OOP Era → Modern OOP
     C --> Python
@@ -102,6 +107,8 @@ flowchart TD
     style TwentyFirst fill:#e0f7fa
     style Algol fill:#fff3e0
     style Self fill:#ffe0b2
+    style Forth fill:#f3e5f5
+    style Oberon fill:#e8f5e9
 ```
 
 ## Language Families
@@ -186,10 +193,12 @@ flowchart LR
 | Language | Year | Primary Paradigm | Influenced By | Influenced |
 |----------|------|------------------|---------------|------------|
 | Lisp | 1958 | Functional | Lambda calculus | Scheme, ML, Clojure, Ruby |
+| Forth | 1970 | Concatenative | IPL, assemblers | PostScript, Joy, Factor, OpenFirmware |
 | Simula | 1967 | OOP | ALGOL 60 | Smalltalk, C++, all OOP |
 | C | 1972 | Imperative | ALGOL 60, BCPL | C++, Go, Rust, most systems |
 | Smalltalk | 1972 | OOP | Simula | Ruby, Python, Java, ObjC |
 | ML | 1978 | Functional | Lisp | Haskell, OCaml, Rust |
+| Oberon | 1987 | Modular, object-based | ALGOL → Pascal → Modula | Component Pascal, Go, Java runtime |
 | Erlang | 1986 | Functional, Actor | Lisp, Prolog | Go (concurrency), Elixir |
 | Haskell | 1990 | Pure Functional | ML, Miranda | Rust, Swift, PureScript |
 | Python | 1991 | Multi-paradigm | C, Smalltalk | Julia, Nim |

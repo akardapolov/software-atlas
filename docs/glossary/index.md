@@ -79,6 +79,11 @@ Key terms and definitions used throughout Software Engineering Atlas.
     range queries. Used by most traditional relational databases
     (PostgreSQL, MySQL, SQL Server).
 
+**Bounding Box (BBox)**
+:   A rectangle that encloses an object in an image, usually represented
+    as `(x, y, width, height)` or two corner coordinates. The basic output
+    unit of object detectors such as YOLO and R-CNN.
+
 ## G
 
 **Gateway**
@@ -97,6 +102,14 @@ Key terms and definitions used throughout Software Engineering Atlas.
 **Homoiconicity**
 :   A property of languages where code and data share the same
     representation. Lisp and Clojure are homoiconic.
+
+## I
+
+**IoU (Intersection over Union)**
+:   A metric that measures the overlap between two bounding boxes:
+    `area(intersection) / area(union)`. In object detection, a prediction
+    is considered correct when its IoU with a ground-truth box exceeds a
+    threshold, commonly 0.5.
 
 ## L
 
@@ -156,6 +169,12 @@ Key terms and definitions used throughout Software Engineering Atlas.
 :   An approach where data and behaviour are bundled into objects
     with methods. Originated with Simula (1967).
 
+**One-Stage Detector**
+:   An object-detection architecture that predicts bounding boxes and
+    class probabilities in a single forward pass. Examples include YOLO,
+    SSD, and RetinaNet. Contrasts with two-stage detectors such as
+    Faster R-CNN, which first generate region proposals.
+
 **OSS (Open Source Software)**
 :   Software distributed under licenses that allow modification and
     redistribution. Many foundational tools (GCC, Git, Linux) are OSS.
@@ -167,6 +186,12 @@ Key terms and definitions used throughout Software Engineering Atlas.
     mediates between the passive View and the Model.
 
 ## N
+
+**NMS (Non-Maximum Suppression)**
+:   A post-processing step in object detection that removes duplicate
+    bounding boxes around the same object. Predictions are sorted by
+    confidence; the highest-confidence box is kept, and overlapping boxes
+    with high IoU are suppressed.
 
 **NoSQL**
 :   A broad category of non-relational databases emphasising scalability,
@@ -227,3 +252,11 @@ Key terms and definitions used throughout Software Engineering Atlas.
     direction: actions are dispatched to a central store, which
     updates state and notifies views to re-render. Redux, Flux,
     Vuex, and NgRx implement this pattern.
+
+## Y
+
+**YOLO (You Only Look Once)**
+:   A family of one-stage object detectors introduced by Joseph Redmon
+    et al. in 2016. YOLO reframes detection as a single regression problem,
+    predicting bounding boxes and class probabilities in one network pass
+    and enabling real-time object detection.

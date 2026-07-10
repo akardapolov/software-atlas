@@ -70,7 +70,7 @@ flowchart TD
     subgraph Predecessors
         C["Dennis Ritchie<br/>C<br/>1972"]
         CSP["Hoare<br/>CSP<br/>1978"]
-        Oberon["Wirth<br/>Oberon<br/>1970s"]
+        Oberon["Wirth<br/>Oberon<br/>1987<br/>[→](../oberon/index.md)"]
         Pike["Rob Pike<br/>Plan 9<br/>1990s"]
     end
 

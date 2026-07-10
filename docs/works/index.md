@@ -20,7 +20,7 @@ Papers, books, and talks that became part of the software development canon.
 | 1980s | Meyer — OOSC; Hughes — Why FP Matters; Ingalls — Design Principles; Cardelli & Wegner — Types; Wirfs-Brock — RDD; Rumbaugh — OMT; Jacobson — OOSE; Cox — Objective-C; Goldberg — Smalltalk-80 |
 | 1990s | GoF — Design Patterns; Liskov — Subtyping; Fowler — Refactoring; Martin — SOLID (OCP, LSP, DIP); Gamma — ECOOP Patterns; Kay — OOP Philosophy; Cunningham — WyCash, Technical Debt |
 | 2000s | Beck — TDD; Evans — DDD; Armstrong — Erlang; Martin — Clean Code, Agile PPP; Fowler — POEAA; Hickey — Simple Made Easy, Boundaries, Value of Values |
-| 2010s | Humble — CD; Kleppmann — DDIA; Wlaschin — DMF; Metz — POODR, 99 Bottles |
+| 2010s | Redmon — YOLO; Humble — CD; Kleppmann — DDIA; Wlaschin — DMF; Metz — POODR, 99 Bottles |
 | 2020s | Vaswani — Attention; Kaplan — Scaling Laws; Brown — GPT-3; Ouyang — InstructGPT; Wei — Chain-of-Thought |
 
 ## See Also

@@ -122,6 +122,7 @@ How learned models are built, understood, and integrated into software systems.
 | #  | Topic                                            | Key ideas                                                           | Details                                  |
 |----|--------------------------------------------------|---------------------------------------------------------------------|------------------------------------------|
 | 16 | [**Large Language Models**](llm/index.md)        | Transformers, prompting, RAG, agents, evaluation, safety            | How we build and integrate LLM systems   |
+| 17 | [**Computer Vision**](computer-vision/index.md)  | CNNs, object detection, segmentation, YOLO, IoU, mAP                | How machines understand images and video |
 
 ### Deep dives
 - [Transformer Architecture](llm/transformer.md) — attention, tokens, and how LLMs process text
@@ -130,6 +131,7 @@ How learned models are built, understood, and integrated into software systems.
 - [Agents & Tool Use](llm/agents.md) — LLMs that plan, call tools, and act
 - [Evaluation](llm/evaluation.md) — benchmarks, human feedback, and LLM-as-judge
 - [Safety & Alignment](llm/safety.md) — hallucination, bias, RLHF, and responsible deployment
+- [Object Detection](computer-vision/object-detection.md) — one-stage vs two-stage detectors, YOLO, NMS
 
 ---
 

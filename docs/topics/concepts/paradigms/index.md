@@ -765,7 +765,9 @@ links to Joy, Factor, Forth, Cat, and related work.
 
 → [Factor language](https://factorcode.org/) — modern, practical concatenative language with rich libraries
 
-→ [Forth](https://forth-standard.org/) — the original concatenative language, still used in embedded systems
+→ [Forth](../../../languages/forth/index.md) — the original concatenative language, still used in embedded systems
+
+→ [forth-standard.org](https://forth-standard.org/) — Forth 200x standard
 
 ---
 
@@ -984,7 +986,7 @@ flowchart LR
         Scheme["Scheme<br/>1975"]
         ML["ML<br/>1978"]
         Backus78["Backus FP<br/>Manifesto 1978"]
-        Forth["Forth<br/>Moore 1970"]
+        Forth["Forth<br/>Moore 1970<br/>[→](../../../languages/forth/index.md)"]
         Church --> Prolog
         Simula --> Smalltalk
         Smalltalk --> Hewitt

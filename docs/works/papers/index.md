@@ -40,6 +40,7 @@ Key academic papers that shaped software development.
 | 2002 | Fowler | Patterns of Enterprise Application Architecture | Enterprise patterns |
 | 2003 | Kay | Email: The Meaning of OOP | OOP philosophy |
 | 2007 | Helland | Life beyond Distributed Transactions | Distributed |
+| 2016 | Redmon et al. | You Only Look Once: Unified, Real-Time Object Detection | Computer Vision / Object Detection |
 | 2017 | Vaswani et al. | Attention Is All You Need | LLM / Transformers |
 | 2020 | Kaplan et al. | Scaling Laws for Neural Language Models | LLM / Scaling |
 | 2020 | Brown et al. | Language Models are Few-Shot Learners (GPT-3) | LLM / In-context learning |

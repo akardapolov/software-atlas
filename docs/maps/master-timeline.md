@@ -15,7 +15,7 @@ timeline
 
     section 1968–1989 · Formalization
         1968 : NATO conference — software engineering
-        1970 : Royce — phased lifecycle : Codd — Relational Model
+        1970 : Royce — phased lifecycle : Codd — Relational Model : Forth (Moore) — first concatenative language
         1972 : Information Hiding (Parnas) : Smalltalk (Kay) : Prolog (Colmerauer)
         1973 : Actor Model (Hewitt)
         1974 : Abstract Data Types (Liskov)
@@ -25,7 +25,7 @@ timeline
         1982 : Byzantine Generals (Lamport et al.)
         1983 : ACID (Haerder & Reuter)
         1986 : Erlang (Armstrong)
-        1987 : LSP introduced (Liskov)
+        1987 : LSP introduced (Liskov) : Oberon (Wirth) — systems language with GC
         1988 : Design by Contract (Meyer)
         1989 : Why FP Matters (Hughes)
 
@@ -50,7 +50,7 @@ timeline
         2012 : Spanner — global distributed SQL (Google)
         2013 : Docker / OCI containers (Hykes)
         2014 : Raft (Ongaro & Ousterhout) : Kubernetes 1.0 (Google)
-        2016 : SRE book (Google)
+        2016 : SRE book (Google) : YOLO v1 (Redmon et al.) — real-time object detection
         2018 : DORA metrics
         2019 : Team Topologies (Skelton & Pais)
 ```
@@ -85,6 +85,7 @@ timeline
 | Year | Event | Author/Creator | Significance |
 |------|-------|----------------|--------------|
 | 1970 | Relational Model | Codd | Foundation of database theory |
+| 1970 | Forth | Charles H. Moore | First concatenative, stack-based language |
 | 1972 | Information Hiding | Parnas | Foundation of modular design |
 | 1972 | Smalltalk | Alan Kay | Pure OOP, GUI concepts |
 | 1972 | C Language | Ritchie | Systems programming lingua franca |
@@ -100,6 +101,7 @@ timeline
 | 1981 | Transaction Concept | Gray | ACID properties formalised |
 | 1983 | C++ | Stroustrup | OOP for systems programming |
 | 1986 | Erlang | Ericsson | Concurrency, fault tolerance |
+| 1987 | Oberon | Niklaus Wirth | Systems language with GC on bare metal |
 | 1987 | Perl | Larry Wall | Text processing, CGI scripting |
 | 1989 | Why FP Matters | John Hughes | Influential FP advocacy |
 
@@ -147,6 +149,7 @@ timeline
 | 2014 | Kubernetes 1.0 | Google | Container orchestration, declarative ops |
 | 2014 | Microservices | Various | Architectural style named |
 | 2015 | Building Microservices | Newman | Practical guide |
+| 2016 | YOLO v1 | Redmon et al. | Unified real-time object detection |
 | 2017 | DDIA | Kleppmann | Distributed systems guide |
 | 2019 | Team Topologies | Skelton & Pais | Org design for flow |
 
