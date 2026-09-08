@@ -54,7 +54,7 @@ flowchart TD
     Q --> A["<b>A · Control Style</b><br/>Imperative<br/>Declarative<br/><br/><sub>How much do you specify<br/>the steps?</sub>"]
     Q --> B["<b>B · Organization Model</b><br/>Procedural<br/>Object-Oriented<br/>Functional<br/>Logic<br/><br/><sub>Around what abstraction<br/>is code organized?</sub>"]
     Q --> C["<b>C · Execution Model</b><br/>Sequential<br/>Concurrent<br/>Parallel<br/>Reactive<br/>Event-driven<br/><br/><sub>How do computations<br/>relate in time?</sub>"]
-    Q --> D["<b>D · Type Discipline</b><br/>Static / Dynamic<br/>Explicit / Inferred<br/>Nominal / Structural<br/><br/><sub>When and how are values<br/>classified and checked?</sub>"]
+    Q --> D["<b>D · Type Discipline</b><br/>Static / Dynamic<br/>Explicit / Inferred<br/>Nominal / Structural<br/>Gradual<br/><br/><sub>When and how are values<br/>classified and checked?</sub>"]
 
     style A fill:#f3e5f5
     style B fill:#e1f5fe
@@ -130,10 +130,10 @@ main = do
 ```
 
 !!! note "Imperative and Declarative are properties, not paradigms"
-They describe *how code is written*, not *what the program is made of*.
-Any organization model (OOP, FP, etc.) can be used more imperatively
-or more declaratively. Putting "Imperative" and "Functional" in the
-same flat list is a category error — they answer different questions.
+    They describe *how code is written*, not *what the program is made of*.
+    Any organization model (OOP, FP, etc.) can be used more imperatively
+    or more declaratively. Putting "Imperative" and "Functional" in the
+    same flat list is a category error — they answer different questions.
 
 ---
 
@@ -159,7 +159,7 @@ This axis is **orthogonal** to both A and B. It determines how
 computational tasks relate to each other in time.
 
 | Model | Key idea | Examples |
-|-------|----------|----------|
+|-------|----------|---------|
 | **Sequential** | One thing at a time, in order | C, Python (default) |
 | **Concurrent** | Multiple logical activities, possibly interleaved | Go, Erlang |
 | **Parallel** | Multiple computations at the same physical time | CUDA, OpenMP, fork/join |
@@ -167,11 +167,11 @@ computational tasks relate to each other in time.
 | **Event-driven** | Callbacks or handlers triggered by external/internal events | Node.js, GUI frameworks |
 
 !!! warning "Concurrent ≠ Parallel"
-Concurrency is about **structure** (dealing with multiple things at once).
-Parallelism is about **execution** (doing multiple things simultaneously).
-A concurrent program may run on a single core. A parallel computation
-may have no explicit concurrency structure at all.
-See Rob Pike — ["Concurrency Is Not Parallelism"](https://go.dev/blog/waza-talk).
+    Concurrency is about **structure** (dealing with multiple things at once).
+    Parallelism is about **execution** (doing multiple things simultaneously).
+    A concurrent program may run on a single core. A parallel computation
+    may have no explicit concurrency structure at all.
+    See Rob Pike — ["Concurrency Is Not Parallelism"](https://go.dev/blog/waza-talk).
 
 ---
 
@@ -201,6 +201,7 @@ But this axis is richer than a simple binary. Type disciplines also differ in:
 | **Inferred** | Haskell, ML, Rust (partially), OCaml |
 | **Nominal** | Java, C# |
 | **Structural** | TypeScript, Go interfaces |
+| **Gradual** | TypeScript, Python + mypy, Elixir 1.18+ |
 
 Type discipline is **orthogonal** to the other axes:
 
@@ -209,12 +210,222 @@ Type discipline is **orthogonal** to the other axes:
 - **procedural and static** (C)
 - **logic-based and dynamically checked** (classic Prolog)
 - **multi-paradigm and strongly static** (Rust, Scala)
+- **functional and gradually typed** (Elixir 1.18+)
 
 !!! note "Typing is not a paradigm in the same sense as OOP or FP"
-A type discipline does not answer the question "what is a program?"
-It answers a different question: **what kinds of values may appear,
-and how does the language enforce constraints on them?**
-That makes it a separate classificatory axis rather than a structural paradigm.
+    A type discipline does not answer the question "what is a program?"
+    It answers a different question: **what kinds of values may appear,
+    and how does the language enforce constraints on them?**
+    That makes it a separate classificatory axis rather than a structural paradigm.
+
+#### The Gradual Typing Trilemma
+
+The binary static/dynamic distinction obscures a harder problem: can a
+type system be simultaneously **sound**, **gradual**, and
+**developer-friendly**? This triad is sometimes called the *holy grail*
+of type system design — and the difficulty of achieving all three at once
+is what makes the problem interesting.
+
+- **Sound** — if the type checker accepts a program, no type error can
+  occur at runtime. The type checker's verdict is a genuine guarantee,
+  not a best-effort approximation.
+- **Gradual** — type annotations are optional and can be added
+  incrementally. Dynamically-typed code and statically-typed code can
+  coexist in the same codebase without a hard boundary.
+- **Developer-friendly** — the system produces clear, actionable error
+  messages; does not demand verbose annotations; does not require the
+  programmer to understand advanced type theory to use it effectively.
+
+The trilemma is that these three properties pull in different directions:
+
+| Pair achieved | What is sacrificed |
+|---|---|
+| Sound + gradual | Annotations become complex; runtime checks multiply at typed/untyped boundaries |
+| Sound + developer-friendly | Full annotation is required; gradual adoption becomes impractical |
+| Gradual + developer-friendly | Soundness breaks; `any`-like escapes allow type errors through |
+
+The escape hatch most languages reach for is an *any* type — a value
+the type checker treats as compatible with everything. TypeScript has
+`any`; Python's `typing` module has `Any`. The problem is that `any` is
+infectious: once a value enters through an `any`-typed boundary, type
+information is lost and soundness guarantees no longer apply downstream.
+
+#### Gradual Typing Across the Ecosystem
+
+The gradual typing problem surfaces wherever a dynamically-typed language
+matures into a context where stronger guarantees are wanted. Each
+ecosystem has reached for a different point in the trilemma:
+
+**Python — external analysis, `Any` as escape hatch**
+
+```python
+# Without annotations — mypy treats everything as implicitly Any
+def add(x, y):
+    return x + y
+
+# With annotations — mypy can verify call sites
+def add(x: int, y: int) -> int:
+    return x + y
+
+# Any as explicit escape
+from typing import Any
+def process(value: Any) -> str:
+    return str(value)   # no type errors, but no guarantees either
+```
+
+Tools: `mypy`, `pyright`, `ty` (Astral, 2025). Annotations live in
+`.pyi` stub files or inline. `Any` at a boundary silences the checker
+but forfeits soundness for values that cross it.
+
+**TypeScript — structural and mostly sound, `any` as a hole**
+
+```typescript
+// Structural typing: shape matters, not declared name
+interface HasName { name: string }
+function greet(x: HasName) { return "Hello, " + x.name; }
+
+greet({ name: "Alice", age: 30 });  // OK — has the required shape
+
+// any disables checking entirely
+function risky(x: any) {
+    x.nonExistent();   // no error at compile time; crash at runtime
+}
+
+// unknown is the sound alternative — forces narrowing before use
+function safe(x: unknown) {
+    if (typeof x === "string") {
+        console.log(x.toUpperCase());  // now the compiler knows it's a string
+    }
+}
+```
+
+TypeScript's structural type system is largely sound within typed code.
+`any` is the intentional escape; `unknown` is the sound alternative that
+forces the developer to narrow the type before using the value.
+
+**Ruby — Sorbet and RBS, gradual by default**
+
+```ruby
+# typed: true  (Sorbet signature comment)
+
+# T.untyped is Ruby's escape hatch — equivalent to any
+sig { params(value: T.untyped).returns(String) }
+def process(value)
+  value.to_s
+end
+
+# Fully typed — Sorbet can verify this
+sig { params(name: String, age: Integer).returns(String) }
+def greet(name, age)
+  "#{name} is #{age}"
+end
+```
+
+Sorbet introduces gradual typing via `# typed:` comments at the file
+level. Files at `typed: false` are invisible to the checker; files at
+`typed: strict` require all signatures. `T.untyped` is the explicit
+escape hatch.
+
+**Clojure — runtime contracts, not compile-time types**
+
+```clojure
+;; clojure.spec: runtime-checked contracts
+(require '[clojure.spec.alpha :as s])
+
+(s/def ::age pos-int?)
+(s/def ::name string?)
+(s/def ::user (s/keys :req [::name ::age]))
+
+;; Validation at the boundary
+(s/valid? ::user {::name "Alice" ::age 30})   ; => true
+(s/valid? ::user {::name "Alice" ::age -1})   ; => false
+
+;; Instrumented function — checks inputs at runtime
+(s/fdef greet
+  :args (s/cat :name ::name :age ::age)
+  :ret  string?)
+```
+
+Clojure takes a different path: instead of compile-time static analysis,
+it uses runtime-checked specifications via `clojure.spec` or `malli`.
+This is fully gradual (specs are optional) and developer-friendly, but
+soundness is runtime-enforced, not compile-time guaranteed.
+
+**Elixir 1.18+ — `dynamic()` as a range, not an escape**
+
+Elixir's approach, developed across versions 1.17–1.20, makes a
+principled distinction that the other systems largely do not:
+
+```elixir
+# System.get_env/1 returns dynamic(nil | binary())
+# The compiler tracks this *range* through the program
+
+case System.get_env("PORT") do
+  nil   -> :not_found
+  value -> {:ok, String.to_integer(value)}
+  #                                ^-- in this branch the range narrows
+  #                                    to binary(); String.to_integer/1
+  #                                    expects binary() ✓
+end
+
+# Guard expressions carry implicit type information — no annotations needed
+def add_a_and_b(data) do
+  data.a + data.b   # compiler infers data must be %{a: number(), b: number()}
+end
+
+# A verified bug — the compiler can prove this crashes at runtime
+def example(x) when not is_map_key(x, :foo) do
+  x.foo   # warning: key :foo is guaranteed absent
+end
+```
+
+The key mechanism is **narrowing**: as a `dynamic()` value flows through
+pattern matches, guards (`when is_integer(x)`), and conditionals, the
+compiler progressively tightens the range of possible types. An operation
+is accepted if it is compatible with *some* member of the range. An
+operation that cannot succeed against *any* member of the range is
+flagged as a *verified bug* — an error guaranteed to raise at runtime.
+
+This means the checker can find errors in **unannotated code**. Guard
+expressions and pattern matches already carry implicit type information;
+the compiler extracts and propagates it without requiring a single
+explicit type signature.
+
+#### `dynamic()` vs `any()` — the key distinction
+
+| Property | `any` (classical escape) | `dynamic()` (Elixir) |
+|---|---|---|
+| Soundness | Broken at boundary | Maintained within range |
+| Gradual | Yes | Yes |
+| Developer-friendly | Yes | Yes — no annotations required |
+| What the checker does | Stops tracking the value | Tracks a range of possible types |
+| False positives | None (checker is silent) | None (only verified bugs reported) |
+
+#### Trilemma Summary
+
+| Language / tool | Sound | Gradual | Developer-friendly | Escape hatch |
+|---|---|---|---|---|
+| Python + mypy | Partial | Yes | Yes | `Any` |
+| TypeScript | Mostly | Yes | Yes | `any` / `unknown` |
+| Ruby + Sorbet | Partial | Yes | Yes | `T.untyped` |
+| Clojure + spec | Runtime only | Yes | Yes | No static checker |
+| Elixir 1.18+ | Yes (within range) | Yes | Yes (no annotations) | `dynamic()` with range |
+| Haskell | Yes | No | Moderate | None by design |
+
+No system fully escapes the trilemma — each makes deliberate trade-offs.
+Elixir's contribution is to show that *zero-annotation soundness for
+verified bugs* is achievable as a first milestone, even before explicit
+type signatures are introduced. Whether this constitutes a full resolution
+of the trilemma or a principled point within it remains an open question
+in programming language research.
+
+!!! note "Gradual typing is an active research area"
+    The term was introduced by Jeremy Siek in 2006. The trilemma
+    formulation is more recent and not universally agreed upon. Different
+    communities draw the boundaries differently — some treat soundness
+    as non-negotiable, others treat it as one goal among several.
+    The practical implementations above represent the current state of
+    the art, not settled answers.
 
 ---
 
@@ -227,20 +438,22 @@ That makes it a separate classificatory axis rather than a structural paradigm.
 | Java (streams + lambdas) | More declarative | OOP + FP | Sequential | Static, nominal, mostly explicit |
 | Spring (annotations) | Declarative configuration | OOP + AOP | Depends | Static, nominal |
 | Haskell | Declarative | Functional | Sequential* | Static, inferred |
-| Erlang / Elixir | Mostly declarative | Functional + Actor | Concurrent | Dynamic |
+| Erlang / Elixir | Mostly declarative | Functional + Actor | Concurrent | Dynamic / Gradual (Elixir 1.18+) |
 | Go | Imperative | Procedural | Concurrent (CSP) | Static, inferred + explicit, structural interfaces |
 | Scala + Akka | Mixed | OOP + FP + Actor | Concurrent | Static, mostly inferred |
 | SQL | Declarative | Query-based | Delegated to DBMS | Typed, dialect-dependent |
 | Prolog | Declarative | Logic | Usually sequential search | Typically dynamic / runtime-checked |
 | Rust | Imperative | Procedural + FP | Concurrent | Static, strongly inferred |
-| Clojure | Mostly declarative | Functional | Concurrent (STM) | Dynamic |
+| Clojure | Mostly declarative | Functional | Concurrent (STM) | Dynamic + runtime contracts (spec) |
 | React (JSX) | Declarative | Component-based | Event-driven | Usually dynamic (JS) or static optional (TS) |
-| Python | Mixed | Multi (OOP + Proc + FP) | Sequential* | Dynamic |
+| Python | Mixed | Multi (OOP + Proc + FP) | Sequential* | Dynamic + optional gradual (mypy, pyright) |
+| TypeScript | Mixed | Multi (OOP + FP) | Event-driven* | Gradual, structural, mostly sound |
+| Ruby | Mixed | OOP + FP | Sequential* | Dynamic + optional gradual (Sorbet) |
 
 !!! note "Most modern languages are multi-paradigm"
-Python supports imperative, OOP, and functional styles. Scala blends
-OOP with FP. Rust is imperative with strong FP features. The paradigm
-is in how you *use* the language, not just in the language itself.
+    Python supports imperative, OOP, and functional styles. Scala blends
+    OOP with FP. Rust is imperative with strong FP features. The paradigm
+    is in how you *use* the language, not just in the language itself.
 
     The same is true of type discipline in practice: many ecosystems support
     annotations, inference, optional checking, code generation, or external
@@ -728,11 +941,11 @@ Concatenative languages occupy a small but durable niche. They are used where:
 | Shell pipelines | Unix pipes share the concatenative data-flow idea |
 
 !!! note "Unix pipes as concatenative thinking"
-`cat file | grep pattern | sort | uniq -c` is concatenative in spirit:
-each command consumes its input stream and produces an output stream,
-and composition is juxtaposition (`|`). There are no named intermediates.
-The data flows left to right through the pipeline exactly as words flow
-left to right in a Forth program.
+    `cat file | grep pattern | sort | uniq -c` is concatenative in spirit:
+    each command consumes its input stream and produces an output stream,
+    and composition is juxtaposition (`|`). There are no named intermediates.
+    The data flows left to right through the pipeline exactly as words flow
+    left to right in a Forth program.
 
 #### Point-Free Style in Applicative Languages
 
@@ -877,12 +1090,12 @@ SELECT name, age FROM users WHERE age > 18 ORDER BY name;
 | Annotations / Metadata | Framework configuration      | Spring `@Transactional`                                                       |
 
 !!! note "Annotations are a mechanism, not a paradigm"
-Spring's `@Transactional`, `@Cacheable`, `@RestController` are
-**declarative configuration** implemented via metaprogramming and
-AOP (Aspect-Oriented Programming). You declare *what* behaviour
-you want; the framework generates the imperative code at runtime
-(often through proxies or bytecode instrumentation). This is a powerful
-technique *within* a broader organization model — not a separate paradigm.
+    Spring's `@Transactional`, `@Cacheable`, `@RestController` are
+    **declarative configuration** implemented via metaprogramming and
+    AOP (Aspect-Oriented Programming). You declare *what* behaviour
+    you want; the framework generates the imperative code at runtime
+    (often through proxies or bytecode instrumentation). This is a powerful
+    technique *within* a broader organization model — not a separate paradigm.
 
     Similarly, AOP is a **modularization technique** for cross-cutting concerns
     (logging, security, transactions), not a standalone answer to the question
@@ -900,13 +1113,15 @@ Examples:
 - **Java**: OOP organization, often imperative control, usually sequential execution,
   **static nominal typing**
 - **Python**: multi-paradigm organization, mixed control style, usually sequential execution,
-  **dynamic typing**
+  **dynamic typing** with optional gradual checking via mypy / pyright
 - **Haskell**: functional organization, declarative style, usually sequential execution,
   **static inferred typing**
 - **Go**: procedural organization, imperative control, concurrent execution,
   **static typing with structural interface compatibility**
 - **TypeScript**: often object/component-oriented in practice, mixed control,
   event-driven in the browser, **static structural typing layered over JavaScript**
+- **Elixir**: functional + actor organization, declarative style, concurrent execution,
+  **dynamic with gradual type narrowing** (1.18+)
 
 Some practical consequences of axis D:
 
@@ -915,6 +1130,8 @@ Some practical consequences of axis D:
 - **Inference** can preserve static guarantees while reducing boilerplate
 - **Structural typing** often favors composition and ad hoc interoperability
 - **Nominal typing** often favors explicit modelling and deliberately declared interfaces
+- **Gradual typing** allows incremental adoption of static analysis, but the
+  escape hatch (`any`, `T.untyped`, `dynamic()`) determines how much soundness is preserved
 
 The choice of type discipline shapes API design, refactoring style,
 metaprogramming, tool support, and library ergonomics — even when the
@@ -1083,10 +1300,13 @@ flowchart LR
 | 1995 | Gosling — Java                                | OOP for the masses                               |
 | 2001 | von Thun — Joy                                | Formal algebra of concatenative programs         |
 | 2003 | Pestov — Factor                               | Modern practical concatenative language          |
+| 2006 | Siek — Gradual Typing                         | Theoretical foundation for optional type systems |
 | 2007 | Hickey — Clojure                              | Practical FP on the JVM                          |
 | 2009 | Pike, Thompson — Go                           | CSP for the masses                               |
 | 2010 | Mozilla — Rust                                | Memory safety without GC                         |
+| 2012 | Microsoft — TypeScript                        | Gradual structural typing for JavaScript         |
 | 2015 | Mozilla — Rust 1.0                            | First stable release                             |
+| 2025 | Elixir 1.20                                   | Zero-annotation gradual typing with soundness    |
 
 ---
 
@@ -1098,6 +1318,7 @@ flowchart LR
 - Pierce — *Types and Programming Languages* (2002)
 - Van Roy & Haridi — *Concepts, Techniques, and Models of Computer Programming* (2004)
 - Pike — ["Concurrency Is Not Parallelism"](https://go.dev/blog/waza-talk) (2012)
+- Siek & Taha — ["Gradual Typing for Functional Languages"](https://wphomes.soic.indiana.edu/jsiek/what-is-gradual-typing/) (2006)
 - [concatenative.org](https://concatenative.org/) — community hub for concatenative languages
 
 ## Related Topics

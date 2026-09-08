@@ -31,6 +31,7 @@ flowchart TD
         Cpp["C++<br/>Stroustrup, 1983"]
         Erlang["Erlang<br/>Armstrong, 1986"]
         Perl["Perl<br/>Wall, 1987"]
+        Self["Self<br/>Ungar & Smith, 1987"]
     end
 
     subgraph ModernOOP["☕ Modern OOP: 1990s"]
