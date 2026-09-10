@@ -1,18 +1,25 @@
 # Paradigms
 
-How we think about computation. Each paradigm offers a different mental
-model for structuring programs — a different answer to the question
-"what is a program?"
+How we think about computation. Programming paradigms offer different
+mental models for structuring programs — different answers to questions
+such as "what is a program?", "how does it compute?", and "how do its
+parts interact?"
+
+This page maps those models alongside related properties of languages
+and implementations. It is a practical guide to their relationships,
+not a claim that there is one universally accepted classification.
 
 ## Contents
 
 - [What Is a Paradigm?](#what-is-a-paradigm)
-- [The Big Picture: Four Independent Axes](#the-big-picture-four-independent-axes)
-    - [Axis A: Control Style — the Imperative ↔ Declarative Spectrum](#axis-a-control-style--the-imperative--declarative-spectrum)
-    - [Axis B: Organization Model — What Is "a Program"?](#axis-b-organization-model--what-is-a-program)
-    - [Axis C: Execution Model — How Does Computation Run?](#axis-c-execution-model--how-does-computation-run)
-    - [Axis D: Type Discipline — How Are Values Classified and Checked?](#axis-d-type-discipline--how-are-values-classified-and-checked)
-- [Mapping Languages to the Four Axes](#mapping-languages-to-the-four-axes)
+- [The Big Picture: Six Complementary Questions](#the-big-picture-six-complementary-questions)
+    - [A. Control and Specification Style](#a-control-and-specification-style)
+    - [B. Organization and Abstraction](#b-organization-and-abstraction)
+    - [C. State and Effects](#c-state-and-effects)
+    - [D. Concurrency and Coordination](#d-concurrency-and-coordination)
+    - [E. Type Discipline](#e-type-discipline)
+    - [F. Implementation Strategy](#f-implementation-strategy)
+- [Mapping Languages and Styles](#mapping-languages-and-styles)
 - [Organization Models in Depth](#organization-models-in-depth)
     - [Procedural Programming](#procedural-programming)
     - [Object-Oriented Programming](#object-oriented-programming)
@@ -20,8 +27,9 @@ model for structuring programs — a different answer to the question
     - [Logic Programming](#logic-programming)
     - [Applicative vs Concatenative Style](#applicative-vs-concatenative-style)
 - [Execution Models in Depth](#execution-models-in-depth)
-    - [Actor Model](#actor-model-hewitt-1973--erlang-1986)
-    - [CSP — Communicating Sequential Processes](#csp--communicating-sequential-processes-hoare-1978)
+    - [Actor Model](#actor-model)
+    - [CSP — Communicating Sequential Processes](#csp-communicating-sequential-processes)
+    - [Comparison](#comparison)
 - [Declarative Techniques and DSLs](#declarative-techniques-and-dsls)
 - [Type Discipline in Practice](#type-discipline-in-practice)
 - [The Pragmatic View](#the-pragmatic-view)
@@ -31,474 +39,830 @@ model for structuring programs — a different answer to the question
 
 ## What Is a Paradigm?
 
-A programming paradigm is a **style of programming** — a set of concepts
-and abstractions that determine how you think about and structure programs.
+A programming paradigm is a **style of programming** supported by a set
+of concepts, abstractions, and computational conventions.
 
-A common mistake is arranging paradigms in a strict hierarchy:
-"OOP is a kind of imperative programming," "functional is a kind of
-declarative." This mixes levels of abstraction and conflates independent
-dimensions. In reality, a paradigm is best understood as **a point in a
-multidimensional space**, not a node in a tree.
+The term is used at different levels:
 
-Not every important language property is itself a paradigm. Some describe
-the **structure** of programs, some describe **control**, some describe
-**execution**, and some describe the language's **type discipline**.
-These dimensions are related, but not reducible to one another.
+- **Imperative and declarative programming** describe broad approaches
+  to expressing computation.
+- **Procedural, object-oriented, functional, and logic programming**
+  emphasize particular abstractions and ways of composing programs.
+- **Actor, dataflow, and reactive programming** emphasize interaction,
+  dependencies, or the organization of ongoing computation.
 
-## The Big Picture: Four Independent Axes
+These categories overlap. Functional programming is commonly classified
+as declarative, and procedural programming as imperative. Those are useful
+classifications in some contexts, but they do not describe every aspect
+of a language or program.
+
+For example:
+
+- Object-oriented code can use immutable objects and expression-based
+  transformations.
+- A functional language can support mutable references and imperative I/O.
+- Actor-based concurrency can coexist with functional or object-oriented
+  organization.
+- A statically typed language can be interpreted, and a dynamically typed
+  language can be compiled.
+
+The atlas therefore treats paradigms as **regions in a multidimensional
+map**, rather than requiring each one to occupy a single branch of a tree.
+
+Not every important language property is itself a paradigm. Type checking,
+garbage collection, and compilation strategy matter greatly, but answer
+different questions from "what abstractions organize this program?"
+
+## The Big Picture: Six Complementary Questions
 
 ```mermaid
 flowchart TD
-    Q["<b>How to characterise a language or style?</b><br/><br/><sub>Answer four questions</sub>"]
+    Q["How can we understand a language or programming style?"]
 
-    Q --> A["<b>A · Control Style</b><br/>Imperative<br/>Declarative<br/><br/><sub>How much do you specify<br/>the steps?</sub>"]
-    Q --> B["<b>B · Organization Model</b><br/>Procedural<br/>Object-Oriented<br/>Functional<br/>Logic<br/><br/><sub>Around what abstraction<br/>is code organized?</sub>"]
-    Q --> C["<b>C · Execution Model</b><br/>Sequential<br/>Concurrent<br/>Parallel<br/>Reactive<br/>Event-driven<br/><br/><sub>How do computations<br/>relate in time?</sub>"]
-    Q --> D["<b>D · Type Discipline</b><br/>Static / Dynamic<br/>Explicit / Inferred<br/>Nominal / Structural<br/>Gradual<br/><br/><sub>When and how are values<br/>classified and checked?</sub>"]
+    subgraph SEM ["Programming Style and Language Semantics"]
+        A["A · Control and Specification<br/>How are computations described?"]
+        B["B · Organization and Abstraction<br/>Around what concepts is code organized?"]
+        C["C · State and Effects<br/>How are changes and external interactions represented?"]
+        D["D · Concurrency and Coordination<br/>How do activities coexist and communicate?"]
+        E["E · Type Discipline<br/>Which constraints are expressed and checked?"]
+    end
+
+    subgraph IMPL ["Implementation"]
+        F["F · Implementation Strategy<br/>How is the program translated and executed?"]
+    end
+
+    Q --> A
+    Q --> B
+    Q --> C
+    Q --> D
+    Q --> E
+    Q --> F
 
     style A fill:#f3e5f5
     style B fill:#e1f5fe
-    style C fill:#e8f5e9
-    style D fill:#fff3e0
+    style C fill:#fce4ec
+    style D fill:#e8f5e9
+    style E fill:#fff3e0
+    style F fill:#ede7f6
 ```
 
-These axes are **orthogonal** — choosing a position on one axis does not
-determine your position on the others. OOP code can be imperative or
-declarative. Functional code can be sequential or concurrent. A language
-can be statically or dynamically typed regardless of whether it is procedural,
-object-oriented, functional, or logic-based. A language — or even a single
-file — can occupy different points on each axis.
+These questions are **complementary, not strictly orthogonal**. A paradigm
+may influence several dimensions, and each dimension may contain multiple
+choices rather than a single scale.
+
+The distinction between language and implementation is especially important:
+
+- A **language specification** defines constructs and their meaning.
+- An **implementation** realizes that language through a compiler,
+  interpreter, runtime, or a combination of them.
+- A **programming style** is how developers use those facilities.
+- Libraries and frameworks can introduce additional models, such as
+  actors, reactive streams, or declarative configuration.
+
+For example, "Java with immutable domain objects, Reactor, and HotSpot"
+describes a more specific combination than simply "Java is object-oriented."
+
+#### Additional dimensions worth exploring 
+
+The six questions are an overview, not an exhaustive taxonomy. Other important dimensions include:
+
+- **Evaluation strategy:** call-by-value, call-by-name, call-by-need;
+      strict and non-strict semantics.
+- **Memory and resource management:** manual allocation, tracing GC,
+      reference counting, ownership, borrowing, and deterministic cleanup.
+- **Abstraction and modularity:** modules, interfaces, traits, functors,
+      separate compilation, and dependency boundaries.
+- **Metaprogramming and staging:** macros, reflection, code generation,
+      compile-time evaluation, and staged computation.
+- **Determinism and search:** deterministic evaluation, nondeterministic
+      choice, backtracking, and probabilistic computation.
+- **Domain and specialization:** general-purpose languages, DSLs,
+      query languages, modeling languages, and configuration languages.
+
+These dimensions intersect with the six questions above. They are
+neighboring topics for the atlas to develop, not additional boxes
+into which every language must fit.
 
 ---
 
-### Axis A: Control Style — the Imperative ↔ Declarative Spectrum
+### A. Control and Specification Style
 
-This is not two boxes but a **continuous spectrum**. The question:
-how much do you specify the *steps* of computation?
+**Question:** How explicitly does the program prescribe computational
+steps, rather than describe transformations, relationships, constraints,
+or desired results?
 
+Two broad tendencies are:
+
+- **Imperative:** express commands, state changes, and control flow.
+- **Declarative:** express relationships or desired properties while
+  leaving some operational choices to an evaluator, solver, or framework.
+
+A useful illustration is:
+
+```text
+More explicit operational control             More declarative specification
+
+State updates and loops → Transformation pipelines → Relations and constraints
 ```
-Imperative ◄──────────────────────────────────────► Declarative
 
-Assembly → C → Java → Java Streams → Haskell → SQL → Prolog
-   ↑                                                      ↑
-   Every step                                    Only the result
-   specified                                     is described
-```
+This is not an objective ranking of languages. Declarativeness depends on
+the construct, the domain, and the level of abstraction.
 
-The same language can sit at different points depending on how you write:
+A pipeline specifies the order of transformations, for example, while
+leaving iteration mechanics implicit. A SQL query leaves many execution-plan
+choices to the database, but still specifies an exact relational operation.
+
+The same language supports different approaches:
 
 ```java
 import java.math.BigDecimal;
 import java.util.List;
 
-class Order {
-  private BigDecimal price;
-
-  public BigDecimal getPrice() {
-    return price;
-  }
-}
-
 public class Example {
-  public static void main(String[] args) {
-    List<Order> orders = List.of();
-    BigDecimal threshold = BigDecimal.ZERO;
+    record Order(BigDecimal price) {}
 
-    // Java — imperative end of the spectrum
-    BigDecimal sum = BigDecimal.ZERO;
-    for (Order o : orders) {
-      if (o.getPrice().compareTo(threshold) > 0) {
-        sum = sum.add(o.getPrice());
-      }
+    public static void main(String[] args) {
+        List<Order> orders = List.of(
+            new Order(new BigDecimal("10.00")),
+            new Order(new BigDecimal("25.00"))
+        );
+        BigDecimal threshold = new BigDecimal("15.00");
+
+        // Explicit iteration and accumulator updates.
+        BigDecimal imperativeTotal = BigDecimal.ZERO;
+        for (Order order : orders) {
+            if (order.price().compareTo(threshold) > 0) {
+                imperativeTotal = imperativeTotal.add(order.price());
+            }
+        }
+
+        // Transformation pipeline; iteration mechanics are implicit.
+        BigDecimal pipelineTotal = orders.stream()
+            .map(Order::price)
+            .filter(price -> price.compareTo(threshold) > 0)
+            .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        System.out.println(imperativeTotal); // 25.00
+        System.out.println(pipelineTotal);   // 25.00
     }
-
-    // Java — declarative end of the spectrum
-    BigDecimal sum2 = orders.stream()
-        .map(Order::getPrice)
-        .filter(p -> p.compareTo(threshold) > 0)
-        .reduce(BigDecimal.ZERO, BigDecimal::add);
-  }
 }
 ```
 
+The second version is **more declarative about traversal**, but it still
+specifies a particular sequence of transformations.
+
+Likewise, sequential-looking syntax does not determine the paradigm:
+
 ```haskell
--- Haskell is considered declarative, but IO notation looks sequential
+main :: IO ()
 main = do
     putStrLn "Name?"
     name <- getLine
     putStrLn ("Hi " ++ name)
 ```
 
-!!! note "Imperative and Declarative are properties, not paradigms"
-    They describe *how code is written*, not *what the program is made of*.
-    Any organization model (OOP, FP, etc.) can be used more imperatively
-    or more declaratively. Putting "Imperative" and "Functional" in the
-    same flat list is a category error — they answer different questions.
+Haskell's `do` notation is syntax for composing monadic computations.
+In `IO`, it expresses sequencing of effects. It is not an imperative mode
+that disables Haskell's semantics, and it is also used with abstractions
+other than `IO`.
+
+**Broad paradigms and narrower models**
+
+Imperative and declarative programming are commonly called paradigms.
+This page separates control style from organization to make their
+relationships clearer, not to invalidate that terminology.
 
 ---
 
-### Axis B: Organization Model — What Is "a Program"?
+### B. Organization and Abstraction
 
-This is the axis most people mean when they say "paradigm." It answers:
-around what central abstraction do you organize code?
+**Question:** Around what central abstractions is code organized?
 
-| Model | "What is a program?" | Central abstraction |
-|-------|---------------------|---------------------|
-| **Procedural** | A collection of procedures that operate on data | Procedures, functions, modules |
-| **Object-Oriented** | A collection of objects that interact via messages | Objects, methods, interfaces |
-| **Functional** | A composition of mathematical functions | Pure functions, expressions, immutable values |
-| **Logic** | A set of facts and rules; the runtime finds solutions | Facts, rules, queries |
+| Model | Useful mental model | Central abstractions |
+|-------|---------------------|----------------------|
+| **Procedural** | Procedures operate on data | Procedures, functions, modules |
+| **Object-oriented** | Objects provide behavior through interfaces | Objects, methods, messages, interfaces |
+| **Functional** | Functions and expressions compose transformations | First-class functions, composition, values |
+| **Logic** | Relations describe what holds; queries ask for solutions | Predicates, facts, rules, logical variables |
+| **Component-based** | Components compose through defined contracts | Components, ports, interfaces, lifecycle |
+| **Concatenative** | Program fragments compose by juxtaposition | Words, quotations, composition |
 
-These are not mutually exclusive — most modern languages blend several.
+These are not mutually exclusive or all at the same conceptual level.
+For example, concatenative programming primarily distinguishes a
+composition model; component-based development often describes
+coarser-grained architecture.
 
----
-
-### Axis C: Execution Model — How Does Computation Run?
-
-This axis is **orthogonal** to both A and B. It determines how
-computational tasks relate to each other in time.
-
-| Model | Key idea | Examples |
-|-------|----------|---------|
-| **Sequential** | One thing at a time, in order | C, Python (default) |
-| **Concurrent** | Multiple logical activities, possibly interleaved | Go, Erlang |
-| **Parallel** | Multiple computations at the same physical time | CUDA, OpenMP, fork/join |
-| **Reactive** | Computation structured around data streams and propagation | RxJava, Reactor |
-| **Event-driven** | Callbacks or handlers triggered by external/internal events | Node.js, GUI frameworks |
-
-!!! warning "Concurrent ≠ Parallel"
-    Concurrency is about **structure** (dealing with multiple things at once).
-    Parallelism is about **execution** (doing multiple things simultaneously).
-    A concurrent program may run on a single core. A parallel computation
-    may have no explicit concurrency structure at all.
-    See Rob Pike — ["Concurrency Is Not Parallelism"](https://go.dev/blog/waza-talk).
+Functional and logic programming also make claims about computation,
+not merely source-code organization. Actor-based programming likewise
+influences both organization and coordination.
 
 ---
 
-### Axis D: Type Discipline — How Are Values Classified and Checked?
+### C. State and Effects
 
-This axis captures a different question: not how a program is organized
-or executed, but how the language treats **values, expressions, and constraints**
-on their use.
+**Question:** How are changing state and interactions with the outside
+world represented and controlled?
 
-The most common distinction is:
+An **effect** is an observable interaction beyond returning a value,
+such as mutation, I/O, or an exception. Which interactions count as
+effects depends on the semantic model being discussed.
 
-- **Static typing** — many constraints are checked before execution
-- **Dynamic typing** — many constraints are checked during execution
+| Concern | Common approaches |
+|---------|-------------------|
+| **Data mutation** | Mutable objects and arrays; immutable values and persistent data structures |
+| **State sharing** | Shared references; actor-local state; ownership-controlled access |
+| **Effect expression** | Ordinary effectful calls; explicit effectful computations; effect systems |
+| **Coordination of updates** | Locks, atomics, transactions, message passing |
+| **Resource lifecycle** | Explicit cleanup, RAII, scoped resource management, ownership |
 
-But this axis is richer than a simple binary. Type disciplines also differ in:
+Several distinctions matter:
 
-- **Explicit vs inferred typing** — whether the programmer must write annotations
-- **Nominal vs structural typing** — whether compatibility depends on declared identity or shape
-- **Sound vs unsound typing** — whether the type checker guarantees the absence of certain classes of runtime errors
-- **Gradual or optional typing** — whether static checking can be layered onto a dynamic language
+- **Immutability** means a value or data structure is not changed after
+  creation.
+- **Purity** concerns whether a computation has observable effects and
+  whether its result depends only on its inputs.
+- **Isolation** limits which computations can access particular state.
+- **Ownership** controls responsibility for and access to values or
+  resources; it does not necessarily prohibit mutation.
 
-| Dimension | Examples |
-|----------|----------|
-| **Static** | Haskell, Rust, Java, OCaml |
-| **Dynamic** | Python, Ruby, JavaScript |
-| **Explicit** | Java, C |
-| **Inferred** | Haskell, ML, Rust (partially), OCaml |
-| **Nominal** | Java, C# |
-| **Structural** | TypeScript, Go interfaces |
-| **Gradual** | TypeScript, Python + mypy, Elixir 1.18+ |
+Examples:
 
-Type discipline is **orthogonal** to the other axes:
+- Java can use either mutable objects or immutable domain values.
+- Haskell distinguishes pure expressions from effectful computations
+  through abstractions such as `IO`; controlled mutation is still possible.
+- Clojure combines persistent immutable collections with explicit state
+  mechanisms such as atoms and refs.
+- Erlang processes can maintain evolving private state while ordinary
+  data values remain immutable.
+- Rust permits mutation but uses ownership and borrowing to constrain
+  aliasing and access in safe code.
 
-- a language may be **functional and dynamic** (Clojure, Scheme)
-- **object-oriented and static** (Java, C#)
-- **procedural and static** (C)
-- **logic-based and dynamically checked** (classic Prolog)
-- **multi-paradigm and strongly static** (Rust, Scala)
-- **functional and gradually typed** (Elixir 1.18+)
+**Immutable data does not eliminate every state-related bug**
+Immutable data avoids in-place modification of those values. It does
+not prevent stale snapshots, incorrect update logic, or races involving
+external resources and mutable coordination mechanisms.
 
-!!! note "Typing is not a paradigm in the same sense as OOP or FP"
-    A type discipline does not answer the question "what is a program?"
-    It answers a different question: **what kinds of values may appear,
-    and how does the language enforce constraints on them?**
-    That makes it a separate classificatory axis rather than a structural paradigm.
+---
 
-#### The Gradual Typing Trilemma
+### D. Concurrency and Coordination
 
-The binary static/dynamic distinction obscures a harder problem: can a
-type system be simultaneously **sound**, **gradual**, and
-**developer-friendly**? This triad is sometimes called the *holy grail*
-of type system design — and the difficulty of achieving all three at once
-is what makes the problem interesting.
+**Question:** How do computational activities coexist, communicate, and
+respond to change?
 
-- **Sound** — if the type checker accepts a program, no type error can
-  occur at runtime. The type checker's verdict is a genuine guarantee,
-  not a best-effort approximation.
-- **Gradual** — type annotations are optional and can be added
-  incrementally. Dynamically-typed code and statically-typed code can
-  coexist in the same codebase without a hard boundary.
-- **Developer-friendly** — the system produces clear, actionable error
-  messages; does not demand verbose annotations; does not require the
-  programmer to understand advanced type theory to use it effectively.
+This question contains several related dimensions:
 
-The trilemma is that these three properties pull in different directions:
+| Concern | Key idea | Examples |
+|---------|----------|----------|
+| **Sequential computation** | Activities proceed without concurrent progress at the level being modeled | A simple batch algorithm |
+| **Concurrency** | Multiple logical activities can make progress | Goroutines, Erlang processes, async tasks |
+| **Parallelism** | Computations execute at the same physical time | Multicore workers, GPU kernels |
+| **Communication** | Activities exchange information or coordinate access | Shared memory, actors, channels |
+| **Event-driven organization** | Events trigger handlers or state transitions | GUI applications, Node.js servers |
+| **Reactive/dataflow organization** | Dependencies or streams drive propagation | Spreadsheets, reactive streams, dataflow graphs |
 
-| Pair achieved | What is sacrificed |
-|---|---|
-| Sound + gradual | Annotations become complex; runtime checks multiply at typed/untyped boundaries |
-| Sound + developer-friendly | Full annotation is required; gradual adoption becomes impractical |
-| Gradual + developer-friendly | Soundness breaks; `any`-like escapes allow type errors through |
+A program can be **event-driven, concurrent, and parallel** at the same
+time. These labels are not alternatives in a single list.
 
-The escape hatch most languages reach for is an *any* type — a value
-the type checker treats as compatible with everything. TypeScript has
-`any`; Python's `typing` module has `Any`. The problem is that `any` is
-infectious: once a value enters through an `any`-typed boundary, type
-information is lost and soundness guarantees no longer apply downstream.
+**Concurrent ≠ Parallel**
+Concurrency concerns the organization of multiple activities.
+Parallelism concerns simultaneous execution.
 
-#### Gradual Typing Across the Ecosystem
+    A concurrent program may run on one core. Conversely, a compiler or
+    library may parallelize an operation without the programmer explicitly
+    creating tasks.
 
-The gradual typing problem surfaces wherever a dynamically-typed language
-matures into a context where stronger guarantees are wanted. Each
-ecosystem has reached for a different point in the trilemma:
+    See Rob Pike —
+    ["Concurrency Is Not Parallelism"](https://go.dev/blog/waza-talk).
 
-**Python — external analysis, `Any` as escape hatch**
+Reactive programming and event-driven programming overlap but are not
+synonyms. Event-driven code may consist of independent handlers, whereas
+reactive abstractions typically make dependencies, streams, or propagation
+rules explicit.
+
+Similarly, dataflow is broader than any one reactive library: spreadsheets
+and batch processing graphs also organize computation through dependencies.
+
+---
+
+### E. Type Discipline
+
+**Question:** What constraints on values and expressions can be described,
+and when and how are they checked?
+
+The familiar distinction is:
+
+- **Static typing:** type analysis checks constraints before the relevant
+  code executes.
+- **Dynamic typing:** operations inspect or check relevant type properties
+  during execution.
+
+This does not mean statically typed languages perform no runtime checks,
+or dynamically typed languages cannot receive static analysis.
+
+Type discipline includes several additional dimensions:
+
+| Dimension | Question | Examples |
+|-----------|----------|----------|
+| **Annotations and inference** | Which types must be written, and which can be inferred? | Local inference in Java and Rust; extensive inference in ML-family languages |
+| **Nominal and structural compatibility** | Does compatibility depend on declared identity, structure, or both? | Java classes; TypeScript object types; Go interfaces |
+| **Expressiveness** | Which properties can types describe? | Generics, algebraic data types, dependent types, effect types |
+| **Guarantees** | What does successful checking establish under the system's assumptions? | Type safety in a specified safe subset |
+| **Gradual integration** | How do typed and dynamically unknown values interact? | Python typing tools, TypeScript, Sorbet, research gradual languages |
+
+These dimensions are not binary labels for whole languages:
+
+- Java has nominal class types and also supports type inference.
+- Go uses structural compatibility for interfaces, but also has named types
+  with identity.
+- TypeScript is predominantly structural, with some nominal-like behavior.
+- Rust infers many local types but generally requires explicit public
+  function signatures.
+
+Terms such as **strong typing** and **weak typing** have inconsistent
+definitions. Prefer a specific claim about coercions, checking, memory
+safety, or type-system guarantees.
+
+#### Trade-offs in Gradual Typing
+
+Gradual typing studies how statically typed and dynamically typed parts of
+a program can coexist and interact.
+
+In practical ecosystems, related terms such as **optional typing** are also
+used. They are not always interchangeable:
+
+- An optional checker may analyze annotations without changing execution.
+- A sound gradual language may insert runtime checks at typed/dynamic
+  boundaries to enforce its guarantees.
+- Merely making validation rules optional does not turn a contract library
+  into a gradual type system.
+
+Important trade-offs include:
+
+- strength and scope of guarantees;
+- compatibility with existing dynamic code;
+- annotation and migration effort;
+- precision of inference and diagnostics;
+- runtime checking costs;
+- implementation complexity.
+
+There is no general theorem that a system must choose exactly two of
+"sound," "gradual," and "developer-friendly." In particular, soundness
+does not require complete manual annotation: inference can establish
+strong guarantees with relatively little annotation.
+
+#### What Does Soundness Mean Here?
+
+A soundness claim must identify the property being guaranteed and the
+assumptions under which it holds.
+
+Distinguish three questions:
+
+1. **Type safety:** can an accepted program perform an operation forbidden
+   by the language's type-safety model?
+2. **Diagnostic validity:** if the checker reports a particular error,
+   is that diagnosis justified?
+3. **Analysis completeness:** will every relevant error be detected?
+
+These are different guarantees.
+
+A checker that reports only definitely invalid operations may leave many
+potential failures unreported. Conversely, a conservative checker may
+reject programs that would execute successfully.
+
+In sound gradual systems, a program can pass static checking and later
+fail a **defined runtime cast or boundary check**. Such a controlled failure
+does not automatically contradict the system's soundness theorem.
+
+**No warning is not a universal correctness proof**
+    Even strong type systems generally do not establish all of termination,
+    absence of exceptions, correct business logic, valid input contents,
+    and safe foreign code.
+
+    Guarantees must be stated for a particular language, configuration, and safe subset.
+
+#### Gradual and Optional Typing Across the Ecosystem
+
+**Python — annotations and external analysis**
 
 ```python
-# Without annotations — mypy treats everything as implicitly Any
-def add(x, y):
-    return x + y
-
-# With annotations — mypy can verify call sites
-def add(x: int, y: int) -> int:
-    return x + y
-
-# Any as explicit escape
 from typing import Any
+
+# By default, mypy usually does not type-check the body of a
+# completely unannotated function. Configuration can change this.
+def add_untyped(x, y):
+    return x + y
+
+def add_typed(x: int, y: int) -> int:
+    return x + y
+
+# Any permits an unchecked flow through the annotated boundary.
 def process(value: Any) -> str:
-    return str(value)   # no type errors, but no guarantees either
+    return value
+
+result = process(42)  # Checker permits it; runtime result is an int.
 ```
 
-Tools: `mypy`, `pyright`, `ty` (Astral, 2025). Annotations live in
-`.pyi` stub files or inline. `Any` at a boundary silences the checker
-but forfeits soundness for values that cross it.
+Python annotations are not normally enforced by the Python runtime.
+Tools such as mypy and Pyright analyze them externally.
 
-**TypeScript — structural and mostly sound, `any` as a hole**
+`Any` permits operations and assignments that a checker could not justify
+for an arbitrary unknown value. It weakens guarantees wherever those
+unchecked flows matter, but does not necessarily erase every unrelated
+type fact in the program.
+
+**TypeScript — structural checking with deliberate soundness trade-offs**
 
 ```typescript
-// Structural typing: shape matters, not declared name
-interface HasName { name: string }
-function greet(x: HasName) { return "Hello, " + x.name; }
-
-greet({ name: "Alice", age: 30 });  // OK — has the required shape
-
-// any disables checking entirely
-function risky(x: any) {
-    x.nonExistent();   // no error at compile time; crash at runtime
+interface HasName {
+    name: string;
 }
 
-// unknown is the sound alternative — forces narrowing before use
-function safe(x: unknown) {
-    if (typeof x === "string") {
-        console.log(x.toUpperCase());  // now the compiler knows it's a string
+function greet(value: HasName): string {
+    return "Hello, " + value.name;
+}
+
+const user = { name: "Alice", age: 30 };
+greet(user); // OK: structurally compatible.
+
+// A fresh object literal receives an additional excess-property check:
+// greet({ name: "Alice", age: 30 }); // Error: age is not declared in HasName.
+
+function risky(value: any) {
+    value.nonExistent(); // No static error; may fail at runtime.
+}
+
+function safer(value: unknown) {
+    if (typeof value === "string") {
+        console.log(value.toUpperCase());
     }
 }
 ```
 
-TypeScript's structural type system is largely sound within typed code.
-`any` is the intentional escape; `unknown` is the sound alternative that
-forces the developer to narrow the type before using the value.
+TypeScript deliberately trades some soundness for compatibility and
+usability. Its unchecked cases are not limited to `any`.
 
-**Ruby — Sorbet and RBS, gradual by default**
+For example, with `strict` enabled but `noUncheckedIndexedAccess` disabled:
+
+```typescript
+const values: number[] = [1];
+const value: number = values[10]; // Actually undefined at runtime.
+```
+
+`unknown` is safer than `any` for representing an unknown value because
+it requires narrowing before most operations. It does not make the
+entire type system sound, and it is not the same kind of escape hatch.
+
+**Ruby — Sorbet, RBS, and separate roles**
 
 ```ruby
-# typed: true  (Sorbet signature comment)
+# typed: true
 
-# T.untyped is Ruby's escape hatch — equivalent to any
+require "sorbet-runtime"
+extend T::Sig
+
 sig { params(value: T.untyped).returns(String) }
 def process(value)
   value.to_s
 end
 
-# Fully typed — Sorbet can verify this
 sig { params(name: String, age: Integer).returns(String) }
 def greet(name, age)
   "#{name} is #{age}"
 end
 ```
 
-Sorbet introduces gradual typing via `# typed:` comments at the file
-level. Files at `typed: false` are invisible to the checker; files at
-`typed: strict` require all signatures. `T.untyped` is the explicit
-escape hatch.
+Sorbet combines static analysis with an optional runtime signature-checking
+library. `T.untyped` allows unchecked interactions.
 
-**Clojure — runtime contracts, not compile-time types**
+File-level strictness affects checking:
+
+- `typed: false` still participates in parts of analysis and contributes
+  definitions.
+- `typed: true` enables type checking without requiring every method
+  signature.
+- `typed: strict` imposes stronger signature and typing requirements.
+- `typed: ignore` more substantially excludes a file from analysis.
+
+**RBS** is a language for describing Ruby type signatures. Tools such as
+Steep use those signatures for checking; RBS itself is not a type checker.
+
+**Clojure — specifications and runtime validation**
 
 ```clojure
-;; clojure.spec: runtime-checked contracts
 (require '[clojure.spec.alpha :as s])
+(require '[clojure.spec.test.alpha :as stest])
 
 (s/def ::age pos-int?)
 (s/def ::name string?)
 (s/def ::user (s/keys :req [::name ::age]))
 
-;; Validation at the boundary
-(s/valid? ::user {::name "Alice" ::age 30})   ; => true
-(s/valid? ::user {::name "Alice" ::age -1})   ; => false
+(s/valid? ::user {::name "Alice" ::age 30})  ; => true
+(s/valid? ::user {::name "Alice" ::age -1})  ; => false
 
-;; Instrumented function — checks inputs at runtime
+(defn greet [name age]
+  (str name " is " age))
+
 (s/fdef greet
   :args (s/cat :name ::name :age ::age)
-  :ret  string?)
+  :ret string?)
+
+;; fdef declares a specification; instrument enables argument checking.
+(stest/instrument `greet)
 ```
 
-Clojure takes a different path: instead of compile-time static analysis,
-it uses runtime-checked specifications via `clojure.spec` or `malli`.
-This is fully gradual (specs are optional) and developer-friendly, but
-soundness is runtime-enforced, not compile-time guaranteed.
+`clojure.spec` supports validation, function specifications,
+instrumentation, and generative testing. Standard instrumentation checks
+function arguments; it does not automatically enforce every `:ret` and
+`:fn` specification on every call. Those specifications also support
+checks such as generative testing with `stest/check`.
 
-**Elixir 1.18+ — `dynamic()` as a range, not an escape**
+Optional specifications are useful but are not, by themselves, a sound
+gradual type system. Clojure also has separate static-typing projects;
+runtime contracts are not its only possible approach.
 
-Elixir's approach, developed across versions 1.17–1.20, makes a
-principled distinction that the other systems largely do not:
+**Elixir — evolving compiler analysis and gradual set-theoretic typing**
+
+Elixir's compiler type analysis is being developed incrementally.
+Its design uses set-theoretic types and gradual information to improve
+checking without requiring developers to annotate every function.
+
+Patterns, guards, and operations already provide useful information:
 
 ```elixir
-# System.get_env/1 returns dynamic(nil | binary())
-# The compiler tracks this *range* through the program
+defmodule Example do
+  def read_port do
+    case System.get_env("PORT") do
+      nil ->
+        :not_found
 
-case System.get_env("PORT") do
-  nil   -> :not_found
-  value -> {:ok, String.to_integer(value)}
-  #                                ^-- in this branch the range narrows
-  #                                    to binary(); String.to_integer/1
-  #                                    expects binary() ✓
-end
+      value ->
+        # Here value is a binary.
+        # Its contents may still be invalid as an integer.
+        {:ok, String.to_integer(value)}
+    end
+  end
 
-# Guard expressions carry implicit type information — no annotations needed
-def add_a_and_b(data) do
-  data.a + data.b   # compiler infers data must be %{a: number(), b: number()}
-end
-
-# A verified bug — the compiler can prove this crashes at runtime
-def example(x) when not is_map_key(x, :foo) do
-  x.foo   # warning: key :foo is guaranteed absent
+  def add_a_and_b(%{a: a, b: b})
+      when is_number(a) and is_number(b) do
+    a + b
+  end
 end
 ```
 
-The key mechanism is **narrowing**: as a `dynamic()` value flows through
-pattern matches, guards (`when is_integer(x)`), and conditionals, the
-compiler progressively tightens the range of possible types. An operation
-is accepted if it is compatible with *some* member of the range. An
-operation that cannot succeed against *any* member of the range is
-flagged as a *verified bug* — an error guaranteed to raise at runtime.
+The design can retain constraints on dynamically known values rather than
+treating every uncertain value as completely unconstrained. Its
+`dynamic()` terminology should be explained in terms of Elixir's own type
+system, not assumed to mean exactly the same thing as TypeScript's `any`.
 
-This means the checker can find errors in **unannotated code**. Guard
-expressions and pattern matches already carry implicit type information;
-the compiler extracts and propagates it without requiring a single
-explicit type signature.
+However:
 
-#### `dynamic()` vs `any()` — the key distinction
+- Compatibility with **some** possible value does not establish safety
+  for **every** possible value.
+- Reporting definitely incompatible operations is not equivalent to
+  proving that every accepted program is free of type errors.
+- Type narrowing is not unique to Elixir.
+- A value known to be a binary is not necessarily a valid numeric string.
 
-| Property | `any` (classical escape) | `dynamic()` (Elixir) |
-|---|---|---|
-| Soundness | Broken at boundary | Maintained within range |
-| Gradual | Yes | Yes |
-| Developer-friendly | Yes | Yes — no annotations required |
-| What the checker does | Stops tracking the value | Tracks a range of possible types |
-| False positives | None (checker is silent) | None (only verified bugs reported) |
+Exact inference capabilities, warning categories, and guarantees are
+release-dependent. They should be documented against a specific Elixir
+release and its official type-system documentation, rather than grouped
+under an open-ended claim such as "1.18+ is sound."
 
-#### Trilemma Summary
+#### Comparison of Practical Guarantees
 
-| Language / tool | Sound | Gradual | Developer-friendly | Escape hatch |
-|---|---|---|---|---|
-| Python + mypy | Partial | Yes | Yes | `Any` |
-| TypeScript | Mostly | Yes | Yes | `any` / `unknown` |
-| Ruby + Sorbet | Partial | Yes | Yes | `T.untyped` |
-| Clojure + spec | Runtime only | Yes | Yes | No static checker |
-| Elixir 1.18+ | Yes (within range) | Yes | Yes (no annotations) | `dynamic()` with range |
-| Haskell | Yes | No | Moderate | None by design |
+| Ecosystem | Main checking mechanism | Runtime behavior | Important limitation |
+|-----------|-------------------------|------------------|----------------------|
+| Python + mypy/Pyright | External static analysis | Annotations normally do not add runtime enforcement | `Any`, untyped code, and inaccurate declarations weaken guarantees |
+| TypeScript | Static structural checking | Types are erased; JavaScript executes | Deliberate unsoundness exists beyond `any` |
+| Ruby + Sorbet | Static analysis; optional runtime signature checks | Enforcement depends on library and configuration | `T.untyped` and unchecked boundaries limit guarantees |
+| Clojure + spec | Explicit validation, instrumentation, generative testing | Checks occur where enabled | Not a whole-program static type-safety guarantee |
+| Elixir compiler analysis | Evolving inference and gradual type analysis | Existing language runtime behavior remains relevant | Guarantees depend on the implemented analysis and release |
+| Haskell | Static type checking with extensive inference | No automatic gradual boundary-checking layer | Guarantees concern the safe subset; exceptions, nontermination, and unsafe facilities remain |
 
-No system fully escapes the trilemma — each makes deliberate trade-offs.
-Elixir's contribution is to show that *zero-annotation soundness for
-verified bugs* is achievable as a first milestone, even before explicit
-type signatures are introduced. Whether this constitutes a full resolution
-of the trilemma or a principled point within it remains an open question
-in programming language research.
+**Gradual typing is an active research area**
+    Jeremy Siek and Walid Taha introduced the term in their 2006 work on
+    gradual typing for functional languages.
 
-!!! note "Gradual typing is an active research area"
-    The term was introduced by Jeremy Siek in 2006. The trilemma
-    formulation is more recent and not universally agreed upon. Different
-    communities draw the boundaries differently — some treat soundness
-    as non-negotiable, others treat it as one goal among several.
-    The practical implementations above represent the current state of
-    the art, not settled answers.
+    Modern ecosystems implement different combinations of annotations,
+    inference, unknown types, runtime checks, and escape hatches. Compare
+    their stated guarantees rather than treating "gradual" as a single
+    quality level.
 
 ---
 
-## Mapping Languages to the Four Axes
+### F. Implementation Strategy
 
-| Language / Style | A: Control Style | B: Organization | C: Execution | D: Type Discipline |
-|-----------------|------------------|-----------------|--------------|--------------------|
-| C | Imperative | Procedural | Sequential | Static, mostly explicit |
-| Java (classic) | Imperative | Object-Oriented | Sequential | Static, nominal, mostly explicit |
-| Java (streams + lambdas) | More declarative | OOP + FP | Sequential | Static, nominal, mostly explicit |
-| Spring (annotations) | Declarative configuration | OOP + AOP | Depends | Static, nominal |
-| Haskell | Declarative | Functional | Sequential* | Static, inferred |
-| Erlang / Elixir | Mostly declarative | Functional + Actor | Concurrent | Dynamic / Gradual (Elixir 1.18+) |
-| Go | Imperative | Procedural | Concurrent (CSP) | Static, inferred + explicit, structural interfaces |
-| Scala + Akka | Mixed | OOP + FP + Actor | Concurrent | Static, mostly inferred |
-| SQL | Declarative | Query-based | Delegated to DBMS | Typed, dialect-dependent |
-| Prolog | Declarative | Logic | Usually sequential search | Typically dynamic / runtime-checked |
-| Rust | Imperative | Procedural + FP | Concurrent | Static, strongly inferred |
-| Clojure | Mostly declarative | Functional | Concurrent (STM) | Dynamic + runtime contracts (spec) |
-| React (JSX) | Declarative | Component-based | Event-driven | Usually dynamic (JS) or static optional (TS) |
-| Python | Mixed | Multi (OOP + Proc + FP) | Sequential* | Dynamic + optional gradual (mypy, pyright) |
-| TypeScript | Mixed | Multi (OOP + FP) | Event-driven* | Gradual, structural, mostly sound |
-| Ruby | Mixed | OOP + FP | Sequential* | Dynamic + optional gradual (Sorbet) |
+**Question:** How does a particular implementation translate and execute
+a program?
 
-!!! note "Most modern languages are multi-paradigm"
-    Python supports imperative, OOP, and functional styles. Scala blends
-    OOP with FP. Rust is imperative with strong FP features. The paradigm
-    is in how you *use* the language, not just in the language itself.
+Compilation and interpretation are mechanisms, not mutually exclusive
+categories of languages.
 
-    The same is true of type discipline in practice: many ecosystems support
-    annotations, inference, optional checking, code generation, or external
-    static analysis layered on top of the base language.
+- A **compiler** translates a program from one representation into another.
+- An **interpreter** executes a program by processing its representation.
+- A system may compile one representation and interpret the next.
+- The same language can have implementations with different strategies.
+
+Common implementation properties include:
+
+| Property | Possibilities |
+|----------|---------------|
+| **Compilation timing** | Ahead-of-time (AOT), just-in-time (JIT), combinations |
+| **Translation target** | Native machine code, bytecode, another intermediate representation, another source language |
+| **Interpretation level** | Syntax tree, bytecode, another executable representation |
+| **Runtime adaptation** | Profiling, specialization, tiered compilation, deoptimization |
+| **Runtime services** | Garbage collection, scheduling, dynamic loading, exception handling |
+
+These describe an **execution pipeline**, not a single spectrum.
+
+#### Typical Pipelines
+
+| Implementation / configuration | Typical path | Important qualification |
+|--------------------------------|--------------|-------------------------|
+| C through GCC or Clang | Source → compiler IRs → native object code → linked executable | C can also be interpreted; AOT is the conventional implementation strategy |
+| Rust through standard `rustc` with LLVM | Source → AST → HIR → THIR → MIR → LLVM IR → native object code → linked executable | Simplified internal pipeline; alternate backends and targets exist |
+| Java through HotSpot | Source → JVM bytecode → interpretation and tiered JIT → native execution | Some code may remain interpreted; other JVM and AOT configurations differ |
+| Python through conventional CPython | Source → AST → bytecode → bytecode evaluation | JIT facilities depend on version and build; they are not assumed here |
+| Python through PyPy | Bytecode interpretation + tracing JIT for hot paths | Runtime profiling drives compilation decisions |
+| JavaScript through V8 | Source → bytecode → interpretation and tiered JIT | Engine tiers and details evolve |
+| TypeScript through `tsc`, then a JS engine | Type checking + JavaScript emission → JavaScript implementation pipeline | Type checking and execution are separate; types are erased |
+| Haskell through GHC, native-code configuration | Source → Core → STG and lower-level representations → native code | GHC also provides interactive execution modes; backends vary |
+| Erlang/Elixir on Erlang/OTP | Source → BEAM code → interpreter or BeamAsm JIT, depending on runtime configuration | The VM supplies process scheduling and other runtime services |
+
+The table describes common configurations, not essential properties
+of the languages.
+
+#### Rust: Multiple Intermediate Representations
+
+Rust is a useful example of why "compiled to machine code" is only the
+outermost description of a compiler.
+
+A simplified LLVM-backed pipeline is:
+
+```mermaid
+flowchart LR
+    SRC["Rust source"]
+    AST["AST<br/>Parsing and macro expansion"]
+    HIR["HIR<br/>High-level IR"]
+    THIR["THIR<br/>Typed high-level IR"]
+    MIR["MIR<br/>Mid-level IR"]
+    LLVM["LLVM IR"]
+    OBJ["Native object code"]
+    EXE["Linked executable or library"]
+
+    SRC --> AST --> HIR --> THIR --> MIR --> LLVM --> OBJ --> EXE
+```
+
+| Representation | Main role |
+|----------------|-----------|
+| **Source** | Programmer-facing Rust syntax, including macros |
+| **AST** | Syntactic structure used during parsing, expansion, and related front-end work |
+| **HIR** | A lowered high-level representation with syntactic constructs normalized |
+| **THIR** | Typed representation of bodies used during lowering toward MIR |
+| **MIR** | Explicit control-flow representation used for borrow checking, analysis, optimization, and interpretation machinery |
+| **LLVM IR** | Backend representation used by LLVM for optimization and target-specific code generation |
+| **Object code** | Machine code and metadata prepared for linking |
+
+These are **intermediate representations**, not successive versions of
+ordinary Rust source code.
+
+The diagram is intentionally simplified:
+
+- `rustc` is query-driven, not merely a sequence of complete files emitted
+  at each stage.
+- Different representations serve different analyses.
+- Compile-time evaluation uses MIR-based interpretation machinery.
+- Miri interprets MIR to detect certain classes of undefined behavior
+  during execution.
+- LLVM is the standard backend, but alternative backends exist.
+- A WebAssembly target does not follow the final native-executable steps
+  shown above.
+
+Thus Rust can involve **AOT compilation and interpretation within the same
+toolchain**, without changing its source-language type discipline or
+programming paradigms.
+
+See the [Rust Compiler Development Guide](https://rustc-dev-guide.rust-lang.org/)
+and [Miri](https://github.com/rust-lang/miri).
+
+**Implementation strategy does not determine semantics**
+    JIT compilation does not imply dynamic typing.
+    Bytecode does not imply interpretation.
+    Native compilation does not imply manual memory management.
+    Lazy evaluation does not imply interpretation.
+
+    These properties can influence implementation choices, but they answer
+    different questions.
+
+---
+
+## Mapping Languages and Styles
+
+The following table describes typical styles and facilities, not exclusive
+classifications. The two parts share the same examples so that all six
+questions remain readable.
+
+### Style, Organization, State
+
+| Language / style | A: Control and specification | B: Organization | C: State and effects |
+|------------------|------------------------------|-----------------|----------------------|
+| C | Predominantly imperative | Procedural, modular | Explicit mutation; shared state and manual resource management are common |
+| Java | Imperative with declarative APIs | Class-based OOP; functional features | Mutable and immutable objects; ordinary effectful methods |
+| Haskell | Predominantly expression-based and declarative | Functional | Pure expressions; explicit effectful computations; controlled mutation |
+| Erlang / Elixir | Functional expressions, pattern matching | Functional; process-oriented organization | Immutable values; evolving process-local state |
+| Go | Predominantly imperative | Procedural; interfaces and methods | Mutation; shared memory or channel-based coordination |
+| Rust | Imperative and expression-based styles | Procedural, functional features, traits | Ownership and borrowing constrain mutation and aliasing |
+| Clojure | Functional transformations with controlled effects | Functional | Persistent values; atoms, refs, agents, ordinary I/O |
+| SQL queries | Declarative relational specification | Query-based | Queries read database state; statements and transactions can change it |
+| Prolog | Relational specification with operational search behavior | Logic | Logical bindings; practical systems also provide effects and mutable facilities |
+| Python | Mixed | Procedural, OOP, functional features | Mutable and immutable values; ordinary effectful functions |
+| TypeScript | Mixed | OOP, functional, component-oriented styles | JavaScript state and effects; static checking layered above |
+| Ruby | Predominantly imperative with functional idioms | OOP; blocks and modules | Mutable objects; ordinary effectful methods |
+| Forth | Explicit stack transformations and control flow | Concatenative; word definitions | Stack operations, memory access, and I/O |
+
+### Coordination, Types, Implementation
+
+| Language / style | D: Concurrency and coordination | E: Type discipline | F: Typical implementation |
+|------------------|--------------------------------|--------------------|---------------------------|
+| C | Threads, atomics, libraries; sequential programs are common | Static; largely explicit declarations | AOT native compilation |
+| Java | Threads, executors, virtual threads, reactive libraries | Static; nominal classes; inference in selected contexts | JVM bytecode with interpretation/JIT |
+| Haskell | Sequential evaluation, explicit concurrency, parallel abstractions | Static; extensive inference | GHC native compilation; interactive modes also available |
+| Erlang / Elixir | Lightweight processes and asynchronous messages | Dynamic foundations; Elixir adds evolving compiler type analysis | BEAM runtime |
+| Go | Goroutines, channels, shared-memory synchronization | Static; inferred locals; structural interface compatibility | Commonly AOT native compilation with runtime support |
+| Rust | Threads, channels, atomics, async libraries | Static; local inference; nominal types and traits | Commonly `rustc` with LLVM |
+| Clojure | JVM concurrency; atoms, STM, agents, libraries | Dynamic; optional specs and external analysis | JVM bytecode compilation and JVM execution |
+| SQL queries | Planning, scheduling, and parallelism delegated to DBMS | Typed; rules depend on SQL dialect | DBMS planning and execution machinery |
+| Prolog | Commonly sequential search; extensions support other models | Commonly dynamic/runtime-checked | Implementation-dependent compilation and interpretation |
+| Python | Threads, processes, async tasks, libraries | Dynamic; optional static analysis | Commonly CPython bytecode evaluation |
+| TypeScript | JavaScript host mechanisms: events, promises, workers | Static structural checking with gradual features and deliberate unsoundness | JavaScript emission followed by JS execution |
+| Ruby | Threads, fibers, processes, runtime-specific mechanisms | Dynamic; optional Sorbet/RBS-based tooling | Interpreter, VM, and JIT strategies vary by implementation |
+| Forth | Implementation- and application-dependent | Often little or no static type checking; stack-effect conventions | Threaded code, native compilation, and interpretation vary |
+
+**Evaluation strategy is a separate question**
+    Haskell has non-strict semantics and is commonly implemented using
+    call-by-need evaluation. That does not imply automatic parallelism.
+
+    Conversely, a strict language can provide lazy iterators or explicit
+    delayed computations without becoming globally non-strict.
 
 ---
 
 ## Organization Models in Depth
 
+Examples in the following sections are illustrative fragments unless
+presented as complete programs. Alternative definitions are alternatives,
+not declarations intended to coexist in the same scope.
+
 ### Procedural Programming
 
-**Core idea:** A program is a collection of **procedures** (functions)
-that operate on **data**. Data and code are separate entities.
+**Core idea:** organize computation into procedures or functions that
+operate on data, often grouped into modules.
 
 ```c
-// C — procedural style
-int total = 0;
-for (int i = 0; i < 10; i++) {
-    total += i;
+#include <stddef.h>
+
+int sum_values(const int *values, size_t count) {
+    int total = 0;
+
+    for (size_t i = 0; i < count; ++i) {
+        total += values[i];
+    }
+
+    return total;
 }
 ```
 
-The programmer specifies **how** to compute the result, step by step.
-The mental model is a machine executing instructions in order.
+The **procedure** provides the organizational boundary. The loop and
+accumulator show one possible **imperative implementation** inside it.
+
+Procedural organization does not require every procedure to mutate state,
+and it does not prevent encapsulation through modules or abstract data types.
 
 **Strengths:**
 
-- Maps directly to how hardware works
-- Intuitive for sequential algorithms
-- Efficient — close to the metal
-- Simple mental model
+- Direct decomposition into operations and subproblems
+- Clear call structure for many algorithms
+- Straightforward integration with modules and explicit data structures
+- Can support low-level control in languages designed for it
 
-**Weaknesses:**
+**Trade-offs:**
 
-- Mutable state makes reasoning hard (especially with concurrency)
-- Order-dependent — reordering statements changes meaning
-- Procedures can have hidden side effects
-- Data and code separated — changes to data structures ripple through all procedures
+- Procedures may depend on hidden global state or effects
+- Shared representations can couple many procedures
+- Mutation and order dependence require careful reasoning
+- Data abstraction depends on the language's module and interface facilities
 
-**Key moment:** Dijkstra's "Go To Considered Harmful" (1968) argued that
-unrestricted control flow (with `goto`) was unmanageable. **Structured
-programming** restricted flow to `if/else`, `while`, and functions —
-making procedural code tractable.
+Efficiency is not a guarantee of the paradigm. C's low-level facilities
+and implementations are one practical realization, not the definition of
+procedural programming.
 
-**Languages:** C, Pascal, Fortran, BASIC
+**Historical connection:** structured programming promoted disciplined
+control flow through sequence, selection, and iteration, together with
+decomposition. Dijkstra's 1968 letter was an influential intervention in
+that movement, not its sole origin.
+
+**Languages:** C, Pascal, Fortran, BASIC; procedural styles also appear in
+most multi-paradigm languages.
 
 → [Edsger Dijkstra](../../../authors/edsger-dijkstra.md) ·
 [Go To Considered Harmful](../../../works/papers/dijkstra-1968-goto.md)
@@ -507,122 +871,157 @@ making procedural code tractable.
 
 ### Object-Oriented Programming
 
-**Core idea:** A program is a collection of **objects** — bundles of data
-(state) and behaviour (methods) — that interact by sending **messages**.
+**Core idea:** organize programs around objects that expose behavior
+through methods or messages, often encapsulating state and representation.
 
-> 🔍 **Deep Dive:** This section focuses on OOP as a structural paradigm. For a detailed breakdown of OOP mechanics (encapsulation, inheritance, polymorphism) and the evolution of design principles (DbC, GoF, SOLID), see the **[OOP & Design](../../design/index.md)** topic.
+Objects may be mutable or immutable. Classes and inheritance are common,
+but prototype-based languages demonstrate that they are not the only
+basis for object-oriented organization.
 
-#### Two Visions of OOP
+> **Deep dive:** For encapsulation, inheritance, polymorphism, and design
+> principles, see [OOP & Design](../../design/index.md).
 
-OOP has two distinct historical traditions that are often conflated:
+#### Two Historical Emphases
 
-##### Kay's OOP: Messaging
+Two influential emphases help explain OOP's development. They overlap;
+they are not mutually exclusive definitions.
 
-Alan Kay, who coined the term "object-oriented programming," defined it
-as being about **messages**, not classes:
+##### Kay and Smalltalk: Messaging and Late Binding
+
+Alan Kay emphasized communication, encapsulated state, and late binding:
 
 > "OOP to me means only messaging, local retention and protection
 > and hiding of state-process, and extreme late-binding of all things."
 
-In Kay's vision:
+See the [2003 correspondence containing this explanation](https://www.purl.org/stefan_ram/pub/doc_kay_oop_en).
 
-- Objects are like biological cells or computers on a network
-- The only operation is sending a message to an object
-- The receiver decides how to handle the message (late binding)
-- Objects are isolated — no shared state
+This emphasis highlights:
 
-This vision is realised in **Smalltalk**, **Erlang** (processes as objects),
-and conceptually in **microservices** (services as objects, APIs as messages).
+- interacting entities rather than passive records;
+- behavior selected by the receiver;
+- encapsulation of internal representation;
+- late binding that allows implementations to vary.
 
-##### Simula's OOP: Classification
+Smalltalk also has classes, inheritance, and shared object references.
+Its message sends are not a guarantee of actor-like isolation.
 
-Dahl and Nygaard's Simula introduced OOP through the lens of **modelling**:
+Erlang processes and microservices provide useful **analogies** for
+independent entities communicating through messages, but should not be
+treated as identical realizations of Smalltalk's object model.
 
-- **Classes** as blueprints for real-world entities
-- **Inheritance** as an "is-a" relationship
-- **Virtual methods** for runtime polymorphism
+##### Simula: Modeling, Classes, and Inheritance
 
-This tradition was adopted by **C++**, **Java**, **C#**, and most
-mainstream languages. It emphasises type hierarchies, code reuse via
-inheritance, and encapsulation through access modifiers.
+Dahl and Nygaard's Simula developed objects and classes in the context
+of modeling and simulation.
+
+Important contributions include:
+
+- classes representing related entities;
+- object instances with state and behavior;
+- inheritance and class specialization;
+- virtual procedures supporting runtime variation.
+
+This tradition strongly influenced C++, Java, and C#.
 
 ```java
-// Java — Simula-tradition OOP
+// Animal.java
 public class Animal {
-  private String name;
-  public Animal(String name) { this.name = name; }
-  public void speak() { System.out.println("..."); }
-}
+    private final String name;
 
-public class Dog extends Animal {
-  public Dog(String name) { super(name); }
-  @Override
-  public void speak() { System.out.println("Woof!"); }
+    public Animal(String name) {
+        this.name = name;
+    }
+
+    public String name() {
+        return name;
+    }
+
+    public String speak() {
+        return "...";
+    }
 }
 ```
-
-##### The Tension
-
-| Aspect | Kay's OOP | Simula/C++ OOP |
-|--------|-----------|----------------|
-| Primary mechanism | Message passing | Method call |
-| Binding | Extreme late binding | Earlier binding where possible |
-| Coupling | Loose (isolated objects) | Often tighter via class hierarchies |
-| State sharing | None in principle | Common in practice |
-| Modern echo | Erlang, microservices | Java, C++, C# |
-
-> 🔬 **Polymorphism taxonomy:** OOP polymorphism (inclusion/subtype)
-> is one of four forms of polymorphism. For the full Cardelli–Wegner
-> taxonomy with diagrams, see **[OOP Deep Dive: Polymorphism](../../design/oop-deep-dive.md)**.
-
-#### OOP Is Not Inherently Imperative
-
-A common misconception places OOP as a subtype of imperative programming.
-OOP is an **organization model** (axis B) — it says *what a program is
-made of* (objects). It says nothing about *how code inside methods is
-written* (axis A), *how computations are scheduled* (axis C), or
-whether the language is *statically or dynamically typed* (axis D):
 
 ```java
-// Same OOP class, imperative control style
-class OrderService {
-  BigDecimal totalPrice(List<Order> orders) {
-    BigDecimal sum = BigDecimal.ZERO;
-    for (Order o : orders) {
-      sum = sum.add(o.getPrice());
+// Dog.java
+public class Dog extends Animal {
+    public Dog(String name) {
+        super(name);
     }
-    return sum;
-  }
-}
 
-// Same OOP class, more declarative control style
-class OrderService {
-  BigDecimal totalPrice(List<Order> orders) {
-    return orders.stream()
-        .map(Order::getPrice)
-        .reduce(BigDecimal.ZERO, BigDecimal::add);
-  }
+    @Override
+    public String speak() {
+        return "Woof!";
+    }
 }
 ```
 
-Same organization (objects with methods). Different control style.
-And the same organization model exists in both **statically typed**
-languages (Java, C#) and **dynamically typed** ones (Python, Ruby).
-**Organization, control, execution, and typing are independent axes.**
+##### Comparing the Emphases
 
-**Strengths of OOP:**
+| Concern | Messaging-oriented emphasis | Classification-oriented emphasis |
+|---------|-----------------------------|---------------------------------|
+| Main design question | How do entities collaborate through protocols? | How are related entities modeled and specialized? |
+| Prominent mechanisms | Message sends, receiver-selected behavior, late binding | Classes, inheritance, virtual methods |
+| Typical focus | Behavioral boundaries and collaboration | Domain modeling and subtype relationships |
+| Shared ground | Encapsulation, objects, polymorphism | Encapsulation, objects, polymorphism |
 
-- Natural mapping to domain concepts
-- Encapsulation hides complexity
-- Polymorphism enables extensibility
+A dynamically dispatched method call and a message send are not necessarily
+opposing mechanisms; terminology and semantics differ between languages.
 
-**Weaknesses of OOP:**
+#### Classes Are Not the Only Object Model
 
-- Inheritance creates tight coupling ("fragile base class" problem)
-- Shared mutable state complicates concurrency
-- "Kingdom of nouns" — tendency to create unnecessary class hierarchies
+Prototype-based OOP, associated with Self and JavaScript, organizes reuse
+through objects and delegation rather than requiring class-based
+instantiation as the foundational mechanism.
 
-**Languages:** Simula, Smalltalk, C++, Java, C#, Python, Ruby, Kotlin
+JavaScript's modern `class` syntax operates within its prototype-based
+object model.
+
+#### OOP Does Not Require Mutable Imperative Methods
+
+An object can encapsulate a collection and expose a calculation without
+mutating it:
+
+```java
+import java.math.BigDecimal;
+import java.util.List;
+
+record Order(BigDecimal price) {}
+
+final class OrderBook {
+    private final List<Order> orders;
+
+    OrderBook(List<Order> orders) {
+        this.orders = List.copyOf(orders);
+    }
+
+    BigDecimal totalAbove(BigDecimal threshold) {
+        return orders.stream()
+            .map(Order::price)
+            .filter(price -> price.compareTo(threshold) > 0)
+            .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+}
+```
+
+This combines object-oriented organization, immutable stored data, and
+a transformation pipeline.
+
+**Strengths:**
+
+- Encapsulation can protect invariants and hide representation
+- Interfaces and polymorphism support substitution and extension
+- Objects can model domain entities, resources, or collaborating services
+
+**Trade-offs:**
+
+- Inheritance can introduce fragile dependencies
+- Shared mutable object graphs complicate reasoning and concurrency
+- Over-modeling can create unnecessary classes and indirection
+- Object boundaries do not automatically produce good modularity
+
+**Languages:** Simula, Smalltalk, Self, C++, Java, C#, Python, Ruby,
+JavaScript, Kotlin.
 
 → [Alan Kay](../../../authors/alan-kay.md) ·
 [Ole-Johan Dahl](../../../authors/ole-johan-dahl.md) ·
@@ -633,99 +1032,127 @@ languages (Java, C#) and **dynamically typed** ones (Python, Ruby).
 
 ### Functional Programming
 
-**Core idea:** A program is a **composition of functions** that transform
-**immutable values**. Functions are mathematical — given the same input,
-they always produce the same output, with no side effects.
+**Core idea:** emphasize functions as values, expression-based
+transformations, and composition.
+
+**Pure functional programming** additionally restricts observable effects
+in ordinary function evaluation. Functional programming more broadly can
+coexist with mutation, exceptions, and I/O.
 
 ```haskell
--- Haskell — functional style
+total :: Integer
 total = sum [0..9]
 
--- Or more explicitly:
-total = foldr (+) 0 [0..9]
+-- Alternative expression:
+-- total = foldr (+) 0 [0..9]
 ```
 
 #### Core Concepts
 
-**Pure functions:**
+**First-class and higher-order functions**
 
-- No side effects (no mutation, no I/O, no global state)
-- **Referential transparency** — an expression can be replaced by its
-  value without changing the program's behaviour
-- Easier to test, reason about, and parallelise
+Functions can be stored, passed as arguments, and returned as results.
 
-**Immutability:**
+Operations such as `map`, `filter`, and folds express recurring patterns
+without repeating traversal mechanics.
 
-- Data structures are never modified in place
-- "Changing" a list returns a new list (the old one still exists)
-- Eliminates entire categories of bugs (data races, aliasing, stale state)
+**Pure functions and referential transparency**
 
-**Higher-order functions:**
+A pure computation has no observable side effects and depends only on
+its inputs.
 
-- Functions that take functions as arguments or return functions
-- `map`, `filter`, `reduce` replace most loops
-- Enable powerful composition and abstraction
+Referential transparency allows an expression to be replaced by an
+equivalent value or expression without changing observable behavior,
+subject to the language's semantics.
 
-**Algebraic data types:**
+This makes local reasoning, testing, caching, and some optimizations easier.
+
+**Immutable and persistent data**
+
+Immutable values are not modified after creation. Persistent data structures
+allow old and new versions to coexist, often sharing unchanged structure
+rather than copying everything.
+
+Immutability prevents races caused by in-place updates to those values.
+It does not remove every coordination or consistency problem.
+
+**Algebraic data types and pattern matching**
+
+These are especially prominent in statically typed functional languages,
+though not exclusive to FP:
 
 ```haskell
--- Sum type (OR): a Shape is a Circle OR a Rectangle
-data Shape = Circle Double | Rectangle Double Double
+data Shape
+    = Circle Double
+    | Rectangle Double Double
 
--- Pattern matching: handle each case
 area :: Shape -> Double
-area (Circle r)      = pi * r * r
-area (Rectangle w h) = w * h
+area (Circle radius) = pi * radius * radius
+area (Rectangle width height) = width * height
 ```
 
-#### FP and the Control Spectrum
+#### FP Across the Six Questions
 
-Functional programming **tends toward** the declarative end of the
-control spectrum but is not synonymous with it. A chain of
-`map.filter.reduce` is declarative — you describe transformations,
-not steps. But:
+FP spans several dimensions:
 
-- Haskell's `do`-notation sequences effects in a linear-looking way
-- Clojure allows controlled mutation via atoms and refs
-- Scala lets you mix FP with imperative loops
+- **Organization:** composition of functions and transformations.
+- **Control:** often expression-based and relatively declarative.
+- **State and effects:** frequently emphasizes immutable data and explicit
+  handling of effects.
+- **Types:** may be static, dynamic, or gradually checked.
+- **Coordination:** may use sequential execution, actors, STM, or other models.
+- **Implementation:** may use native compilation, bytecode, interpretation,
+  or JIT compilation.
 
-FP is an **organization model** (axis B) with natural affinity for the
-declarative end of the **control spectrum** (axis A). They are related
-but distinct concepts. Likewise, FP does not imply any one type discipline:
-functional languages may be **statically typed** (Haskell, OCaml, F#),
-**dynamically typed** (Clojure, Scheme), or span both traditions.
+Haskell, OCaml, Scheme, and Clojure are therefore not interchangeable
+examples of one fixed computational package.
 
-#### Evolution
+#### Historical Connections
 
 ```mermaid
 flowchart LR
-    Church["Church<br/>Lambda Calculus<br/>1936"] --> McCarthy["McCarthy<br/>Lisp<br/>1958"]
-    McCarthy --> Scheme["Steele & Sussman<br/>Scheme<br/>1975"]
-    Church --> Milner["Milner<br/>ML<br/>1978"]
-    Church --> Backus["Backus<br/>FP Manifesto<br/>1978"]
-    Milner --> Haskell["Committee<br/>Haskell<br/>1990"]
-    Scheme --> Clojure["Hickey<br/>Clojure<br/>2007"]
-    Backus --> Hughes["Hughes<br/>Why FP Matters<br/>1989"]
-    Hughes --> Clojure
-    Milner --> OCaml["OCaml<br/>1996"]
-    Milner --> Rust["Rust<br/>2010"]
-    Haskell --> Rust
+    Church["Lambda Calculus<br/>Church, 1930s"]
+    Lisp["Lisp<br/>1958"]
+    Scheme["Scheme<br/>1975"]
+    ML["ML<br/>Early 1970s"]
+    Haskell["Haskell<br/>1990"]
+    OCaml["OCaml<br/>1996"]
+    Clojure["Clojure<br/>2007"]
+
+    Church -.-> Lisp
+    Church -.-> ML
+    Lisp --> Scheme
+    Lisp --> Clojure
+    ML --> Haskell
+    ML --> OCaml
 ```
+
+Solid arrows indicate broad language-family or design influence.
+Dashed arrows indicate theoretical connections; they are not claims of
+exclusive ancestry.
+
+Other influential works include Backus's 1978 argument against the
+von Neumann style and Hughes's explanation of how higher-order functions
+and lazy evaluation support modularity.
 
 **Strengths:**
 
-- Easier to reason about (no hidden state changes)
-- Natural parallelism (pure functions can be evaluated in any order)
-- Composability (small functions combine into larger ones)
-- Testability (pure functions are trivially testable)
+- Pure transformations support local reasoning
+- Function composition provides reusable abstraction
+- Immutable data simplifies some sharing and concurrency problems
+- Explicit inputs and outputs often make tests easier to construct
 
-**Weaknesses:**
+**Trade-offs:**
 
-- Learning curve (new mental model for most developers)
-- Performance overhead in some cases (immutable data structures, GC)
-- I/O requires special handling (monads in Haskell, controlled mutation in Clojure)
+- Effect management introduces additional abstractions
+- Allocation and persistent structures have workload-dependent costs
+- Laziness can complicate performance and space reasoning
+- Pure code is not automatically terminating, efficient, or correct
+- Parallel execution still depends on task independence, granularity,
+  scheduling, and runtime support
 
-**Languages:** Lisp, Scheme, ML, Haskell, Erlang, Clojure, F#, Scala, Elixir
+**Languages:** Lisp, Scheme, ML, Haskell, OCaml, Erlang, Clojure, F#,
+Scala, Elixir.
 
 → [Alonzo Church](../../../authors/alonzo-church.md) ·
 [John McCarthy](../../../authors/john-mccarthy.md) ·
@@ -736,127 +1163,157 @@ flowchart LR
 
 ### Logic Programming
 
-**Core idea:** A program is a set of **facts** and **rules**. Computation
-is not a sequence of execution steps, but an **inference engine searching
-for proofs** — the runtime finds values that satisfy the declared constraints.
+**Core idea:** describe relationships using predicates, facts, and rules;
+ask queries whose solutions satisfy those relationships.
 
-If Procedural organizes around actions, OOP around stateful entities, and FP
-around mathematical transformations, Logic programming organizes code around
-**knowledge and constraints**.
-
-#### The Three Pillars
-
-A logic program typically consists of three elements:
-1. **Facts:** Unconditional statements about the domain.
-2. **Rules:** Conditional statements linking facts.
-3. **Queries:** The questions we ask the system.
+#### Facts, Rules, and Queries
 
 ```prolog
-% Prolog — logic programming
-
-% 1. Facts (Knowledge Base)
+% Facts
 parent(tom, bob).
 parent(tom, liz).
 parent(bob, ann).
 
-% 2. Rule (Domain Logic)
-grandparent(X, Z) :- parent(X, Y), parent(Y, Z).
+% Rule
+grandparent(X, Z) :-
+    parent(X, Y),
+    parent(Y, Z).
 
-% 3. Query
+% Query:
 % ?- grandparent(tom, Who).
 % Who = ann.
 ```
 
-#### How It Works (The Engine)
+Logical variables participate in substitutions and unification rather
+than ordinary assignment to mutable storage.
 
-In logic programming, there is no explicit control flow (`if`, `for`, `while`)
-in the usual imperative sense, no variable mutation in the ordinary procedural
-sense, and no function call structure as the primary organizing principle.
-Instead, you submit a query, and the **inference engine** uses
-**unification** and **backtracking** to search the knowledge base and prove
-the theorem.
+#### Declarative and Operational Readings
 
-**The Sudoku Metaphor:** When solving Sudoku, you don't write an algorithm
-("put 1 in the corner, if it fails try 2..."). You define the *rules*
-(no duplicates in a row/column/box). Logic programming lets you write the rules
-and hand the computer a grid; the engine figures out the numbers that satisfy
-those rules. Because you never specify the *steps* to find the answer, this
-sits near the extreme declarative end of the control spectrum (Axis A).
+A logic program has both:
 
-#### Modern Influence
+- a **declarative reading**: which relationships hold;
+- an **operational reading**: how an implementation searches for answers.
 
-While pure Prolog is rarely used in mainstream web/enterprise development today,
-the logic organization model heavily influences modern tools:
+In Prolog, execution commonly uses unification and depth-first search
+with backtracking. Clause order and goal order can affect performance,
+the order of answers, and termination.
 
-- **Databases & SQL:** SQL is rooted in relational logic and algebra. You
-  declare constraints (`WHERE`, `JOIN`), and the DB optimizer searches for an execution plan.
-- **Type systems:** In languages like Haskell, Rust, or TypeScript, type inference
-  can often be understood as constraint solving.
-- **Rule engines:** Business rules and authorization policies are often expressed
-  as facts plus inference rules.
-- **Datalog systems:** Modern program analysis and data systems often use Datalog-like subsets.
+Practical Prolog also includes control constructs, `cut`, I/O, and
+facilities with effects. Negation as failure should not be confused
+with unrestricted classical logical negation.
 
-**Languages:** Prolog, Datalog, miniKanren, core.logic (Clojure)
+Logic programming in general is broader than Prolog's search mechanism.
+Datalog systems, for example, often evaluate rules by computing a
+fixed point rather than using Prolog-style depth-first backtracking.
+
+#### Constraint Logic Programming
+
+Constraint logic programming combines relational descriptions with
+specialized constraint solvers.
+
+For Sudoku, a model can state:
+
+- cells contain values from a finite domain;
+- rows, columns, and boxes contain distinct values;
+- given cells have fixed values.
+
+A finite-domain solver propagates constraints and performs search when
+necessary. The programmer still chooses a model and may select search
+strategies; declarative specification does not make operational concerns
+disappear.
+
+#### Modern Connections
+
+- **Databases:** relational algebra and logic underpin important parts
+  of query languages and database theory.
+- **Type inference:** many type systems formulate inference as constraint
+  generation and solving.
+- **Rule engines:** policies and business rules can be expressed through
+  facts and inference.
+- **Datalog:** used in static analysis, authorization, and data processing.
+- **Constraint solvers:** used in scheduling, configuration, verification,
+  and combinatorial search.
+
+SQL optimization searches for an execution plan; that is different from
+Prolog searching for substitutions that answer a query.
+
+**Languages and systems:** Prolog, Datalog, miniKanren, core.logic,
+constraint logic programming systems.
 
 ---
 
 ### Applicative vs Concatenative Style
 
-Most programmers work exclusively in the **applicative** style without
-realising it has a name or an alternative. The distinction cuts across all
-four axes above — it is a property of **how functions are composed and
-how arguments are passed**, not of the organization model, execution model,
-or type discipline.
+This distinction concerns **application and composition**. It crosses
+the boundaries between functional, procedural, and other styles.
 
 #### Applicative Style
 
-In **applicative** (or *applicative-order*) programming, functions are
-applied to **named arguments**. Composition is expressed by nesting
-function calls or binding intermediate results to names:
+In applicative notation, a function is applied to explicit arguments:
 
-```python
-# Python — applicative style
-result = reduce(add, filter(positive, map(double, numbers)))
-
-# Or with names:
-doubled   = map(double, numbers)
-positives = filter(positive, doubled)
-result    = reduce(add, positives)
+```text
+f(x)
+f x
+f(g(x))
 ```
 
-This is the dominant style in virtually all mainstream languages:
-C, Java, Python, Haskell, Lisp, ML. Even when chaining methods
-(`orders.stream().map(...).filter(...)`), arguments are still named and
-bound explicitly.
+Arguments can be literals, expressions, or named values. They do not have
+to be named parameters in the calling code.
 
-The key properties:
+```python
+from functools import reduce
+from operator import add
 
-- Functions are called with explicit arguments: `f(x)` or `f x`
-- Intermediate values have names (or are nested)
-- The **data flow** is implicit — you track it by reading how names are threaded through calls
-- Composition is expressed by **substitution**: replacing a name with the expression that produced it
+def double(value):
+    return value * 2
+
+def positive(value):
+    return value > 0
+
+numbers = [1, -2, 3, -4, 5]
+
+result = reduce(
+    add,
+    filter(positive, map(double, numbers)),
+    0,
+)
+```
+
+Composition may be expressed through nesting, intermediate bindings,
+higher-order combinators, or explicit composition operators.
+
+**Applicative style ≠ applicative-order evaluation**
+    Applicative-order refers to an evaluation strategy in which arguments
+    are evaluated before function application.
+
+    A language can use application-based notation without using that
+    strategy. Haskell is the prominent example: function application is
+    fundamental, but its semantics are non-strict.
+
+    This terminology is also separate from Haskell's `Applicative`
+    type class.
 
 #### Concatenative Style
 
-In **concatenative** (or *stack-based*, *point-free*) programming,
-functions are composed by **juxtaposition** — placing them next to each
-other. There are no named arguments. Instead, every function implicitly
-consumes values from a shared **stack** and pushes results back onto it.
-The program is read as a **pipeline of transformations**.
+In concatenative programming, concatenating program fragments expresses
+their composition.
+
+A common model interprets fragments as transformations of a stack:
 
 ```forth
-\ Forth — concatenative style
-\ Compute (3 + 4) * 2
+\ Forth: compute (3 + 4) * 2
 
 3 4 + 2 *
-\       ^--- multiply top two stack items → result: 14
-\     ^----- push 2
-\   ^------- add top two items → stack: [7]
-\ ^--------- push 3, push 4 → stack: [3, 4]
 ```
 
+The sequence pushes `3` and `4`, adds them, pushes `2`, and multiplies,
+leaving `14`.
+
 ```factor
-! Factor — modern concatenative language
+! Factor: transform, filter, and sum.
+
+USING: kernel math math.order sequences ;
+
 : double ( n -- n ) 2 * ;
 : positive? ( n -- ? ) 0 > ;
 
@@ -866,169 +1323,197 @@ The program is read as a **pipeline of transformations**.
 0 [ + ] reduce
 ```
 
-The key properties:
+Stack effects describe the input and output shape of words:
 
-- No named parameters — functions implicitly operate on an **implicit data context** (the stack)
-- Programs are composed by **concatenation**: `f g h` means "apply f, then g, then h"
-- **Data flow is explicit** — the order of words on the page is the order of transformations
-- Composition is associative: `(f g) h = f (g h)` — programs can be freely rearranged
+```text
++       ( a b -- sum )
+double  ( n -- n )
+```
+
+The important semantic idea is composition by concatenation.
+An implicit stack is a common realization, not a reason to equate every
+stack-based execution system with a concatenative source language.
 
 #### The Core Contrast
 
-```mermaid
-flowchart TD
-    subgraph APP ["Applicative Style"]
-        direction TB
-        A1["f(g(h(x)))"]
-        A2["Named argument x<br/>threaded through nested calls"]
-        A3["Data flow: implicit<br/>tracked via names"]
-        A1 --> A2 --> A3
-    end
+| Concern | Applicative style | Concatenative style |
+|---------|-------------------|---------------------|
+| Basic expression | Apply a function to arguments | Compose program fragments by juxtaposition |
+| Example | `f(g(h(x)))` | `h g f` |
+| Argument plumbing | Explicit operands, nesting, bindings | Often implicit stack or data context |
+| Reading challenge | Track nested dependencies and bindings | Track stack effects and transformations |
+| Composition | Explicit operators or language constructs | Concatenation is the central operation |
 
-    subgraph CAT ["Concatenative Style"]
-        direction TB
-        C1["h g f"]
-        C2["No named arguments<br/>implicit stack carries values"]
-        C3["Data flow: explicit<br/>left-to-right word order"]
-        C1 --> C2 --> C3
-    end
+For compatible fragments, composition is associative:
 
-    subgraph COMP ["Composition model"]
-        direction LR
-        AP["Applicative:<br/>compose by<br/>substitution<br/>result(f) → arg(g)"]
-        CP["Concatenative:<br/>compose by<br/>juxtaposition<br/>f g = 'f then g'"]
-    end
-
-    APP --- COMP
-    CAT --- COMP
-
-    style APP fill:#e1f5fe
-    style CAT fill:#e8f5e9
-    style COMP fill:#fff3e0
+```text
+(f g) h = f (g h)
 ```
 
-A useful way to feel the difference: in applicative style you ask
-*"what value do I pass here?"*; in concatenative style you ask
-*"what transformation do I place next in the pipeline?"*
+This permits **regrouping while preserving order**. It does not permit
+arbitrary reordering:
 
-#### Why Concatenative Languages?
+```text
+f g ≠ g f   in general
+```
 
-Concatenative languages occupy a small but durable niche. They are used where:
+Associativity is not unique to concatenative programming; it is also a
+property of ordinary function composition.
 
-- **Extreme simplicity of the runtime** matters — Forth runs on bare metal with
-  no OS, no heap allocator, no call stack in the conventional sense. This makes
-  it attractive for embedded systems, bootloaders, and firmware.
-- **Interactive, incremental development** — Forth and Factor REPLs let you
-  define and test individual words in isolation and assemble programs
-  interactively on the stack.
-- **Metaprogramming and language extension** — because a program is simply a
-  sequence of words, it is trivially parsed and manipulated. Forth is famously
-  its own assembler, compiler, and operating environment simultaneously.
-- **Formal reasoning about programs** — the algebraic property of concatenation
-  (`(f g) h = f (g h)`) means programs can be equationally reasoned about and
-  mechanically optimised by rewriting sequences of words.
-- **Scripting and DSLs embedded in constrained environments** — PostScript
-  (the language inside laser printers) is concatenative. PDF's content streams
-  are concatenative. Many hardware description languages borrow stack-based ideas.
+#### Related, Not Identical: Stack-Based and Point-Free
 
-| Use area | Example |
-|----------|---------|
-| Embedded / bare-metal | Forth on microcontrollers, OpenFirmware |
-| Desktop scripting | Factor, Gforth |
-| Printer language | PostScript (every laser printer is a Forth-like VM) |
-| Cryptography / formal tools | Joy (theoretical), Cat |
-| Blockchain / smart contracts | Bitcoin Script (stack-based) |
-| Shell pipelines | Unix pipes share the concatenative data-flow idea |
+- **Concatenative** describes how program composition corresponds to
+  concatenation.
+- **Stack-based** describes an operand or execution model.
+- **Point-free**, or **tacit**, describes expressions that omit explicit
+  mention of their arguments.
 
-!!! note "Unix pipes as concatenative thinking"
-    `cat file | grep pattern | sort | uniq -c` is concatenative in spirit:
-    each command consumes its input stream and produces an output stream,
-    and composition is juxtaposition (`|`). There are no named intermediates.
-    The data flows left to right through the pipeline exactly as words flow
-    left to right in a Forth program.
+These ideas frequently occur together, but are not synonyms.
 
-#### Point-Free Style in Applicative Languages
-
-The concatenative idea leaks into applicative languages via **point-free**
-(or **tacit**) style — writing function compositions without mentioning
-the argument:
+In Haskell:
 
 ```haskell
--- Haskell — applicative, but point-free composition
--- Named (pointed) style:
-process xs = filter positive (map double xs)
+double :: Integer -> Integer
+double value = value * 2
 
--- Point-free (tacit) style — no xs mentioned:
+positive :: Integer -> Bool
+positive value = value > 0
+
+process :: [Integer] -> [Integer]
 process = filter positive . map double
+
+-- Alternative, with an explicit argument:
+-- process values = filter positive (map double values)
 ```
 
-The `.` operator in Haskell is function composition: `(f . g) x = f (g x)`.
-Writing `filter positive . map double` without mentioning `xs` brings
-applicative Haskell close to the concatenative ideal — the program reads
-as a pipeline of transformations. This is the same idea as Forth's word
-sequences, expressed within an applicative language.
+Here `(f . g) x = f (g x)`. The composition is written right-to-left,
+unlike the usual left-to-right execution of Forth words.
 
-#### Further Reading
+#### Practical Uses
 
-→ [concatenative.org](https://concatenative.org/) — the central community
-resource for concatenative languages: language surveys, papers, wiki, and
-links to Joy, Factor, Forth, Cat, and related work.
+| Area | Examples and qualifications |
+|------|-----------------------------|
+| Embedded systems and firmware | Forth implementations can be small and suitable for bare-metal environments |
+| Interactive development | Forth and Factor support incremental definition and testing of words |
+| Page description | PostScript is a stack-based programming language used in publishing and printing |
+| Language research | Joy explores concatenative combinators and equational reasoning |
+| Blockchain scripting | Bitcoin Script uses a constrained stack-based execution model |
+| Pipeline-oriented thinking | Unix pipes provide a useful analogy for composition through an implicit stream |
 
-→ Manfred von Thun — *[The Theory of Concatenative Combinators](http://www.latrobe.edu.au/humanities/research/research-projects/past-projects/joy-programming-language)* — Joy language and the algebra of programs
+Forth implementations commonly use both a data stack and a return stack.
+They do not universally lack a call-return mechanism, heap allocation,
+or operating-system integration.
 
-→ [Factor language](https://factorcode.org/) — modern, practical concatenative language with rich libraries
+PostScript is not implemented by every printer. PDF content streams use
+postfix operators for page description, but should not simply be treated
+as full PostScript programs.
 
-→ [Forth](../../../languages/forth/index.md) — the original concatenative language, still used in embedded systems
+Forth's extensibility also makes parsing subtler than "split on whitespace":
+words can control interpretation and consume additional input.
 
-→ [forth-standard.org](https://forth-standard.org/) — Forth 200x standard
+**Unix pipes as an analogy**
+    `grep pattern file | sort | uniq -c` composes stream processors without
+    named intermediate files.
+
+    This resembles concatenative dataflow, but operating-system pipes,
+    processes, and shell syntax have their own semantics.
+
+#### Concatenative Resources
+
+- [concatenative.org](https://concatenative.org/) — language surveys,
+  explanations, and links to research
+- [Factor](https://factorcode.org/) — a practical concatenative language
+- [Forth](../../../languages/forth/index.md) — historical and practical context
+- [Forth standard](https://forth-standard.org/) — language specification
 
 ---
 
 ## Execution Models in Depth
 
-Execution model is **orthogonal** to organization model. A functional
-program can be sequential (Haskell by default) or concurrent (Erlang).
-An OOP program can be sequential (Java by default) or concurrent
-(Akka actors). Likewise, either may be statically or dynamically typed.
-Two major concurrency models emerged from theoretical
-work in the 1970s:
+Concurrency models influence both program structure and execution.
+A functional or object-oriented program can use actors, channels,
+shared-memory synchronization, or combinations of them.
 
-### Actor Model (Hewitt 1973 / Erlang 1986)
+The actor model and CSP are influential theoretical foundations.
+Modern libraries and languages adapt them rather than necessarily
+implementing the original models without modification.
 
-- Isolated processes with private state
-- Communicate via **asynchronous** messages
-- No shared memory
-- Each actor processes one message at a time
+### Actor Model
+
+The actor model was introduced by Carl Hewitt, Peter Bishop, and
+Richard Steiger in 1973.
+
+An actor responds to a message by potentially:
+
+- sending messages to other actors;
+- creating new actors;
+- determining behavior for subsequent messages.
+
+Communication is asynchronous. Actor identity provides a destination
+for messages.
+
+Practical actor systems commonly provide private state and serialized
+message handling. Exact scheduling, delivery, ordering, mailbox, and
+failure semantics depend on the implementation.
 
 ```erlang
-%% Erlang — actor model
+%% counter.erl
 -module(counter).
 -export([start/0, increment/1, get/1]).
 
-start() -> spawn(fun() -> loop(0) end).
+start() ->
+    spawn(fun() -> loop(0) end).
 
-increment(Pid) -> Pid ! increment.
+increment(Pid) ->
+    Pid ! increment,
+    ok.
 
 get(Pid) ->
-    Pid ! {get, self()},
-    receive {count, N} -> N end.
+    Ref = make_ref(),
+    Pid ! {get, self(), Ref},
+    receive
+        {count, Ref, N} -> {ok, N}
+    after 1000 ->
+        {error, timeout}
+    end.
 
 loop(N) ->
     receive
-        increment -> loop(N + 1);
-        {get, From} -> From ! {count, N}, loop(N)
+        increment ->
+            loop(N + 1);
+        {get, From, Ref} ->
+            From ! {count, Ref, N},
+            loop(N)
     end.
 ```
 
-### CSP — Communicating Sequential Processes (Hoare 1978)
+The reference correlates a response with a request. The timeout prevents
+an indefinite wait, but this is still an introductory example rather than
+a complete failure-handling protocol. Production Erlang commonly uses OTP
+behaviors such as `gen_server`.
 
-- Independent sequential processes
-- Communicate via channels
-- No shared memory in the model
-- Channels are first-class values
+"No shared mutable state" is a useful actor-model discipline. An actor
+library in a language with ordinary shared objects may not enforce it
+automatically.
+
+### CSP — Communicating Sequential Processes
+
+Tony Hoare introduced CSP in 1978 and developed it further as a process
+algebra.
+
+Its central ideas include:
+
+- independently described processes;
+- communication and synchronization through shared events;
+- synchronous rendezvous-style interaction in the classical model.
+
+Modern CSP-inspired systems often expose channels directly.
 
 ```go
-// Go — CSP style
+package main
+
+import "fmt"
+
 func producer(ch chan<- int) {
     for i := 0; i < 10; i++ {
         ch <- i
@@ -1038,22 +1523,36 @@ func producer(ch chan<- int) {
 
 func main() {
     ch := make(chan int)
+
     go producer(ch)
-    for n := range ch {
-        fmt.Println(n)
+
+    for value := range ch {
+        fmt.Println(value)
     }
 }
 ```
 
+Go's unbuffered channel coordinates a send with a corresponding receive.
+Buffered channels decouple them up to their capacity.
+
+Go channels are first-class values, but that is a property of Go's
+facilities, not a universal definition of classical CSP. Go also supports
+shared memory and locks, so it is more accurate to call its channel-based
+concurrency **CSP-inspired**.
+
 ### Comparison
 
-| Aspect        | Actors                 | CSP                   |
-|---------------|------------------------|-----------------------|
-| Communication | Asynchronous messages  | Channel communication |
-| Identity      | Named actors/processes | Processes + channels  |
-| Buffering     | Mailbox-based          | Usually explicit      |
-| Languages     | Erlang, Elixir, Akka   | Go, occam, core.async |
-| Theory        | Hewitt 1973            | Hoare 1978            |
+| Concern | Actor-oriented systems | CSP-inspired channel systems |
+|---------|------------------------|------------------------------|
+| Communication endpoint | Actor identity or address | Channel or shared communication event |
+| Typical interaction | Asynchronous message sending | Rendezvous or buffered channel operations |
+| State organization | Commonly actor-local | Commonly local to sequential processes/tasks |
+| Synchronization | Often expressed through message protocols | Often directly tied to communication |
+| Practical examples | Erlang/Elixir processes, Akka actors | Go channels, occam, core.async |
+| Caveat | Delivery and isolation guarantees vary | Modern channel systems differ from classical CSP |
+
+Neither model automatically solves distributed-system failures,
+deadlocks, overload, or application-level protocol correctness.
 
 → [Tony Hoare](../../../authors/tony-hoare.md) ·
 [Joe Armstrong](../../../authors/joe-armstrong.md) ·
@@ -1063,112 +1562,178 @@ func main() {
 
 ## Declarative Techniques and DSLs
 
-The declarative end of the control spectrum manifests in many forms
-beyond functional and logic programming. These are not separate paradigms
-but **domain-specific applications** of declarative thinking:
+Declarative thinking appears in many domains. Some of these approaches are
+also described as paradigms in their own right; here the focus is on the
+abstractions they provide.
 
 ```sql
--- SQL — declarative query
-SELECT name, age FROM users WHERE age > 18 ORDER BY name;
--- We describe WHAT we want. The database decides HOW to get it.
+-- Specify a relational result; the DBMS chooses an execution plan.
+SELECT name, age
+FROM users
+WHERE age > 18
+ORDER BY name;
 ```
 
 ```html
-<!-- HTML — declarative structure -->
+<!-- Describe document structure; rendering depends on browser and styles. -->
 <h1>Hello, World!</h1>
 <p>This is a paragraph.</p>
-<!-- We describe WHAT the page looks like. The browser decides HOW to render. -->
 ```
 
-| Technique              | Domain                       | Example                                                                       |
-|------------------------|------------------------------|-------------------------------------------------------------------------------|
-| SQL                    | Data querying                | `SELECT name FROM users WHERE age > 18`                                       |
-| HTML / CSS             | Document structure and style | `<h1>Hello</h1>`                                                              |
-| Regular expressions    | Text pattern matching        | `\d{3}-\d{4}`                                                                 |
-| Build DSLs             | Build configuration          | Makefile, Gradle DSL — see [Build Systems](../../tools/build-systems/index.md) |
-| Infrastructure as Code | Provisioning and deployment  | Terraform, Kubernetes YAML                                                    |
-| Annotations / Metadata | Framework configuration      | Spring `@Transactional`                                                       |
+| Technique | Domain | Declarative element |
+|-----------|--------|---------------------|
+| SQL queries | Data access | Relations, filtering, grouping, projection |
+| HTML / CSS | Documents and presentation | Structure, semantics, style constraints |
+| Regular expressions | Text matching | Patterns describing accepted text |
+| Build systems | Dependency management | Targets and dependency relationships |
+| Infrastructure as code | Provisioning | Desired resources and configuration |
+| Constraint programming | Search and optimization | Variables, domains, constraints |
+| Reactive/dataflow systems | Propagation | Dependencies and stream transformations |
+| Framework metadata | Configuration | Declared behavior attached to program elements |
 
-!!! note "Annotations are a mechanism, not a paradigm"
-    Spring's `@Transactional`, `@Cacheable`, `@RestController` are
-    **declarative configuration** implemented via metaprogramming and
-    AOP (Aspect-Oriented Programming). You declare *what* behaviour
-    you want; the framework generates the imperative code at runtime
-    (often through proxies or bytecode instrumentation). This is a powerful
-    technique *within* a broader organization model — not a separate paradigm.
+Real systems often mix styles:
 
-    Similarly, AOP is a **modularization technique** for cross-cutting concerns
-    (logging, security, transactions), not a standalone answer to the question
-    "what is a program?"
+- Makefiles combine dependency declarations with imperative recipes.
+- Gradle DSLs can execute arbitrary configuration logic.
+- Infrastructure tools combine desired-state descriptions with procedural
+  providers and lifecycle operations.
+- SQL includes state-changing statements and dialect-specific procedural
+  extensions.
+
+**Annotations are a mechanism**
+    Annotations can encode declarative configuration, but do not themselves
+    define a paradigm.
+
+    In Spring, `@Transactional` and `@Cacheable` often work through
+    interceptors and proxies. `@RestController` supplies metadata for web
+    framework registration and request handling; it is not simply the
+    same AOP mechanism.
+
+    Implementations may inspect metadata, register handlers, create proxies,
+    instrument code, or perform ahead-of-time processing.
+
+**Aspect-oriented programming** focuses on modularizing cross-cutting
+concerns such as tracing, security, and transactions. It is often described
+as a paradigm or programming approach in its own right. In this map it
+primarily connects to organization, modularity, and implementation mechanisms.
+
+→ [Build Systems](../../tools/build-systems/index.md)
 
 ---
 
 ## Type Discipline in Practice
 
-The type-discipline axis often interacts with the other three axes, but it does
-not collapse into them.
+Type discipline affects API design, refactoring, abstraction, and tooling,
+but it should not be mistaken for either a paradigm or an implementation
+strategy.
 
-Examples:
+Practical examples:
 
-- **Java**: OOP organization, often imperative control, usually sequential execution,
-  **static nominal typing**
-- **Python**: multi-paradigm organization, mixed control style, usually sequential execution,
-  **dynamic typing** with optional gradual checking via mypy / pyright
-- **Haskell**: functional organization, declarative style, usually sequential execution,
-  **static inferred typing**
-- **Go**: procedural organization, imperative control, concurrent execution,
-  **static typing with structural interface compatibility**
-- **TypeScript**: often object/component-oriented in practice, mixed control,
-  event-driven in the browser, **static structural typing layered over JavaScript**
-- **Elixir**: functional + actor organization, declarative style, concurrent execution,
-  **dynamic with gradual type narrowing** (1.18+)
+- **Java:** nominal interfaces and classes support object-oriented API
+  boundaries; local inference reduces some declaration overhead.
+- **Python:** optional analysis can improve a dynamic codebase incrementally,
+  but annotations are not normally runtime contracts.
+- **Haskell:** inference and algebraic data types support functional
+  modeling; types also distinguish effectful computations.
+- **Go:** structural interface satisfaction supports implementation
+  independence without explicit interface declarations on each type.
+- **Rust:** ownership and borrowing contribute to memory and concurrency
+  safety in safe code; they do not establish application correctness.
+- **TypeScript:** structural checking improves JavaScript tooling and
+  catches many errors, while intentionally allowing some unsound cases.
+- **Elixir:** compiler analysis extracts information from existing code,
+  with capabilities and guarantees tied to release-specific development.
 
-Some practical consequences of axis D:
+Some useful engineering conclusions:
 
-- **Static typing** shifts many errors earlier, into compilation or analysis
-- **Dynamic typing** increases flexibility and lowers annotation overhead, but moves many checks to runtime
-- **Inference** can preserve static guarantees while reducing boilerplate
-- **Structural typing** often favors composition and ad hoc interoperability
-- **Nominal typing** often favors explicit modelling and deliberately declared interfaces
-- **Gradual typing** allows incremental adoption of static analysis, but the
-  escape hatch (`any`, `T.untyped`, `dynamic()`) determines how much soundness is preserved
+- Static analysis moves certain errors earlier, but does not replace tests.
+- Dynamic typing does not necessarily mean high annotation overhead would
+  otherwise be unavoidable; static inference can also reduce annotations.
+- Structural compatibility helps ad hoc interoperability but can admit
+  unintended matches between similarly shaped concepts.
+- Nominal identity can distinguish domain concepts with similar
+  representations, at the cost of more explicit declarations.
+- Unknown or dynamic values require a clear boundary policy:
+  validation, runtime checks, narrowing, trusted declarations, or acceptance
+  of reduced guarantees.
+- Type checking and code generation are separate activities, even when a
+  single compiler performs both.
 
-The choice of type discipline shapes API design, refactoring style,
-metaprogramming, tool support, and library ergonomics — even when the
-organization model stays the same.
+The most useful question is not "which type system wins?" but:
+
+> Which guarantees does this system provide, at which boundaries, under
+> which assumptions, and at what cost?
 
 ---
 
 ## The Pragmatic View
 
-Paradigms are not mutually exclusive. Modern practice often combines
-several positions across all four axes:
+Modern software combines models at different levels.
 
-- **Functional core** — pure functions for business logic (testable, composable)
-- **Imperative shell** — procedural I/O at the edges
-- **Objects** — for organising modules and managing lifecycle
-- **Declarative** — SQL for data, HTML for UI, annotations for config
-- **Static or dynamic typing** — depending on the language and trade-offs
+One useful pattern is **Functional Core / Imperative Shell**, associated
+with Gary Bernhardt:
 
-This is the **Functional Core / Imperative Shell** pattern described by
-Gary Bernhardt.
+- Put business transformations in a largely pure core.
+- Keep I/O and coordination at explicit boundaries.
+- Pass data into the core and interpret its results at the edges.
 
-The same task viewed through different organizational lenses:
+Objects can organize the core or shell. SQL can describe data queries.
+Actors can manage ongoing processes. Static or dynamic checking can support
+any of these choices.
 
+These additional choices are compatible with the pattern; they are not
+all part of its definition.
+
+### One Task, Several Perspectives
+
+Assume non-null prices, a common numeric interpretation, and an empty-input
+result of zero.
+
+```text
+Task: select orders whose price exceeds a threshold, then sum their prices.
+
+Procedural:
+    Call total_above(orders, threshold); use a loop inside the procedure.
+
+Object-oriented:
+    Ask an OrderBook for totalAbove(threshold).
+
+Functional:
+    Map orders to prices, filter, then fold with addition.
+
+Logic:
+    Define a relation connecting orders, a threshold, and the resulting total.
+
+Concatenative:
+    Compose price extraction, threshold filtering, and summation.
+
+SQL:
+    SELECT COALESCE(SUM(price), 0)
+    FROM orders
+    WHERE price > :threshold;
 ```
-Task: filter orders above a threshold, compute total price
 
-Procedural:     "loop through the list, accumulate sum in a variable"
-OOP:            "ask the OrderBook object to calculate its total"
-Functional:     "apply a chain of transformations: map → filter → reduce"
-Logic:          "define a rule: total(Orders, Sum) :- ..."
-Concatenative:  "double filter-positive reduce-add"   \ words compose left-to-right
-SQL:            "SELECT SUM(price) FROM orders WHERE price > threshold"
+A concrete concatenative-style Factor expression is:
+
+```factor
+USING: assocs kernel math math.order sequences ;
+
+! orders is a sequence of associations containing a "price" entry.
+! Illustrative fixed threshold: 20.
+
+orders
+[ "price" of ] map
+[ 20 > ] filter
+0 [ + ] reduce
 ```
 
-All produce the same result. The difference is in the **cognitive model**
-and the **properties** of the resulting code (testability,
-parallelisability, readability, analyzability).
+Under the stated assumptions, these approaches can express the same result.
+They differ in abstraction boundaries, operational control, and how
+dependencies and effects are exposed.
+
+No paradigm automatically guarantees readability, performance, testability,
+or maintainability. The benefit depends on how well the chosen model fits
+the problem and how consistently it is used.
 
 → [Gary Bernhardt — Boundaries](../../../authors/gary-bernhardt.md) ·
 [Rich Hickey — Simple Made Easy](../../../authors/rich-hickey.md)
@@ -1177,154 +1742,208 @@ parallelisability, readability, analyzability).
 
 ## Historical Evolution
 
-The diagram below shows **historical influences**, not a classification
-hierarchy. Languages and ideas influenced each other across paradigm
-boundaries.
+Programming ideas developed through multiple intersecting histories:
+mathematical foundations, language design, implementation techniques,
+and practical constraints.
+
+The diagram is selective. Solid arrows show broad historical or language-family
+influence; dashed arrows show theoretical connections. Neither implies
+exclusive ancestry.
 
 ```mermaid
 flowchart LR
-    subgraph Foundations ["Theoretical Foundations · 1930s"]
-        Church["Lambda Calculus<br/>Church 1936"]
+    subgraph Foundations ["Foundations"]
+        Lambda["Lambda Calculus<br/>Church, 1930s"]
         Turing["Turing Machine<br/>1936"]
+        Logic["Formal Logic<br/>Resolution and Automated Reasoning"]
     end
 
-    subgraph First ["First Languages · 1950s–60s"]
-        Turing --> Fortran["Fortran<br/>1957"]
-        Church --> Lisp["Lisp<br/>1958"]
+    subgraph Early ["Early High-Level Languages"]
+        Fortran["Fortran<br/>1957"]
+        Lisp["Lisp<br/>1958"]
         Algol["ALGOL 60<br/>1960"]
+        Simula["Simula 67<br/>1967"]
     end
 
-    subgraph Seventies ["Paradigm Explosion · 1970s"]
-        Simula["Simula<br/>1967"]
+    subgraph Expansion ["Expanding Models"]
         C["C<br/>1972"]
+        Smalltalk["Smalltalk<br/>1972 onward"]
         Prolog["Prolog<br/>1972"]
-        Smalltalk["Smalltalk<br/>1972"]
-        Hewitt["Actor Model<br/>Hewitt 1973"]
+        Actors["Actor Model<br/>1973"]
         Scheme["Scheme<br/>1975"]
-        ML["ML<br/>1978"]
-        Backus78["Backus FP<br/>Manifesto 1978"]
-        Forth["Forth<br/>Moore 1970<br/>[→](../../../languages/forth/index.md)"]
-        Church --> Prolog
-        Simula --> Smalltalk
-        Smalltalk --> Hewitt
-        Lisp --> Scheme
-        Church --> ML
-        Church --> Backus78
-        Turing --> Forth
+        ML["ML<br/>Early 1970s"]
+        CSP["CSP<br/>1978"]
+        Forth["Forth<br/>Late 1960s–early 1970s"]
     end
 
-    subgraph Eighties ["Maturation · 1980s–90s"]
+    subgraph Later ["Later Languages and Systems"]
         CPP["C++<br/>1983"]
         Erlang["Erlang<br/>1986"]
         Haskell["Haskell<br/>1990"]
         Java["Java<br/>1995"]
-        PostScript["PostScript<br/>1982"]
-        Simula --> CPP
-        Prolog --> Erlang
-        Hewitt --> Erlang
-        ML --> Haskell
-        CPP --> Java
-        Forth --> PostScript
-    end
-
-    subgraph Modern ["Modern Era · 2000s–10s"]
+        PostScript["PostScript<br/>1984"]
+        OCaml["OCaml<br/>1996"]
         Clojure["Clojure<br/>2007"]
         Go["Go<br/>2009"]
-        Rust["Rust<br/>2010"]
-        Joy["Joy<br/>von Thun 2001"]
+        Rust["Rust<br/>Public announcement 2010"]
+        Joy["Joy<br/>Developed before its 2001 publications"]
         Factor["Factor<br/>2003"]
-        Lisp --> Clojure
-        Haskell --> Clojure
-        C --> Go
-        ML --> Rust
-        Haskell --> Rust
-        Joy --> Factor
     end
 
-    %% Cross-subgraph edges
+    Lambda -.-> Lisp
+    Lambda -.-> ML
+    Logic --> Prolog
+
     Algol --> Simula
     Algol --> C
-    Forth --> Joy
+    Simula --> Smalltalk
+    Simula --> CPP
+    C --> CPP
 
-    style Church fill:#e1f5fe
+    Lisp --> Scheme
+    Lisp --> Clojure
+    Lisp --> Smalltalk
+    Smalltalk --> Actors
+
+    Prolog --> Erlang
+    Actors -.-> Erlang
+
+    ML --> Haskell
+    ML --> OCaml
+    ML --> Rust
+
+    CPP --> Java
+    C --> Go
+    CSP --> Go
+
+    Forth --> PostScript
+    Forth --> Joy
+    Joy --> Factor
+
+    style Lambda fill:#e1f5fe
     style Lisp fill:#e1f5fe
     style Scheme fill:#e1f5fe
     style ML fill:#e1f5fe
     style Haskell fill:#e1f5fe
+    style OCaml fill:#e1f5fe
     style Clojure fill:#e1f5fe
+
     style Simula fill:#fff3e0
     style Smalltalk fill:#fff3e0
     style CPP fill:#fff3e0
     style Java fill:#fff3e0
+
     style Fortran fill:#f3e5f5
     style Algol fill:#f3e5f5
     style C fill:#f3e5f5
-    style Go fill:#e8f5e9
+
+    style Actors fill:#e8f5e9
+    style CSP fill:#e8f5e9
     style Erlang fill:#e8f5e9
-    style Prolog fill:#e8f5e9
-    style Rust fill:#fce4ec
+    style Go fill:#e8f5e9
+
     style Forth fill:#fce4ec
-    style PostScript fill:#fce4ec
     style Joy fill:#fce4ec
     style Factor fill:#fce4ec
+    style PostScript fill:#fce4ec
 ```
 
-<span style="font-size:0.85em">
-🟣 Imperative lineage · 🟠 OOP lineage · 🔵 FP lineage · 🟢 Concurrent / Logic lineage · 🔴 Multi-paradigm / Concatenative
-</span>
+The Turing machine is shown as a general foundation of computability,
+not as a direct design ancestor of each imperative language.
+
+Language-family pages and work entries should provide the more detailed
+sources behind individual historical relationships.
 
 ### Timeline
 
-| Year | Event                                         | Significance                                     |
-|------|-----------------------------------------------|--------------------------------------------------|
-| 1936 | Church — Lambda Calculus                      | Theoretical foundation of FP                     |
-| 1936 | Turing — Turing Machine                       | Theoretical foundation of imperative computation |
-| 1957 | Backus — Fortran                              | First high-level imperative language             |
-| 1958 | McCarthy — Lisp                               | First FP language                                |
-| 1960 | Naur et al. — ALGOL 60                        | Foundation for structured programming and Simula |
-| 1967 | Dahl & Nygaard — Simula 67                    | Invention of OOP (classes, inheritance)          |
-| 1968 | Dijkstra — Go To Considered Harmful           | Birth of structured programming                  |
-| 1970 | Moore — Forth                                 | First concatenative language                     |
-| 1972 | Kay — Smalltalk                               | Message-passing OOP                              |
-| 1972 | Ritchie — C                                   | Dominant procedural language                     |
-| 1972 | Colmerauer — Prolog                           | Logic programming                                |
-| 1973 | Hewitt — Actor Model                          | Theoretical model for concurrency                |
-| 1978 | Hoare — CSP                                   | Channel-based concurrency model                  |
-| 1978 | Milner — ML                                   | Typed FP, type inference                         |
-| 1978 | Backus — "Can Programming Be Liberated?"      | The case against imperative                      |
-| 1982 | Adobe (Warnock et al.) — PostScript           | Concatenative language in every printer          |
-| 1983 | Stroustrup — C++                              | OOP goes mainstream                              |
-| 1986 | Armstrong — Erlang                            | Actor model in industrial practice               |
-| 1989 | Hughes — "Why Functional Programming Matters" | The case for FP                                  |
-| 1990 | Committee — Haskell 1.0                       | Pure FP with lazy evaluation                     |
-| 1995 | Gosling — Java                                | OOP for the masses                               |
-| 2001 | von Thun — Joy                                | Formal algebra of concatenative programs         |
-| 2003 | Pestov — Factor                               | Modern practical concatenative language          |
-| 2006 | Siek — Gradual Typing                         | Theoretical foundation for optional type systems |
-| 2007 | Hickey — Clojure                              | Practical FP on the JVM                          |
-| 2009 | Pike, Thompson — Go                           | CSP for the masses                               |
-| 2010 | Mozilla — Rust                                | Memory safety without GC                         |
-| 2012 | Microsoft — TypeScript                        | Gradual structural typing for JavaScript         |
-| 2015 | Mozilla — Rust 1.0                            | First stable release                             |
-| 2025 | Elixir 1.20                                   | Zero-annotation gradual typing with soundness    |
+Dates below distinguish language development, publication, public
+announcement, and stable release where that distinction matters.
+
+| Year / period | Event | Significance |
+|---------------|-------|--------------|
+| 1930s; landmark work in 1936 | Church — lambda calculus and computability | Major theoretical foundation for functional computation |
+| 1936 | Turing — Turing machine | Foundational model of effective computation |
+| 1957 | Backus and IBM team — Fortran | One of the first widely adopted high-level programming languages |
+| 1958 | McCarthy — Lisp development begins | Foundational language for symbolic and functional programming |
+| 1960 | ALGOL 60 | Influential block structure, scope, and procedural notation |
+| 1965 | Robinson — resolution principle | Important foundation for automated reasoning and logic programming |
+| 1967 | Dahl and Nygaard — Simula 67 | Classes, objects, inheritance, and simulation-oriented modeling |
+| 1968 | Dijkstra — “Go To Statement Considered Harmful” | Influential argument for disciplined control flow |
+| Late 1960s–early 1970s | Moore — Forth | Early and influential concatenative, stack-oriented language |
+| Early 1970s | Milner and colleagues — ML | Functional programming in the LCF theorem-proving environment |
+| 1972 | Colmerauer and colleagues — Prolog | Early practical logic programming |
+| 1972 | Smalltalk-72 | Early Smalltalk realization of message-oriented objects |
+| 1972 | Ritchie — C | Influential systems-oriented procedural language |
+| 1973 | Hewitt, Bishop, and Steiger — actor model | Message-based model of concurrent computation |
+| 1975 | Sussman and Steele — Scheme | Lexically scoped Lisp with a small semantic core |
+| 1978 | Hoare — CSP | Influential model of communicating processes |
+| 1978 | Milner — “A Theory of Type Polymorphism in Programming” | Foundational account of polymorphic type inference |
+| 1978 | Backus — “Can Programming Be Liberated from the von Neumann Style?” | Argument for function-level alternatives to conventional programming |
+| 1983 | Stroustrup's language takes the name C++ | Development of C-compatible abstraction and object-oriented facilities |
+| 1984 | Adobe — PostScript | Programmable page description using a stack-oriented language |
+| 1986 | Armstrong, Virding, and Williams — Erlang development | Concurrent programming for reliable telecommunications systems |
+| 1989 | Hughes — “Why Functional Programming Matters” | Explains modularity benefits of higher-order functions and lazy evaluation |
+| 1990 | Haskell 1.0 | Standardized pure functional language with non-strict semantics |
+| 1995 | Java public release | Mainstream class-based OOP with a portable VM platform |
+| 1996 | OCaml | Development of the ML family with objects and a practical compiler toolchain |
+| 2001 | von Thun — Joy publications | Published exposition of concatenative programming and combinators; not the language's sole origin date |
+| 2003 | Pestov — Factor | Development of a practical concatenative language |
+| 2006 | Siek and Taha — gradual typing | Formal study of integrating static and dynamic typing |
+| 2007 | Hickey — Clojure | Functional programming and persistent data on the JVM |
+| 2009 | Griesemer, Pike, and Thompson — Go public release | Practical goroutines and CSP-inspired channels |
+| 2010 | Rust publicly announced | Emerging systems language combining safety and low-level control |
+| 2012 | Microsoft — TypeScript | Static checking and structural types layered over JavaScript |
+| 2015 | Rust 1.0 | First stable release |
+| 2024 onward | Elixir compiler type-analysis rollout | Incremental development of static analysis and gradual set-theoretic typing |
+
+Historical labels such as "first functional language" or "invention of OOP"
+compress a complex development into a memorable milestone. Use them
+carefully: earlier experiments, collaborators, and later refinements
+usually matter.
 
 ---
 
 ## Further Reading
 
-- Backus — ["Can Programming Be Liberated from the von Neumann Style?"](../../../works/papers/backus-1978-liberated.md) (1978)
-- Hughes — ["Why Functional Programming Matters"](../../../works/papers/hughes-1989-why-fp.md) (1989)
-- Hickey — ["Simple Made Easy"](../../../works/talks/hickey-2011-simple-made-easy.md) (2011)
+### Paradigms and Program Structure
+
+- Van Roy and Haridi — *Concepts, Techniques, and Models of Computer Programming* (2004)
+- Backus — [“Can Programming Be Liberated from the von Neumann Style?”](../../../works/papers/backus-1978-liberated.md) (1978)
+- Hughes — [“Why Functional Programming Matters”](../../../works/papers/hughes-1989-why-fp.md) (1989)
+- Hickey — [“Simple Made Easy”](../../../works/talks/hickey-2011-simple-made-easy.md) (2011)
+- [Alan Kay on object-oriented programming](https://www.purl.org/stefan_ram/pub/doc_kay_oop_en) — correspondence and historical terminology
+
+### Concurrency
+
+- Hewitt, Bishop, and Steiger — *A Universal Modular ACTOR Formalism for Artificial Intelligence* (1973)
+- Hoare — *Communicating Sequential Processes* (1978 paper; 1985 book)
+- Pike — [“Concurrency Is Not Parallelism”](https://go.dev/blog/waza-talk)
+
+### Types and Gradual Typing
+
 - Pierce — *Types and Programming Languages* (2002)
-- Van Roy & Haridi — *Concepts, Techniques, and Models of Computer Programming* (2004)
-- Pike — ["Concurrency Is Not Parallelism"](https://go.dev/blog/waza-talk) (2012)
-- Siek & Taha — ["Gradual Typing for Functional Languages"](https://wphomes.soic.indiana.edu/jsiek/what-is-gradual-typing/) (2006)
-- [concatenative.org](https://concatenative.org/) — community hub for concatenative languages
+- Siek and Taha — *Gradual Typing for Functional Languages* (2006)
+- Siek — [“What Is Gradual Typing?”](https://wphomes.soic.indiana.edu/jsiek/what-is-gradual-typing/) — explanatory introduction
+- [TypeScript: Type Compatibility](https://www.typescriptlang.org/docs/handbook/type-compatibility.html) — including its soundness trade-offs
+- [Python typing specification](https://typing.python.org/en/latest/spec/)
+- [Sorbet documentation](https://sorbet.org/docs/overview)
+- [Clojure spec guide](https://clojure.org/guides/spec)
+- [Elixir documentation](https://hexdocs.pm/elixir/) — consult the documentation for the release being discussed
+
+### Implementations and Concatenative Languages
+
+- [Rust Compiler Development Guide](https://rustc-dev-guide.rust-lang.org/)
+- [Miri](https://github.com/rust-lang/miri)
+- [CPython Developer's Guide](https://devguide.python.org/)
+- [V8 documentation](https://v8.dev/docs)
+- [concatenative.org](https://concatenative.org/)
+- [Factor](https://factorcode.org/)
+- [Forth standard](https://forth-standard.org/)
 
 ## Related Topics
 
-- [Functional Programming](../functional/index.md) — deep dive into FP
-- [OOP & Design](../design/index.md) — design principles for OOP
-- [Concurrency](../concurrency/index.md) — concurrent programming models
-- [Type Systems](../types/index.md) — how types interact with paradigms
-- [Languages](../../../languages/index.md) — how each language embodies paradigms
+- [Functional Programming](../functional/index.md) — functions, values, composition, and effects
+- [OOP & Design](../../design/index.md) — object models and design principles
+- [Concurrency](../concurrency/index.md) — coordination and concurrent execution
+- [Type Systems](../types/index.md) — typing, inference, and guarantees
+- [Languages](../../../languages/index.md) — concrete embodiments of programming ideas
