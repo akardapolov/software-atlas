@@ -5,31 +5,31 @@ history, key concepts, typing, influences, and links to code examples.
 
 ## Language Timeline
 
-| Language                  | Year | Creator(s)                | Primary paradigm(s)    | Typing             |
-|---------------------------|------|---------------------------|------------------------|--------------------|
-| [Fortran](fortran/index.md) | 1957 | John Backus (IBM)         | Imperative, array      | Static             |
-| [Lisp](lisp/index.md)      | 1958 | John McCarthy             | Functional, symbolic   | Dynamic            |
-| [ALGOL](algol/index.md)    | 1960 | International committee   | Imperative, structured | Static             |
-| [BASIC](basic/index.md)    | 1964 | Kemeny, Kurtz             | Imperative             | Weak / dynamic     |
-| [Simula](simula/index.md)  | 1967 | Dahl, Nygaard             | OOP                    | Static             |
-| [Forth](forth/index.md)    | 1970 | Charles H. Moore          | Concatenative, stack-based | Dynamic        |
-| [Smalltalk](smalltalk/index.md) | 1972 | Alan Kay et al.           | OOP, message passing   | Dynamic            |
-| [C](c/index.md)            | 1972 | Dennis Ritchie            | Imperative, procedural | Static, weak       |
-| [ML](ml/index.md)          | 1978 | Robin Milner              | Functional             | Static, inferred   |
-| [Ada](ada/index.md)        | 1983 | Jean Ichbiah et al.       | Multi-paradigm, concurrent | Static, strong |
-| [Erlang](erlang/index.md)  | 1986 | Joe Armstrong             | Functional, concurrent | Dynamic            |
-| [Oberon](oberon/index.md)  | 1987 | Niklaus Wirth             | Imperative, modular, object-based | Static, strong |
-| [Haskell](haskell/index.md) | 1990 | Committee                 | Functional, pure       | Static, inferred   |
-| [Python](python/index.md)  | 1991 | Guido van Rossum          | Multi-paradigm         | Dynamic, strong    |
-| [Java](java/index.md)      | 1995 | James Gosling             | OOP, imperative        | Static, nominal    |
-| [C#](csharp/index.md)      | 2000 | Anders Hejlsberg (Microsoft) | OOP, functional, component-oriented | Static, nominal |
-| [Clojure](clojure/index.md) | 2007 | Rich Hickey               | Functional, Lisp       | Dynamic, strong    |
-| [Go](go/index.md)          | 2009 | Pike, Thompson, Griesemer | Imperative, CSP        | Static, structural |
-| [Rust](rust/index.md)      | 2010 | Graydon Hoare             | Multi-paradigm         | Static, affine     |
-| [TypeScript](typescript/index.md) | 2012 | Anders Hejlsberg          | Multi-paradigm         | Static, structural |
+| Language                          | Year | Creator(s)                   | Primary paradigm(s)                 | Typing             |
+|-----------------------------------|------|------------------------------|-------------------------------------|--------------------|
+| [Fortran](fortran/index.md)       | 1957 | John Backus (IBM)            | Imperative, array                   | Static             |
+| [Lisp](lisp/index.md)             | 1958 | John McCarthy                | Functional, symbolic                | Dynamic            |
+| [ALGOL](algol/index.md)           | 1960 | International committee      | Imperative, structured              | Static             |
+| [BASIC](basic/index.md)           | 1964 | Kemeny, Kurtz                | Imperative                          | Weak / dynamic     |
+| [Simula](simula/index.md)         | 1967 | Dahl, Nygaard                | OOP                                 | Static             |
+| [Forth](forth/index.md)           | 1970 | Charles H. Moore             | Concatenative, stack-based          | Dynamic            |
+| [Smalltalk](smalltalk/index.md)   | 1972 | Alan Kay et al.              | OOP, message passing                | Dynamic            |
+| [C](c/index.md)                   | 1972 | Dennis Ritchie               | Imperative, procedural              | Static, weak       |
+| [ML](ml/index.md)                 | 1978 | Robin Milner                 | Functional                          | Static, inferred   |
+| [Ada](ada/index.md)               | 1983 | Jean Ichbiah et al.          | Multi-paradigm, concurrent          | Static, strong     |
+| [Erlang](erlang/index.md)         | 1986 | Joe Armstrong                | Functional, concurrent              | Dynamic            |
+| [Oberon](oberon/index.md)         | 1987 | Niklaus Wirth                | Imperative, modular, object-based   | Static, strong     |
+| [Haskell](haskell/index.md)       | 1990 | Committee                    | Functional, pure                    | Static, inferred   |
+| [Python](python/index.md)         | 1991 | Guido van Rossum             | Multi-paradigm                      | Dynamic, strong    |
+| [Java](java/index.md)             | 1995 | James Gosling                | OOP, imperative                     | Static, nominal    |
+| [C#](csharp/index.md)             | 2000 | Anders Hejlsberg (Microsoft) | OOP, functional, component-oriented | Static, nominal    |
+| [Clojure](clojure/index.md)       | 2007 | Rich Hickey                  | Functional, Lisp                    | Dynamic, strong    |
+| [Go](go/index.md)                 | 2009 | Pike, Thompson, Griesemer    | Imperative, CSP                     | Static, structural |
+| [Rust](rust/index.md)             | 2010 | Graydon Hoare                | Multi-paradigm                      | Static, affine     |
+| [TypeScript](typescript/index.md) | 2012 | Anders Hejlsberg             | Multi-paradigm                      | Static, structural |
 
 ## See Also
 
 - [Languages Genealogy Map](../maps/languages-genealogy.md) — visual family tree
-- [Type Systems](../topics/types/index.md) — how type systems differ
-- [Paradigms](../topics/paradigms/index.md) — paradigms these languages embody
+- [Type Systems](../topics/concepts/types/index.md) — how type systems differ
+- [Paradigms](../maps/paradigms-map.md) — paradigms these languages embody
