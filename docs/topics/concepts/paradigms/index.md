@@ -73,30 +73,24 @@ Not every important language property is itself a paradigm. Type checking,
 garbage collection, and compilation strategy matter greatly, but answer
 different questions from "what abstractions organize this program?"
 
-## The Big Picture: Six Complementary Questions
-
 ```mermaid
+%%{init: {'theme': 'default', 'flowchart': {'wrappingWidth': 680, 'nodeSpacing': 8, 'rankSpacing': 16, 'padding': 24}}}%%
 flowchart TD
-    Q["How can we understand a language or programming style?"]
+    Q["<b style='font-size:20px'>How can we understand a language or programming style?</b>"]
 
-    subgraph SEM ["Programming Style and Language Semantics"]
-        A["A · Control and Specification<br/>How are computations described?"]
-        B["B · Organization and Abstraction<br/>Around what concepts is code organized?"]
-        C["C · State and Effects<br/>How are changes and external interactions represented?"]
-        D["D · Concurrency and Coordination<br/>How do activities coexist and communicate?"]
-        E["E · Type Discipline<br/>Which constraints are expressed and checked?"]
-    end
-
-    subgraph IMPL ["Implementation"]
-        F["F · Implementation Strategy<br/>How is the program translated and executed?"]
-    end
+    A["<b>A · Control and Specification</b><br/><small>How are computations described?</small>"]
+    B["<b>B · Organization and Abstraction</b><br/><small>Around what concepts is code organized?</small>"]
+    C["<b>C · State and Effects</b><br/><small>How are changes and external interactions represented?</small>"]
+    D["<b>D · Concurrency and Coordination</b><br/><small>How do activities coexist and communicate?</small>"]
+    E["<b>E · Type Discipline</b><br/><small>Which constraints are expressed and checked?</small>"]
+    F["<b>F · Implementation Strategy</b><br/><small>How is the program translated and executed?</small>"]
 
     Q --> A
-    Q --> B
-    Q --> C
-    Q --> D
-    Q --> E
-    Q --> F
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+    E --> F
 
     style A fill:#f3e5f5
     style B fill:#e1f5fe
