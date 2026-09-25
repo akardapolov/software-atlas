@@ -954,6 +954,10 @@ Full overview → **[projects/lilliput/index.md](./projects/lilliput/index.md)**
 
 ---
 
+## Runtime Memory Layout
+
+### Complete JVM Memory Picture
+
 ```mermaid
 graph TB
     subgraph OS["OPERATING SYSTEM"]
