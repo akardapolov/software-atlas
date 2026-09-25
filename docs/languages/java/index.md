@@ -954,63 +954,75 @@ Full overview → **[projects/lilliput/index.md](./projects/lilliput/index.md)**
 
 ---
 
-## Runtime Memory Layout
-
-### Complete JVM Memory Picture
-
 ```mermaid
 graph TB
-    subgraph OS["🖥️ OPERATING SYSTEM"]
-        subgraph PROCESS["⚙️ JVM PROCESS (java.exe)"]
-            
-            subgraph NATIVE_MEM["📦 Process Native Memory"]
-                
-                subgraph HEAP_AREA["🟢 JVM HEAP (shared by all threads)"]
-                    direction TB
-                    subgraph YOUNG["Young Generation"]
-                        EDEN["Eden Space\n(new objects)"]
-                        S0["Survivor 0"]
-                        S1["Survivor 1"]
-                    end
-                    subgraph OLD["Old Generation (Tenured)"]
-                        OLD_OBJ["Long-lived objects"]
-                    end
-                end
+    subgraph OS["OPERATING SYSTEM"]
+        subgraph PROCESS["JVM PROCESS (java)"]
 
-                subgraph METASPACE_AREA["🟣 METASPACE (native memory)"]
-                    CLASS_META["Class Metadata"]
-                    STATIC_VARS["⚡ Static Variables"]
-                    CONST_POOL["Constant Pool"]
+            subgraph HEAP_AREA["HEAP — shared, GC-managed"]
+                direction TB
+                subgraph YOUNG["Young Generation"]
+                    EDEN["Eden Space<br/>new objects"]
+                    S0["Survivor S0"]
+                    S1["Survivor S1"]
                 end
-
-                subgraph THREADS_MEM["🔴 THREAD MEMORY"]
-                    subgraph THREAD1["🧵 Thread-1 (main)"]
-                        subgraph STACK1["Thread STACK"]
-                            FRAME2["Stack Frame: calculate()"]
-                            FRAME1["Stack Frame: process()"]
-                        end
-                        PC1["PC Register"]
-                    end
+                subgraph OLD["Old Generation (Tenured)"]
+                    OLD_OBJ["Long-lived / promoted objects"]
                 end
-
+                STRPOOL["String Intern Pool<br/>since Java 7 lives in Heap"]
             end
+
+            subgraph METASPACE_AREA["METASPACE — shared, native memory"]
+                CLASS_META["Class Metadata<br/>vtables, bytecode"]
+                STATIC_VARS["Static variable slots<br/>(refs point into Heap)"]
+                CONST_POOL["Runtime Constant Pool"]
+            end
+
+            subgraph CODECACHE_AREA["CODE CACHE — shared, native memory"]
+                JIT["JIT-compiled native code<br/>(C1/C2)"]
+            end
+
+            subgraph DIRECT_AREA["DIRECT / OFF-HEAP MEMORY"]
+                DBB["DirectByteBuffer, mmap,<br/>Unsafe allocations"]
+            end
+
+            subgraph THREADS_MEM["THREAD MEMORY — per thread, not shared"]
+                subgraph THREAD1["Thread-1 (main)"]
+                    subgraph STACK1["Java Stack"]
+                        FRAME2["Frame: calculate()"]
+                        FRAME1["Frame: process()"]
+                    end
+                    PC1["PC Register"]
+                    NSTACK1["Native Method Stack (JNI)"]
+                end
+                subgraph THREADN["Thread-N ..."]
+                    STACKN["Java Stack"]
+                    PCN["PC Register"]
+                end
+            end
+
         end
     end
+
     style HEAP_AREA fill:#e8f5e9,stroke:#4CAF50,color:#1b5e20
     style METASPACE_AREA fill:#f3e5f5,stroke:#9C27B0,color:#4a148c
     style THREADS_MEM fill:#fbe9e7,stroke:#FF5722,color:#bf360c
+    style CODECACHE_AREA fill:#fffde7,stroke:#FBC02D,color:#795548
+    style DIRECT_AREA fill:#e3f2fd,stroke:#2196F3,color:#0d47a1
 ```
 
-### Main runtime areas
+### Sizes & limits
 
-| Area | Shared? | Typical contents | Reclaimed how |
-| :--- | :--- | :--- | :--- |
-| **Thread stack** | No, per thread | Stack frames, local variables, references | Automatically on method return / thread exit |
-| **Heap** | Yes | Most Java objects and arrays | Garbage collection |
-| **Metaspace** | Yes | Class metadata, method metadata | Class unloading / JVM runtime shutdown |
-| **Direct memory** | Yes | Off-heap allocations, foreign segments | Explicit/Cleaner lifecycle |
-
----
+| Area | Shared? | Default size | Tuning flags | Limit type | Contents | Freed by |
+|---|---|---|---|---|---|---|
+| **Heap** (Young+Old) | Yes | ~1/4 physical RAM | `-Xms`, `-Xmx`, `-XX:NewRatio`, `-XX:SurvivorRatio` | Hard — `OutOfMemoryError: Java heap space` | Objects, arrays, String pool | Garbage Collector |
+| **String Pool** | Yes | part of Heap | same as Heap | same as Heap | Interned literals, `String.intern()` | GC (when unreferenced) |
+| **Metaspace** | Yes | ~21MB initial (platform-dep) | `-XX:MetaspaceSize`, `-XX:MaxMetaspaceSize` | Soft — default unlimited, capped only by native/OS memory | Class metadata, method bytecode, static slots, constant pool | Class unloading (ClassLoader GC'd) |
+| **Code Cache** | Yes | ~240MB (JDK9+ tiered) | `-XX:ReservedCodeCacheSize`, `-XX:InitialCodeCacheSize` | Hard — bounded, JVM warns "CodeCache is full" | JIT-compiled machine code | Deoptimization / sweeping |
+| **Direct memory** | Yes | = `-Xmx` if unset | `-XX:MaxDirectMemorySize` | Soft-checked bound — `OutOfMemoryError: Direct buffer memory` | `DirectByteBuffer`, `Unsafe.allocateMemory`, mmap | Explicit free / `Cleaner` / PhantomReference |
+| **Thread stack** | No, per-thread | 512KB–1MB (OS-dependent) | `-Xss` | Hard per thread — `StackOverflowError` | Frames, locals, operand stack, return addr | Auto on method return / thread exit |
+| **PC Register** | No, per-thread | negligible | n/a | n/a | Address of current bytecode instr. | Auto on thread exit |
+| **Native method stack** | No, per-thread | usually merged with Java stack (HotSpot) | `-Xss` | Same as stack | JNI call frames | Auto on method return |
 
 ## Java Memory Model (JMM)
 
