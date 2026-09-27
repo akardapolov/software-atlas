@@ -53,16 +53,19 @@
    - [Project Leyden](#project-leyden) (Startup & AOT Optimizations)
    - [Project Detroit](#project-detroit) (Desktop Application Packaging)
    - [Project Lilliput](#project-lilliput) (Compact Object Headers)
-7. [Other Language Features](#other-language-features)
-8. [Runtime Memory Layout](#runtime-memory-layout)
-9. [Java Memory Model (JMM)](#java-memory-model-jmm)
-10. [Ecosystem and Tools](#ecosystem-and-tools)
-11. [Influence](#influence)
-12. [Strengths and Weaknesses](#strengths-and-weaknesses)
-13. [Code Examples](#code-examples)
-14. [Related Authors](#related-authors)
-15. [Related Topics](#related-topics)
-16. [Further Reading](#further-reading)
+7. [Cheat Sheets](#cheat-sheets)
+   - [Part I: Language Basics](cheatsheets/part-i.md)
+   - [Part II: OOP in Depth and Core APIs](cheatsheets/part-ii.md)
+8. [Other Language Features](#other-language-features)
+9. [Runtime Memory Layout](#runtime-memory-layout)
+10. [Java Memory Model (JMM)](#java-memory-model-jmm)
+11. [Ecosystem and Tools](#ecosystem-and-tools)
+12. [Influence](#influence)
+13. [Strengths and Weaknesses](#strengths-and-weaknesses)
+14. [Code Examples](#code-examples)
+15. [Related Authors](#related-authors)
+16. [Related Topics](#related-topics)
+17. [Further Reading](#further-reading)
 
 ---
 
@@ -934,6 +937,21 @@ Full overview → **[projects/lilliput/index.md](./projects/lilliput/index.md)**
 
 ---
 
+## Cheat Sheets
+
+Quick-reference sheets that condense the language and its core standard-library
+APIs into compact, printable pages: one topic per section, each with a short
+explanation and a practice idea for every construct it covers.
+
+| Sheet | Level | Topics |
+|-------|-------|--------|
+| **[Part I](./cheatsheets/part-i.md)** | Language basics | Compilation & running, variables & types, operators, strings, conditionals, loops, arrays, methods, OOP basics, console I/O |
+| **[Part II](./cheatsheets/part-ii.md)** | OOP in depth & core APIs | Inheritance, polymorphism & abstraction, encapsulation, exceptions, collections, generics, lambdas & Stream API, functional interfaces, files & I/O, multithreading, useful extras |
+
+Full overview → **[cheatsheets/index.md](./cheatsheets/index.md)**
+
+---
+
 ## Other Language Features
 
 | Feature                | Version | Description                                            | Example                                                |
@@ -1103,10 +1121,33 @@ flowchart LR
 
 ---
 
+## Related Authors
+
+- [James Gosling](../../authors/james-gosling.md) — creator of Java
+- [Bjarne Stroustrup](../../authors/bjarne-stroustrup.md) — C++, Java's syntactic ancestor
+- [Alan Kay](../../authors/alan-kay.md) — Smalltalk, OOP heritage
+- [Erich Gamma](../../authors/erich-gamma.md) — Eclipse IDE, JUnit — Java tooling ecosystem
+- [Kent Beck](../../authors/kent-beck.md) — JUnit, TDD in the Java ecosystem
+
+---
+
 ## Related Topics
+
 - [OOP & Design](../../topics/design/index.md) — SOLID, GoF patterns in Java
-- [Concurrency](../../topics/concurrency/index.md) — Multi-threading models, JMM
+- [Concurrency](../../topics/concepts/concurrency/index.md) — Multi-threading models, JMM
 - [Testing](../../topics/testing/index.md) — JUnit, Mockito, AssertJ
+
+---
+
+## Further Reading
+
+| Author                       | Title                           | Year | Focus                                                                                 |
+|------------------------------|---------------------------------|------|---------------------------------------------------------------------------------------|
+| Gosling, Joy, Steele, Bracha | *The Java Programming Language* | 2000 | Authoritative language guide — [work page](../../works/books/gosling-2000-java-pl.md) |
+| Bloch                        | *Effective Java* (3rd ed.)      | 2018 | Idiomatic usage, best practices                                                       |
+| Goetz et al.                 | *Java Concurrency in Practice*  | 2006 | Concurrency, JMM, `java.util.concurrent`                                              |
+| Horstmann                    | *Core Java* (12th ed.)          | 2021 | Comprehensive platform reference                                                      |
+| Walls                        | *Spring in Action* (6th ed.)    | 2022 | Spring framework and ecosystem                                                        |
 
 ---
 
