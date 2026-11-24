@@ -12,7 +12,8 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --sidebar-w: 280px;
+      --sidebar-w: 280px;                 /* ширина, выбранная пользователем */
+      --sidebar-cur: var(--sidebar-w);    /* фактическая ширина (0 при сворачивании) */
       --header-h: 56px;
       --accent: #3b63dd;
       --accent-light: #eef1fd;
@@ -56,9 +57,10 @@
     .layout {
       display: grid;
       grid-template-rows: var(--header-h) 1fr;
-      grid-template-columns: var(--sidebar-w) 1fr;
+      grid-template-columns: var(--sidebar-cur) 1fr;
       grid-template-areas: "header header" "sidebar main";
       height: 100vh;
+      transition: grid-template-columns .2s ease;
     }
 
     .header {
@@ -128,6 +130,7 @@
 
     .sidebar {
       grid-area: sidebar;
+      min-width: 0;
       background: var(--sidebar-bg);
       border-right: 1px solid var(--border);
       overflow-y: auto;
@@ -208,7 +211,7 @@
     .search-overlay {
       position: fixed;
       top: var(--header-h);
-      left: var(--sidebar-w);
+      left: var(--sidebar-cur);
       right: 0;
       bottom: 0;
       background: var(--bg);
@@ -341,7 +344,44 @@
       border-color: #664d00;
     }
 
-    .sidebar-toggle { display: none; }
+    /* ── Resizer & collapse ── */
+    .sidebar-resizer {
+      position: fixed;
+      top: var(--header-h);
+      bottom: 0;
+      left: calc(var(--sidebar-cur) - 3px);
+      width: 6px;
+      cursor: col-resize;
+      z-index: 85;
+      touch-action: none;
+      transition: left .2s ease, background .15s;
+    }
+    .sidebar-resizer:hover,
+    .sidebar-resizer:focus-visible,
+    html.sidebar-resizing .sidebar-resizer {
+      background: var(--accent);
+      opacity: .5;
+      outline: none;
+    }
+
+    /* во время перетаскивания отключаем анимации и выделение текста */
+    html.sidebar-resizing,
+    html.sidebar-resizing * {
+      cursor: col-resize !important;
+      user-select: none !important;
+    }
+    html.sidebar-resizing .layout,
+    html.sidebar-resizing .sidebar-resizer { transition: none; }
+
+    /* свернутое состояние (только десктоп) */
+    @media (min-width: 769px) {
+      html.sidebar-collapsed { --sidebar-cur: 0px; }
+      html.sidebar-collapsed .sidebar {
+        border-right: none;
+        visibility: hidden;          /* убираем из tab-порядка */
+      }
+      html.sidebar-collapsed .sidebar-resizer { display: none; }
+    }
 
     @media (max-width: 768px) {
       .layout { grid-template-columns: 1fr; grid-template-areas: "header" "main"; }
@@ -349,24 +389,37 @@
         position: fixed;
         top: var(--header-h);
         left: -100%;
-        width: var(--sidebar-w);
+        width: min(var(--sidebar-w), 85vw);
         height: calc(100vh - var(--header-h));
         z-index: 80;
         transition: left .25s;
         box-shadow: var(--shadow);
       }
       .sidebar.open { left: 0; }
-      .sidebar-toggle { display: flex; }
+      .sidebar-resizer { display: none; }
       .search-overlay { left: 0; }
       .content { padding: 24px 20px; }
     }
   </style>
+
+  <script>
+    (function () {
+      try {
+        var w = parseInt(localStorage.getItem("sa-sidebar-w"), 10);
+        if (w >= 180 && w <= 700)
+          document.documentElement.style.setProperty("--sidebar-w", w + "px");
+        if (localStorage.getItem("sa-sidebar-collapsed") === "1")
+          document.documentElement.classList.add("sidebar-collapsed");
+      } catch (e) {}
+    })();
+  </script>
 </head>
 <body>
 
 <div class="layout">
   <header class="header">
-    <button class="btn-icon sidebar-toggle" id="sidebarToggle">☰</button>
+    <button class="btn-icon sidebar-toggle" id="sidebarToggle"
+            title="Toggle sidebar (Ctrl+B)">☰</button>
     <div class="header__logo" id="logoBtn">
       🗺️ Software Engineering Atlas <span>/ knowledge base</span>
     </div>
@@ -394,6 +447,9 @@
   </header>
 
   <nav class="sidebar" id="sidebar"></nav>
+  <div class="sidebar-resizer" id="sidebarResizer"
+       role="separator" aria-orientation="vertical" tabindex="0"
+       title="Drag to resize · double-click to reset"></div>
 
   <main class="main" id="main">
     <div class="content" id="content">
@@ -804,6 +860,80 @@
   let searchIndex  = [];
   let searchTimer  = null;
   const isFileProtocol = location.protocol === "file:";
+
+  // ═══════════════════════════════════════
+  // SIDEBAR: COLLAPSE & RESIZE
+  // ═══════════════════════════════════════
+  const SIDEBAR_MIN = 180;
+  const SIDEBAR_MAX = 600;
+  const SIDEBAR_DEFAULT = 280;
+  const mobileMQ = window.matchMedia("(max-width: 768px)");
+  let sidebarWidth = parseInt(localStorage.getItem("sa-sidebar-w"), 10) || SIDEBAR_DEFAULT;
+
+  function clampSidebarWidth(px) {
+    const max = Math.min(SIDEBAR_MAX, window.innerWidth * 0.6);
+    return Math.round(Math.max(SIDEBAR_MIN, Math.min(max, px)));
+  }
+
+  function setSidebarWidth(px, save = true) {
+    sidebarWidth = clampSidebarWidth(px);
+    document.documentElement.style.setProperty("--sidebar-w", sidebarWidth + "px");
+    if (save) localStorage.setItem("sa-sidebar-w", sidebarWidth);
+  }
+
+  function setSidebarCollapsed(collapsed) {
+    document.documentElement.classList.toggle("sidebar-collapsed", collapsed);
+    localStorage.setItem("sa-sidebar-collapsed", collapsed ? "1" : "0");
+  }
+
+  function toggleSidebar() {
+    if (mobileMQ.matches) {
+      document.getElementById("sidebar").classList.toggle("open");
+    } else {
+      const collapsed = document.documentElement.classList.contains("sidebar-collapsed");
+      setSidebarCollapsed(!collapsed);
+    }
+  }
+
+  function initSidebarResize() {
+    const root   = document.documentElement;
+    const handle = document.getElementById("sidebarResizer");
+
+    handle.addEventListener("pointerdown", e => {
+      if (e.button !== 0) return;
+      e.preventDefault();
+      handle.setPointerCapture(e.pointerId);
+      root.classList.add("sidebar-resizing");
+    });
+
+    handle.addEventListener("pointermove", e => {
+      if (!handle.hasPointerCapture(e.pointerId)) return;
+      setSidebarWidth(e.clientX, false);   // сайдбар прижат к левому краю
+    });
+
+    const stop = e => {
+      if (!handle.hasPointerCapture(e.pointerId)) return;
+      handle.releasePointerCapture(e.pointerId);
+      root.classList.remove("sidebar-resizing");
+      localStorage.setItem("sa-sidebar-w", sidebarWidth);
+    };
+    handle.addEventListener("pointerup", stop);
+    handle.addEventListener("pointercancel", stop);
+
+    // двойной клик — сброс ширины
+    handle.addEventListener("dblclick", () => setSidebarWidth(SIDEBAR_DEFAULT));
+
+    // клавиатура: ← → меняют ширину
+    handle.addEventListener("keydown", e => {
+      if (e.key === "ArrowLeft")  { e.preventDefault(); setSidebarWidth(sidebarWidth - 20); }
+      if (e.key === "ArrowRight") { e.preventDefault(); setSidebarWidth(sidebarWidth + 20); }
+    });
+
+    // при уменьшении окна не даём панели стать слишком широкой
+    window.addEventListener("resize", () => {
+      if (clampSidebarWidth(sidebarWidth) !== sidebarWidth) setSidebarWidth(sidebarWidth);
+    });
+  }
 
   // ═══════════════════════════════════════
   // THEME
@@ -1407,8 +1537,8 @@ python -m http.server 8080 --directory . &amp;&amp; python -c "import http.serve
     // Events
     document.getElementById("themeToggle").onclick  = toggleTheme;
     document.getElementById("logoBtn").onclick       = () => navigate("docs/index.md");
-    document.getElementById("sidebarToggle").onclick = () =>
-      document.getElementById("sidebar").classList.toggle("open");
+    document.getElementById("sidebarToggle").onclick = toggleSidebar;
+    initSidebarResize();
 
     const searchInput = document.getElementById("searchInput");
     searchInput.addEventListener("input", e => {
@@ -1423,6 +1553,10 @@ python -m http.server 8080 --directory . &amp;&amp; python -c "import http.serve
       if (e.key === "/" && document.activeElement !== searchInput) {
         e.preventDefault();
         searchInput.focus();
+      }
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "b") {
+        e.preventDefault();
+        toggleSidebar();
       }
     });
 
