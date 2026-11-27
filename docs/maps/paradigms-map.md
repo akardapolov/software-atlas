@@ -4,26 +4,48 @@ How programming paradigms relate, overlap, and influenced each other over time.
 
 ## Contents
 
-1. [What a paradigm is](#1-what-a-paradigm-is)
-2. [Paradigm overview: influence map](#2-paradigm-overview-influence-map)
-3. [Six complementary questions](#3-six-complementary-questions)
-4. [A. Control and description](#a-control-and-description)
-5. [B. Organization and abstraction](#b-organization-and-abstraction)
-6. [C. State and effects](#c-state-and-effects)
-7. [D. Concurrency and coordination](#d-concurrency-and-coordination)
-8. [E. Type discipline](#e-type-discipline)
-9. [F. Implementation strategy](#f-implementation-strategy)
-10. [Additional dimensions](#4-additional-dimensions)
-11. [Declarative techniques and DSLs](#5-declarative-techniques-and-dsls)
-12. [Languages at a glance](#6-languages-at-a-glance)
-13. [Modern multi-paradigm synthesis](#7-modern-multi-paradigm-synthesis)
-14. [Paradigm selection guide](#8-paradigm-selection-guide)
-15. [Key ideas](#9-key-ideas)
-16. [Timeline](#10-timeline)
-17. [Type discipline: deep dive](#11-type-discipline-deep-dive)
-18. [Case study: gradual and optional typing in Java](#12-case-study-gradual-and-optional-typing-in-java)
-19. [Further reading](#13-further-reading)
-20. [See also](#see-also)
+**I. Foundations**
+
+- [1. What a paradigm is](#1-what-a-paradigm-is)
+- [2. Paradigm overview: influence map](#2-paradigm-overview-influence-map)
+- [3. Six complementary questions](#3-six-complementary-questions)
+
+**II. Dimensions in detail** *(A–F are subsections of section 3)*
+
+- [A. Control and description](#a-control-and-description)
+- [B. Organization and abstraction](#b-organization-and-abstraction)
+- [C. State and effects](#c-state-and-effects)
+- [D. Concurrency and coordination](#d-concurrency-and-coordination)
+- [E. Type discipline](#e-type-discipline)
+- [F. Implementation strategy](#f-implementation-strategy)
+- [4. Additional dimensions](#4-additional-dimensions)
+
+**III. Practice**
+
+- [5. Declarative techniques and DSLs](#5-declarative-techniques-and-dsls)
+- [6. Languages at a glance](#6-languages-at-a-glance)
+- [7. Modern multi-paradigm synthesis](#7-modern-multi-paradigm-synthesis)
+- [8. Paradigm selection guide](#8-paradigm-selection-guide)
+- [9. Key ideas](#9-key-ideas)
+
+**IV. History**
+
+- [10. Timeline](#10-timeline)
+
+**V. Deep dives**
+
+- [11. Type discipline: deep dive](#11-type-discipline-deep-dive)
+  - [11.1 Annotations and type inference](#111-annotations-and-type-inference)
+  - [11.2 Nominal and structural compatibility](#112-nominal-and-structural-compatibility)
+  - [11.3 Expressiveness](#113-expressiveness)
+  - [11.4 Guarantees](#114-guarantees)
+  - [11.5 Gradual integration](#115-gradual-integration)
+- [12. Case study: gradual and optional typing in Java](#12-case-study-gradual-and-optional-typing-in-java)
+
+**VI. Reference**
+
+- [13. Further reading](#13-further-reading)
+- [See also](#see-also)
 
 ---
 
@@ -54,7 +76,7 @@ flowchart TD
     end
 
     subgraph OOP["📦 Object-Oriented"]
-        ClassBased["Class-based<br/>Simula, Java, C++, C#"]
+        ClassBased["Class-based<br/>Simula, Smalltalk, Java, C++, C#"]
         ProtoBased["Prototype-based<br/>Self, JavaScript"]
     end
 
@@ -188,11 +210,11 @@ block-beta
 
 **How to read the diagram**
 
-- Color marks the dimension (A–F); the rightmost level gives examples of languages and technologies.
+- Color marks the dimension (A–F); the italic lines inside the blocks give examples of languages and technologies.
 - Branches are not mutually exclusive. One language passes through several branches. Java, for example: A (imperative + declarative APIs) → B (OOP) → D (threads, reactive libraries) → E (static, nominal) → F (bytecode + JIT).
 - Branches inside one dimension are not necessarily alternatives either. In D, concurrency and parallelism can be combined, and in B different models are often mixed in one program.
 - **A is a scale, not a ranking.** Imperative and declarative are two ends of one axis: loops → pipelines → relations and constraints. More declarative does not mean better (see [A. Control and description](#a-control-and-description)).
-- **E has three separate questions about guarantees:** (1) type safety, (2) soundness of diagnostics, (3) completeness of analysis. They are not interchangeable (see [E. Type discipline](#e-type-discipline) and [11.4](#11-type-discipline-deep-dive)).
+- **E has three separate questions about analysis guarantees:** (1) type safety, (2) precision of diagnostics (no false alarms), (3) coverage of analysis (no missed errors). They are not interchangeable (see [E. Type discipline](#e-type-discipline) and [11.4](#114-guarantees)).
 - **F does not define language semantics.** The implementation (compiler, interpreter, JIT, runtime) is one thing and the language is another (see [F. Implementation strategy](#f-implementation-strategy)).
 
 | | Dimension | Question |
@@ -206,9 +228,7 @@ block-beta
 
 The dimensions are not strictly orthogonal: a paradigm can affect several of them at once.
 
----
-
-## A. Control and description
+### A. Control and description
 
 - **Imperative style**: commands, state changes, control flow.
 - **Declarative style**: a description of relations or the desired result, while some operational decisions are left to an evaluator, solver, or framework.
@@ -223,7 +243,7 @@ loops and state updates → transformation pipelines → relations and constrain
 
 The degree of declarativeness depends on the construct and the problem domain.
 
-### ⚡ Imperative programming
+#### ⚡ Imperative programming
 
 **Core idea:** programs as sequences of commands that change state.
 
@@ -246,7 +266,7 @@ for (int i = 0; i < n; i++) {
 
 **Weaknesses:** state management gets complex as programs grow; shared mutable state makes parallelization harder.
 
-### 📋 Declarative programming
+#### 📋 Declarative programming
 
 **Core idea:** describe what you want, not how to get it.
 
@@ -264,14 +284,12 @@ SELECT name FROM users WHERE age > 18;
 
 **Weaknesses:** less control, behavior (especially performance) can be opaque.
 
-### Examples on the scale
+#### Examples on the scale
 
 - A Java loop with an accumulator is imperative. `stream().map().filter().reduce()` is more declarative with respect to traversal, but the order of transformations is still specified.
 - SQL leaves the choice of execution plan to the DBMS, but it still states the exact relational operation.
 
----
-
-## B. Organization and abstraction
+### B. Organization and abstraction
 
 | Model | Idea | Key abstractions |
 |---|---|---|
@@ -284,11 +302,11 @@ SELECT name FROM users WHERE age > 18;
 
 The models are not mutually exclusive and live at different levels. Component-based development, for example, mostly describes large-scale architecture.
 
-### Procedural
+#### Procedural
 
 The unit of organization is the procedure, often inside a module. Languages: C, Pascal, Fortran, BASIC. It rests on the ideas of structured programming: sequence, selection, iteration.
 
-### 📦 Object-oriented programming
+#### 📦 Object-oriented programming
 
 **Core idea:** a program is a set of objects that encapsulate state and expose behavior through methods or messages.
 
@@ -317,14 +335,14 @@ class Account {
 
 **Subparadigms**
 
-- **Class-based** (Java, C++): objects are instances of classes.
+- **Class-based** (Smalltalk, Java, C++): objects are instances of classes.
 - **Prototype-based** (JavaScript, Self): objects are cloned from, or delegate to, other objects.
 
 **Strengths:** modeling real-world domains, code reuse, encapsulation.
 
 **Weaknesses:** inheritance hierarchies can become rigid; shared mutable state.
 
-### λ Functional programming
+#### λ Functional programming
 
 **Core idea:** programs as a composition of functions and expressions that transform (preferably immutable) data.
 
@@ -350,13 +368,13 @@ mySum = foldr (+) 0
 **Subparadigms**
 
 - **Pure FP** (Haskell, PureScript): effects are tracked in the type system.
-- **Impure FP** (Lisp, Clojure, ML, Erlang): functional style with pragmatic escape hatches.
+- **Impure FP** (Lisp, Clojure, ML, OCaml, Erlang): functional style with pragmatic escape hatches.
 
 **Strengths:** testability, safety under concurrency, ease of reasoning.
 
 **Weaknesses:** learning curve; performance overhead (often mitigated in practice).
 
-### Logic programming
+#### Logic programming
 
 A program is a set of facts and rules, and execution is the answer to a query.
 
@@ -367,17 +385,15 @@ A program is a set of facts and rules, and execution is the answer to a query.
 - Datalog usually evaluates rules to a fixed point instead of backtracking search.
 - Languages and systems: Prolog, Datalog, miniKanren, core.logic.
 
-### Applicative and concatenative style
+#### Applicative and concatenative style
 
 These concern how application and composition are expressed.
 
-- *Applicative:* a function is applied to explicit arguments: `f(g(x))`. Do not confuse it with applicative evaluation order or with the `Applicative` type class in Haskell.
+- *Applicative:* a function is applied to explicit arguments: `f(g(x))`. Do not confuse it with applicative-order evaluation (arguments are evaluated before the call) or with the `Applicative` type class in Haskell.
 - *Concatenative:* juxtaposing program fragments means composing them. Often (but not necessarily) an implicit stack is used: `3 4 + 2 *`. Languages: Forth, Factor, Joy, PostScript.
 - Related but distinct notions: **stack-based** (an operand model) and **point-free / tacit** (an expression without explicit arguments, e.g. `filter positive . map double`).
 
----
-
-## C. State and effects
+### C. State and effects
 
 An **effect** is an observable interaction beyond returning a value: mutation, I/O, an exception.
 
@@ -396,9 +412,7 @@ An **effect** is an observable interaction beyond returning a value: mutation, I
 
 Immutability does not protect against stale snapshots, bugs in update logic, or races on external resources.
 
----
-
-## D. Concurrency and coordination
+### D. Concurrency and coordination
 
 | Concept | Essence | Examples |
 |---|---|---|
@@ -413,7 +427,7 @@ Immutability does not protect against stale snapshots, bugs in update logic, or 
 - A program can be event-driven, concurrent, and parallel at the same time.
 - Event-driven and reactive programming overlap but are not synonyms: in reactive programming the dependencies and propagation rules are explicit.
 
-### 🔄 Actor model
+#### 🔄 Actor model
 
 **Core idea:** isolated actors communicate through asynchronous messages (Hewitt, Bishop, Steiger, 1973).
 
@@ -433,7 +447,7 @@ loop(State) ->
     end.
 ```
 
-### CSP (Communicating Sequential Processes)
+#### CSP (Communicating Sequential Processes)
 
 **Core idea:** independent sequential processes synchronize through shared events (Hoare, 1978). In the classical model this is a rendezvous.
 
@@ -451,7 +465,7 @@ go func() { ch <- 42 }()
 value := <-ch
 ```
 
-### Actors vs CSP
+#### Actors vs CSP
 
 | | Actors | CSP / channels |
 |---|---|---|
@@ -461,9 +475,7 @@ value := <-ch
 
 Neither model by itself solves the problems of distributed systems, deadlocks, or overload.
 
----
-
-## E. Type discipline
+### E. Type discipline
 
 - **Static typing:** constraints are checked before the code runs.
 - **Dynamic typing:** type properties are checked at run time.
@@ -475,15 +487,16 @@ Static languages also perform run-time checks, and dynamic ones can get static a
 | Annotations and inference | What must be written and what is inferred | Local inference in Java and Rust; extended inference in the ML family |
 | Nominal / structural compatibility | Compatibility is determined by declaration, structure, or both | Java classes; TypeScript object types; Go interfaces |
 | Expressiveness | What can be described by types | Generics, ADTs, dependent types, effect types |
-| Guarantees | What a successful check establishes | Type safety in the safe subset |
+| Guarantees | What a successful check establishes | Type safety (soundness) in the safe subset |
 | Gradual integration | How typed and unknown values interact | Python typing, TypeScript, Sorbet |
 
 - The terms "strong/weak typing" are defined inconsistently. It is better to be specific: casts, checks, memory safety, type-system guarantees.
 - **Gradual typing** (Siek, Taha, 2006) studies the coexistence of statically and dynamically typed parts. **Optional typing** is not the same: the check may not affect execution. A sound gradual system may insert checks at the boundaries.
-- **Three different questions about correctness (soundness):**
-    1. *Type safety:* can an accepted program perform a forbidden operation?
-    2. *Soundness of diagnostics:* is a reported error real?
-    3. *Completeness of analysis:* will all errors be found?
+- **Three different questions about analysis guarantees:**
+    1. *Type safety:* can an accepted program perform a forbidden operation? (In type theory this property is called soundness of the type system.)
+    2. *Precision of diagnostics (no false alarms):* is every reported error real, and are correct programs accepted?
+    3. *Coverage of analysis (no missed errors):* will all errors of the chosen class be found?
+- **A note on terminology.** In static analysis, "sound" usually means "no missed errors" and "complete" means "no false alarms". Communities use these words differently, so this document uses neutral names.
 - The absence of warnings does not prove correctness: types usually do not guarantee termination, absence of exceptions, or correct business logic.
 
 The [deep dive](#11-type-discipline-deep-dive) covers each axis in detail.
@@ -493,14 +506,12 @@ The [deep dive](#11-type-discipline-deep-dive) covers each axis in detail.
 | Python + mypy/Pyright | External static analysis | Annotations usually not checked | `Any`, untyped code |
 | TypeScript | Static structural checking | Types are erased | Intentional unsoundness (not only `any`) |
 | Java (javac + JVM) | Static nominal checking, local type inference; optional pluggable checkers via JSR 308; no gradual typing | Class types are preserved; casts are checked; bytecode verifier | Generics erasure, `null`, unchecked casts, reflection, `Object` |
-| Ruby + Sorbet | Static analysis + optional runtime signatures | Depends on configuration | `T.untyped` |
+| Ruby + Sorbet | Static analysis + runtime signatures (sorbet-runtime) | `sig` checks at run time when the runtime library is used; depends on configuration | `T.untyped` |
 | Clojure + spec | Validation, instrumentation, generative testing | Checks where enabled | Not a static guarantee for the whole program |
 | Elixir | Evolving compiler analysis, set-theoretic types | BEAM runtime | Depends on the release |
 | Haskell | Static checking, broad inference | No boundary-checking layer | Exceptions, non-termination, unsafe |
 
----
-
-## F. Implementation strategy
+### F. Implementation strategy
 
 - A **compiler** translates a program from one representation to another.
 - An **interpreter** executes a program by processing its representation.
@@ -603,7 +614,7 @@ Typical styles and capabilities, not an exclusive classification.
 | **SQL** | Declarative | Query-based | Queries read, statements modify | Planning and parallelism in the DBMS | Typed, dialect-dependent | DBMS planner and executor |
 | **Prolog** | Relations + operational search | Logic | Logic bindings, practical effects | Usually sequential search | Usually dynamic | Implementation-dependent |
 | **Python** | Mixed | Procedural, OOP, functional elements | Mutable and immutable values | Threads, processes, async | Dynamic, optional analysis | CPython: bytecode |
-| **TypeScript** | Mixed | OOP, functional, component-based | JS state and effects | Events, promises, workers | Static structural, gradual traits | JS generation + JS engine |
+| **TypeScript** | Mixed | OOP, functional, component-based | JS state and effects | Events, promises, workers | Static structural; optional typing (types erased) | JS generation + JS engine |
 | **Ruby** | Imperative + functional idioms | OOP, blocks, modules | Mutable objects | Threads, fibers, processes | Dynamic, Sorbet/RBS | Interpreter, VM, JIT |
 | **Forth** | Explicit stack operations | Concatenative, words | Stack, memory, I/O | Implementation-dependent | Usually no static checking | Threaded code, native compilation, interpretation |
 
@@ -647,7 +658,7 @@ These are starting points, not rules. Team skills, ecosystem, and constraints of
 | Business applications | OOP + FP mix (Kotlin, C#, Java) | Domain modeling, mature ecosystems |
 | Data pipelines | Functional style (Clojure, Elixir, Scala) | Transformations compose well |
 | Highly concurrent services | Actors / CSP (Erlang, Elixir, Go) | Isolation, lightweight activities |
-| Correctness-critical logic | Pure FP with expressive types (Haskell, Idris, OCaml) | Types encode invariants |
+| Correctness-critical logic | Functional style with expressive types (Haskell, Idris, OCaml) | Types encode invariants |
 | Quick scripting | Multi-paradigm (Python, Ruby) | Flexibility, short feedback loop |
 | Querying and reporting | Declarative (SQL, Datalog) | The engine optimizes execution |
 | Infrastructure | Declarative (Terraform, Kubernetes manifests) | Desired state instead of steps |
@@ -678,7 +689,7 @@ These are starting points, not rules. Team skills, ecosystem, and constraints of
 | 1972 | Prolog, Smalltalk-72, C |
 | 1973 | The actor model |
 | 1975 | Scheme |
-| 1978 | CSP; Backus on the von Neumann style; Milner's polymorphic type inference |
+| 1977–1978 | Backus's lecture on the von Neumann style (given 1977, published 1978); CSP (1978); Milner's polymorphic type inference (1978) |
 | 1983–1984 | C++ gets its name; PostScript |
 | 1986 | Erlang |
 | 1989 | Hughes: "Why Functional Programming Matters" |
@@ -722,7 +733,7 @@ block-beta
     V1["all explicit → local inference → Hindley–Milner"]
     V2["nominal ↔ structural"]
     V3["generics → ADTs → dependent types"]
-    V4["type safety · diagnostics · completeness"]
+    V4["type safety · precision · coverage"]
     V5["gradual ↔ optional"]
 
     L3["<b>Examples</b>"]
@@ -772,7 +783,7 @@ This is the "verbosity ↔ inference" axis. It has nothing to do with static vs.
 
 | Level | What is written | Examples |
 |---|---|---|
-| All explicit | Types of variables, parameters, results | C, Java before 10 |
+| All explicit | Types of variables, parameters, results | C, older Java (before diamond, lambdas, and `var`) |
 | Local inference | Local variable types are inferred, signatures are written | Java `var`, Go `:=`, Rust |
 | Extended (Hindley–Milner) | Almost nothing; function types are inferred too | OCaml, Haskell, SML |
 
@@ -845,7 +856,7 @@ flowchart LR
     S3 --> S4["<b>4. ADTs</b><br/>sum and product,<br/>match"]
     S4 --> S5["<b>5. Higher-kinded,<br/>GADTs</b><br/>Functor f"]
     S5 --> S6["<b>6. Dependent</b><br/>Vect n a"]
-    S6 --> S7["<b>7. Effects,<br/>linear types</b><br/>Koka, ownership"]
+    S6 --> S7["<b>7. Effects,<br/>linear / affine types</b><br/>Koka, Rust ownership"]
 
     classDef s fill:#880e4f,color:#fff,stroke:#f8bbd0
     class S1,S2,S3,S4,S5,S6,S7 s
@@ -870,7 +881,8 @@ append : Vect n a -> Vect m a -> Vect (n + m) a
 
 - "Make invalid states unrepresentable" is already achievable with ADTs; dependent types are not needed for it.
 - The price of expressiveness: complex errors, slow checking, a high entry barrier.
-- TypeScript's type system is rich enough to compute with, and checking may not terminate.
+- TypeScript's type system is rich enough to compute with (it is Turing-complete), so the checker has to impose recursion-depth limits.
+- Rust's ownership is based on affine types (a value can be used at most once), which is weaker than strictly linear types.
 
 ### 11.4 Guarantees
 
@@ -898,13 +910,17 @@ String x = s.get(0);          // ClassCastException, far from the real cause
 const user = JSON.parse(text) as User;   // no check, this is only an assertion
 ```
 
-**Three questions about correctness**
+**Three questions about analysis guarantees**
 
 | Question | Meaning | What violates it |
 |---|---|---|
-| Type safety | An accepted program will not perform a forbidden operation | "Holes" in the type system |
-| Soundness of diagnostics | Every reported error is real | False positives |
-| Completeness of analysis | All errors are found | Missed errors |
+| Type safety | An accepted program will not perform a forbidden operation (soundness of the type system) | "Holes" in the type system |
+| Precision of diagnostics | Every reported error is real; correct programs are not rejected (no false alarms) | False positives |
+| Coverage of analysis | All errors of the chosen class are found (soundness in the static-analysis sense) | Missed errors |
+
+Type safety is, in essence, coverage for one specific class of errors: operations that are forbidden at run time.
+
+Terminology differs between communities. In static analysis, "sound" usually means "no missed errors" and "complete" means "no false alarms". That is why the table uses neutral names.
 
 By Rice's theorem, every non-trivial semantic property of programs is undecidable. A terminating analysis therefore cannot get everything at once: it either rejects some correct programs or lets some errors through.
 
@@ -926,7 +942,7 @@ flowchart TB
     O --> O1["An external analyzer<br/>checks annotations"]
     O --> O2["They do not affect<br/>execution"]
     O --> O3["Types are erased<br/>or ignored"]
-    O --> O4["<i>mypy, TypeScript, Sorbet</i>"]
+    O --> O4["<i>mypy, TypeScript</i><br/><i>(Sorbet: hybrid, has runtime sigs)</i>"]
 
     classDef q fill:#000,color:#fff,stroke:#fff
     classDef g fill:#7c2d00,color:#fff,stroke:#ffe0b2
@@ -952,12 +968,12 @@ double("ab")   # mypy: error; interpreter: returns "abab"
 |---|---|---|
 | Python + mypy/Pyright | `Any` | Annotations are not checked |
 | TypeScript | `any`, the safer `unknown` | Types are erased |
-| Ruby + Sorbet | `T.untyped` | `sig` checking can be enabled |
+| Ruby + Sorbet | `T.untyped` | `sig` is checked by sorbet-runtime when it is used (hybrid model) |
 | Typed Racket | `Any` | Contracts at the boundaries |
 
 **Subtleties**
 
-- The main value is gradual migration (JS → TypeScript, Python module by module).
+- The main value is gradual migration (JS → TypeScript, Python module by module). Migration can be gradual even when the system is formally optional, as in TypeScript.
 - The main risk is at the boundaries: an error shows up far from where the value entered typed code.
 - Sound gradual systems pay for the checks with performance, so mainstream languages more often choose the optional model.
 
@@ -979,19 +995,17 @@ flowchart LR
     J --> D["<b>Dynamic<br/>loopholes</b>"]
 
     G --> G1["❌ Not in the language<br/>no ? type, no blame"]
-    O --> O1["✅ Via external checkers<br/>JSR 308: Checker Framework,<br/>NullAway, JSpecify"]
+    O --> O1["⚠️ Only via external checkers<br/>JSR 308: Checker Framework,<br/>NullAway, JSpecify"]
     D --> D1["⚠️ Imitation<br/>Object + cast, raw types,<br/>reflection, Proxy"]
 
     classDef root fill:#000,color:#fff,stroke:#fff
     classDef no fill:#b71c1c,color:#fff,stroke:#ffcdd2
-    classDef yes fill:#1b5e20,color:#fff,stroke:#c8e6c9
-    classDef mid fill:#e65100,color:#fff,stroke:#ffe0b2
+    classDef part fill:#e65100,color:#fff,stroke:#ffe0b2
     classDef cat fill:#263238,color:#fff,stroke:#cfd8dc
     class J root
     class G,O,D cat
     class G1 no
-    class O1 yes
-    class D1 mid
+    class O1,D1 part
 ```
 
 ### Optional typing: Checker Framework
@@ -1012,11 +1026,14 @@ class Users {
 ```
 
 ```bash
-# Plain compilation succeeds, the annotations are ignored
-javac Users.java
+# Plain compilation succeeds (checker-qual.jar with the annotations is on the
+# classpath); the annotations are ignored
+javac -cp checker-qual.jar Users.java
 
-# With the checker, the same program does not compile
-javac -processor org.checkerframework.checker.nullness.NullnessChecker Users.java
+# With the checker plugged in, the same program does not compile
+# (simplified command; see the Checker Framework manual for the exact setup)
+javac -cp checker-qual.jar -processorpath checker.jar \
+      -processor org.checkerframework.checker.nullness.NullnessChecker Users.java
 ```
 
 This is optionality in its pure form: types are checked **only if a tool is plugged in**, and they do not affect execution.
@@ -1091,7 +1108,7 @@ Groovy has `def` (dynamic) and `@TypeChecked`/`@CompileStatic` (static), so you 
 ## 13. Further reading
 
 - Van Roy, Haridi: *Concepts, Techniques, and Models of Computer Programming*
-- Backus: "Can Programming Be Liberated from the von Neumann Style?" (1978)
+- Backus: "Can Programming Be Liberated from the von Neumann Style?" (Turing lecture 1977, published 1978)
 - Hughes: "Why Functional Programming Matters" (1989)
 - Hickey: "Simple Made Easy" (2011)
 - Pike: "Concurrency Is Not Parallelism"
